@@ -1,4 +1,4 @@
---È¸¿ø Å×ÀÌºí
+--È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE MEMBER_TBL (
 	MEMBER_NO	                NUMBER		        PRIMARY KEY,
 	MEMBER_NAME	                VARCHAR2(30)		NOT NULL,
@@ -7,16 +7,16 @@ CREATE TABLE MEMBER_TBL (
 	MEMBER_PW	                CHAR(60)		    NOT NULL,
 	MEMBER_EMAIL	            VARCHAR2(100)		NOT NULL,
 	MEMBER_PHONE	            CHAR(13)		    NOT NULL,
-	MEMBER_GRADE	            NUMBER		        NOT NULL,           -- 1:»ç¿ëÀÚ  2:°ü¸®ÀÚ  // 3: ºí·¢(°Ô½Ã±Û ¹× ÈÄ±â, ´ñ±Û ÀÛ¼º ±ÝÁö-1ÀÏ)
+	MEMBER_GRADE	            NUMBER		        NOT NULL,           -- 1:ï¿½ï¿½ï¿½ï¿½ï¿½  2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  // 3: ï¿½ï¿½(ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½Ä±ï¿½, ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½-1ï¿½ï¿½)
 	MEMBER_ACCOUNTNUMBER	    VARCHAR2(20)		NULL,
 	ENROLL_DATE	                DATE		        NOT NULL,
-	SELLER_SCORE	            NUMBER		        NOT NULL,           -- 0~100 »çÀÌ. ½ÃÀÛ 37Á¡.
-	SELLER_GRADE	            NUMBER		        NOT NULL,           --(1~3) ·¹º§¿¡µû¸¥ ¼ö¼ö·á ºÎ°¡
-	MEMBER_WITHDRAW	            CHAR(1)		        NOT NULL            -- 0 : Á¤»óÈ¸¿ø /1: Å»ÅðÈ¸¿ø ¡æ1ÀÏ °æ¿ì ÇØ´ç °èÁ¤À¸·Î ·Î±×ÀÎ ±ÝÁö
+	SELLER_SCORE	            NUMBER		        NOT NULL,           -- 0~100 ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ 37ï¿½ï¿½.
+	SELLER_GRADE	            NUMBER		        NOT NULL,           --(1~3) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½
+	MEMBER_WITHDRAW	            CHAR(1)		        NOT NULL            -- 0 : ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½ /1: Å»ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½1ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 );
 CREATE SEQUENCE MEMBER_SEQ;
 
---ÁÖ¼ÒÅ×ÀÌºí
+--ï¿½Ö¼ï¿½ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE ADDRESS_TBL (
 	ADDRESS_NO	            NUMBER		        PRIMARY KEY,
 	MEMBER_NO	            NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
@@ -26,12 +26,12 @@ CREATE TABLE ADDRESS_TBL (
 	ADDRESS_NAME	        VARCHAR2(30)		NOT NULL,
 	ADDRESS_PHONE	        CHAR(13)		    NOT NULL,
 	ADDRESS_REQUEST	        VARCHAR2(200)		NULL,
-	ADDRESS_DEFALUT	        NUMBER		        NOT NULL        -- 1:±âº»¹è¼ÛÁö
+	ADDRESS_DEFALUT	        NUMBER		        NOT NULL        -- 1:ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 CREATE SEQUENCE ADDRESS_SEQ;
 
 
---»óÇ° Å×ÀÌºí
+--ï¿½ï¿½Ç° ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE PRODUCT_TBL (
 	PRODUCT_NO	                NUMBER		            PRIMARY KEY,
 	MEMBER_NO	                NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,
@@ -40,7 +40,7 @@ CREATE TABLE PRODUCT_TBL (
 	PRODUCT_EXPLAIN	            VARCHAR2(4000)		    NULL,
 	PRODUCT_PRICE	            NUMBER		            NOT NULL,
 	PRODUCT_DATE	            DATE		            NOT NULL,
-	PRODUCT_HIDE                CHAR(1)                 NOT NULL,       -- 0 : º¸¿©ÁÖ±â, 1: ¼û±â±â
+	PRODUCT_HIDE                CHAR(1)                 NOT NULL,       -- 0 : ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½, 1: ï¿½ï¿½ï¿½ï¿½ï¿½
 	PRODUCT_LINE	            VARCHAR2(100)		    NOT NULL,
 	PRODUCT_GEN	                VARCHAR2(100)		    NULL,
 	PRODUCT_MODEL	            VARCHAR2(100)		    NULL,
@@ -55,12 +55,12 @@ CREATE TABLE PRODUCT_TBL (
 	PRODUCT_CONNECTIVITY	    VARCHAR2(100)		    NULL,
 	PRODUCT_CHARGE	            VARCHAR2(100)		    NULL,
     PRODUCT_THUMBNAIL	        VARCHAR2(100)		    NULL,
-	PRODUCT_SUMMARY	            VARCHAR2(300)		    NOT NULL        -- EX) iPhone 15 Pro Max 256GB È­ÀÌÆ®
+	PRODUCT_SUMMARY	            VARCHAR2(300)		    NOT NULL        -- EX) iPhone 15 Pro Max 256GB È­ï¿½ï¿½Æ®
 );
 CREATE SEQUENCE PRODUCT_SEQ;
 
 
---»óÇ° Ã·ºÎÆÄÀÏ Å×ÀÌºí
+--ï¿½ï¿½Ç° Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE PRODUCT_FILE_TBL (
 	FILE_NO	            NUMBER		        PRIMARY KEY,
 	PRODUCT_NO	        NUMBER		        NOT NULL        REFERENCES PRODUCT_TBL,
@@ -70,39 +70,39 @@ CREATE TABLE PRODUCT_FILE_TBL (
 CREATE SEQUENCE PRODUCT_FILE_SEQ;
 
 
---°Å·¡Å×ÀÌºí
+--ï¿½Å·ï¿½ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE TRADE_TBL (
 	TRADE_NO	                NUMBER		            PRIMARY KEY,
 	TRADE_SELLER	            NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,
 	TRADE_BUYER	                NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,
-	PRODUCT_NO	                NUMBER		            NOT NULL        REFERENCES PRODUCT_TBL,     -- PRODUCT_TBLÀÌ¶û JOINÇØ¼­ RPODUCT_SUMMARY °¡Á®¿Í¾ß ÇÔ. »óÇ°ÀÌ ¹ºÁö º¸¿©ÁÖ´Â ¿ëµµ
-	TRADE_RESERVE_DATE          DATE                    NULL,               -- TRADE_STATE = "¿¹¾àÁß"ÀÎ °ÍÀÇ ¿¹¾àÀÏÀÓ
+	PRODUCT_NO	                NUMBER		            NOT NULL        REFERENCES PRODUCT_TBL,     -- PRODUCT_TBLï¿½Ì¶ï¿½ JOINï¿½Ø¼ï¿½ RPODUCT_SUMMARY ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½ ï¿½ï¿½. ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ëµµ
+	TRADE_RESERVE_DATE          DATE                    NULL,               -- TRADE_STATE = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     TRADE_DATE	                DATE    		        NOT NULL,
 	TRADE_PRICE	                NUMBER		            NOT NULL,
-	TRADE_STATE	                VARCHAR2(30)		    NOT NULL,           -- ¿¹¾àÁß, °áÁ¦¿Ï·á, ¹ß¼Û´ë±â, ¹è¼ÛÁß,  ¹è¼Û¿Ï·á, ±¸¸ÅÈ®Á¤ or È¯ºÒ
+	TRADE_STATE	                VARCHAR2(30)		    NOT NULL,           -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½, ï¿½ß¼Û´ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½,  ï¿½ï¿½Û¿Ï·ï¿½, ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ or È¯ï¿½ï¿½
 	ZIPCODE	                    CHAR(5)		            NOT NULL,
 	ADDRESS	                    VARCHAR2(200)		    NOT NULL,
 	ADDRESS_DETAIL	            VARCHAR2(100)		    NULL,
 	ADDRESS_NAME	            VARCHAR2(30)		    NOT NULL,
 	ADDRESS_PHONE	            CHAR(13)		        NOT NULL,
 	ADDRESS_REQUEST	            VARCHAR2(200)		    NOT NULL,
-	INVOICE_NUMBER	            VARCHAR2(30)		    NULL                -- ±¸¸ÅÀÚ°¡ °áÁ¦¿Ï·áÈÄ ÆÇ¸ÅÀÚ°¡ ÆÇ¸Å¹°Ç° ÅÃ¹èº¸³»¸é¼­ µî·Ï
+	INVOICE_NUMBER	            VARCHAR2(30)		    NULL                -- ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½ï¿½Ú°ï¿½ ï¿½Ç¸Å¹ï¿½Ç° ï¿½Ã¹èº¸ï¿½ï¿½ï¿½é¼­ ï¿½ï¿½ï¿½
 );
 CREATE SEQUENCE TRADE_SEQ;
 
 
---»óÇ°º° ¸Å¼öÈ£°¡ Å×ÀÌºí
+--ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Å¼ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE BID_TBL (
 	BID_NO	                NUMBER		    PRIMARY KEY,
 	PRODUCT_NO	            NUMBER		    NOT NULL        REFERENCES PRODUCT_TBL,
-	MEMBER_NO	            NUMBER		    NOT NULL        REFERENCES MEMBER_TBL,      -- ÀÔÂûÀÚ
+	MEMBER_NO	            NUMBER		    NOT NULL        REFERENCES MEMBER_TBL,      -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BID_PRICE	            NUMBER		    NOT NULL
 );
 CREATE SEQUENCE BID_SEQ;
 
 
 
---ÁÁ¾Æ¿ä Å×ÀÌºí
+--ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE LIKE_TBL (
 	LIKE_NO	            NUMBER		    PRIMARY KEY,
 	MEMBER_NO	        NUMBER		    NOT NULL    REFERENCES MEMBER_TBL,
@@ -111,36 +111,36 @@ CREATE TABLE LIKE_TBL (
 CREATE SEQUENCE LIKE_SEQ;
 
 
---ÈÄ±â Å×ÀÌºí
+--ï¿½Ä±ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE REVIEW_TBL (
 	TRADE_NO	                NUMBER		        NOT NULL    REFERENCES TRADE_TBL,
 	REVIEW_SELLER	            NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
 	REVIEW_CONSUMER	            NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
 	PRODUCT_NO	                NUMBER		        NOT NULL    REFERENCES PRODUCT_TBL,
-	REVIEW_SATISFACTION	        NUMBER		        NOT NULL,       -- -1:ºÒ¸¸Á·, 0:º¸Åë, 1:¸¸Á·
+	REVIEW_SATISFACTION	        NUMBER		        NOT NULL,       -- -1:ï¿½Ò¸ï¿½ï¿½ï¿½, 0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½
 	REVIEW_DETAIL	            VARCHAR2(3000)		NULL
 );
 
 
---ÂÊÁö Å×ÀÌºí
+--ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE NOTE_TBL (
 	NOTE_NO	                    NUMBER		            PRIMARY KEY,
-	SENDER_MEMBER_NO	        NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,  --º¸³½ÀÌ È¸¿ø¹øÈ£
-	RECEIVER_MEMBER_NO	        NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,  --¹Þ´ÂÀÌ È¸¿ø¹øÈ£
+	SENDER_MEMBER_NO	        NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½È£
+	RECEIVER_MEMBER_NO	        NUMBER		            NOT NULL        REFERENCES MEMBER_TBL,  --ï¿½Þ´ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½È£
 	PRODUCT_NO	                NUMBER		            NULL            REFERENCES PRODUCT_TBL,
 	NOTE_TITLE	                VARCHAR2(200)		    NOT NULL,
 	NOTE_CONTENT	            VARCHAR2(2000)		    NOT NULL,
 	SEND_DATE	                DATE		            NOT NULL,
 	RECEIVE_DATE	            DATE		            NOT NULL,
-	RECEIVER_READ	            CHAR(1)		            NOT NULL,       -- 0(ÀÐÀ½x) / 1(ÀÐÀ½)   ¹ÞÀºÀÌ°¡ ÀÐ¾ú´ÂÁö
-	RECEIVER_DELETE	            CHAR(1)		            NOT NULL,       -- 0(»èÁ¦x) / 1(»èÁ¦)   ¹ÞÀºÀÌ°¡ »èÁ¦Çß´ÂÁö
-	SENDER_DELETE	            CHAR(1)		            NOT NULL        -- 0(»èÁ¦x) / 1(»èÁ¦)   º¸³½ÀÌ°¡ »èÁ¦Çß´ÂÁö
+	RECEIVER_READ	            CHAR(1)		            NOT NULL,       -- 0(ï¿½ï¿½ï¿½ï¿½x) / 1(ï¿½ï¿½ï¿½ï¿½)   ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½
+	RECEIVER_DELETE	            CHAR(1)		            NOT NULL,       -- 0(ï¿½ï¿½ï¿½ï¿½x) / 1(ï¿½ï¿½ï¿½ï¿½)   ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½
+	SENDER_DELETE	            CHAR(1)		            NOT NULL        -- 0(ï¿½ï¿½ï¿½ï¿½x) / 1(ï¿½ï¿½ï¿½ï¿½)   ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½
 );
 CREATE SEQUENCE NOTE_SEQ;
 
 
-----------------------Á¦Ç°ºñ±³Å×ÀÌºí---------------------------
---¾ÆÀÌÆù
+----------------------ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½---------------------------
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE IPHONE_TBL (
 	PRODUCT_LINE	        VARCHAR2(100)		    NOT NULL,
 	IPHONE_GEN	            VARCHAR2(100)		    NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IPHONE_TBL (
 	IPHONE_IMAGE	        VARCHAR2(100)		    NOT NULL,
 	IPHONE_STORAGE	        VARCHAR2(100)		    NOT NULL
 );
---¸ÆºÏ
+--ï¿½Æºï¿½
 CREATE TABLE MACBOOK_TBL (
 	PRODUCT_LINE	        VARCHAR2(100)		    NOT NULL,
 	MACBOOK_GEN	            VARCHAR2(100)		    NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE MACBOOK_TBL (
     MACBOOK_CPU 	        VARCHAR2(100)		    NULL,
     MACBOOK_GPU 	        VARCHAR2(100)		    NULL
 );
---¾ÆÀÌÆÐµå
+--ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½
 CREATE TABLE IPAD_TBL (
 	PRODUCT_LINE	        VARCHAR2(100)		    NOT NULL,
 	IPAD_GEN	            VARCHAR2(100)		    NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE IPAD_TBL (
 	IPAD_STORAGE	        VARCHAR2(100)		    NOT NULL,
 	IPAD_CONNECTIVITY	    VARCHAR2(100)		    NOT NULL
 );
---¿öÄ¡
+--ï¿½ï¿½Ä¡
 CREATE TABLE WATCH_TBL (
 	PRODUCT_LINE	        VARCHAR2(100)		NOT NULL,
 	WATCH_GEN	            VARCHAR2(100)		NOT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE WATCH_TBL (
 	WATCH_IMAGE	            VARCHAR2(100)		NOT NULL,
 	WATCH_CONNECTIVITY	    VARCHAR2(100)		NOT NULL
 );
---¿¡¾îÆÌ
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE AIRPODS_TBL (
 	PRODUCT_LINE	        VARCHAR2(100)		NOT NULL,
 	AIRPODS_GEN	            VARCHAR2(100)		NOT NULL,
@@ -190,40 +190,41 @@ CREATE TABLE AIRPODS_TBL (
 	AIRPODS_IMAGE	        VARCHAR2(100)		NOT NULL,
 	AIRPODS_CHARGE	        VARCHAR2(100)		NOT NULL
 );
---»ö»ó
+--ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE COLOR_TBL (
 	color	            VARCHAR2(100)		NOT NULL,   -- JOIN USING COLOR
-	colorImg	        VARCHAR2(300)		NOT NULL    -- ÀÌ¹ÌÁö ÀÌ¸§ ÀÔ·Â
+	colorImg	        VARCHAR2(300)		NOT NULL    -- ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½Ô·ï¿½
 );
 -------------------------------------------------------------------
 
---°Ô½ÃÆÇ Å×ÀÌºí
+--ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE BOARD_TBL (
 	BOARD_NO	            NUMBER		        PRIMARY KEY,
 	BOARD_TITLE	            VARCHAR2(100)		NOT NULL,
 	BOARD_CONTENT	        VARCHAR2(4000)		NOT NULL,
 	MEMBER_NO	            NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
 	READ_COUNT	            NUMBER		        NOT NULL,
-	BOARD_TYPE	            NUMBER		        NOT NULL,     -- 1.°øÁö»çÇ×, 2.ÀÚÀ¯°Ô½ÃÆÇ, 3.Áú¹®°Ô½ÃÆÇ, 4.»Ë³»±â, 5.¸Å°ÅÁø
+	BOARD_TYPE	            NUMBER		        NOT NULL,     -- 1.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2.ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½, 3.ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½, 4.ï¿½Ë³ï¿½ï¿½ï¿½, 5.ï¿½Å°ï¿½ï¿½ï¿½
 	PRODUCT_CATEGORY	    VARCHAR2(50)		NULL,         -- IPHONE,  MACBOOK,  IPAD,  APPLEWATCH,  AIRPODS
-	BOARD_HIDE	            CHAR(1)		        NOT NULL,     -- 0 : º¸¿©ÁÖ±â, 1 : ¼û±â±â
-	BOARD_DATE	            DATE        		NOT NULL
+	BOARD_HIDE	            CHAR(1)		        NOT NULL,     -- 0 : ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½, 1 : ï¿½ï¿½ï¿½ï¿½ï¿½
+	BOARD_DATE	            DATE        		NOT NULL,
+    BOARD_THUMBNAIL         VARCHAR2(100),
 );
 CREATE SEQUENCE BOARD_SEQ;
 
---´ñ±Û Å×ÀÌºí
+--ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE COMMENT_TBL (
 	COMMENT_NO	            NUMBER		        PRIMARY KEY,
 	BOARD_NO	            NUMBER		        NOT NULL    REFERENCES BOARD_TBL,
 	COMMENT_WRITER	        NUMBER		        NULL        REFERENCES MEMBER_TBL,
 	COMMENT_CONTENT	        VARCHAR2(500)		NOT NULL,
-	SELF_REF	            NUMBER		        NULL        REFERENCES COMMENT_TBL,   --NULL: ´ñ±Û, NULL x: ´ë´ñ±Û
-	COMMENT_HIDE	        CHAR(1)		        NOT NULL,   -- 0 : º¸¿©ÁÖ±â, 1 : ¼û±â±â
+	SELF_REF	            NUMBER		        NULL        REFERENCES COMMENT_TBL,   --NULL: ï¿½ï¿½ï¿½, NULL x: ï¿½ï¿½ï¿½ï¿½
+	COMMENT_HIDE	        CHAR(1)		        NOT NULL,   -- 0 : ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½, 1 : ï¿½ï¿½ï¿½ï¿½ï¿½
 	COMMENT_DATE	        DATE    		    NOT NULL
 );
 CREATE SEQUENCE COMMENT_SEQ;
 
---°Ô½ÃÆÇ Ã·ºÎÆÄÀÏ Å×ÀÌºí
+--ï¿½Ô½ï¿½ï¿½ï¿½ Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE BOARD_FILE_TBL (
 	FILE_NO	                NUMBER		        PRIMARY KEY,
 	BOARD_NO	            NUMBER		        NOT NULL    REFERENCES BOARD_TBL,
@@ -232,47 +233,47 @@ CREATE TABLE BOARD_FILE_TBL (
 );
 CREATE SEQUENCE BOARD_FILE_SEQ;
 
---È¯ºÒ°ü¸® Å×ÀÌºí
+--È¯ï¿½Ò°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE REFUND_TBL (
 	REFUND_NO	            NUMBER		        PRIMARY KEY,
 	TRADE_NO	            NUMBER		        NOT NULL    REFERENCES TRADE_TBL,
-    PRODUCT_NO              NUMBER              NOT NULL    REFERENCES PRODUCT_TBL,     -- PRODUCT_TBLÀÌ¶û JOINÇØ¼­ RPODUCT_SUMMARY °¡Á®¿Í¾ß ÇÔ. »óÇ°ÀÌ ¹ºÁö º¸¿©ÁÖ´Â ¿ëµµ
+    PRODUCT_NO              NUMBER              NOT NULL    REFERENCES PRODUCT_TBL,     -- PRODUCT_TBLï¿½Ì¶ï¿½ JOINï¿½Ø¼ï¿½ RPODUCT_SUMMARY ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½ ï¿½ï¿½. ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ëµµ
 	REFUND_DATE	            DATE		        NOT NULL,
 	REFUND_REASON	        VARCHAR2(2000)		NOT NULL,
-	REFUND_STATUS	        NUMBER		        NULL    --½ÅÃ»,ÁøÇàÁß(0), ¹Ý·Á(->±¸¸ÅÈ®Á¤, 1) , ½ÂÀÎ(2)
+	REFUND_STATUS	        NUMBER		        NULL    --ï¿½ï¿½Ã»,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(0), ï¿½Ý·ï¿½(->ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½, 1) , ï¿½ï¿½ï¿½ï¿½(2)
 );
 CREATE SEQUENCE REFUND_SEQ;
 
---½Å°íÅ×ÀÌºí
+--ï¿½Å°ï¿½ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE REPORT_TBL (
 	REPORT_NO	            NUMBER		        PRIMARY KEY,
-	REPORT_TYPE	            NUMBER		        NOT NULL,       --1(»óÇ°ÆÇ¸Å±Û), 2(»óÇ°ÈÄ±â), 3(ÀÚÀ¯), 4(Áú¹®), 5(»Ë³»±â), 6(ÀÚÀ¯,Áú¹®,»Ë³»±â´ñ±Û)
-	REPORT_TARGET	        NUMBER		        NOT NULL,       --°¢ À¯Çü¿¡ ¸Â°Ô PK³Ñ°ÜÁÖ±â.  (»óÇ°ÆÇ¸Å±Û, »óÇ°ÈÄ±â, ÀÚÀ¯,Áú¹®,»Ë³»±â, ´ñ±Û)¹øÈ£
-    REPORT_CONTENT	        VARCHAR2(1000)		NULL,           --½Å°íÀ¯ÇüÀÌ ±âÅ¸ÀÏ ½Ã È°¼ºÈ­
+	REPORT_TYPE	            NUMBER		        NOT NULL,       --1(ï¿½ï¿½Ç°ï¿½Ç¸Å±ï¿½), 2(ï¿½ï¿½Ç°ï¿½Ä±ï¿½), 3(ï¿½ï¿½ï¿½ï¿½), 4(ï¿½ï¿½ï¿½ï¿½), 5(ï¿½Ë³ï¿½ï¿½ï¿½), 6(ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½,ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½)
+	REPORT_TARGET	        NUMBER		        NOT NULL,       --ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ PKï¿½Ñ°ï¿½ï¿½Ö±ï¿½.  (ï¿½ï¿½Ç°ï¿½Ç¸Å±ï¿½, ï¿½ï¿½Ç°ï¿½Ä±ï¿½, ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½,ï¿½Ë³ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½)ï¿½ï¿½È£
+    REPORT_CONTENT	        VARCHAR2(1000)		NULL,           --ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ È°ï¿½ï¿½È­
 	REPORT_DATE	            DATE    		    NOT NULL,
 	REPORTING_MEMBER	    NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
 	REPORTED_MEMBER	        NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
-	REPORT_STATUS	        NUMBER		        NOT NULL        --ÁøÇàÁß(0), ¹Ý·Á(1), Á¦Àç(2)
+	REPORT_STATUS	        NUMBER		        NOT NULL        --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(0), ï¿½Ý·ï¿½(1), ï¿½ï¿½ï¿½ï¿½(2)
 );
 CREATE SEQUENCE REPORT_SEQ;
 
---½Å°í ¼±ÅÃ ³»¿ë ÂüÁ¶ Å×ÀÌºí
+--ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE REPORT_SELECT_REFERENCE_TBL(
-    REPROT_SELECT_NO            NUMBER             PRIMARY KEY,    -- SEQ »ç¿ë X. »èÁ¦ ¹× ¼öÁ¤ ¿ëÀÌÇÏ±â À§ÇØ
+    REPROT_SELECT_NO            NUMBER             PRIMARY KEY,    -- SEQ ï¿½ï¿½ï¿½ X. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½
     REPROT_SELECT_CONTENT       VARCHAR2(100)      NOT NULL
 );
 
---½Å°í¼±ÅÃ Å×ÀÌºí
+--ï¿½Å°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE REPORT_SELECT_TBL (
 	REPORT_NO	        NUMBER		    NOT NULL    REFERENCES REPORT_TBL,
 	REPROT_SELECT_NO	NUMBER		    NOT NULL    REFERENCES REPORT_SELECT_REFERENCE_TBL
 );
 
 
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(1,'¿å¼³À» »ç¿ëÇß¾î¿ä');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(2,'»ç±â¸¦ ÀúÁú·¶¾î¿ä');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(3,'ÇÇ½ÌÀ» ½ÃµµÇß¾î¿ä');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(4,'À§Á¶»óÇ°À» ÆÇ¸ÅÇß¾î¿ä');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(5,'ºÒ¹ýÈ°µ¿ÀÌ ÀÇ½ÉµÇ¾î¿ä');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(6,'ºÒ°ÇÀüÇÑ ³»¿ëÀÌ ÀÛ¼ºµÇ¾ú¾î¿ä');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(7,'ºñ¹æÀûÀÎ ¾ð¾î¸¦ »ç¿ëÇß¾î¿ä');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(1,'ï¿½å¼³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß¾ï¿½ï¿½');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(2,'ï¿½ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(3,'ï¿½Ç½ï¿½ï¿½ï¿½ ï¿½Ãµï¿½ï¿½ß¾ï¿½ï¿½');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(4,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ç¸ï¿½ï¿½ß¾ï¿½ï¿½');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(5,'ï¿½Ò¹ï¿½È°ï¿½ï¿½ï¿½ï¿½ ï¿½Ç½ÉµÇ¾ï¿½ï¿½');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(6,'ï¿½Ò°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(7,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î¸¦ ï¿½ï¿½ï¿½ï¿½ß¾ï¿½ï¿½');
