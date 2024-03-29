@@ -19,9 +19,31 @@
   transition: all 0.2s;
 }
 
+.btn_form {
+  padding: 9px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-family: ns-b;
+  line-height: 1.5;
+  text-align: center;
+  transition: all 0.2s;
+}
+.bg1 {
+  background-color: var(--main_01);
+}
+.bg2 {
+  background-color: var(--gray_04);
+}
+.bg3 {
+  background-color: var(--gray_05);
+}
+.bg4 {
+  background-color: var(--main_02);
+}
 
-
-.badge{
+.badge {
   display: inline-block;
   padding: 0 5px;
   border: 1px solid var(--gray_05);
@@ -33,62 +55,55 @@
   line-height: 18px;
 }
 
-.badge.blue{
+.badge.blue {
   border-color: var(--bg_01);
   background-color: var(--bg_01);
   color: var(--main_01);
 }
 
-.badge.blue.outline{
+.badge.blue.outline {
   border-color: var(--main_01);
   background-color: #fff;
   color: var(--main_01);
 }
 
-
-.badge.red{
+.badge.red {
   border-color: var(--bg_01);
   background-color: var(--bg_02);
   color: var(--main_02);
 }
 
-
-.badge.red.outline{
+.badge.red.outline {
   border-color: var(--main_02);
   background-color: #fff;
   color: var(--main_02);
 }
 
-
-
-.badge.black{
+.badge.black {
   border-color: var(--bg_01);
   background-color: var(--black_01);
   color: var(--gray_08);
 }
 
-
-.badge.black.outline{
+.badge.black.outline {
   border-color: var(--gray_01);
   background-color: #fff;
   color: var(--gray_01);
 }
 
-
-.badge.gray{
+.badge.gray {
   border-color: var(--bg_01);
   background-color: var(--gray_06);
   color: var(--gray_01);
 }
 
-.badge.gray.outline{
+.badge.gray.outline {
   border-color: var(--gray_04);
   background-color: #fff;
   color: var(--gray_04);
 }
 
-
-.msgSuccess{
+.msgSuccess {
   color: var(--main_01);
 }
 
@@ -96,13 +111,11 @@
   color: var(--main_02);
 }
 
-
-
-.input_item{
+.input_item {
   padding-top: 20px;
 }
 
-.input_wrap label{
+.input_wrap label {
   font-weight: 900;
   font-size: 20px;
 }
@@ -113,14 +126,9 @@
   line-height: 1.5;
   cursor: pointer;
   padding: 8px 12px;
-  color:var(--gray_04);
+  color: var(--gray_04);
   border: 1px solid var(--gray_06);
 }
 
 .input_wrap input[type="radio"] {
-
-  
- 
-
-
 }

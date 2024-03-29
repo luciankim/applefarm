@@ -3,7 +3,10 @@ import Footer from "./page/common/Footer";
 import "./page/common/default.css";
 import { Routes, Route } from "react-router-dom";
 import Ref from "./page/common/Ref";
+
 import Mypage from "./page/member/Mypage";
+
+import MemberWish from "./page/member/MemberWish";
 
 function App() {
   return (
@@ -13,7 +16,10 @@ function App() {
         <section className="inner_wrap">
           <Routes>
             <Route path="/ref" element={<Ref />} />
+
             <Route path="/mypage" element={<Mypage />} />
+
+            <Route path="/member/wish" element={<MemberWish />} />
           </Routes>
         </section>
       </main>

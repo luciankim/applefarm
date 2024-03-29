@@ -80,7 +80,7 @@ const LoginForm = (props) => {
           <Link to="/join" title="회원가입">
             <span className="material-icons">assignment_ind</span>
           </Link>
-          <Link>
+          <Link to="/member/wish" title="위시리스트">
             <span className="material-icons">favorite_border</span>
           </Link>
           <Link>

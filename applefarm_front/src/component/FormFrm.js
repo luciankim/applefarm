@@ -63,6 +63,42 @@ const Button = (props) => {
     </button>
   );
 };
+const Button1 = (props) => {
+  const { text, icon, clickEvent } = props;
+  return (
+    <button className="btn_form bg1" type="button" onClick={clickEvent}>
+      {text}
+      {icon}
+    </button>
+  );
+};
+const Button2 = (props) => {
+  const { text, icon, clickEvent } = props;
+  return (
+    <button className="btn_form bg2" type="button" onClick={clickEvent}>
+      {text}
+      {icon}
+    </button>
+  );
+};
+const Button3 = (props) => {
+  const { text, icon, clickEvent } = props;
+  return (
+    <button className="btn_form bg3" type="button" onClick={clickEvent}>
+      {text}
+      {icon}
+    </button>
+  );
+};
+const Button4 = (props) => {
+  const { text, icon, clickEvent } = props;
+  return (
+    <button className="btn_form bg4" type="button" onClick={clickEvent}>
+      {text}
+      {icon}
+    </button>
+  );
+};
 
 //  ---------뱃지 태그----------완료: 240324
 const BadgeBlue = (props) => {
@@ -202,6 +238,10 @@ const Radio = (props) => {
 export {
   Input,
   Button,
+  Button1,
+  Button2,
+  Button3,
+  Button4,
   Select,
   BadgeBlue,
   BadgeBlack,
