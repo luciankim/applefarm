@@ -8,19 +8,15 @@ const Header = (props) => {
   const isLogin = props.isLogin;
   const logout = props.logout;
 
-
-
-
-
   return (
     <header>
       <div className="topbar"></div>
       <div className="header">
         <LogoForm />
-        <SearchForm />
+      </div>
+      <div className="header2">
         <LoginForm isLogin={isLogin} logout={logout} />
       </div>
-
       <NavMenu />
     </header>
   );
@@ -54,21 +50,9 @@ const SearchForm = () => {
     { value: "5", label: "AirPods" },
   ];
 
-
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  return (
-    <div className="searchForm">
-      <Select options={options}  addId="searchSelect" onChange={handleSelectChange}/>
-      <Input type="text" data={searchKeyword} setData={setSearchKeyword} />
-      <Button
-        type="submit"
-        addClass="search-btn"
-        id="search-btn"
-        icon={<span className="material-icons">search</span>}
-      />
-    </div>
-  );
+  return <div className="searchForm"></div>;
 };
 
 const LoginForm = (props) => {
@@ -99,8 +83,8 @@ const LoginForm = (props) => {
           <Link>
             <span className="material-icons">favorite_border</span>
           </Link>
-          <Link to="/ref">
-            <span className="material-icons">shopping_cart</span>
+          <Link>
+            <span class="material-icons">email</span>
           </Link>
         </>
       )}
