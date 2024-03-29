@@ -106,10 +106,6 @@
 
 /* 마이페이지 */
 
-.mypage-sideMenu {
-  width: 1200px;
-}
-
 .mypage-title {
   font-size: 26px;
 }
@@ -137,4 +133,9 @@
 
 .sideMenu > ul > li > a:hover {
   color: #0267f3;
+}
+
+/* 회원가입 */
+
+.join-wrap {
 }

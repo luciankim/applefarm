@@ -7,6 +7,7 @@ import Ref from "./page/common/Ref";
 import Mypage from "./page/member/Mypage";
 
 import MemberWish from "./page/member/MemberWish";
+import Join from "./page/member/Join";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
 
             <Route path="/member/wish" element={<MemberWish />} />
+
+            <Route path="/join" element={<Join />} />
           </Routes>
         </section>
       </main>
