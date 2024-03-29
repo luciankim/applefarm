@@ -20,6 +20,7 @@ const Mypage = () => {
 
   return (
     <div className="mypage-sideMenu">
+      <div className="mypage-title">마이페이지</div>
       <div className="sideMenu-title">내 정보</div>
       <SideMenu myInfoMenu={myInfoMenu} setMyInfoMenu={setMyInfoMenu} />
       <div className="sideMenu-title">쇼핑 정보</div>
