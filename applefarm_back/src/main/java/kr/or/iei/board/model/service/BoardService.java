@@ -1,13 +1,17 @@
 package kr.or.iei.board.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.board.model.dao.BoardDao;
+import kr.or.iei.board.model.dto.Board;
+import kr.or.iei.board.model.dto.BoardFile;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -33,5 +37,13 @@ public class BoardService {
 		map.put("boardList", list);
 		map.put("pi", pi);
 		return map;
+	}
+
+	@Transactional
+	public int insertBoard(Board board, ArrayList<BoardFile> fileList) {
+		int  result = boardDao.insertBoard(board);
+	
+			
+		return result;
 	}
 }

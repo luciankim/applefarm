@@ -26,6 +26,7 @@
   width: 100%;
   border-spacing: 0;
 }
+
 .board-info-tbl tr > td:first-child {
   width: 150px;
   padding: 10px 20px;
@@ -143,4 +144,8 @@
 .board-view-btn-zone > button {
   width: 100px;
   margin-right: 20px;
+}
+
+#board-write-btn {
+  width: 100%;
 }

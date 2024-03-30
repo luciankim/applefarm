@@ -1,6 +1,7 @@
 import { Input } from "../../component/FormFrm";
 import "./boardFrm.css";
-
+import TextEditor from "../../component/TextEditor";
+import { Button1 } from "../../component/FormFrm";
 const BoardFrm = (props) => {
   const boardTitle = props.boardTitle;
   const setBoardTitle = props.setBoardTitle;
@@ -22,6 +23,7 @@ const BoardFrm = (props) => {
   const setBoardThumbnail = props.setBoardThumbnail;
 
   const buttonFunction = props.buttonFunction;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
 
   //--------------썸네일 파일 추가시 동작할 함수---------------
   const changeThumbnail = (e) => {
@@ -117,7 +119,20 @@ const BoardFrm = (props) => {
           </table>
         </div>
       </div>
-      <div className="board-frm-bottom"></div>
+      <div className="board-frm-bottom">
+        <TextEditor
+          data={boardContent}
+          setData={setBoardContent}
+          url={backServer + "/board/editor"}
+        />
+      </div>
+      <div className="board-write-btn-box">
+        <Button1
+          text="작성하기"
+          clickEvent={buttonFunction}
+          addId="board-write-btn"
+        />
+      </div>
     </div>
   );
 };

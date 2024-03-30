@@ -8,29 +8,46 @@
 
 	<select id="selectBoardList" resultType="board">
 
-SELECT * FROM (
-    SELECT ROWNUM AS rnum, d.* FROM (
-        SELECT
-            b.board_no,
-            b.board_title,
-            m.member_nickname,
-            TO_CHAR(b.board_date, 'yyyy-mm-dd hh24:mi:ss') AS board_date,
-            b.read_count
-        FROM
-            board_tbl b
-        JOIN
-            member_tbl m ON b.member_no = m.member_no
-        WHERE
-            b.board_type = 2 AND b.board_hide = 0
-        ORDER BY
-            b.board_no DESC
-    ) d
-) WHERE rnum BETWEEN #{start} AND #{end}
+		SELECT * FROM (
+		SELECT ROWNUM AS rnum, d.* FROM (
+		SELECT
+		b.board_no,
+		b.board_title,
+		m.member_nickname,
+		TO_CHAR(b.board_date, 'yyyy-mm-dd hh24:mi:ss') AS board_date,
+		b.read_count
+		FROM
+		board_tbl b
+		JOIN
+		member_tbl m ON b.member_no = m.member_no
+		WHERE
+		b.board_type = 2 AND b.board_hide = 0
+		ORDER BY
+		b.board_no DESC
+		) d
+		) WHERE rnum BETWEEN #{start} AND #{end}
 
 	</select>
 
 
 	<select id="selectCount" resultType="int">
-		select count(*) from board_tbl where board_type=2 and board_hide=0
+		select count(*) from
+		board_tbl where board_type=2 and board_hide=0
 	</select>
+
+
+
+	<insert id="insertBoard">
+INSERT INTO BOARD_TBL VALUES(BOARD_SEQ.NEXTVAL, #{boardTitle}, #{boardContent}, 1,1, #{boardType}, #{productCategory}, 0, SYSDATE, #{boardThumbnail})
+		
+		<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+			select max(board_no) from board_tbl
+		</selectKey>
+	</insert>
+
+
+	<insert id="insertBoardFile">
+		insert into board_file_tbl values(board_file_seq.nextval, #{boardNo}, #{filename}, #{filepath})
+	</insert>
+	
 </mapper>
