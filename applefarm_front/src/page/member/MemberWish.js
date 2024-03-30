@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Button1, Button2, Button3, Button4 } from "../../component/FormFrm";
 import "./member.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { DelModal } from "./Modal";
+
 const MemberWish = () => {
   const [likeList, setLikeList] = useState([
     {
@@ -27,6 +29,10 @@ const MemberWish = () => {
     },
   ]);
   const navigate = useNavigate();
+  useEffect(() => {
+    //좋아요 리스트 조회하기
+  }, []);
+
   return (
     <div className="mypage-current-wrap">
       <div className="mypage-current-title">
@@ -46,7 +52,14 @@ const MemberWish = () => {
           </thead>
           <tbody>
             {likeList.map((like, index) => {
-              return <LikeItem key={"like" + index} like={like} />;
+              return (
+                <LikeItem
+                  key={"like" + index}
+                  like={like}
+                  likeList={likeList}
+                  setLikeList={setLikeList}
+                />
+              );
             })}
           </tbody>
         </table>
@@ -57,17 +70,37 @@ const MemberWish = () => {
 const LikeItem = (props) => {
   const like = props.like;
   const navigate = useNavigate();
+
+  //구매 페이지 이동 작성 예정
   const purchase = () => {
     //구매페이지 이동
     navigate("/purchase", { state: { like: like } });
   };
-  const likeCancel = () => {
-    //좋아요 테이블 삭제구현
+
+  //모달
+  const likeList = props.likeList;
+  const setLikeList = props.setLikeList;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
   };
+  //좋아요 삭제
+  const likeDelFun = () => {
+    // 삭제 동작 처리 로직 작성 예정 -> 데이터 생성시 구현 예정
+    console.log(like);
+    const newLikeList = likeList.filter((item) => {
+      return item !== like;
+    });
+    setLikeList(newLikeList);
+    setModalOpen(false);
+  };
+
   return (
     <tr>
       <td>
-        <span className="material-icons like-cancel-icon" onClick={likeCancel}>
+        <span className="material-icons like-cancel-icon" onClick={showModal}>
           favorite
         </span>
       </td>
@@ -82,6 +115,11 @@ const LikeItem = (props) => {
       <td>{like.seller}</td>
       <td className="purchase-btn-box">
         <Button3 text="구매하기" clickEvent={purchase} />
+      </td>
+      <td>
+        {modalOpen && (
+          <DelModal setModalOpen={setModalOpen} clickEvent={likeDelFun} />
+        )}
       </td>
     </tr>
   );

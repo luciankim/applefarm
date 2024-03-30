@@ -26,7 +26,7 @@ CREATE TABLE ADDRESS_TBL (
 	ADDRESS_NAME	        VARCHAR2(30)		NOT NULL,
 	ADDRESS_PHONE	        CHAR(13)		    NOT NULL,
 	ADDRESS_REQUEST	        VARCHAR2(200)		NULL,
-	ADDRESS_DEFALUT	        NUMBER		        NOT NULL        -- 1:�⺻�����
+	ADDRESS_DEFAULT	        NUMBER		        NOT NULL        -- 1:�⺻�����
 );
 CREATE SEQUENCE ADDRESS_SEQ;
 
@@ -193,8 +193,9 @@ CREATE TABLE AIRPODS_TBL (
 --����
 CREATE TABLE COLOR_TBL (
 	color	            VARCHAR2(100)		NOT NULL,   -- JOIN USING COLOR
-	colorImg	        VARCHAR2(300)		NOT NULL    -- �̹��� �̸� �Է�
+	colorImage	        VARCHAR2(300)		NOT NULL    -- IMAGE FILE'S NAME
 );
+
 -------------------------------------------------------------------
 
 --�Խ��� ���̺�
@@ -268,8 +269,6 @@ CREATE TABLE REPORT_SELECT_TBL (
 	REPORT_NO	        NUMBER		    NOT NULL    REFERENCES REPORT_TBL,
 	REPROT_SELECT_NO	NUMBER		    NOT NULL    REFERENCES REPORT_SELECT_REFERENCE_TBL
 );
-
-
 
 
 INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(1,'�弳�� ����߾��');
