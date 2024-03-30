@@ -53,8 +53,8 @@ const BoardList = (props) => {
         <table>
           <thead>
             <tr>
-              <th width="10%">번호</th>
-              <th width="40%">제목</th>
+              <th width="15%">번호</th>
+              <th width="35%">제목</th>
               <th width="20%">닉네임</th>
               <th width="20%">작성일</th>
               <th width="10%">조회수</th>
@@ -80,10 +80,22 @@ const BoardList = (props) => {
 
 const BoardItem = (props) => {
   const board = props.board;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const boardView = () => {
+    navigate("/board/view/" + board.boardNo);
+  };
   return (
     <tr>
       <td>{board.boardNo}</td>
-      <td>{board.boardTitle}</td>
+      <td onClick={boardView}>
+        {board.boardTitle}
+        {/* {board.boardThumbnai === null ? (
+          <img src="/image/default.png" />
+        ) : (
+          <img src={backServer + "/board/thumbnail/" + board.boardThumbnail} />
+        )} */}
+      </td>
       <td>{board.memberNickName}</td>
       <td>{board.boardDate}</td>
       <td>{board.readCount}</td>

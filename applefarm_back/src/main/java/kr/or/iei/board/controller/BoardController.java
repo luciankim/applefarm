@@ -86,5 +86,14 @@ public class BoardController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+	
+	@GetMapping(value="/one/{boardNo}")
+	public ResponseEntity<ResponseDTO> selectOneBoard(@PathVariable int boardNo){
+		Board board = boardService.selectOneBoard(boardNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", board);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
 }
 

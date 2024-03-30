@@ -47,8 +47,14 @@
 
 .board-tbl-box > table > tbody > tr > td {
   text-align: center;
+  padding: 15px 5px;
 }
 
-.board-tbl-box > table > tbody > tr > td {
-  padding: 15px 5px;
+.board-tbl-box > table > tbody > tr > td:nth-child(2) {
+  text-align: left;
+  cursor: pointer;
+}
+
+.board-tbl-box > table > tbody > tr > td:nth-child(2):hover {
+  font-weight: 900;
 }

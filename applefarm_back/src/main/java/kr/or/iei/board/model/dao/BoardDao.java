@@ -15,6 +15,8 @@ public interface BoardDao {
 	int selectCount();
 	int insertBoard(Board board);
 	int insertBoardFile(BoardFile bf);
+	Board selectOneBoard(int boardNo);
+	List selectOneBoardFileList(int boardNo);
 
 
 }

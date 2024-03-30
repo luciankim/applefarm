@@ -14,6 +14,7 @@
 		b.board_no,
 		b.board_title,
 		m.member_nickname,
+		b.board_thumbnail,
 		TO_CHAR(b.board_date, 'yyyy-mm-dd hh24:mi:ss') AS board_date,
 		b.read_count
 		FROM
@@ -47,7 +48,24 @@ INSERT INTO BOARD_TBL VALUES(BOARD_SEQ.NEXTVAL, #{boardTitle}, #{boardContent}, 
 
 
 	<insert id="insertBoardFile">
-		insert into board_file_tbl values(board_file_seq.nextval, #{boardNo}, #{filename}, #{filepath})
+		insert into board_file_tbl values(BOARD_FILE_SEQ.nextval, #{boardNo}, #{filename}, #{filepath})
 	</insert>
+	
+	<select id="selectOneBoard" resultType="board">
+		select
+			board_no,
+			board_title,
+			board_content,
+			member_no,
+			read_count,
+			board_type,
+			TO_CHAR(board_date, 'yyyy-mm-dd hh24:mi:ss') as board_date,
+			board_thumbnail
+		from board_tbl where board_no = #{board_no}
+	</select>
+	
+	<select id="selectOneBoardFileList" resultType="boardFile">
+		select * from board_file_tbl where board_no=#{boardNo}
+	</select>
 	
 </mapper>

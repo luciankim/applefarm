@@ -42,8 +42,18 @@ public class BoardService {
 	@Transactional
 	public int insertBoard(Board board, ArrayList<BoardFile> fileList) {
 		int  result = boardDao.insertBoard(board);
-	
+		for(BoardFile bf : fileList) {
+			bf.setBoardNo(board.getBoardNo());
+			result += boardDao.insertBoardFile(bf);
+		}
 			
 		return result;
+	}
+
+	public Board selectOneBoard(int boardNo) {
+		Board board = boardDao.selectOneBoard(boardNo);
+		List list = boardDao.selectOneBoardFileList(boardNo);
+		board.setFileList(list);
+		return board;
 	}
 }

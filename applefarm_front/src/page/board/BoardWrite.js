@@ -1,8 +1,11 @@
 import { useState } from "react";
 import BoardFrm from "./BoardFrm";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const BoardWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
   //제목, 썸네일, 내용, 첨부파일 -> 글 작성을 위해서 사용자에게 받아야 하는 정보 -> state 생성(데이터 전송용)
   const [boardTitle, setBoardTitle] = useState("");
   const [boardContent, setBoardContent] = useState("");
@@ -13,7 +16,7 @@ const BoardWrite = () => {
   //사용자 화면 출력용 state (화면전송시 사용하지 않음)
   const [fileList, setFileList] = useState([]); //화면출력용 애들이 변수명이랑 같음
   const [boardThumbnail, setBoardThumbnail] = useState(null); //썸네일 미리보기
-
+  const navigate = useNavigate();
   const write = () => {
     console.log("제목: ", boardTitle); //필수
     console.log("내용: ", boardContent); //필수
@@ -46,7 +49,16 @@ const BoardWrite = () => {
           },
         })
         .then((res) => {
-          console.log(res);
+          if (res.data.message === "success") {
+            navigate("/board/list");
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "게시글 작성 실패",
+              text: res.data.message,
+              confirmButtonText: "확인",
+            });
+          }
         })
         .catch((res) => {
           console.log(res);
