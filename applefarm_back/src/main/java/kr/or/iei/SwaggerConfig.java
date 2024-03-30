@@ -18,9 +18,15 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 @EnableWebMvc
 public class SwaggerConfig {
+	
+	//Swagger 확인은 아래 주소에서.
+	//http://로컬주소:포트번호/swagger-ui/index.html
+	
 	private ApiInfo swaggerInfo() {
-		return new ApiInfoBuilder().title("APPLEFARM API")
-				.description("APPLEFARM Api 문서").build();
+		return new ApiInfoBuilder()
+					.title("APPLEFARM API")
+					.description("APPLEFARM Api 문서")
+					.build();
 	}
 	
 	@Bean
