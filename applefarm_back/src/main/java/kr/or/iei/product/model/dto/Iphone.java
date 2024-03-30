@@ -16,11 +16,11 @@ public class Iphone {
 
 	//Iphone_tbl
 	private String ProductLine;
-	private String IphoneGen;
-	private String IphoneModel;
-	private String IphoneColor;
-	private String IphoneImage;
-	private String IphoneStorage;
+	private String ProductGen;
+	private String ProductModel;
+	private String ProductColor;
+	private String ProductImage;
+	private String ProductStorage;
 	
 	//Color_tbl
 	private String ColorImage;
