@@ -13,7 +13,8 @@ import kr.or.iei.board.model.dao.BoardDao;
 import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.board.model.dto.BoardFile;
 import kr.or.iei.util.PageInfo;
-import kr.or.iei.util.Pagination;
+import kr.or.iei.util.PagiNation;
+
 
 @Service
 public class BoardService {
@@ -21,7 +22,7 @@ public class BoardService {
 	private BoardDao boardDao;
 
 	@Autowired
-	private Pagination pagination;
+	private PagiNation pagination;
 	
 	public Map selectBoardList(int reqPage) {
 		int numPerPage = 10; //한페이지당 게시물 수
