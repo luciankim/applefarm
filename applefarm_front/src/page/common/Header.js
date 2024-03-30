@@ -84,7 +84,7 @@ const LoginForm = (props) => {
             <span className="material-icons">favorite_border</span>
           </Link>
           <Link>
-            <span class="material-icons">email</span>
+            <span className="material-icons">email</span>
           </Link>
         </>
       )}
