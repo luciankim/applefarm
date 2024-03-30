@@ -25,7 +25,7 @@ const SideMenu = (props) => {
   };
 
   return (
-    <div className="side-menu">
+    <div className="sideMenu">
       <ul>
         {myInfoMenus.map((myInfoMenu, index) => {
           return (
