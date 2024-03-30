@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./member.css";
 import SideMenu from "../../component/SideMenu";
+import { Route, Routes } from "react-router-dom";
+import Address from "./Address";
 
 //로그인 정보 가져오기
 const Mypage = () => {
@@ -8,7 +10,7 @@ const Mypage = () => {
     { url: "loginInfo", text: "로그인 정보", active: false },
     { url: "sellerGrade", text: "판매자 등급", active: false },
     { url: "memberAccountNumber", text: "판매 정산 계좌", active: false },
-    { url: "addressList", text: "주소록", active: false },
+    { url: "address", text: "주소록", active: false },
     { url: "viewMyPost", text: "내가 쓴 글", active: false },
   ]);
 
@@ -19,17 +21,23 @@ const Mypage = () => {
   ]);
 
   return (
-    <div className="mypage-sideMenu">
-      <div className="mypage-title">마이페이지</div>
-
-      <div className="sideMenu-wrap">
-        <div className="sideMenu-title">내 정보</div>
-        <SideMenu myInfoMenu={myInfoMenu} setMyInfoMenu={setMyInfoMenu} />
-        <div className="sideMenu-title">쇼핑 정보</div>
-        <SideMenu
-          myShoppingMenu={myShoppingMenu}
-          setMyShoppingMenu={setMyShoppingMenu}
-        />
+    <div className="mypage-wrap">
+      <div className="mypage-sideMenu">
+        <div className="mypage-title">마이페이지</div>
+        <div className="sideMenu-wrap">
+          <div className="sideMenu-title">내 정보</div>
+          <SideMenu myInfoMenu={myInfoMenu} setMyInfoMenu={setMyInfoMenu} />
+          <div className="sideMenu-title">쇼핑 정보</div>
+          <SideMenu
+            myShoppingMenu={myShoppingMenu}
+            setMyShoppingMenu={setMyShoppingMenu}
+          />
+        </div>
+      </div>
+      <div className="mypage-content">
+        <Routes>
+          <Route path="/address" element={<Address />}></Route>
+        </Routes>
       </div>
     </div>
   );
