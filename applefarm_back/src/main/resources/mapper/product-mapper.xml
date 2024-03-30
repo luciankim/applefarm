@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.product.model.dao.ProductDao">
 
-
+	<select id="selectProductCategory" resultType="productCategory">
+		select * from #{table} where product_line=#{productLine} and product_gen=#{productGen} order by 1
+	</select>
 
 </mapper>

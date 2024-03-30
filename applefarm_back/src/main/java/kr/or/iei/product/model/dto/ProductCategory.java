@@ -1,7 +1,5 @@
 package kr.or.iei.product.model.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,19 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="product")
-@Schema(description = "판매상품 객체")
-public class Product {
+@Alias(value = "productCategory")
+@Schema(description = "제품카테고리 객체")
+public class ProductCategory {
 
 	//Product_tbl
-	private int ProductNo;
-	private int MemberNo;
-	private char ProductQuality;
-	private String ProductTitle;
-	private String ProductExplain;
-	private int ProductPrice;
-	private Date ProductDate;
-	private char ProductHide;
 	private String ProductLine;
 	private String ProductGen;
 	private String ProductModel;
@@ -40,4 +30,8 @@ public class Product {
 	private String ProductCharge;
 	private String ProductThumbnail;
 	private String ProductSummary;
+	
+	//Color_tbl
+	private String ColorImage;
+	
 }
