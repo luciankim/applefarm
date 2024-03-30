@@ -84,7 +84,7 @@ const LoginForm = (props) => {
             <span className="material-icons">favorite_border</span>
           </Link>
           <Link>
-            <span class="material-icons">email</span>
+            <span className="material-icons">email</span>
           </Link>
         </>
       )}
@@ -194,16 +194,19 @@ const NavMenu = () => {
           <Link to="#">Community</Link>
           <ul className="dropdown-content">
             <li>
+              <Link to="">공지사항</Link>
+            </li>
+            <li>
+              <Link to="/board/list">자유게시판</Link>
+            </li>
+            <li>
               <Link to="#">질문게시판</Link>
             </li>
             <li>
-              <Link to="#">자랑게시판</Link>
+              <Link to="#">뽐내기게시판</Link>
             </li>
             <li>
-              <Link to="#">자유게시판</Link>
-            </li>
-            <li>
-              <Link to="#">체험단모집</Link>
+              <Link to="#">매거진</Link>
             </li>
           </ul>
         </li>
