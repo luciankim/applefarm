@@ -1,0 +1,60 @@
+/* 
+기본 색상 
+  --main_01: #0267f3;
+  --main_02: #ff3d00;
+  --main_03: #2f6082;
+  --main_04: #8f8f8f;
+  --main_05: #1065dc;
+*/
+
+.inner-section-wrap {
+  width: 900px;
+  margin: 0 auto;
+}
+
+.board-title {
+  font-size: 26px;
+  color: #000;
+  text-align: left;
+}
+
+.board-subtitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.board-subtitle .totalPostCount {
+  margin-top: auto;
+  font-size: 16px;
+}
+
+.board-tbl-box {
+  margin-top: 10px;
+}
+.board-tbl-box table {
+  width: 100%;
+  border-bottom: 1px solid #717171;
+  font-size: 15px;
+  border-spacing: 0;
+}
+
+.board-tbl-box > table > thead > tr > th {
+  padding: 10px;
+  border-top: 1px solid #252525;
+  border-bottom: 1px solid #9d9d9d;
+  background-color: aliceblue;
+}
+
+.board-tbl-box > table > tbody > tr > td {
+  text-align: center;
+  padding: 15px 5px;
+}
+
+.board-tbl-box > table > tbody > tr > td:nth-child(2) {
+  text-align: left;
+  cursor: pointer;
+}
+
+.board-tbl-box > table > tbody > tr > td:nth-child(2):hover {
+  font-weight: 900;
+}

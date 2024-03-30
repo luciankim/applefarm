@@ -64,9 +64,14 @@ const Button = (props) => {
   );
 };
 const Button1 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, addId } = props;
   return (
-    <button className="btn_form bg1" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg1"
+      type="button"
+      onClick={clickEvent}
+      id={addId}
+    >
       {text}
       {icon}
     </button>

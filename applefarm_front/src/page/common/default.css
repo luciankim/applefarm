@@ -103,7 +103,7 @@ select {
 
 .container {
   flex: 1;
-  width: 1320px;
+  width: 1200px; /*1320에서 수정*/
   margin: 30px auto;
 }
 
@@ -274,11 +274,11 @@ select {
   min-height: 100vh;
 }
 
-.inner_wrap {
+.inner-wrap {
   width: 100%;
-  max-width: 1320px; /* 최대 너비를 1320px로 설정 */
+  max-width: 1200px; /* 최대 너비를 1320px로 설정 */ /*1320에서 수정*/
   margin: 0 auto; /* 상단 및 하단 마진을 0으로, 좌우 마진을 auto로 설정하여 가운데 정렬 */
-  padding: 20px 60px; /* 좌우 패딩 */
+  /* padding: 20px 60px; 좌우 패딩 */
 }
 
 /* ref */
