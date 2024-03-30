@@ -36,7 +36,8 @@ const MemberWish = () => {
   return (
     <div className="mypage-current-wrap">
       <div className="mypage-current-title">
-        <span className="material-icons like-icon">favorite</span>
+        {/**<span className="material-icons like-icon">favorite</span>  */}
+        좋아요
       </div>
       <div className="member-like-tbl-box">
         <table>
