@@ -1,5 +1,5 @@
 import { Input } from "../../component/FormFrm";
-import "./boardFrm.css";
+import "./board.css";
 import TextEditor from "../../component/TextEditor";
 import { Button1 } from "../../component/FormFrm";
 const BoardFrm = (props) => {
