@@ -17,6 +17,8 @@ public interface BoardDao {
 	int insertBoardFile(BoardFile bf);
 	Board selectOneBoard(int boardNo);
 	List selectOneBoardFileList(int boardNo);
+	int deleteBoard(int boardNo);
+	BoardFile selectOneBoardFile(int fileNo);
 
 
 }

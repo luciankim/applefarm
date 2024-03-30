@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value="boardFile")
 public class BoardFile {
-	private int boardFileNo;
+	private int fileNo;
 	private int boardNo;
 	private String filename;
 	private String filepath;

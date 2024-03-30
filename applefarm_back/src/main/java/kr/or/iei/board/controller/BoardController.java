@@ -1,13 +1,22 @@
 package kr.or.iei.board.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +48,6 @@ public class BoardController {
 	@GetMapping(value="/list/{reqPage}")
 	public ResponseEntity<ResponseDTO> boardList(@PathVariable int reqPage){
 		Map map = boardService.selectBoardList(reqPage);
-		System.out.println("controoler" + map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
@@ -76,7 +84,6 @@ public class BoardController {
 				fileList.add(bf);
 			}
 		}
-		System.out.println("컨트롤러: " + board + "파일 : " + fileList);
 		int result = boardService.insertBoard(board,fileList);
 		if(result == 1 + fileList.size()) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -86,7 +93,7 @@ public class BoardController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	
+
 	
 	@GetMapping(value="/one/{boardNo}")
 	public ResponseEntity<ResponseDTO> selectOneBoard(@PathVariable int boardNo){
@@ -94,6 +101,47 @@ public class BoardController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", board);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
+	
+	@GetMapping(value="/file/{fileNo}")
+	public ResponseEntity<Resource> fileDown(@PathVariable int fileNo) throws FileNotFoundException{
+		BoardFile boardFile = boardService.selectOneBoardFile(fileNo);
+		String savepath = root+"/board/";
+		File file = new File(savepath+boardFile.getFilepath());
+		Resource resource = new InputStreamResource(new FileInputStream(file));
+		//파일 다운로드 헤더 설정
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Disposition", "attachment; filename=\""+boardFile.getFilename()+"\"");
+		header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		header.add("Pragma", "no-cache");
+		header.add("Expires", "0");
+		
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.headers(header)
+				.contentLength(file.length())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.body(resource);
+		
+	}
+	
+	
+	@DeleteMapping(value="{boardNo}")
+	public ResponseEntity<ResponseDTO> deleteBoard(@PathVariable int boardNo){
+		List<BoardFile> fileList = boardService.deleteBoard(boardNo);
+		if(fileList != null) {
+			String savepath = root+"/board/";
+			for(BoardFile boardFile : fileList) {
+				File file = new File(savepath+boardFile.getFilepath());
+				file.delete();
+			}
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
 	
 }
 

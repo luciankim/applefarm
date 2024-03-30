@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @Alias(value="board")
 @Schema(description = "게시판 객체")
 public class Board {
+	
+	//BOARD_TBL
 	private int boardNo;
 	private String boardTitle;
 	private String boardContent;
