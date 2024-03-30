@@ -74,11 +74,14 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 7px;
+  /*
+  background-color: rgba(2, 103, 243, 0.5);
+  */
 }
 .zipcode-btn:hover {
   text-shadow: 0px 0px 0px black;
 }
-.address-btn {
+.address-modal-btn {
   padding: 10px 15px;
   background-color: #ffffff;
   border: 1px solid #ccc;
