@@ -193,8 +193,9 @@ CREATE TABLE AIRPODS_TBL (
 --����
 CREATE TABLE COLOR_TBL (
 	color	            VARCHAR2(100)		NOT NULL,   -- JOIN USING COLOR
-	colorImg	        VARCHAR2(300)		NOT NULL    -- �̹��� �̸� �Է�
+	colorImage	        VARCHAR2(300)		NOT NULL    -- IMAGE FILE'S NAME
 );
+
 -------------------------------------------------------------------
 
 --�Խ��� ���̺�
