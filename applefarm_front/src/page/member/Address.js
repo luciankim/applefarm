@@ -21,7 +21,9 @@ const Address = () => {
             <div>등록된 배송지가 없습니다.</div>
             <div>새 배송지를 등록해주세요.</div>
             <div>
-              <button className="address-btn">새 배송지 추가</button>
+              <button className="address-btn" onClick={plusModal}>
+                새 배송지 추가
+              </button>
             </div>
           </div>
         ) : (
