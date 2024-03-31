@@ -204,8 +204,7 @@ public class BoardController {
 		}
 	}
 	
-	
-	
+
 	@DeleteMapping(value="/comment/{commentNo}")
 	public ResponseEntity<ResponseDTO> deleteComment(@PathVariable int commentNo){
 		int result = boardService.deleteComment(commentNo);
