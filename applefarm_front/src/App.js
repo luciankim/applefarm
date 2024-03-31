@@ -7,6 +7,7 @@ import Mypage from "./page/member/Mypage";
 import MemberWish from "./page/member/MemberWish";
 import BoardMain from "./page/board/BoardMain";
 import Join from "./page/member/Join";
+import AdminMain from "./page/admin/AdminMain";
 import ProductMain from "./page/product/ProductMain";
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
             <Route path="/mypage/*" element={<Mypage />} />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
             <Route path="/board/*" element={<BoardMain />} />
-
             <Route path="/join" element={<Join />} />
+            <Route path="/admin/*" element={<AdminMain />} />
 
             {/*제품별 메인을 아래처럼 컴포넌트 하나로 처리 불가능하다면 별 두개로 바꾸고...*/}
             <Route path="/product" element={<ProductMain />} />

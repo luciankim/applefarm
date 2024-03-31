@@ -1,25 +1,40 @@
 import axios from "axios";
+import "./board.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button1, Button2 } from "../../component/FormFrm";
+import {
+  Button1,
+  Button2,
+  Button3,
+  Input,
+  Textarea,
+} from "../../component/FormFrm";
 import Swal from "sweetalert2";
+import Comment from "./Comment";
 
 const BoardView = (props) => {
   // const isLogin = props.isLogin;
   const isLogin = true;
   const params = useParams();
-  const boardNo = params.boardNo;
+  const boardNo = params.boardNo; //댓글
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [board, setBoard] = useState({});
-  const [member, setMember] = useState(null);
+  const [memberNo, setMemberNo] = useState(21); //댓글
+  const [commentContent, setCommentContent] = useState(""); //댓글
+  const [selfRef, setSelfRef] = useState(0); //댓글
+  const [commentList, setCommentList] = useState([]);
   const navigate = useNavigate();
+  const [replyForms, setReplyForms] = useState({});
 
   useEffect(() => {
     axios
       .get(backServer + "/board/one/" + boardNo)
       .then((res) => {
-        console.log(res.data.data);
-        setBoard(res.data.data);
+        console.log("전체조회", res.data.data);
+        setBoard(res.data.data.board);
+        console.log("게시물", board);
+        setCommentList(res.data.data.commentList);
+        console.log("댓글", commentList);
       })
       .catch((res) => {
         console.log(res);
@@ -30,9 +45,12 @@ const BoardView = (props) => {
     //     console.log(res.data.data);
     //   });
     // }
-  }, []);
+  }, [boardNo]);
   const modify = () => {
     navigate("/board/modify/" + boardNo);
+  };
+  const back = () => {
+    navigate("/board/list"); // 기본적으로 지정된 URL로 이동
   };
   const deleteBoard = () => {
     Swal.fire({
@@ -57,6 +75,50 @@ const BoardView = (props) => {
       }
     });
   };
+
+  // 댓글 삭제
+  const deleteComment = (commentNo) => {
+    Swal.fire({
+      icon: "warning",
+      text: "댓글을 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(backServer + "/board/comment/" + commentNo)
+          .then((res) => {
+            if (res.data.message === "success") {
+              console.log("삭제", res.data.message);
+              // 댓글 삭제 후 해당 게시물의 댓글 목록을 다시 가져옴
+              axios
+                .get(backServer + "/board/one/" + boardNo)
+                .then((res) => {
+                  console.log("재조회", res.data);
+                  const commentData = res.data.data.commentList;
+                  setCommentList(commentData);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+  // 댓글 수정
+  const modifyComment = (commentNo) => {
+    console.log("수정 댓글:", commentNo);
+  };
+
+  const toggleReplyForm = (commentNo) => {
+    setReplyForms({ ...replyForms, [commentNo]: !replyForms[commentNo] });
+  };
+  console.log("대댓글", replyForms);
   return (
     <div className="board-view-wrap">
       <div className="board-view-top">
@@ -72,8 +134,9 @@ const BoardView = (props) => {
         <div className="board-view-info">
           <div className="board-view-title">{board.boardTitle}</div>
           <div className="board-view-sub-info">
-            <div>{board.boardWriter}</div>
+            <div>작성자 {board.memberNo}</div>
             <div>작성일 {board.boardDate}</div>
+            <div>조회수 {board.readCount}</div>
           </div>
           <div className="board-view-file">
             <div>첨부파일</div>
@@ -91,6 +154,70 @@ const BoardView = (props) => {
         className="board-view-detail"
         dangerouslySetInnerHTML={{ __html: board.boardContent }}
       ></div>
+
+      {/* 댓글출력 */}
+      <div className="commentBox">
+        <ul className="posting-comment">
+          {commentList.map((comment, index) => {
+            return (
+              <li key={"comment" + index}>
+                <div className="comment-info">
+                  <div className="comment-writer">
+                    작성자 {comment.commentWriter}
+                  </div>
+                  <div className="comment-date">
+                    작성일 {comment.commentDate}
+                  </div>
+                </div>
+                <div
+                  className="comment-content"
+                  dangerouslySetInnerHTML={{ __html: comment.commentContent }}
+                ></div>
+                {/* 댓글 작성자와 로그인한 사용자가 동일한 경우에만 수정, 삭제 버튼 표시 */}
+                {isLogin && comment.commentWriter === memberNo && (
+                  <>
+                    <Button1
+                      text="수정"
+                      clickEvent={() => modifyComment(comment.commentNo)}
+                    />
+                    <Button2
+                      text="삭제"
+                      clickEvent={() => deleteComment(comment.commentNo)}
+                    />
+                    {/* <Button3
+                      text="답글"
+                      clickEvent={() => toggleReplyForm(comment.commentNo)}
+                    />
+                    {replyForms[comment.commentNo] && (
+                      <div>
+                        <Textarea
+                          content={commentContent}
+                          setContent={setCommentContent}
+                        />
+                        <Button1 text="등록" />
+                      </div>
+                    )} */}
+                  </>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      {/* 댓글입력 */}
+      <div className="inputCommentBox">
+        <Comment
+          boardNo={boardNo}
+          memberNo={memberNo}
+          commentContent={commentContent}
+          setCommentContent={setCommentContent}
+          commentList={commentList}
+          setCommentList={setCommentList}
+          selfRef={selfRef}
+          setSelfRef={setSelfRef}
+        />
+      </div>
       {isLogin ? (
         <div className="board-view-btn-zone">
           {/* {member && member.memberId === board.boardWriter ? ( */}
@@ -98,6 +225,7 @@ const BoardView = (props) => {
             <>
               <Button1 text="수정" clickEvent={modify} />
               <Button2 text="삭제" clickEvent={deleteBoard} />
+              <Button3 text="목록" clickEvent={back} />
             </>
           ) : (
             ""
@@ -115,7 +243,7 @@ const FileItem = (props) => {
   const fileDown = () => {
     axios
       .get(backServer + "/board/file/" + file.fileNo, {
-        //axios는 기본적으로 모든응답을 json으로 처리 -> 이 요청은 파일을받아야함
+        //axios는 기본적으로 모든 응답을 json으로 처리 -> 이 요청은 파일을받아야함
         //-> json으로는 처리가 불가능 -> 파일형식으로 받겠다
         responseType: "blob",
       })
