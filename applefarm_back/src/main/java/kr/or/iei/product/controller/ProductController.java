@@ -39,14 +39,8 @@ public class ProductController {
 	})
 	@PostMapping(value="/category")
 	public ResponseEntity<ResponseDTO> productCategory(@RequestBody HashMap<String, String> categoryMap){
-		//categoryMap = {"table" : "~~_tbl", "productLine" : "~~", "productGen" : "~~"}
-		System.out.println("hi");
-		System.out.println(categoryMap.get("table"));
-		System.out.println(categoryMap.get("productLine"));
-		System.out.println(categoryMap.get("productGen"));
-		
+		//categoryMap = {"table" : "~~_tbl", "productLine" : "~~"}
 		List list = productService.selectProductCategory(categoryMap);
-		
 		if(list.size()==0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

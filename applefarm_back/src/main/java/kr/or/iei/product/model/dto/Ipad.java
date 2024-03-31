@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 public class Ipad {
 
 	//Ipad_tbl
-	private String ProductLine;
-	private String IpadGen;
-	private String IpadColor;
-	private String IpadImage;
-	private String IpadStorage;
-	private String IpadConnectivity;
+	private String productLine;
+	private String ipadGen;
+	private String ipadColor;
+	private String ipadImage;
+	private String ipadStorage;
+	private String ipadConnectivity;
 	
 	//Color_tbl
-	private String ColorImage;
+	private String colorImage;
 }

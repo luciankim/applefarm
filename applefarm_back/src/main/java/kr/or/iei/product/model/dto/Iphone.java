@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 public class Iphone {
 
 	//Iphone_tbl
-	private String ProductLine;
-	private String ProductGen;
-	private String ProductModel;
-	private String ProductColor;
-	private String ProductImage;
-	private String ProductStorage;
+	private String productLine;
+	private String productGen;
+	private String productModel;
+	private String productColor;
+	private String productImage;
+	private String productStorage;
 	
 	//Color_tbl
-	private String ColorImage;
+	private String colorImage;
 }

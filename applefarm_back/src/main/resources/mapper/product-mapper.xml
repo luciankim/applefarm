@@ -3,7 +3,13 @@
 <mapper namespace="kr.or.iei.product.model.dao.ProductDao">
 
 	<select id="selectProductCategory" resultType="productCategory">
-		select * from #{table} where product_line=#{productLine} and product_gen=#{productGen} order by 1
+		select * 
+			<if test = "table == 'IPHONE_TBL'">from IPHONE_TBL</if>
+			<if test = "table == 'MACBOOK_TBL'">from MACBOOK_TBL</if>
+			<if test = "table == 'IPAD_TBL'">from IPAD_TBL</if>
+			<if test = "table == 'WATCH_TBL'">from WATCH_TBL</if>
+			<if test = "table == 'AIRPODS_TBL'">from AIRPODS_TBL</if>
+		where product_line = #{productLine}
+		order by rownum desc
 	</select>
-
 </mapper>
