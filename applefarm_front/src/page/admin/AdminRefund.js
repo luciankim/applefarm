@@ -8,23 +8,29 @@ const AdminRefund = () => {
     {
       img: "/image/iphone.jpg",
       name: "아이폰 12 프로 128기가 블랙",
-      quality: "A급",
+      reason: "변심",
+      seller: "코딩의신",
+      buyer: "user01",
       price: "800,000",
-      seller: "user01",
+      state: "승인",
     },
     {
       img: "/image/iphone.jpg",
       name: "에어팟 프로 1세대",
-      quality: "b급",
+      seller: "코딩의신",
+      reason: "설명상이",
       price: "33,000",
-      seller: "user35",
+      buyer: "user35",
+      state: "진행중",
     },
     {
       img: "/image/iphone.jpg",
       name: "아이폰 15 256기가 핑크",
-      quality: "c급",
+      seller: "코딩의신",
+      reason: "고장",
       price: "40,000",
-      seller: "user42",
+      buyer: "user42",
+      state: "반려",
     },
   ]);
   const navigate = useNavigate();
@@ -41,15 +47,16 @@ const AdminRefund = () => {
         <table>
           <thead>
             <tr>
-              <th colSpan={2}>상품상세</th>
-              <th>상품상세</th>
-              <th>환불사유</th>
-              <th>판매자</th>
-              <th>구매자</th>
-              <th>구매일</th>
-              <th>환불신청일</th>
-              <th>환불상태</th>
-              <th>환불관리</th>
+              <th colSpan={2} width="20%">
+                상품상세
+              </th>
+              <th width="10%">사유</th>
+              <th width="10%">판매자</th>
+              <th width="10%">구매자</th>
+              <th width="15%">구매일</th>
+              <th width="10%">신청일</th>
+              <th width="10%">상태</th>
+              <th width="15%">환불관리</th>
             </tr>
           </thead>
           <tbody>
@@ -108,19 +115,25 @@ const RefundItem = (props) => {
         </div>
       </td>
       <td>{refund.name}</td>
-      <td className="likeName-td">{refund.name}</td>
-      <td>{refund.quality}</td>
-      <td>{refund.price}</td>
+      <td className="likeName-td">{refund.reason}</td>
       <td>{refund.seller}</td>
+      <td>{refund.buyer}</td>
+      <td>{refund.buyer}</td>
+      <td>{refund.buyer}</td>
+      <td>{refund.state}</td>
       <td className="purchase-btn-box">
-        <Button3 text="구매하기" clickEvent={purchase} />
-      </td>
-      <td>
-        {modalOpen && (
-          <DelModal setModalOpen={setModalOpen} clickEvent={refundDelFun} />
-        )}
+        <Button1 text="승인" clickEvent={purchase} />
+        <Button2 text="반려" clickEvent={purchase} />
       </td>
     </tr>
   );
 };
 export default AdminRefund;
+
+{
+  /* <td>
+  {modalOpen && (
+    <DelModal setModalOpen={setModalOpen} clickEvent={refundDelFun} />
+  )}
+</td> */
+}

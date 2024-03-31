@@ -23,3 +23,7 @@
   font-family: ns-eb;
   text-align: center;
 }
+
+.purchase-btn-box button {
+  margin: 5px 20px;
+}

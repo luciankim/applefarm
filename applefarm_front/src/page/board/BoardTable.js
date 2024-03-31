@@ -1,7 +1,8 @@
 import React from "react";
 import BoardItem from "./BoardItem";
 import Pagination from "../../component/Pagination";
-
+import { Button } from "../../component/FormFrm";
+import { useNavigate } from "react-router-dom";
 const BoardTable = ({
   boardList,
   pageInfo,
@@ -9,6 +10,12 @@ const BoardTable = ({
   setReqPage,
   isSearchResult,
 }) => {
+  const navigate = useNavigate();
+
+  const backList = () => {
+    navigate("/board/list");
+  };
+
   return (
     <div>
       <div className="board-tbl-box">
@@ -36,11 +43,16 @@ const BoardTable = ({
         </table>
       </div>
       <div className="board-page">
-        <Pagination
-          pageInfo={pageInfo}
-          reqPage={reqPage}
-          setReqPage={setReqPage}
-        />
+        {isSearchResult && boardList.length === 0 ? (
+          //  (<Button clickEvent={backList} text="목록" />)
+          ""
+        ) : (
+          <Pagination
+            pageInfo={pageInfo}
+            reqPage={reqPage}
+            setReqPage={setReqPage}
+          />
+        )}
       </div>
     </div>
   );

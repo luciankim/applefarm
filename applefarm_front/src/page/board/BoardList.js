@@ -48,6 +48,7 @@ const BoardList = (props) => {
         setTotalPostCount(res.data.data.totalPostCount);
         setPageInfo(res.data.data.pi);
         setIsSearchResult(!!selectedKeyword); // 검색어가 있으면 true, 없으면 false
+        setSelectedKeyword("");
       })
       .catch((error) => {
         console.error("Error fetching board list:", error);
