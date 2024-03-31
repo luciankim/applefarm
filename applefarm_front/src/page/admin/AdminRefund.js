@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { DelModal } from "../member/Modal";
 
 const AdminRefund = () => {
-  const [likeList, setLikeList] = useState([
+  const [refundList, setRefundList] = useState([
     {
       img: "/image/iphone.jpg",
       name: "아이폰 12 프로 128기가 블랙",
@@ -41,22 +41,25 @@ const AdminRefund = () => {
         <table>
           <thead>
             <tr>
-              <th>체크박스</th>
               <th colSpan={2}>상품상세</th>
+              <th>상품상세</th>
               <th>환불사유</th>
               <th>판매자</th>
+              <th>구매자</th>
               <th>구매일</th>
-              <th>PURCHASE</th>
+              <th>환불신청일</th>
+              <th>환불상태</th>
+              <th>환불관리</th>
             </tr>
           </thead>
           <tbody>
-            {likeList.map((like, index) => {
+            {refundList.map((refund, index) => {
               return (
-                <LikeItem
-                  key={"like" + index}
-                  like={like}
-                  likeList={likeList}
-                  setLikeList={setLikeList}
+                <RefundItem
+                  key={"refund" + index}
+                  refund={refund}
+                  refundList={refundList}
+                  setRefundList={setRefundList}
                 />
               );
             })}
@@ -66,19 +69,20 @@ const AdminRefund = () => {
     </div>
   );
 };
-const LikeItem = (props) => {
-  const like = props.like;
+
+const RefundItem = (props) => {
+  const refund = props.refund;
   const navigate = useNavigate();
 
   //구매 페이지 이동 작성 예정
   const purchase = () => {
     //구매페이지 이동
-    navigate("/purchase", { state: { like: like } });
+    navigate("/purchase", { state: { refund: refund } });
   };
 
   //모달
-  const likeList = props.likeList;
-  const setLikeList = props.setLikeList;
+  const refundList = props.refundList;
+  const setRefundList = props.setRefundList;
   const [modalOpen, setModalOpen] = useState(false);
 
   // 모달창 노출
@@ -86,38 +90,34 @@ const LikeItem = (props) => {
     setModalOpen(true);
   };
   //좋아요 삭제
-  const likeDelFun = () => {
+  const refundDelFun = () => {
     // 삭제 동작 처리 로직 작성 예정 -> 데이터 생성시 구현 예정
-    console.log(like);
-    const newLikeList = likeList.filter((item) => {
-      return item !== like;
+    console.log(refund);
+    const newRefundList = refundList.filter((item) => {
+      return item !== refund;
     });
-    setLikeList(newLikeList);
+    setRefundList(newRefundList);
     setModalOpen(false);
   };
 
   return (
     <tr>
       <td>
-        <span className="material-icons like-cancel-icon" onClick={showModal}>
-          favorite
-        </span>
-      </td>
-      <td>
         <div className="member-like-img-box">
-          <img src={like.img} />
+          <img src={refund.img} />
         </div>
       </td>
-      <td className="likeName-td">{like.name}</td>
-      <td>{like.quality}</td>
-      <td>{like.price}</td>
-      <td>{like.seller}</td>
+      <td>{refund.name}</td>
+      <td className="likeName-td">{refund.name}</td>
+      <td>{refund.quality}</td>
+      <td>{refund.price}</td>
+      <td>{refund.seller}</td>
       <td className="purchase-btn-box">
         <Button3 text="구매하기" clickEvent={purchase} />
       </td>
       <td>
         {modalOpen && (
-          <DelModal setModalOpen={setModalOpen} clickEvent={likeDelFun} />
+          <DelModal setModalOpen={setModalOpen} clickEvent={refundDelFun} />
         )}
       </td>
     </tr>

@@ -216,5 +216,13 @@ public class BoardController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	@GetMapping(value="/searchList/{selectedValue}/{selectedKeyword}/{reqPage}")
+	public ResponseEntity<ResponseDTO> searchKeyword(@PathVariable String selectedValue, @PathVariable String selectedKeyword, @PathVariable int reqPage){
+		Map map = boardService.selectBoardList(selectedValue,selectedKeyword , reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+
 }
 

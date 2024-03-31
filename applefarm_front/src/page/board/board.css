@@ -278,3 +278,21 @@
 .posting-comment li {
   margin: 30px 0;
 }
+
+.search_board {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  border-top: 1px solid rgb(212, 212, 212);
+}
+
+.search_board > select {
+  width: 100px;
+}
+
+.search_board > input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid rgb(211, 211, 211);
+  margin: 0 10px;
+}
