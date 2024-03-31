@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Button1, Button2, Button3, Button4 } from "../../component/FormFrm";
-import "../member/member.css";
 import { useEffect, useRef, useState } from "react";
 import { DelModal } from "../member/Modal";
 
@@ -36,17 +35,17 @@ const AdminRefund = () => {
   return (
     <div className="mypage-current-wrap">
       <div className="mypage-current-title">
-        <span className="material-icons like-icon">favorite</span>
+        <p className="admin-current-p">환불관리</p>
       </div>
       <div className="member-like-tbl-box">
         <table>
           <thead>
             <tr>
-              <th>LIKE</th>
-              <th colSpan={2}>ITEM</th>
-              <th>QUALITY</th>
-              <th>PRICE</th>
-              <th>SELLER</th>
+              <th>체크박스</th>
+              <th colSpan={2}>상품상세</th>
+              <th>환불사유</th>
+              <th>판매자</th>
+              <th>구매일</th>
               <th>PURCHASE</th>
             </tr>
           </thead>

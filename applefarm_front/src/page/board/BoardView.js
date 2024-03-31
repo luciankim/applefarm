@@ -25,6 +25,7 @@ const BoardView = (props) => {
   const [commentList, setCommentList] = useState([]);
   const navigate = useNavigate();
   const [replyForms, setReplyForms] = useState({});
+  const [editingCommentNo, setEditingCommentNo] = useState(null);
 
   useEffect(() => {
     axios
