@@ -203,5 +203,19 @@ public class BoardController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	
+	
+	@DeleteMapping(value="/comment/{commentNo}")
+	public ResponseEntity<ResponseDTO> deleteComment(@PathVariable int commentNo){
+		int result = boardService.deleteComment(commentNo);
+		if(result >0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
 }
 

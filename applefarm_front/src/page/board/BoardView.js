@@ -2,7 +2,13 @@ import axios from "axios";
 import "./board.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button1, Button2, Button3 } from "../../component/FormFrm";
+import {
+  Button1,
+  Button2,
+  Button3,
+  Input,
+  Textarea,
+} from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Comment from "./Comment";
 
@@ -18,6 +24,7 @@ const BoardView = (props) => {
   const [selfRef, setSelfRef] = useState(0); //댓글
   const [commentList, setCommentList] = useState([]);
   const navigate = useNavigate();
+  const [replyForms, setReplyForms] = useState({});
 
   useEffect(() => {
     axios
@@ -38,7 +45,7 @@ const BoardView = (props) => {
     //     console.log(res.data.data);
     //   });
     // }
-  }, [commentContent]);
+  }, [boardNo]);
   const modify = () => {
     navigate("/board/modify/" + boardNo);
   };
@@ -69,6 +76,49 @@ const BoardView = (props) => {
     });
   };
 
+  // 댓글 삭제
+  const deleteComment = (commentNo) => {
+    Swal.fire({
+      icon: "warning",
+      text: "댓글을 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(backServer + "/board/comment/" + commentNo)
+          .then((res) => {
+            if (res.data.message === "success") {
+              console.log("삭제", res.data.message);
+              // 댓글 삭제 후 해당 게시물의 댓글 목록을 다시 가져옴
+              axios
+                .get(backServer + "/board/one/" + boardNo)
+                .then((res) => {
+                  console.log("재조회", res.data);
+                  const commentData = res.data.data.commentList;
+                  setCommentList(commentData);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+  // 댓글 수정
+  const modifyComment = (commentNo) => {
+    console.log("수정 댓글:", commentNo);
+  };
+
+  const toggleReplyForm = (commentNo) => {
+    setReplyForms({ ...replyForms, [commentNo]: !replyForms[commentNo] });
+  };
+  console.log("대댓글", replyForms);
   return (
     <div className="board-view-wrap">
       <div className="board-view-top">
@@ -123,11 +173,38 @@ const BoardView = (props) => {
                   className="comment-content"
                   dangerouslySetInnerHTML={{ __html: comment.commentContent }}
                 ></div>
+                {/* 댓글 작성자와 로그인한 사용자가 동일한 경우에만 수정, 삭제 버튼 표시 */}
+                {isLogin && comment.commentWriter === memberNo && (
+                  <>
+                    <Button1
+                      text="수정"
+                      clickEvent={() => modifyComment(comment.commentNo)}
+                    />
+                    <Button2
+                      text="삭제"
+                      clickEvent={() => deleteComment(comment.commentNo)}
+                    />
+                    {/* <Button3
+                      text="답글"
+                      clickEvent={() => toggleReplyForm(comment.commentNo)}
+                    />
+                    {replyForms[comment.commentNo] && (
+                      <div>
+                        <Textarea
+                          content={commentContent}
+                          setContent={setCommentContent}
+                        />
+                        <Button1 text="등록" />
+                      </div>
+                    )} */}
+                  </>
+                )}
               </li>
             );
           })}
         </ul>
       </div>
+
       {/* 댓글입력 */}
       <div className="inputCommentBox">
         <Comment

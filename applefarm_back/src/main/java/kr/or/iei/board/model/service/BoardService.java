@@ -112,10 +112,16 @@ public class BoardService {
 			return board;			
 	}
 
+	@Transactional
 	public int insertComment(BoardComment boardComment) {
 		System.out.println("service : " + boardComment);
 		int result = boardDao.insertComment(boardComment);
 		return result;
+	}
+	
+	@Transactional
+	public int deleteComment(int commentNo) {
+		return boardDao.deleteComment(commentNo);
 	}
 
 

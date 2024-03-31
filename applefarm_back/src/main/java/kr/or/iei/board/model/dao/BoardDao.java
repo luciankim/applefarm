@@ -26,6 +26,7 @@ public interface BoardDao {
 	int updateReadCount(int boardNo);
 	int insertComment(BoardComment boardComment);
 	List selectCommentList(int boardNo);
+	int deleteComment(int commentNo);
 
 
 }

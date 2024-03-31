@@ -7,6 +7,7 @@ import Mypage from "./page/member/Mypage";
 import MemberWish from "./page/member/MemberWish";
 import BoardMain from "./page/board/BoardMain";
 import Join from "./page/member/Join";
+import AdminMain from "./page/admin/AdminMain";
 
 function App() {
   return (
@@ -20,8 +21,8 @@ function App() {
             <Route path="/member/wish" element={<MemberWish />} />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
             <Route path="/board/*" element={<BoardMain />} />
-
             <Route path="/join" element={<Join />} />
+            <Route path="/admin/*" element={<AdminMain />} />
           </Routes>
         </section>
       </main>

@@ -29,6 +29,7 @@ const Comment = (props) => {
           .then((res) => {
             console.log("재조회", res.data);
             setCommentList(res.data.data.commentList);
+            setCommentContent("");
           })
           .catch((res) => {
             console.log(res);
