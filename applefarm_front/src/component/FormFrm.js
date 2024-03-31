@@ -22,6 +22,16 @@ const Input = (props) => {
   );
 };
 
+// ------------Textaraea ----------
+const Textarea = (props) => {
+  const { content, setContent } = props;
+  const handleChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  return <textarea value={content} onChange={handleChange} />;
+};
+
 //  ---------Join---------- 완료: 240324, 상태관리: 자식(Input)
 const InputWrap = (props) => {
   const { data, setData, type, id, label, blurEvent, checkMsg, placeholder } =
@@ -258,4 +268,5 @@ export {
   Radio,
   Checkbox,
   CheckboxGroup,
+  Textarea,
 };

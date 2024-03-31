@@ -39,7 +39,7 @@
 
 	<insert id="insertBoard">
 		INSERT INTO BOARD_TBL VALUES(BOARD_SEQ.NEXTVAL, #{boardTitle},
-		#{boardContent}, 1,1, #{boardType}, #{productCategory}, 0, SYSDATE,
+		#{boardContent}, #{memberNo},0, #{boardType}, #{productCategory}, 0, SYSDATE,
 		#{boardThumbnail})
 
 		<selectKey resultType="int" keyProperty="boardNo"
@@ -47,6 +47,11 @@
 			select max(board_no) from board_tbl
 		</selectKey>
 	</insert>
+
+	<update id="updateReadCount">
+		update board_tbl set read_count = read_count+1 where
+		board_no=#{boardNo}
+	</update>
 
 
 	<insert id="insertBoardFile">
@@ -69,15 +74,57 @@
 
 
 	<select id="selectOneBoardFileList" resultType="boardFile">
-		select * from board_file_tbl where board_no=#{boardNo}
+		select * from
+		board_file_tbl where board_no=#{boardNo}
 	</select>
-	
-	  <select id="selectOneBoardFile" resultType="boardFile">
-  	select * from board_file_tbl where file_no=#{fileNo}
-  </select>
-	
-	
+
+	<select id="selectOneBoardFile" resultType="boardFile">
+		select * from
+		board_file_tbl where file_no=#{fileNo}
+	</select>
+
+
 	<delete id="deleteBoard">
 		delete from board_tbl where board_no=#{boardNo}
 	</delete>
+
+
+
+	<select id="selectBoardFile" resultType="boardFile">
+		select * from board_file_tbl where file_no in
+		<foreach collection="array" open="(" close=")" separator=","
+			item="fileNo">
+			#{fileNo}
+		</foreach>
+	</select>
+	<delete id="deleteBoardFile">
+		delete from board_file_tbl where board_file_no in
+		<foreach collection="array" open="(" close=")" separator=","
+			item="fileNo">
+			#{fileNo}
+		</foreach>
+	</delete>
+	<update id="updateBoard">
+		update board_tbl set
+		board_title = #{boardTitle},
+		board_content = #{boardContent},
+		board_thumbnail = #{boardThumbnail}
+		where board_no = #{boardNo}
+	</update>
+
+<insert id="insertComment" parameterType="BoardComment">
+    INSERT INTO comment_tbl 
+    VALUES (COMMENT_SEQ.nextval, #{boardNo}, #{commentWriter}, #{commentContent},
+    <choose>
+        <when test="selfRef == 0"> null </when>
+        <otherwise> #{selfRef} </otherwise>
+    </choose>,
+    0, sysdate)
+</insert>
+
+<select id="selectCommentList" resultType="BoardComment">
+	select * from comment_tbl where board_no = #{boardNo} order by 1
+</select>
+
+
 </mapper>
