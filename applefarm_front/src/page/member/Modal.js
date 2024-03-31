@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./modal.css";
-import { Input2, InputReadOnly } from "../../component/FormFrm";
+import { Input, Input2, InputReadOnly } from "../../component/FormFrm";
 import DaumPostcode, { useDaumPostcodePopup } from "react-daum-postcode";
+import axios from "axios";
 
+//좋아요
 const DelModal = (props) => {
   const setModalOpen = props.setModalOpen;
   const clickEvent = props.clickEvent;
@@ -47,7 +49,7 @@ const DelModal = (props) => {
     </div>
   );
 };
-
+//주소록
 const AddressModal = (props) => {
   const setModalOpen = props.setModalOpen;
   const [addressName, setAddressName] = useState("");
@@ -56,15 +58,7 @@ const AddressModal = (props) => {
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const input = useRef();
-
-  //모달 닫기
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const addressEnroll = () => {
-    //주소 DB 추가 작업 필요
-  };
+  const backServer = process.env.REACT_APP_BACK_SERVER;
 
   //주소 api이용
   const scriptUrl =
@@ -96,9 +90,54 @@ const AddressModal = (props) => {
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
+
   const detailFunc = (e) => {
     setAddressDetail(e.target.value);
   };
+
+  const [addressDefault, setAddressDefault] = useState(0);
+  const changeDefault = (e) => {
+    setAddressDefault(e.target.checked ? e.target.value : 0);
+    // 체크 여부에 따라 addressDefault 값을 설정
+  };
+
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const memberNo = 22; //로그인 구현 이후 로그인 정보 불러오기(테스트사용중)
+  const addressEnroll = () => {
+    //주소 DB 추가 작업 필요
+    if (
+      addressName !== "" &&
+      addressPhone !== "" &&
+      zipcode !== "" &&
+      address !== "" &&
+      addressDetail !== "" //필요여부 수정 예정
+    ) {
+      const obj = {
+        memberNo,
+        addressName,
+        addressPhone,
+        zipcode,
+        address,
+        addressDetail,
+        addressDefault,
+      };
+      console.log(obj);
+      axios
+        .post(backServer + "/member/address", obj)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    } else {
+      alert("다 입력해");
+    }
+  };
+
   return (
     <div>
       <div className="modal">
@@ -176,12 +215,23 @@ const AddressModal = (props) => {
                 ref={input}
               ></input>
             </div>
-            <button className="address-modal-btn" onClick={addressEnroll}>
-              등록
-            </button>
-            <button className="address-modal-btn" onClick={closeModal}>
-              취소
-            </button>
+            <div className="address-default-check-box-wrap">
+              <input
+                type="checkbox"
+                id="addressDefault"
+                defaultValue="1"
+                onChange={changeDefault}
+              ></input>
+              <label htmlFor="addressDefault">기본 배송지로 설정</label>
+            </div>
+            <div className="address-input-wrap">
+              <button className="address-modal-btn" onClick={addressEnroll}>
+                등록
+              </button>
+              <button className="address-modal-btn" onClick={closeModal}>
+                취소
+              </button>
+            </div>
           </div>
         </div>
       </div>

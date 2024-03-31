@@ -19,8 +19,7 @@ public class ProductService {
 	public List<ProductCategory> selectProductCategory(HashMap<String, String> categoryMap) {
 		String table = categoryMap.get("table");
 		String productLine = categoryMap.get("productLine");
-		String productGen = categoryMap.get("productGen");
-		List list = productDao.selectProductCategory(table, productLine, productGen);
+		List list = productDao.selectProductCategory(table, productLine);
 		return list;
 	}
 	

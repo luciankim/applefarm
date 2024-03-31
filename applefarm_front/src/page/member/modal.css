@@ -87,5 +87,19 @@
   border: 1px solid #ccc;
   border-radius: 7px;
   width: 25%;
-  margin-right: 5px;
+  margin-right: 10px;
+}
+.address-default-check-box-wrap {
+  text-align: left;
+  padding: 0px 0px 5px 16px;
+  display: flex;
+  align-items: center;
+}
+.address-default-check-box-wrap > input {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+.address-default-check-box-wrap > label {
+  font-size: 13px;
 }

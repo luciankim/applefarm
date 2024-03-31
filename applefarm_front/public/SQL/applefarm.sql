@@ -288,5 +288,4 @@ INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(5,'�ҹ�Ȱ���� �ǽɵ
 INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(6,'�Ұ����� ������ �ۼ��Ǿ����');
 INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(7,'������� �� ����߾��');
 
-select * from iphone_tbl where product_line = 'iPhone' and product_gen = 'iPhone 15 Series';
-SELECT * FROM IPHONE_TBL WHERE PRODUCT_LINE = 'iPhone' AND PRODUCT_GEN = 'iPhone 15 Series';
+COMMIT;
