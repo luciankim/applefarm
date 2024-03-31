@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 public class Watch {
 
 	//Watch_tbl
-	private String ProductLine;
-	private String WatchGen;
-	private String WatchCase;
-	private String WatchModel;
-	private String WatchColor;
-	private String WatchImage;
-	private String WatchConnectivity;
+	private String productLine;
+	private String watchGen;
+	private String watchModel;
+	private String watchColor;
+	private String watchImage;
+	private String watchSize;
+	private String watchConnectivity;
 	
 	//Color_tbl
-	private String ColorImage;
+	private String colorImage;
 }

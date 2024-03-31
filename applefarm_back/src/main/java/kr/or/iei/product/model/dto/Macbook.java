@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 public class Macbook {
 
 	//Macbook_tbl
-	private String ProductLine;
-	private String MacbookGen;
-	private String MacbookModel;
-	private String MacbookModel2;
-	private String MacbookColor;
-	private String MacbookImage;
-	private String MacbookStorage;
-	private String MacbookMemory;
-	private String MacbookChip;
-	private String MacbookCpu;
-	private String MacbookGpu;
+	private String productLine;
+	private String macbookGen;
+	private String macbookModel;
+	private String macbookModel2;
+	private String macbookColor;
+	private String macbookImage;
+	private String macbookStorage;
+	private String macbookMemory;
+	private String macbookChip;
+	private String macbookCpu;
+	private String macbookGpu;
 	
 	//Color_tbl
-	private String ColorImage;
+	private String colorImage;
 }

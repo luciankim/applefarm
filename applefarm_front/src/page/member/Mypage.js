@@ -3,6 +3,7 @@ import "./member.css";
 import SideMenu from "../../component/SideMenu";
 import { Route, Routes } from "react-router-dom";
 import Address from "./Address";
+import MemberWish from "./MemberWish";
 
 //로그인 정보 가져오기
 const Mypage = () => {
@@ -18,6 +19,7 @@ const Mypage = () => {
     { url: "purchaseHistory", text: "구매내역", active: false },
     { url: "salesHistory", text: "판매내역", active: false },
     { url: "refundHistory", text: "환불내역", active: false },
+    { url: "wish", text: "좋아요", active: false },
   ]);
 
   return (
@@ -37,6 +39,7 @@ const Mypage = () => {
       <div className="mypage-content">
         <Routes>
           <Route path="/address" element={<Address />}></Route>
+          <Route path="/wish" element={<MemberWish />}></Route>
         </Routes>
       </div>
     </div>

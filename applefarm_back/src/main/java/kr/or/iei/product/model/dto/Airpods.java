@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 public class Airpods {
 	
 	//Airpods_tbl
-	private String ProductLine;
-	private String AirpodsGen;
-	private String AirpodsColor;
-	private String AirpodsImage;
-	private String AirpodsCharge;
+	private String productLine;
+	private String airpodsGen;
+	private String airpodsColor;
+	private String airpodsImage;
+	private String airpodsCharge;
 	
 	//Color_tbl
-	private String ColorImage;
+	private String colorImage;
 }

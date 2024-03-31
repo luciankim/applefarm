@@ -32,6 +32,42 @@ const Textarea = (props) => {
   return <textarea value={content} onChange={handleChange} />;
 };
 
+const Input2 = (props) => {
+  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+  return (
+    <input
+      className="input_form2 input_focus"
+      id={id}
+      type={type}
+      value={data}
+      onChange={changeData}
+      onBlur={blurEvent}
+      placeholder={placeholder}
+    />
+  );
+};
+
+const InputReadOnly = (props) => {
+  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+  return (
+    <input
+      className="input_form2"
+      id={id}
+      type={type}
+      value={data}
+      onChange={changeData}
+      onBlur={blurEvent}
+      placeholder={placeholder}
+      readOnly
+    />
+  );
+};
 //  ---------Join---------- 완료: 240324, 상태관리: 자식(Input)
 const InputWrap = (props) => {
   const { data, setData, type, id, label, blurEvent, checkMsg, placeholder } =
@@ -252,6 +288,8 @@ const Radio = (props) => {
 
 export {
   Input,
+  Input2,
+  InputReadOnly,
   Button,
   Button1,
   Button2,
