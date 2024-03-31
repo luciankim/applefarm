@@ -31,4 +31,8 @@ public class Board {
 	private String boardThumbnail;
 	private List fileList; //첨부파일
 	
+	
+	//수정, 삭제
+	private int[] delFileNo;
+	private int thumbnailCheck;
 }

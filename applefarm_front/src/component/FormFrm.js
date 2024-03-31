@@ -22,6 +22,16 @@ const Input = (props) => {
   );
 };
 
+// ------------Textaraea ----------
+const Textarea = (props) => {
+  const { content, setContent } = props;
+  const handleChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  return <textarea value={content} onChange={handleChange} />;
+};
+
 const Input2 = (props) => {
   const { data, setData, type, id, blurEvent, placeholder } = props;
   const changeData = (e) => {
@@ -296,4 +306,5 @@ export {
   Radio,
   Checkbox,
   CheckboxGroup,
+  Textarea,
 };
