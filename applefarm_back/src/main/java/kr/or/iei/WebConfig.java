@@ -23,11 +23,11 @@ public class WebConfig implements WebMvcConfigurer{
 		.addResourceLocations("file:///C:/Temp/applefarm/board/");
 	}
 
+	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		// TODO Auto-generated method stub
 		WebMvcConfigurer.super.addCorsMappings(registry);
 	}
-
 
 }

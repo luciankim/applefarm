@@ -15,23 +15,26 @@ import lombok.NoArgsConstructor;
 public class ProductCategory {
 
 	//Product_tbl
-	private String ProductLine;
-	private String ProductGen;
-	private String ProductModel;
-	private String ProductColor;
-	private String ProductModel2;
-	private String ProductStorage;
-	private String ProductMemory;
-	private String ProductChip;
-	private String ProductCpu;
-	private String ProductGpu;
-	private String ProductCase;
-	private String ProductConnectivity;
-	private String ProductCharge;
-	private String ProductThumbnail;
-	private String ProductSummary;
+	private String productLine;
+	private String productGen;
+	private String productModel;
+	private String productModel2;
+	private String productColor;
+	private String productStorage;
+	private String productMemory;
+	private String productChip;
+	private String productCpu;
+	private String productGpu;
+	private String productSize;
+	private String productConnectivity;
+	private String productCharge;
+	//private String productThumbnail;
+	//private String productSummary;
+	
+	//
+	private String productImage;
 	
 	//Color_tbl
-	private String ColorImage;
+	//private String colorImage;
 	
 }
