@@ -478,12 +478,15 @@ const Join = () => {
           />
         </div>
       </div>
+      <div className=""></div>
       <div className="join-btn">
         <Button3 text="가입하기" clickEvent={join} />
       </div>
     </div>
   );
 };
+
+const AgreeModal = () => {};
 
 const JoinInputWrap = (props) => {
   const label = props.label;
