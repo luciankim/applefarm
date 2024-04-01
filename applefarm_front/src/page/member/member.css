@@ -290,3 +290,26 @@
   font-size: 13.5px;
   color: #f44336;
 }
+
+.agree-modal {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.agree-icon {
+  position: relative; /*자기자신을 기준으로*/
+  top: 9px;
+  left: -4px;
+  font-size: 30px;
+  color: #1e1e1e;
+}
+
+.modal-close {
+  display: flex;
+  justify-content: center;
+}
+
+.bg3 {
+  background-color: #0267f3;
+}
