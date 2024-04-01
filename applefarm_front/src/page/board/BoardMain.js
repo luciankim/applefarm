@@ -4,6 +4,8 @@ import BoardList from "./BoardList";
 import SideMenu from "../../component/SideMenu";
 import BoardWrite from "./BoardWrite";
 import BoardView from "./BoardView";
+import BoardModify from "./BoardModify";
+
 const BoardMain = (props) => {
   const isLogin = props.isLogin;
   return (
@@ -15,6 +17,7 @@ const BoardMain = (props) => {
           path="/view/:boardNo"
           element={<BoardView isLogin={isLogin} />}
         />
+        <Route path="/modify/:boardNo" element={<BoardModify />} />
       </Routes>
     </div>
   );

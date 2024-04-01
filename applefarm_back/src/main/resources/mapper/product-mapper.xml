@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.product.model.dao.ProductDao">
 
-
-
+	<select id="selectProductCategory" resultType="productCategory">
+		select * 
+			<if test = "table == 'IPHONE_TBL'">from IPHONE_TBL</if>
+			<if test = "table == 'MACBOOK_TBL'">from MACBOOK_TBL</if>
+			<if test = "table == 'IPAD_TBL'">from IPAD_TBL</if>
+			<if test = "table == 'WATCH_TBL'">from WATCH_TBL</if>
+			<if test = "table == 'AIRPODS_TBL'">from AIRPODS_TBL</if>
+		where product_line = #{productLine}
+		order by rownum desc
+	</select>
 </mapper>

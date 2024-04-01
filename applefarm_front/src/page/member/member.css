@@ -42,7 +42,10 @@
   margin: 0 auto;
 }
 .mypage-current-title {
-  text-align: center;
+  padding: 20px 0px;
+  color: #222222;
+  font-family: ns-b;
+  font-size: 24px;
 }
 .like-icon {
   font-size: 40px;
@@ -50,12 +53,6 @@
   padding: 0px 10px;
   text-shadow: 0px 0px 10px blue;
   cursor: default;
-}
-.mypage-current-title {
-  padding: 20px 0px;
-  color: #222222;
-  font-family: ns-b;
-  font-size: 24px;
 }
 .member-like-tbl-box {
   display: flex;
@@ -121,12 +118,50 @@
 }
 .mypage-wrap {
   display: flex;
+  padding-bottom: 160px;
 }
 .mypage-content {
   flex: 1;
   padding: 10px;
 }
 
+/* 주소록 */
+.address-list-wrap {
+  border-top: 1px solid #ccc;
+}
+.address-list {
+  padding: 5px 10px;
+}
+.basic-address-btn {
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+}
+.address-title {
+  position: relative;
+}
+.address-btn {
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+.address-btn:hover {
+  /*color: #0267f3;*/
+  text-shadow: 0px 0px 0px black;
+}
+.non-address {
+  padding: 100px;
+}
+.non-address > div {
+  text-align: center;
+  color: #8f8f8f;
+  font-size: 15px;
+  padding: 2px;
+}
+.non-address > div:nth-child(3) {
+  padding-top: 10px;
+}
 /* 사이드메뉴 */
 
 .sideMenu > ul > li > a {
@@ -145,6 +180,11 @@
 .sideMenu > ul > li > a.active-side {
   color: #0267f3;
   font-weight: 900;
+}
+
+.mypage-sideMenu {
+  box-sizing: border-box;
+  width: 200px;
 }
 /* 회원가입 */
 

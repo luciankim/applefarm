@@ -5,13 +5,57 @@ import { createContext, useContext } from "react";
 
 //  ---------Input---------- 완료: 240324, 상태관리:자식
 const Input = (props) => {
-  const { data, setData, type, id, blurEvent, placeholder, disabled } = props;
+  const {
+    data,
+    setData,
+    type,
+    id,
+    blurEvent,
+    placeholder,
+    disabled,
+    onKeyDown,
+  } = props;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onKeyDown(); // 엔터 키가 눌리면 전달받은 onKeyPress 함수 호출
+    }
+  };
+  return (
+    <input
+      className="input_form"
+      id={id}
+      type={type}
+      value={data}
+      onChange={changeData}
+      onBlur={blurEvent}
+      onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
+      placeholder={placeholder}
+    />
+  );
+};
+
+// ------------Textaraea ----------
+const Textarea = (props) => {
+  const { content, setContent } = props;
+  const handleChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  return <textarea value={content} onChange={handleChange} />;
+};
+
+const Input2 = (props) => {
+  const { data, setData, type, id, blurEvent, placeholder } = props;
+
   const changeData = (e) => {
     setData(e.target.value);
   };
   return (
     <input
-      className="input_form"
+      className="input_form2 input_focus"
       id={id}
       type={type}
       value={data}
@@ -72,6 +116,24 @@ const InputReadOnly = (props) => {
   );
 };
 
+const InputReadOnly = (props) => {
+  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+  return (
+    <input
+      className="input_form2"
+      id={id}
+      type={type}
+      value={data}
+      onChange={changeData}
+      onBlur={blurEvent}
+      placeholder={placeholder}
+      readOnly
+    />
+  );
+};
 //  ---------Join---------- 완료: 240324, 상태관리: 자식(Input)
 const InputWrap = (props) => {
   const { data, setData, type, id, label, blurEvent, checkMsg, placeholder } =
@@ -310,6 +372,8 @@ const Radio = (props) => {
 
 export {
   Input,
+  Input2,
+  InputReadOnly,
   Button,
   Button1,
   Button2,
@@ -326,4 +390,5 @@ export {
   Radio,
   Checkbox,
   CheckboxGroup,
+  Textarea,
 };
