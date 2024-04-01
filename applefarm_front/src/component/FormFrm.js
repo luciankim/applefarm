@@ -144,13 +144,14 @@ const Button1 = (props) => {
   );
 };
 const Button2 = (props) => {
-  const { text, icon, clickEvent, disabled } = props;
+  const { text, icon, clickEvent, disabled, onKeyDown } = props;
   return (
     <button
       className="btn_form bg2"
       type="button"
       onClick={clickEvent}
       disabled={disabled}
+      onKeyDown={onKeyDown}
     >
       {text}
       {icon}
@@ -158,7 +159,7 @@ const Button2 = (props) => {
   );
 };
 const Button3 = (props) => {
-  const { text, icon, clickEvent, disabled, style } = props;
+  const { text, icon, clickEvent, disabled, style, onKeyDown } = props;
   return (
     <button
       className="btn_form bg3"
@@ -166,6 +167,7 @@ const Button3 = (props) => {
       onClick={clickEvent}
       disabled={disabled}
       style={style}
+      onKeyDown={onKeyDown}
     >
       {text}
       {icon}

@@ -168,6 +168,27 @@ public class MemberController {
 	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	    }
 	} 
+	
+	@Operation(summary = "로그인", description = "회원 데이터를 입력 받아서 로그인")
+	@ApiResponses({ // 응답에 대한 작성 설명할 떄
+	        @ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
+	        @ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value="/login")
+	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
+		
+		Member m = memberService.login(member);
+		
+		
+		if(m != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+		
+		
+	}
 
 	
 	

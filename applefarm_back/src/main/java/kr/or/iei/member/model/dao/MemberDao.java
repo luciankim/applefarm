@@ -15,6 +15,8 @@ public interface MemberDao {
 
 	int join(Member member);
 
+	Member selectId(String memberId);
+
 
 
 	

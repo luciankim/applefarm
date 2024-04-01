@@ -333,8 +333,50 @@
 /*로그인*/
 
 .login-wrap {
-  width: 400px;
+  width: 430px;
+  padding: 25px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   margin: auto;
+}
+
+.btn-box {
+  display: flex;
+}
+.login-search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.login-search-box > span {
+  transform: rotate(90deg);
+  color: #b7b7b7;
+}
+
+.login-search-box a {
+  color: #8f8f8f;
+}
+
+.login-search-box a:hover {
+  text-decoration: underline;
+}
+
+.bg2 {
+  padding: 13px 65px;
+  background-color: #0267f3;
+}
+
+.login-btn-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.login-input input::placeholder {
+  font-size: 14px;
+  color: #b7b7b7;
 }

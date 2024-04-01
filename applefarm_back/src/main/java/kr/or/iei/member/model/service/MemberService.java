@@ -2,6 +2,7 @@ package kr.or.iei.member.model.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,9 @@ public class MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder; 
 
 		
 		public int selectOneEmail(String memberEmail) {
@@ -49,6 +53,23 @@ public class MemberService {
 			
 			
 			return result;
+		}
+
+
+		public Member login(Member member) {
+			
+			Member m = memberDao.selectId(member.getMemberId());
+			
+			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				
+				
+				return m;
+			}else {
+				return null;
+			}
+			
+			
+			
 		}
 		
 }

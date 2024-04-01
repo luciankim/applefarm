@@ -30,6 +30,12 @@
   
   </insert>
   
+ 
+  <select id="selectId" resultType="member">
+  
+  	select * from member_tbl where member_id=#{memberId}
+  
+  </select>
   
   
 </mapper>
