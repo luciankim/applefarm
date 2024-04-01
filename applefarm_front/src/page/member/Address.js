@@ -9,6 +9,14 @@ const Address = () => {
   const [pageInfo, setPageinfo] = useState({});
   const [reqpage, setreqpage] = useState(1);
   const [status, setStatus] = useState(true);
+
+  const [addressName, setAddressName] = useState("");
+  const [addressPhone, setAddressPhone] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [addressDefault, setAddressDefault] = useState(0);
+
   const plusModal = () => {
     setModalOpen(true);
   };
@@ -53,7 +61,7 @@ const Address = () => {
                   return (
                     <AddressItem
                       key={"address" + index}
-                      address={item}
+                      item={item}
                       status={status}
                       setStatus={setStatus}
                       addressList={addressList}
@@ -89,35 +97,72 @@ const Address = () => {
           setModalOpen={setModalOpen}
           status={status}
           setStatus={setStatus}
+          addressName={addressName}
+          setAddressName={setAddressName}
+          addressPhone={addressPhone}
+          setAddressPhone={setAddressPhone}
+          zipcode={zipcode}
+          setZipcode={setZipcode}
+          address={address}
+          setAddress={setAddress}
+          addressDetail={addressDetail}
+          setAddressDetail={setAddressDetail}
+          addressDefault={addressDefault}
+          setAddressDefault={setAddressDefault}
         />
       )}
     </div>
   );
 };
 const AddressItem = (props) => {
-  const address = props.address;
+  const item = props.item;
   const status = props.status;
   const setStatus = props.setStatus;
+
   const addressList = props.addressList;
   const reqPage = props.reqPage;
   const setReqPage = props.setReqPage;
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [modalOpen, setModalOpen] = useState(false);
-  const updateAddress = () => {
-    console.log("수정");
+
+  const [delModalOpen, setDelModalOpen] = useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const [addressNo, setAddressNo] = useState(item.addressNo);
+  const [addressName, setAddressName] = useState(item.addressName);
+  const [addressPhone, setAddressPhone] = useState(item.addressPhone);
+  const [zipcode, setZipcode] = useState(item.zipcode);
+  const [address, setAddress] = useState(item.address);
+  const [addressDetail, setAddressDetail] = useState(item.addressDetail);
+  const [addressDefault, setAddressDefault] = useState(item.addressDefault);
+  const whatModal = "update";
+
+  useEffect(() => {
+    setAddressNo(item.addressNo);
+    setAddressName(item.addressName);
+    setAddressPhone(item.addressPhone);
+    setZipcode(item.zipcode);
+    setAddress(item.address);
+    setAddressDetail(item.addressDetail);
+    setAddressDefault(item.addressDefault);
+  }, [item]);
+
+  const updatModalFun = () => {
+    //console.log("수정");
+    setUpdateModalOpen(true);
   };
   const delModalFun = () => {
     //console.log("삭제");
-    setModalOpen(true);
+    setDelModalOpen(true);
   };
   const addressDelFun = () => {
     axios
-      .delete(backServer + "/member/address/" + address.addressNo)
+      .delete(backServer + "/member/address/" + item.addressNo)
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "success") {
           setStatus(!status);
-          setModalOpen(false);
+          setDelModalOpen(false);
           //console.log(addressList.length);
           //console.log("req:" + reqPage);
           if (reqPage > 1 && addressList.length === 2) {
@@ -131,7 +176,7 @@ const AddressItem = (props) => {
   };
   const basicAddressFun = () => {
     //console.log("기본배송지");
-    const obj = { memberNo: address.memberNo, addressNo: address.addressNo };
+    const obj = { memberNo: item.memberNo, addressNo: item.addressNo };
     axios
       .patch(backServer + "/member/basicAddress", obj)
       .then((res) => {
@@ -149,22 +194,22 @@ const AddressItem = (props) => {
       <li className="address-info-wrap">
         <div className="address-info">
           <div className="address-info-name">
-            <span>{address.addressName}</span>
-            {address.addressDefault == 1 ? (
+            <span>{item.addressName}</span>
+            {item.addressDefault == 1 ? (
               <span className="default-address-mark">기본 배송지</span>
             ) : (
               ""
             )}
           </div>
           <div className="address-info-address">
-            <span>({address.zipcode})</span>
-            <span>{address.address}</span>
-            <span>{address.addressDetail}</span>
+            <span>({item.zipcode})</span>
+            <span>{item.address}</span>
+            <span>{item.addressDetail}</span>
           </div>
-          <div>{address.addressPhone}</div>
+          <div>{item.addressPhone}</div>
         </div>
         <div className="address-btn-wrap">
-          {address.addressDefault !== 1 ? (
+          {item.addressDefault !== 1 ? (
             <button
               className="address-btn address-list-btn"
               onClick={basicAddressFun}
@@ -176,11 +221,11 @@ const AddressItem = (props) => {
           )}
           <button
             className="address-btn  address-list-btn"
-            onClick={updateAddress}
+            onClick={updatModalFun}
           >
             수정
           </button>
-          {address.addressDefault !== 1 ? (
+          {item.addressDefault !== 1 ? (
             <button
               className="address-btn  address-list-btn"
               onClick={delModalFun}
@@ -192,11 +237,33 @@ const AddressItem = (props) => {
           )}
         </div>
       </li>
-      {modalOpen && (
+      {delModalOpen && (
         <DelModal
-          setModalOpen={setModalOpen}
+          setModalOpen={setDelModalOpen}
           clickEvent={addressDelFun}
-          text="주소를 삭제하시겠습니까?"
+          text="Are you sure you want to delete the address?"
+          icon="delete_forever"
+        />
+      )}
+      {updateModalOpen && (
+        <AddressModal
+          setModalOpen={setUpdateModalOpen}
+          status={status}
+          setStatus={setStatus}
+          addressName={addressName}
+          setAddressName={setAddressName}
+          addressPhone={addressPhone}
+          setAddressPhone={setAddressPhone}
+          zipcode={zipcode}
+          setZipcode={setZipcode}
+          address={address}
+          setAddress={setAddress}
+          addressDetail={addressDetail}
+          setAddressDetail={setAddressDetail}
+          addressDefault={addressDefault}
+          setAddressDefault={setAddressDefault}
+          whatModal={whatModal}
+          addressNo={addressNo}
         />
       )}
     </>
