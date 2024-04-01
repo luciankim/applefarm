@@ -37,10 +37,18 @@ const BoardList = (props) => {
   }, [reqPage]);
 
   const fetchBoardList = (page) => {
-    let url = `${backServer}/board/list/${page}`;
+    let url = backServer + "/board/list/" + page;
     if (selectedKeyword) {
-      url = `${backServer}/board/searchList/${selectedValue}/${selectedKeyword}/${page}`;
+      url =
+        backServer +
+        "/board/searchList/" +
+        selectedValue +
+        "/" +
+        selectedKeyword +
+        "/" +
+        page;
     }
+
     axios
       .get(url)
       .then((res) => {
