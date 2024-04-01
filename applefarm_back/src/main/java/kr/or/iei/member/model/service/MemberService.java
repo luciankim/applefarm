@@ -79,6 +79,21 @@ public class MemberService {
 			result+= memberDao.updateAddressDefault1(address.getAddressNo());
 			return result;
 		}
+		@Transactional
+		public int updateAddress(Address address) {
+			System.out.println(address);
+			int result=0;
+			//기본배송지 1인 상태로 수정요청시 update전  기본배송지상태1인거 찾아서 기본배송지상태 0으로 변경
+			if(address.getAddressDefault()==1) {
+				int addressNo = memberDao.selectBasicAddressNo(address.getMemberNo());
+				result += memberDao.updateBasicAddress(addressNo);
+				//result += memberDao.updateSearchUpdateBasicAddress(address.getMemberNo());
+				result -=1;
+			}
+			result += memberDao.updateAddress(address);
+			return result;
+		}
+		
 		
 		public int selectOneEmail(String memberEmail) {
 			
@@ -112,5 +127,7 @@ public class MemberService {
 			
 			return result;
 		}
+
+
 		
 }

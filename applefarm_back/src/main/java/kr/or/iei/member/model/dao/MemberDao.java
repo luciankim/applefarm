@@ -38,6 +38,14 @@ public interface MemberDao {
 
 	int join(Member member);
 
+	int updateSearchUpdateBasicAddress(int memberNo);
+
+	int updateAddress(Address address);
+
+	int selectBasicAddressNo(int memberNo);
+
+	int updateBasicAddress(int addressNo);
+
 
 
 	

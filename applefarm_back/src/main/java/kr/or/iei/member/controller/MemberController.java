@@ -229,6 +229,11 @@ public class MemberController {
 		}
 	}
 	
+	@Operation(summary = "기본배송지 변경", description = "주소록 목록에서 기본배송지 변경")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 값 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
 	@PatchMapping(value="/basicAddress")
 	public ResponseEntity<ResponseDTO> updateAddressDefault(@RequestBody Address address){
 		int result = memberService.updateAddressDefault(address);
@@ -240,6 +245,24 @@ public class MemberController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	@Operation(summary = "주소록 수정", description = "주소록 목록 중 해당 주소 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 값 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/address")
+	public ResponseEntity<ResponseDTO> updateAddress(@RequestBody Address address){
+		int result = memberService.updateAddress(address);
+		if(result==1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(500, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
 }
 	
 	

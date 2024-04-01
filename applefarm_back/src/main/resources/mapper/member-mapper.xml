@@ -28,6 +28,23 @@
 	<update id="updateAddressDefault1">
 		update address_tbl set address_default = 1 where address_no=#{addressNo}
 	</update>
+    <update id="updateSearchUpdateBasicAddress" parameterType="address">
+    	update address_tbl set address_default = 0 where address_no=#{addressNo}
+    	<selectKey resultType="int" order="BEFORE" keyProperty="addressNo">
+    		select address_no from address_tbl where member_no=#{memberNo} and address_default = 1
+    	</selectKey>
+    </update>
+    <select id="selectBasicAddressNo" resultType="int">
+    	select address_no from address_tbl where member_no=#{memberNo} and address_default = 1
+    </select>
+    <update id="updateBasicAddress">
+    	update address_tbl set address_default = 0 where address_no=#{addressNo}
+    </update>
+    <update id="updateAddress">
+    	update address_tbl set address_name=#{addressName}, address_phone=#{addressPhone}, zipcode=#{zipcode}, address=#{address}, address_detail=#{addressDetail}, address_default=#{addressDefault} where address_no=#{addressNo}
+    </update>
+  
+  
   
   
   <select id="selectOneEmail" resultType="int">
