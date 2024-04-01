@@ -23,6 +23,55 @@ const Input = (props) => {
   );
 };
 
+// ------------Textaraea ----------
+const Textarea = (props) => {
+  const { content, setContent } = props;
+  const handleChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  return <textarea value={content} onChange={handleChange} />;
+};
+
+const Input2 = (props) => {
+  const { data, setData, type, id, blurEvent, placeholder, disabled } = props;
+
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+  return (
+    <input
+      className="input_form2 input_focus"
+      id={id}
+      type={type}
+      value={data}
+      onChange={changeData}
+      onBlur={blurEvent}
+      placeholder={placeholder}
+      disabled={disabled}
+    />
+  );
+};
+
+const InputReadOnly = (props) => {
+  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+  return (
+    <input
+      className="input_form2"
+      id={id}
+      type={type}
+      value={data}
+      onChange={changeData}
+      onBlur={blurEvent}
+      placeholder={placeholder}
+      readOnly
+    />
+  );
+};
+
 //  ---------Join---------- 완료: 240324, 상태관리: 자식(Input)
 const InputWrap = (props) => {
   const { data, setData, type, id, label, blurEvent, checkMsg, placeholder } =
