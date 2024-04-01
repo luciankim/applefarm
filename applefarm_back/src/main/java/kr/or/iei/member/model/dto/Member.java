@@ -22,11 +22,8 @@ public class Member {
 	@Schema(description = "회원 이름" ,  type="string")
 	private String memberName;
 	
-	@Schema(description = "회원 성별", type="number")
-	private int memberGender;
-	
 	@Schema(description = "회원 닉네임" , type="string")
-	private int memberNickname; 
+	private String memberNickName; 
 	
 	@Schema(description = "회원 아이디" ,  type="string")
 	private String memberId;
@@ -34,9 +31,12 @@ public class Member {
 	@Schema(description = "회원 비밀번호" ,  type="string")
 	private String memberPw;
 	
+	@Schema(description = "회원 이메일" ,  type="string")
+	private String memberEmail;
+	
 	@Schema(description = "회원 전화번호" ,  type="string")
 	private String memberPhone;
-	
+
 	@Schema(description = "회원 등급" ,  type="number")
 	private int memberType;
 	
@@ -55,6 +55,11 @@ public class Member {
 	@Schema(description = "탈퇴한 회원 여부", type="string")
 	private String memberWithdraw;
 	
+	@Schema(description = "은행명", type="string")
+	private String bankName;
+	
+	@Schema(description = "예금주명", type="string")
+	private String depositorName;
 
 }
 

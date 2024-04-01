@@ -89,6 +89,10 @@ select {
   cursor: pointer;
 }
 
+button[disabled] {
+  cursor: default; /*disabled시 커서 비활성화*/
+}
+
 .ref_layout {
   padding: 20px;
   border-radius: 12px;

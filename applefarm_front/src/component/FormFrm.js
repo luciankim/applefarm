@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 
 //  ---------Input---------- 완료: 240324, 상태관리:자식
 const Input = (props) => {
-  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const { data, setData, type, id, blurEvent, placeholder, disabled } = props;
   const changeData = (e) => {
     setData(e.target.value);
   };
@@ -18,6 +18,7 @@ const Input = (props) => {
       onChange={changeData}
       onBlur={blurEvent}
       placeholder={placeholder}
+      disabled={disabled}
     />
   );
 };
@@ -64,13 +65,15 @@ const Button = (props) => {
   );
 };
 const Button1 = (props) => {
-  const { text, icon, clickEvent, addId } = props;
+  const { text, icon, clickEvent, addId, disabled, style } = props;
   return (
     <button
       className="btn_form bg1"
       type="button"
       onClick={clickEvent}
       id={addId}
+      disabled={disabled}
+      style={style}
     >
       {text}
       {icon}
@@ -78,27 +81,43 @@ const Button1 = (props) => {
   );
 };
 const Button2 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, disabled } = props;
   return (
-    <button className="btn_form bg2" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg2"
+      type="button"
+      onClick={clickEvent}
+      disabled={disabled}
+    >
       {text}
       {icon}
     </button>
   );
 };
 const Button3 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, disabled, style } = props;
   return (
-    <button className="btn_form bg3" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg3"
+      type="button"
+      onClick={clickEvent}
+      disabled={disabled}
+      style={style}
+    >
       {text}
       {icon}
     </button>
   );
 };
 const Button4 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, disabled } = props;
   return (
-    <button className="btn_form bg4" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg4"
+      type="button"
+      onClick={clickEvent}
+      disabled={disabled}
+    >
       {text}
       {icon}
     </button>
