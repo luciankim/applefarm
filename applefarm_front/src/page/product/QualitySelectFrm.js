@@ -17,11 +17,21 @@ const QualitySelectFrm = (props) => {
 
   const [totalQuality, setTotalQuality] = useState();
 
+
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   // console.log(liquidCrystal);
   // console.log(backAndFront);
+  const tableName = "IPHONE_TBL";
 
-  useEffect((res) => {
-    // axios.get()
+  
+  useEffect(() => {
+    axios.get(backServer+"/quality/"+tableName)
+    .then((res)=>{
+      console.log(res.data);
+    })
+    .catch((res)=>{
+       console.log(res);
+     })
   },[])
 
   return (
