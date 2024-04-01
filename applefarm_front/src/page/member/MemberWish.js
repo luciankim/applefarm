@@ -123,6 +123,7 @@ const LikeItem = (props) => {
             setModalOpen={setModalOpen}
             clickEvent={likeDelFun}
             text="Are you sure you want to delete this item?"
+            icon="heart_broken"
           />
         )}
       </td>
