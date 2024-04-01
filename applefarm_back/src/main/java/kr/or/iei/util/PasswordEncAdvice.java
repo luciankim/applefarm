@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import kr.or.iei.member.model.dto.Member;
 
 
+
+
 @Aspect
 @Component
 public class PasswordEncAdvice {
@@ -23,15 +25,19 @@ public class PasswordEncAdvice {
 	
 	
 	//적용할 메소드
-	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.*Member(kr.or.iei.member.model.dto.Member))")
-	public void pwEncPointcut() {} 
+	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.join(kr.or.iei.member.model.dto.Member))")
+	public void pwEncPointcut(){} 
+	
+	//위에 메소드 시작하기 전에(before) 실행
 	
 	@Before(value="pwEncPointcut()")
 	public void pwEncAdvice(JoinPoint jp) {
 		
 		Object[] args = jp.getArgs();
 		
-		Member member = (Member)args[0];
+		
+		
+		Member member = (Member)args[0]; 
 		String encPw = bCryptPasswordEncoder.encode(member.getMemberPw());
 		member.setMemberPw(encPw);
 		

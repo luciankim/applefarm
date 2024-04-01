@@ -319,11 +319,13 @@ const Join = () => {
           if (res.data.message === "success") {
             console.log(res.data);
 
-            navigate("/");
+            navigate("/login");
           } else {
             Swal.fire(
               "처리 중 에러가 발생했습니다. 잠시 후 다시 시도해주세요."
-            );
+            ).then(() => {
+              navigate("/");
+            });
           }
         })
         .catch((res) => {
