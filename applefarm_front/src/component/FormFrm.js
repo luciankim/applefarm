@@ -323,7 +323,7 @@ const Radio = (props) => {
 
 // 박성완
 const PswRadio = (props) => {
-  const { name, val, selectValue, setSelectValue } = props;
+  const { name, val, selectValue, setSelectValue, color } = props;
   const handleChange = (event) => {
     setSelectValue(event.target.value);
   };
@@ -346,6 +346,13 @@ const PswRadio = (props) => {
         <label className="psw_radio_label" htmlFor={val}>
           {val}
         </label>
+        {name === "color" ? (
+          <span className="psw_radio_span">
+            <img src={"/image/colorImage/" + color + ".png"} />
+          </span>
+        ) : (
+          <></>
+        )}
       </div>
     </label>
   );

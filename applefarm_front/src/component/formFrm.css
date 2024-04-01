@@ -153,6 +153,9 @@
   border-radius: 10px;
   padding: 10px 15px;
   margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .input_wrap.input_wrap_focus {
   border: 3px solid var(--main_01);
@@ -163,4 +166,9 @@
 .input_wrap .psw_radio_label {
   font-weight: 500;
   font-size: 18px;
+}
+.input_wrap .psw_radio_span img {
+  object-fit: contain;
+  width: 25px;
+  height: 25px;
 }

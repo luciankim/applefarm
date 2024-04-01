@@ -15,20 +15,40 @@
   justify-content: space-between;
 }
 .product-category-wrap-left {
-  /*flex-shrink: 1;*/ /*화면 줄어들 시 1/1만큼 크기 축소*/
   width: 700px;
+  height: auto; /*sticky 쓸려면 부모요소에 높이 있어야함. 그래서 auto로 넣었음.*/
 }
+.product-category-wrap-left > div {
+  width: 100%;
+  top: 300px; /*stkcky 사용시 top,bottom,left,right중 하나는 있어야.*/
+  position: sticky;
+}
+.product-category-wrap-left .categoryImage {
+  width: 100%;
+  height: 700px;
+  object-fit: contain;
+  border-radius: 20px;
+}
+/*
+<object-fit>
+-contain : 대체 콘텐츠의 가로세로비를 유지하면서, 요소의 콘텐츠 박스 내부에 들어가도록 크기를 맞춤 조절합니다. 콘텐츠가 콘텐츠 박스 크기에 맞도록 하면서도 가로세로비를 유지하게 되므로, 서로의 가로세로비가 일치하지 않으면 객체가 "레터박스"처럼 됩니다.
+-cover : 대체 콘텐츠의 가로세로비를 유지하면서, 요소 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 객체 일부가 잘려나갑니다.
+-fill : 요소 콘텐츠 박스 크기에 맞춰 대체 콘텐츠의 크기를 조절합니다. 콘텐츠가 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 콘텐츠가 늘어납니다.
+-none : 대체 콘텐츠의 크기를 조절하지 않습니다.
+-scale-down : none과 contain 중 대체 콘텐츠의 크기가 더 작아지는 값을 선택합니다.
+*/
+
 .product-category-wrap-right {
   flex-shrink: 0; /*화면 줄어들 시 0/1만큼 크기 축소 = 축소안함*/
   width: 350px;
 }
 .product-category-wrap-right > .category-option {
-  margin-top: 70px;
+  margin-bottom: 70px;
 }
 .product-category-wrap-right > .category-option > div {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .product-category-wrap-right > .category-option > div > .category-option-title {
   font-size: 24px;
@@ -54,19 +74,6 @@
 -분모 : flex-shrink를 준 것의 값들을 모두 합한 값
 -해당 태그가 축소되는 비율은 해당 태그의 분자 / 분모 값임
 -flex-shrink 기본값은 1이고, flex-wrap: wrap속성이 부여된 경우 적용되지 않음(flex-wrap 기본값 : nowrap)
-*/
-
-.categoryImage {
-  width: 100%;
-  object-fit: contain;
-}
-/*
-<object-fit>
--contain : 대체 콘텐츠의 가로세로비를 유지하면서, 요소의 콘텐츠 박스 내부에 들어가도록 크기를 맞춤 조절합니다. 콘텐츠가 콘텐츠 박스 크기에 맞도록 하면서도 가로세로비를 유지하게 되므로, 서로의 가로세로비가 일치하지 않으면 객체가 "레터박스"처럼 됩니다.
--cover : 대체 콘텐츠의 가로세로비를 유지하면서, 요소 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 객체 일부가 잘려나갑니다.
--fill : 요소 콘텐츠 박스 크기에 맞춰 대체 콘텐츠의 크기를 조절합니다. 콘텐츠가 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 콘텐츠가 늘어납니다.
--none : 대체 콘텐츠의 크기를 조절하지 않습니다.
--scale-down : none과 contain 중 대체 콘텐츠의 크기가 더 작아지는 값을 선택합니다.
 */
 
 /*--ProductCategory.js--*/

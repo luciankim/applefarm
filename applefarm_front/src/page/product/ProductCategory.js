@@ -205,21 +205,23 @@ const ProductCategory = (props) => {
     <div className="product-category-wrap">
       {/*좌측 영역*/}
       <div className="product-category-wrap-left">
-        {colorArr.indexOf(productColor) !== -1 ? (
-          <img
-            className="categoryImage"
-            src={
-              "/image/categoryImage/" +
-              imageArr[colorArr.indexOf(productColor)] +
-              ".png"
-            }
-          />
-        ) : (
-          <img
-            className="categoryImage"
-            src={"/image/categoryImage/iPhone_representation.png"}
-          />
-        )}
+        <div>
+          {colorArr.indexOf(productColor) !== -1 ? (
+            <img
+              className="categoryImage"
+              src={
+                "/image/categoryImage/" +
+                imageArr[colorArr.indexOf(productColor)] +
+                ".png"
+              }
+            />
+          ) : (
+            <img
+              className="categoryImage"
+              src={"/image/categoryImage/iPhone_representation.png"}
+            />
+          )}
+        </div>
       </div>
       {/*//좌측 영역*/}
 
@@ -389,6 +391,7 @@ const ArrMap = (props) => {
                   name={name}
                   selectValue={selectValue}
                   setSelectValue={setSelectValue}
+                  color={item} //colorArr일때만 활용됨
                 />
               </li>
             );
