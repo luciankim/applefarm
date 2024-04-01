@@ -33,6 +33,7 @@ const Input = (props) => {
       onBlur={blurEvent}
       onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
       placeholder={placeholder}
+      disabled={disabled}
     />
   );
 };

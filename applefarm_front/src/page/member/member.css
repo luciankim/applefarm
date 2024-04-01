@@ -291,7 +291,10 @@
   color: #f44336;
 }
 
+/*모달*/
+
 .agree-modal {
+  padding-top: 30px;
   width: 500px;
   display: flex;
   flex-direction: column;
@@ -299,8 +302,8 @@
 
 .agree-icon {
   position: relative; /*자기자신을 기준으로*/
-  top: 9px;
-  left: -4px;
+  top: -26px;
+  left: 303px;
   font-size: 30px;
   color: #1e1e1e;
 }
@@ -312,4 +315,26 @@
 
 .bg3 {
   background-color: #0267f3;
+}
+
+.modal-btn {
+  padding: 10px 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #0267f3;
+  color: #f6f6f6;
+  font-weight: bold;
+}
+
+.agree-icon:hover {
+  cursor: pointer;
+}
+
+/*로그인*/
+
+.login-wrap {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
 }

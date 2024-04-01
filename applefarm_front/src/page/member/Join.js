@@ -24,7 +24,6 @@ const Join = () => {
   const [memberPhone, setMemberPhone] = useState(""); //전화번호
   const [memberAccountnumber, setMemberAccountnumber] = useState(""); //계좌번호
   const [memberEmail, setMemberEmail] = useState(""); //이메일
-  const [memberGender, setMemberGender] = useState(""); //성별
 
   //화면구현용
   const [bankName, setBankName] = useState(""); //은행이름
@@ -43,35 +42,35 @@ const Join = () => {
   const [checkRePw, setCheckRePw] = useState(""); //비밀번호 확인 메세지
   const [checkRegDepositorName, setCheckDepositorName] = useState(""); //예금주 정규식 메세지
 
-  const [btnDisabledForEmail, setBtnDisabledForEmail] = useState(false); //버튼,인풋 비/활성화
+  const [btnDisabledForEmail, setBtnDisabledForEmail] = useState(false); //버튼 비/활성화
   const [btnDisabledForVerif, setBtnDisabledForVerif] = useState(true);
   const [btnDisabledForJoin, setBtnDisabledJoin] = useState(true);
-  const [disabledForEmailInput, setDisabledForEmailInput] = useState(false);
+
+  const [disabledForEmailInput, setDisabledForEmailInput] = useState(false); //인풋 비/활성화
   const [disabledForVerifInput, setDisabledForVerifInput] = useState(false);
 
   const [emailButtonColor, setEmailButtonColor] = useState("#0267f3"); //버튼색깔
   const [verifButtonColor, setVerifButtonColor] = useState("#b7b7b7");
-  const [joinButtonColor, setJoinButtonColor] = useState("#b7b7b7");
+  const [joinButtonColor, setJoinButtonColor] = useState("#0267f3");
 
   const [currentAuthCode, setCurrentAuthCode] = useState(""); //인증코드 저장
 
-  const [modalIsOpen, setModalIsOpen] = useState(false); //모달1
-  const [modal2IsOpen, setModal2IsOpen] = useState(false); //모달2
+  const [modalIsOpen, setModalIsOpen] = useState(false); //모달 열기/닫기
 
+  const [chkAgree, setChkAgree] = useState(false); //약관동의 체크박스
+
+  const chkAgreeChange = (e) => {
+    setChkAgree(e.target.checked); // 약관 동의 상태를 토글합니다.
+  };
+
+  // 모달 열기
   const openModal = () => {
     setModalIsOpen(true);
   };
 
-  const openModal2 = () => {
-    setModal2IsOpen(true);
-  };
-
+  //모달 닫기
   const closeModal = () => {
     setModalIsOpen(false);
-  };
-
-  const closeModal2 = () => {
-    setModal2IsOpen(false);
   };
 
   /*모달 스타일 적용*/
@@ -80,14 +79,9 @@ const Join = () => {
       padding: "39px",
       width: "50%",
       height: "50%",
-      margin: "250px 500px",
+      margin: "12% 25%",
       borderRadius: "15px",
     },
-  };
-
-  /*성별값변경*/
-  const genderChange = (event) => {
-    setMemberGender(event.target.value); //선택된 값으로 상태 변경
   };
 
   const navigate = useNavigate();
@@ -304,7 +298,8 @@ const Join = () => {
       checkRegNickName === "" &&
       checkRegPhone === "" &&
       checkRegPw === "" &&
-      checkVerifCode === ""
+      checkVerifCode === "" &&
+      chkAgree
     ) {
       const obj = {
         memberEmail,
@@ -336,6 +331,7 @@ const Join = () => {
         });
     } else {
       Swal.fire("입력값을 확인하세요.");
+      return; //데이터 전송 안되게
     }
   };
 
@@ -473,6 +469,7 @@ const Join = () => {
         placeholder="2자 이상 16자 이하, 영문 또는 숫자 또는 한글"
         blurEvent={nickNameChk}
       />
+      {/*
       <div className="join-input-wrap">
         <div className="bank-input-wrap">
           <div className="label">
@@ -516,10 +513,11 @@ const Join = () => {
           />
         </div>
       </div>
+      */}
 
       <div className="agree-modal">
         <label>
-          <input type="checkbox" />
+          <input type="checkbox" onChange={chkAgreeChange} />
           [필수] 만 14세 이상이며 모두 동의합니다.
         </label>
         <span className="material-icons agree-icon" onClick={openModal}>
@@ -529,7 +527,7 @@ const Join = () => {
           <input type="checkbox" />
           [선택] 광고성 정보 수신에 모두 동의합니다.
         </label>
-        <span className="material-icons agree-icon" onClick={openModal2}>
+        <span className="material-icons agree-icon" onClick={openModal}>
           arrow_right
         </span>
       </div>
@@ -548,33 +546,33 @@ const Join = () => {
         style={modalStyle}
       >
         <p>
-          KREAM 서비스 이용 약관 제 1 조 (목적) 이 약관은 "회원" 개인 상호 간
-          또는 “제휴 사업자”, "입점 사업자"와 “회원” 개인 간에 상품 등을
+          AppleFarm 서비스 이용 약관 제 1 조 (목적) 이 약관은 "회원" 개인 상호
+          간 또는 “제휴 사업자”, "입점 사업자"와 “회원” 개인 간에 상품 등을
           매매하는 것을 중개하고, "상품" 등에 관한 정보를 상호 교환할 수 있도록
-          크림 주식회사(이하 "회사"라 합니다)가 운영, 제공하는 KREAM 서비스(이하
-          "서비스")에 대한 것으로 본 약관에서는 "서비스"의 이용과 관련하여
-          "회사"와 "회원"과의 권리, 의무 및 책임사항, 기타 필요한 사항을
-          규정합니다. 제 2 조 (용어의 정의) 이 약관에서 사용하는 용어의 정의는
-          다음 각 호와 같으며, 정의되지 않은 용어에 대한 해석은 관계 법령 및
-          지침, 본 이용약관, 개인정보취급방침, 상관례 등에 의합니다. "서비스"라
-          함은 회사가 PC 및/또는 모바일 환경에서 제공하는 KREAM 서비스 및 관련
-          제반 서비스를 말합니다. "회원"이라 함은 "회사"의 "서비스"에 접속하여
-          이 약관에 따라 "회사"와 이용계약을 체결하고 "회사"가 제공하는
-          "서비스"를 이용하는 고객을 말합니다. "구매자" 또는 "구매회원"이라 함은
-          "상품"을 구매하거나 또는 구매할 의사로 서비스를 이용하는 회원을
-          말합니다. "판매자" 또는 "판매회원"이라 함은 "서비스"에 "상품"을
-          등록하여 판매하거나 또는 제공할 의사로 서비스를 이용하는 회원을
-          말합니다. "입찰"이라 함은 "상품"을 구매하기 위하여 원하는 "상품"의
-          구매 가격을 제출하는 행위 또는 "상품"을 판매하기 위하여 원하는
-          "상품"의 판매 가격을 제출하는 행위를 말합니다. "거래 체결"이라 함은
-          "입찰"에 의하여 상품의 거래가 성립되는 것을 말합니다. "게시물"이라
-          함은 "회원"이 "서비스"를 이용함에 있어 "서비스"상에 게시한 문자, 음성,
-          음향, 화상, 동영상 등의 정보 형태의 글(댓글 포함), 사진(이미지),
-          동영상 및 각종 파일과 링크 등 일체를 의미합니다. "회원정보"라 함은
-          "서비스"를 이용하는 고객이 등록한 정보를 말합니다. "서비스수수료"라
-          함은 "회원"이 "서비스"를 이용하면서 발생할 수 있는 수수료입니다.
-          "상품"의 판매/구매 및 제반 서비스를 이용함에 따라 부과되는
-          시스템이용료로서 거래 수수료 또는 판매완료 수수료,
+          크림 주식회사(이하 "회사"라 합니다)가 운영, 제공하는 AppleFarm
+          서비스(이하 "서비스")에 대한 것으로 본 약관에서는 "서비스"의 이용과
+          관련하여 "회사"와 "회원"과의 권리, 의무 및 책임사항, 기타 필요한
+          사항을 규정합니다. 제 2 조 (용어의 정의) 이 약관에서 사용하는 용어의
+          정의는 다음 각 호와 같으며, 정의되지 않은 용어에 대한 해석은 관계 법령
+          및 지침, 본 이용약관, 개인정보취급방침, 상관례 등에 의합니다.
+          "서비스"라 함은 회사가 PC 및/또는 모바일 환경에서 제공하는 AppleFarm
+          서비스 및 관련 제반 서비스를 말합니다. "회원"이라 함은 "회사"의
+          "서비스"에 접속하여 이 약관에 따라 "회사"와 이용계약을 체결하고
+          "회사"가 제공하는 "서비스"를 이용하는 고객을 말합니다. "구매자" 또는
+          "구매회원"이라 함은 "상품"을 구매하거나 또는 구매할 의사로 서비스를
+          이용하는 회원을 말합니다. "판매자" 또는 "판매회원"이라 함은 "서비스"에
+          "상품"을 등록하여 판매하거나 또는 제공할 의사로 서비스를 이용하는
+          회원을 말합니다. "입찰"이라 함은 "상품"을 구매하기 위하여 원하는
+          "상품"의 구매 가격을 제출하는 행위 또는 "상품"을 판매하기 위하여
+          원하는 "상품"의 판매 가격을 제출하는 행위를 말합니다. "거래 체결"이라
+          함은 "입찰"에 의하여 상품의 거래가 성립되는 것을 말합니다.
+          "게시물"이라 함은 "회원"이 "서비스"를 이용함에 있어 "서비스"상에
+          게시한 문자, 음성, 음향, 화상, 동영상 등의 정보 형태의 글(댓글 포함),
+          사진(이미지), 동영상 및 각종 파일과 링크 등 일체를 의미합니다.
+          "회원정보"라 함은 "서비스"를 이용하는 고객이 등록한 정보를 말합니다.
+          "서비스수수료"라 함은 "회원"이 "서비스"를 이용하면서 발생할 수 있는
+          수수료입니다. "상품"의 판매/구매 및 제반 서비스를 이용함에 따라
+          부과되는 시스템이용료로서 거래 수수료 또는 판매완료 수수료,
           유료부가서비스수수료 등이 있으며, 관련내용은 제24조(서비스수수료)에
           명시된 바에 따릅니다. "포인트"라 함은 "서비스"의 효율적 이용을 위해
           "회사"가 임의로 책정 또는 지급, 조정할 수 있는 "서비스" 상의 가상
@@ -585,52 +583,52 @@ const Join = () => {
           "할인쿠폰"의 지급, 사용, 소멸 등과 관련한 구체적인 정책에 대해서는
           이용약관 및 공지사항 등으로 별도 고지하는 바에 따릅니다. “상품”이라
           함은 본 약관에 따라 “회원” 간 거래 대상으로서 “서비스”에 등록된 재화
-          또는 용역을 말합니다. “제휴 사업자”라 함은 “KREAM EXCLUSIVE DROPS” 및
-          “B2C 상품 페이지”에서 제공하는 통신판매중개를 이용하여 “회원”과 “제휴
-          사업자 판매 상품”을 거래하고자 “회사”와 별도의 계약을 체결한 사업자를
-          말합니다. “입점 사업자”라 함은 “서비스”에서 제공하는 통신판매중개를
-          이용하여
+          또는 용역을 말합니다. “제휴 사업자”라 함은 “AppleFarm EXCLUSIVE DROPS”
+          및 “B2C 상품 페이지”에서 제공하는 통신판매중개를 이용하여 “회원”과
+          “제휴 사업자 판매 상품”을 거래하고자 “회사”와 별도의 계약을 체결한
+          사업자를 말합니다. “입점 사업자”라 함은 “서비스”에서 제공하는
+          통신판매중개를 이용하여
         </p>
         <div className="modal-close">
-          <Button3 className="modal-btn" onClick={() => setModal2IsOpen(false)}>
+          <button className="modal-btn" onClick={closeModal}>
             닫기
-          </Button3>
+          </button>
         </div>
       </Modal>
 
       <Modal
-        isOpen={modal2IsOpen}
-        onRequestClose={closeModal2}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
         style={modalStyle}
       >
         <p>
-          KREAM 서비스 이용 약관 제 1 조 (목적) 이 약관은 "회원" 개인 상호 간
-          또는 “제휴 사업자”, "입점 사업자"와 “회원” 개인 간에 상품 등을
+          AppleFarm 서비스 이용 약관 제 1 조 (목적) 이 약관은 "회원" 개인 상호
+          간 또는 “제휴 사업자”, "입점 사업자"와 “회원” 개인 간에 상품 등을
           매매하는 것을 중개하고, "상품" 등에 관한 정보를 상호 교환할 수 있도록
-          크림 주식회사(이하 "회사"라 합니다)가 운영, 제공하는 KREAM 서비스(이하
-          "서비스")에 대한 것으로 본 약관에서는 "서비스"의 이용과 관련하여
-          "회사"와 "회원"과의 권리, 의무 및 책임사항, 기타 필요한 사항을
-          규정합니다. 제 2 조 (용어의 정의) 이 약관에서 사용하는 용어의 정의는
-          다음 각 호와 같으며, 정의되지 않은 용어에 대한 해석은 관계 법령 및
-          지침, 본 이용약관, 개인정보취급방침, 상관례 등에 의합니다. "서비스"라
-          함은 회사가 PC 및/또는 모바일 환경에서 제공하는 KREAM 서비스 및 관련
-          제반 서비스를 말합니다. "회원"이라 함은 "회사"의 "서비스"에 접속하여
-          이 약관에 따라 "회사"와 이용계약을 체결하고 "회사"가 제공하는
-          "서비스"를 이용하는 고객을 말합니다. "구매자" 또는 "구매회원"이라 함은
-          "상품"을 구매하거나 또는 구매할 의사로 서비스를 이용하는 회원을
-          말합니다. "판매자" 또는 "판매회원"이라 함은 "서비스"에 "상품"을
-          등록하여 판매하거나 또는 제공할 의사로 서비스를 이용하는 회원을
-          말합니다. "입찰"이라 함은 "상품"을 구매하기 위하여 원하는 "상품"의
-          구매 가격을 제출하는 행위 또는 "상품"을 판매하기 위하여 원하는
-          "상품"의 판매 가격을 제출하는 행위를 말합니다. "거래 체결"이라 함은
-          "입찰"에 의하여 상품의 거래가 성립되는 것을 말합니다. "게시물"이라
-          함은 "회원"이 "서비스"를 이용함에 있어 "서비스"상에 게시한 문자, 음성,
-          음향, 화상, 동영상 등의 정보 형태의 글(댓글 포함), 사진(이미지),
-          동영상 및 각종 파일과 링크 등 일체를 의미합니다. "회원정보"라 함은
-          "서비스"를 이용하는 고객이 등록한 정보를 말합니다. "서비스수수료"라
-          함은 "회원"이 "서비스"를 이용하면서 발생할 수 있는 수수료입니다.
-          "상품"의 판매/구매 및 제반 서비스를 이용함에 따라 부과되는
-          시스템이용료로서 거래 수수료 또는 판매완료 수수료,
+          크림 주식회사(이하 "회사"라 합니다)가 운영, 제공하는 AppleFarm
+          서비스(이하 "서비스")에 대한 것으로 본 약관에서는 "서비스"의 이용과
+          관련하여 "회사"와 "회원"과의 권리, 의무 및 책임사항, 기타 필요한
+          사항을 규정합니다. 제 2 조 (용어의 정의) 이 약관에서 사용하는 용어의
+          정의는 다음 각 호와 같으며, 정의되지 않은 용어에 대한 해석은 관계 법령
+          및 지침, 본 이용약관, 개인정보취급방침, 상관례 등에 의합니다.
+          "서비스"라 함은 회사가 PC 및/또는 모바일 환경에서 제공하는 AppleFarm
+          서비스 및 관련 제반 서비스를 말합니다. "회원"이라 함은 "회사"의
+          "서비스"에 접속하여 이 약관에 따라 "회사"와 이용계약을 체결하고
+          "회사"가 제공하는 "서비스"를 이용하는 고객을 말합니다. "구매자" 또는
+          "구매회원"이라 함은 "상품"을 구매하거나 또는 구매할 의사로 서비스를
+          이용하는 회원을 말합니다. "판매자" 또는 "판매회원"이라 함은 "서비스"에
+          "상품"을 등록하여 판매하거나 또는 제공할 의사로 서비스를 이용하는
+          회원을 말합니다. "입찰"이라 함은 "상품"을 구매하기 위하여 원하는
+          "상품"의 구매 가격을 제출하는 행위 또는 "상품"을 판매하기 위하여
+          원하는 "상품"의 판매 가격을 제출하는 행위를 말합니다. "거래 체결"이라
+          함은 "입찰"에 의하여 상품의 거래가 성립되는 것을 말합니다.
+          "게시물"이라 함은 "회원"이 "서비스"를 이용함에 있어 "서비스"상에
+          게시한 문자, 음성, 음향, 화상, 동영상 등의 정보 형태의 글(댓글 포함),
+          사진(이미지), 동영상 및 각종 파일과 링크 등 일체를 의미합니다.
+          "회원정보"라 함은 "서비스"를 이용하는 고객이 등록한 정보를 말합니다.
+          "서비스수수료"라 함은 "회원"이 "서비스"를 이용하면서 발생할 수 있는
+          수수료입니다. "상품"의 판매/구매 및 제반 서비스를 이용함에 따라
+          부과되는 시스템이용료로서 거래 수수료 또는 판매완료 수수료,
           유료부가서비스수수료 등이 있으며, 관련내용은 제24조(서비스수수료)에
           명시된 바에 따릅니다. "포인트"라 함은 "서비스"의 효율적 이용을 위해
           "회사"가 임의로 책정 또는 지급, 조정할 수 있는 "서비스" 상의 가상
@@ -639,11 +637,9 @@ const Join = () => {
           따릅니다.
         </p>
         <div className="modal-close">
-          <button
-            className="modal-btn"
-            onRequestClose={closeModal2}
-            text="닫기"
-          />
+          <button className="modal-btn" onClick={closeModal}>
+            닫기
+          </button>
         </div>
       </Modal>
     </div>

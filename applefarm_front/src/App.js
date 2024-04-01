@@ -9,6 +9,7 @@ import BoardMain from "./page/board/BoardMain";
 import Join from "./page/member/Join";
 import AdminMain from "./page/admin/AdminMain";
 import ProductMain from "./page/product/ProductMain";
+import Login from "./page/member/Login";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/board/*" element={<BoardMain />} />
             <Route path="/join" element={<Join />} />
             <Route path="/admin/*" element={<AdminMain />} />
+            <Route path="/login" element={<Login />} />
 
             {/*제품별 메인을 아래처럼 컴포넌트 하나로 처리 불가능하다면 별 두개로 바꾸고...*/}
             <Route path="/product" element={<ProductMain />} />
