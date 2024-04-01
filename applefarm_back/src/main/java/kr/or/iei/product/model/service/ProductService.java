@@ -22,6 +22,11 @@ public class ProductService {
 		List list = productDao.selectProductCategory(table, productLine);
 		return list;
 	}
+
+	public List selectQualityList(String tableName) {
+		
+		return productDao.selectQualityList(tableName);
+	}
 	
 	
 }

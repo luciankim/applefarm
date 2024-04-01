@@ -1,0 +1,131 @@
+/* QualitySelectFrm */
+.quality-select-total-wrap {
+  width: 1200px;
+  /* background-color: rgb(233, 238, 208); */
+  margin: 0 auto;
+}
+
+.quality-select-wrap {
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.quality-select-title {
+  width: 100%;
+  height: 100px;
+  /* background-color: aquamarine; */
+  text-align: center;
+  line-height: 100px;
+  font-size: 30px;
+}
+
+.quality-select-input-area {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 0;
+}
+
+.quality-type {
+  display: flex;
+  justify-content: space-between;
+}
+
+.radio4 + label {
+  display: block;
+  /* width: 250px; */
+  width: calc(100% / 4);
+  height: 60px;
+  line-height: 60px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+.radio3 + label {
+  display: block;
+  /* width: 250px; */
+  width: calc(100% / 3);
+  height: 60px;
+  line-height: 60px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+.radio2 + label {
+  display: block;
+  /* width: 250px; */
+  width: calc(100% / 2);
+  height: 60px;
+  line-height: 60px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+.radio1 + label {
+  display: block;
+  /* width: 250px; */
+  width: calc(100% / 1);
+  height: 60px;
+  line-height: 60px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+
+.radio:checked + label {
+  border: 3px solid blue;
+  color: black;
+}
+.radio {
+  display: none;
+}
+
+.quality-select-image1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.quality-select-image1 > img {
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  /* text-align: center; */
+}
+.quality-select-image2 > img {
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  /* text-align: center; */
+}
+
+.quality-type {
+  font-size: 13px;
+  margin: 10px 20px;
+}
+
+.quality-select-input-wrap > label {
+  font-size: 13px;
+}
+
+.quality-select-half {
+  display: flex;
+}
+
+.quality-select-half > div {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.total-quality {
+  width: 70%;
+  margin: 0 auto;
+}

@@ -25,7 +25,9 @@
   top: 50%;
   position: absolute;*/
 }
-
+.modal-text {
+  font-size: 15px;
+}
 .close-icon-wrap {
   overflow: hidden;
 }
@@ -40,7 +42,7 @@
   margin: 10px;
   width: 80px;
 }
-.modal-icon {
+.modal-main-icon {
   font-size: 28px;
   cursor: default;
 }
@@ -102,4 +104,8 @@
 }
 .address-default-check-box-wrap > label {
   font-size: 13px;
+}
+.address-disable-input {
+  color: #545454;
+  cursor: default;
 }
