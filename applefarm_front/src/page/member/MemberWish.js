@@ -119,7 +119,11 @@ const LikeItem = (props) => {
       </td>
       <td>
         {modalOpen && (
-          <DelModal setModalOpen={setModalOpen} clickEvent={likeDelFun} />
+          <DelModal
+            setModalOpen={setModalOpen}
+            clickEvent={likeDelFun}
+            text="Are you sure you want to delete this item?"
+          />
         )}
       </td>
     </tr>
