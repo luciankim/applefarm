@@ -107,6 +107,11 @@ const ProductCategory = (props) => {
         "Apple Watch Series" ||
         "Apple Watch SE") &&
       category.productGen === productGen &&
+      //model컬럼에 null인게 하나라도 있으면
+      //modelArr.length = 1
+      //modelArr[0] = [null]
+      //그래서 아래의 한 줄이 추가로 필요
+      category.productModel !== null &&
       !modelArr.includes(category.productModel)
     ) {
       modelArr.push(category.productModel);
@@ -117,11 +122,17 @@ const ProductCategory = (props) => {
       (category.productLine === "MacBook Pro" || "MacBook Air") &&
       category.productGen === productGen &&
       category.productModel === productModel &&
+      //model2컬럼에 null인게 하나라도 있으면
+      //model2Arr.length = 1
+      //model2Arr[0] = [null]
+      //그래서 아래의 한 줄이 추가로 필요
+      category.productModel2 !== null &&
       !model2Arr.includes(category.productModel2)
     ) {
       model2Arr.push(category.productModel2);
     }
   });
+
   useEffect(() => {
     setSelectedCategory(
       categoryArr.filter((category) =>
@@ -192,66 +203,38 @@ const ProductCategory = (props) => {
 
   return (
     <div>
-      <ul>
-        {genArr.map((gen, index) => {
-          return (
-            <li key={"gen" + index}>
-              <Radio
-                val={gen}
-                name="gen"
-                selectValue={productGen}
-                setSelectValue={setProductGen}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
-      <ul>
-        {modelArr.map((model, index) => {
-          return (
-            <li key={"model" + index}>
-              <Radio
-                val={model}
-                name="model"
-                selectValue={productModel}
-                setSelectValue={setProductModel}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
-      <ul>
-        {model2Arr.map((model2, index) => {
-          return (
-            <li key={"modelmodel" + index}>
-              <Radio
-                val={model2}
-                name="model2"
-                selectValue={productModel2}
-                setSelectValue={setProductModel2}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
-      <ul>
-        {colorArr.map((color, index) => {
-          return (
-            <li key={"color" + index}>
-              <Radio
-                val={color}
-                name="color"
-                selectValue={productColor}
-                setSelectValue={setProductColor}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
+      {
+        <ArrMap //ul태그
+          arr={genArr}
+          name="gen"
+          selectValue={productGen}
+          setSelectValue={setProductGen}
+        />
+      }
+      {
+        <ArrMap //ul태그
+          arr={modelArr}
+          name="model"
+          selectValue={productModel}
+          setSelectValue={setProductModel}
+        />
+      }
+      {
+        <ArrMap //ul태그
+          arr={model2Arr}
+          name="model2"
+          selectValue={productModel2}
+          setSelectValue={setProductModel2}
+        />
+      }
+      {
+        <ArrMap //ul태그
+          arr={colorArr}
+          name="color"
+          selectValue={productColor}
+          setSelectValue={setProductColor}
+        />
+      }
       {colorArr.indexOf(productColor) !== -1 ? (
         <img
           src={
@@ -263,128 +246,105 @@ const ProductCategory = (props) => {
       ) : (
         <></>
       )}
+      {
+        <ArrMap //ul태그
+          arr={storageArr}
+          name="storage"
+          selectValue={productStorage}
+          setSelectValue={setProductStorage}
+        />
+      }
 
-      <ul>
-        {storageArr.map((storage, index) => {
-          return (
-            <li key={"storage" + index}>
-              <Radio
-                val={storage}
-                name="storage"
-                selectValue={productStorage}
-                setSelectValue={setProductStorage}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      {
+        <ArrMap //ul태그
+          arr={memoryArr}
+          name="memory"
+          selectValue={productMemory}
+          setSelectValue={setProductMemory}
+        />
+      }
 
-      <ul>
-        {memoryArr.map((memory, index) => {
-          return (
-            <li key={"memory" + index}>
-              <Radio
-                val={memory}
-                name="memory"
-                selectValue={productMemory}
-                setSelectValue={setProductMemory}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      {
+        <ArrMap //ul태그
+          arr={chipArr}
+          name="cbip"
+          selectValue={productChip}
+          setSelectValue={setProductChip}
+        />
+      }
 
-      <ul>
-        {chipArr.map((chip, index) => {
-          return (
-            <li key={"cbip" + index}>
-              <Radio
-                val={chip}
-                name="chip"
-                selectValue={productChip}
-                setSelectValue={setProductChip}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      {
+        <ArrMap //ul태그
+          arr={cpuArr}
+          name="cpu"
+          selectValue={productCpu}
+          setSelectValue={setProductCpu}
+        />
+      }
 
-      <ul>
-        {cpuArr.map((cpu, index) => {
-          return (
-            <li key={"cpu" + index}>
-              <Radio
-                val={cpu}
-                name="cpu"
-                selectValue={productCpu}
-                setSelectValue={setProductCpu}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      {
+        <ArrMap //ul태그
+          arr={gpuArr}
+          name="gpu"
+          selectValue={productGpu}
+          setSelectValue={setProductGpu}
+        />
+      }
 
-      <ul>
-        {gpuArr.map((gpu, index) => {
-          return (
-            <li key={"gpu" + index}>
-              <Radio
-                val={gpu}
-                name="gpu"
-                selectValue={productGpu}
-                setSelectValue={setProductGpu}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      {
+        <ArrMap //ul태그
+          arr={sizeArr}
+          name="size"
+          selectValue={productSize}
+          setSelectValue={setProductSize}
+        />
+      }
 
-      <ul>
-        {sizeArr.map((size, index) => {
-          return (
-            <li key={"size" + index}>
-              <Radio
-                val={size}
-                name="size"
-                selectValue={productSize}
-                setSelectValue={setProductSize}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
-      <ul>
-        {connectivityArr.map((connectivity, index) => {
-          return (
-            <li key={"connectivity" + index}>
-              <Radio
-                val={connectivity}
-                name="connectivity"
-                selectValue={productConnectivity}
-                setSelectValue={setProductConnectivity}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
-      <ul>
-        {chargeArr.map((charge, index) => {
-          return (
-            <li key={"charge" + index}>
-              <Radio
-                val={charge}
-                name="charge"
-                selectValue={productCharge}
-                setSelectValue={setProductCharge}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      {
+        <ArrMap //ul태그
+          arr={connectivityArr}
+          name="connectivity"
+          selectValue={productConnectivity}
+          setSelectValue={setProductConnectivity}
+        />
+      }
+      {
+        <ArrMap //ul태그
+          arr={chargeArr}
+          name="charge"
+          selectValue={productCharge}
+          setSelectValue={setProductCharge}
+        />
+      }
     </div>
   );
+};
+
+const ArrMap = (props) => {
+  const arr = props.arr;
+  const name = props.name;
+  const selectValue = props.selectValue;
+  const setSelectValue = props.setSelectValue;
+  if (arr.length === 0) {
+    return <></>;
+  } else {
+    return (
+      <ul>
+        {arr.map((item, index) => {
+          return (
+            <li key={name + index}>
+              <Radio
+                val={item}
+                name={name}
+                selectValue={selectValue}
+                setSelectValue={setSelectValue}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
 };
 
 export default ProductCategory;
