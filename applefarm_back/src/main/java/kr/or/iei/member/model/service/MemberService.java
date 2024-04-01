@@ -1,5 +1,6 @@
 package kr.or.iei.member.model.service;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.mail.search.AddressStringTerm;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
 
@@ -76,6 +77,39 @@ public class MemberService {
 			int result = memberDao.updateAddressDefault(address.getMemberNo());
 			result -= memberDao.selectAddressCount(address.getMemberNo());
 			result+= memberDao.updateAddressDefault1(address.getAddressNo());
+			return result;
+		}
+		
+		public int selectOneEmail(String memberEmail) {
+			
+			int duplicationEmail = memberDao.selectOneEmail(memberEmail);
+			
+			
+			return duplicationEmail;
+		}
+
+
+		public int selectOneId(String memberId) {
+			
+			
+			int duplicationId = memberDao.selectOneId(memberId);
+			
+			return duplicationId;
+		}
+
+
+		public int selectOneNickName(String memberNickName) {
+			int duplicationNickName = memberDao.selectOneNickName(memberNickName);
+			return duplicationNickName;
+		}
+
+
+		@Transactional
+		public int join(Member member) {
+			
+			int result = memberDao.join(member);
+					
+			
 			return result;
 		}
 		

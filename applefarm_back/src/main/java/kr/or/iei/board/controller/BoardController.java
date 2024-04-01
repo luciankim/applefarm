@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.board.model.dto.BoardComment;
@@ -40,6 +41,7 @@ import kr.or.iei.util.FileUtils;
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value="/board")
+@Tag(name="BOARD", description = "BOARD API")
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
@@ -216,5 +218,13 @@ public class BoardController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	@GetMapping(value="/searchList/{selectedValue}/{selectedKeyword}/{reqPage}")
+	public ResponseEntity<ResponseDTO> searchKeyword(@PathVariable String selectedValue, @PathVariable String selectedKeyword, @PathVariable int reqPage){
+		Map map = boardService.selectBoardList(selectedValue,selectedKeyword , reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+
 }
 

@@ -5,9 +5,23 @@ import { createContext, useContext } from "react";
 
 //  ---------Input---------- 완료: 240324, 상태관리:자식
 const Input = (props) => {
-  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const {
+    data,
+    setData,
+    type,
+    id,
+    blurEvent,
+    placeholder,
+    disabled,
+    onKeyDown,
+  } = props;
   const changeData = (e) => {
     setData(e.target.value);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onKeyDown(); // 엔터 키가 눌리면 전달받은 onKeyPress 함수 호출
+    }
   };
   return (
     <input
@@ -17,6 +31,7 @@ const Input = (props) => {
       value={data}
       onChange={changeData}
       onBlur={blurEvent}
+      onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
       placeholder={placeholder}
     />
   );
@@ -33,7 +48,8 @@ const Textarea = (props) => {
 };
 
 const Input2 = (props) => {
-  const { data, setData, type, id, blurEvent, placeholder } = props;
+  const { data, setData, type, id, blurEvent, placeholder, disabled } = props;
+
   const changeData = (e) => {
     setData(e.target.value);
   };
@@ -46,6 +62,7 @@ const Input2 = (props) => {
       onChange={changeData}
       onBlur={blurEvent}
       placeholder={placeholder}
+      disabled={disabled}
     />
   );
 };
@@ -110,13 +127,15 @@ const Button = (props) => {
   );
 };
 const Button1 = (props) => {
-  const { text, icon, clickEvent, addId } = props;
+  const { text, icon, clickEvent, addId, disabled, style } = props;
   return (
     <button
       className="btn_form bg1"
       type="button"
       onClick={clickEvent}
       id={addId}
+      disabled={disabled}
+      style={style}
     >
       {text}
       {icon}
@@ -124,27 +143,43 @@ const Button1 = (props) => {
   );
 };
 const Button2 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, disabled } = props;
   return (
-    <button className="btn_form bg2" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg2"
+      type="button"
+      onClick={clickEvent}
+      disabled={disabled}
+    >
       {text}
       {icon}
     </button>
   );
 };
 const Button3 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, disabled, style } = props;
   return (
-    <button className="btn_form bg3" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg3"
+      type="button"
+      onClick={clickEvent}
+      disabled={disabled}
+      style={style}
+    >
       {text}
       {icon}
     </button>
   );
 };
 const Button4 = (props) => {
-  const { text, icon, clickEvent } = props;
+  const { text, icon, clickEvent, disabled } = props;
   return (
-    <button className="btn_form bg4" type="button" onClick={clickEvent}>
+    <button
+      className="btn_form bg4"
+      type="button"
+      onClick={clickEvent}
+      disabled={disabled}
+    >
       {text}
       {icon}
     </button>
@@ -286,6 +321,27 @@ const Radio = (props) => {
   );
 };
 
+// 박성완
+const RadioPswDefault = (props) => {
+  const { name, val, selectValue, setSelectValue } = props;
+  const handleChange = (event) => {
+    setSelectValue(event.target.value);
+  };
+  return (
+    <div className="input_wrap radioPswDefault">
+      <input
+        type="radio"
+        id={val}
+        name={name}
+        defaultValue={val}
+        checked={selectValue === val}
+        onChange={handleChange}
+      />
+      <label htmlFor={val}>{val}</label>
+    </div>
+  );
+};
+
 export {
   Input,
   Input2,
@@ -304,6 +360,7 @@ export {
   MsgSuccess,
   MsgFail,
   Radio,
+  RadioPswDefault,
   Checkbox,
   CheckboxGroup,
   Textarea,

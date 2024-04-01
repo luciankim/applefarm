@@ -229,4 +229,127 @@
 /* 회원가입 */
 
 .join-wrap {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.input-with-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-with-btn input {
+  min-width: 510px;
+}
+
+.input-with-btn button {
+  min-width: 110px;
+}
+
+.join-title {
+  padding-bottom: 40px;
+  font-size: 26px;
+}
+
+.join-btn button {
+  width: 350px;
+}
+
+.join-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.join-input-wrap {
+  padding: 20px 0;
+}
+
+.gender-title {
+  padding-bottom: 13px;
+}
+
+.join-gender {
+  padding-top: 17px;
+  padding-bottom: 15px;
+}
+
+.gender-box {
+  padding: 17px 32px;
+  padding-bottom: 25px;
+  border: 1px solid #b7b7b7;
+  border-radius: 15px;
+}
+
+.join-gender label {
+  padding: 0 15px;
+}
+
+.bank-input-wrap {
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 0 1px #b7b7b7;
+  max-height: 330px;
+  min-height: 330px;
+}
+
+.bank-input-wrap > .label {
+  padding-bottom: 15px;
+}
+.bank-input-wrap select {
+  width: 560px;
+
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid #b7b7b7;
+}
+
+.little-text {
+  font-size: 12px;
+  color: #8f8f8f;
+}
+
+.join-btn {
+  padding: 30px 0;
+}
+
+.bank-title {
+  padding: 10px 0;
+}
+
+.input-wrap input::placeholder {
+  font-size: 14px;
+  color: #b7b7b7;
+}
+
+.check-msg {
+  font-size: 13.5px;
+  color: #f44336;
+}
+
+.agree-modal {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.agree-icon {
+  position: relative; /*자기자신을 기준으로*/
+  top: 9px;
+  left: -4px;
+  font-size: 30px;
+  color: #1e1e1e;
+}
+
+.modal-close {
+  display: flex;
+  justify-content: center;
+}
+
+.bg3 {
+  background-color: #0267f3;
 }

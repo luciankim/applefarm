@@ -116,10 +116,6 @@ const BoardView = (props) => {
     console.log("수정 댓글:", commentNo);
   };
 
-  const toggleReplyForm = (commentNo) => {
-    setReplyForms({ ...replyForms, [commentNo]: !replyForms[commentNo] });
-  };
-  console.log("대댓글", replyForms);
   return (
     <div className="board-view-wrap">
       <div className="board-view-top">

@@ -6,9 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.member.model.dto.Address;
+import kr.or.iei.member.model.dto.Member;
 
 @Mapper
 public interface MemberDao {
+
 
 	int insertAddress(Address address);
 
@@ -27,6 +29,16 @@ public interface MemberDao {
 	int deleteAddress(int addressNo);
 
 	int updateAddressDefault1(int addressNo);
+
+	int selectOneEmail(String memberEmail);
+
+	int selectOneId(String memberId);
+
+	int selectOneNickName(String memberNickName);
+
+	int join(Member member);
+
+
 
 	
 }

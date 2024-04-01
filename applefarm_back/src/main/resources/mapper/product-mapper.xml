@@ -12,4 +12,8 @@
 		where product_line = #{productLine}
 		order by rownum desc
 	</select>
+	
+	<select id="selectQualityList" resultType="Quality">
+		select * from quality_tbl where table_name = #{tableName}
+	</select>
 </mapper>

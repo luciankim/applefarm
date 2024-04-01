@@ -27,6 +27,8 @@ public interface BoardDao {
 	int insertComment(BoardComment boardComment);
 	List selectCommentList(int boardNo);
 	int deleteComment(int commentNo);
+	List selectSearchBoardList(String selectedValue, String selectedKeyword, PageInfo pi);
+	int totalSearchCount(String selectedValue, String selectedKeyword);
 
 
 }
