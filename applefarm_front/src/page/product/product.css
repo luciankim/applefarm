@@ -83,7 +83,7 @@
 
 .radio:checked + label {
   border: 3px solid blue;
-color: black;
+  color: black;
 }
 .radio {
   display: none;
@@ -101,33 +101,31 @@ color: black;
   /* text-align: center; */
 }
 .quality-select-image2 > img {
-    display: block;
-    width: 40%;
-    margin: 0 auto;
-    /* text-align: center; */
-  }
-
-.quality-type{
-    font-size: 13px;
-    margin: 10px 20px;
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  /* text-align: center; */
 }
 
-.quality-select-input-wrap > label{
-    font-size: 13px;
+.quality-type {
+  font-size: 13px;
+  margin: 10px 20px;
 }
 
-
-
-.quality-select-half{
-    display: flex;
+.quality-select-input-wrap > label {
+  font-size: 13px;
 }
 
-.quality-select-half>div{
-    width: 40%;
-    margin: 0 auto;
+.quality-select-half {
+  display: flex;
 }
 
-.total-quality{
-    width: 70%;
-    margin: 0 auto;
+.quality-select-half > div {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.total-quality {
+  width: 70%;
+  margin: 0 auto;
 }

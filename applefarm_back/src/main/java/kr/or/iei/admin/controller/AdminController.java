@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.admin.model.service.AdminService;
-import kr.or.iei.member.model.dto.Member;
 
 @CrossOrigin("*")
 @RestController
