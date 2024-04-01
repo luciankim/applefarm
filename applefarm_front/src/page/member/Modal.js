@@ -8,6 +8,7 @@ import axios from "axios";
 const DelModal = (props) => {
   const setModalOpen = props.setModalOpen;
   const clickEvent = props.clickEvent;
+  const text = props.text;
   const modalBackground = useRef();
   //모달 닫기
   const closeModal = () => {
@@ -33,7 +34,7 @@ const DelModal = (props) => {
             <span className="material-icons heart-broken-icon">
               heart_broken
             </span>
-            <p>Are you sure you want to delete this item?</p>
+            <p>{text}</p>
             <button
               className="like-delete-btn like-modal-btn"
               onClick={clickEvent}
@@ -57,6 +58,8 @@ const AddressModal = (props) => {
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
+  const status = props.status;
+  const setStatus = props.setStatus;
   const input = useRef();
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -129,12 +132,16 @@ const AddressModal = (props) => {
         .post(backServer + "/member/address", obj)
         .then((res) => {
           console.log(res.data);
+          if (res.data.message === "success") {
+            setModalOpen(false);
+            setStatus(!status);
+          }
         })
         .catch((res) => {
           console.log(res);
         });
     } else {
-      alert("다 입력해");
+      alert("다입력하세요-> 수정예정");
     }
   };
 
