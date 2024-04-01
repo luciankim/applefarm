@@ -8,9 +8,9 @@ import ProductCategory from "./ProductCategory";
 const ProductMain = (props) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   /*
-  const naviTable: props.navitable //"iphone_tbl"
-  const naviProductLine: props.naviProductLine
-  const naviProductGen: props.naviProductGen
+  const table: props.table; //"iphone_tbl"
+  const naviProductLine: props.naviProductLine;
+  const naviProductGen: props.naviProductGen;
   */
 
   //<화면 출력 순서>
@@ -18,13 +18,31 @@ const ProductMain = (props) => {
   //차트js, 거래건js
   //리스트js
   return (
-    <ProductCategory
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-      //naviTable={naviTable}
-      //naviProductLine={naviProductLine}
-      //naviProductGen={naviProductGen}
-    />
+    <div className="productMain">
+      <div className="productMain-title">
+        {/*
+        table === "iphone_tbl"
+          ? "iPhone"
+          : table === "macbook_tbl"
+          ? "MacBook"
+          : table === "ipad_tbl"
+          ? "iPad"
+          : table === "watch_tbl"
+          ? "Apple Watch"
+          : table === "airpods_tbl"
+          ? "에어팟"
+          : ""
+          */}
+        {"iPhone"}
+      </div>
+      <ProductCategory
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        //table={table}
+        //naviProductLine={naviProductLine}
+        //naviProductGen={naviProductGen}
+      />
+    </div>
   );
 };
 

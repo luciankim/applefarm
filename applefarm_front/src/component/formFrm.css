@@ -148,12 +148,19 @@
 
 /*박성완*/
 .input_wrap {
-  width: 320px;
-  border: 1px solid var(--line_01);
+  width: 100%;
+  border: 1px solid var(--gray_02);
   border-radius: 10px;
   padding: 10px 15px;
-  margin-top: 10px;
+  margin-top: 15px;
+}
+.input_wrap.input_wrap_focus {
+  border: 3px solid var(--main_01);
 }
 .input_wrap > .psw_radio {
   display: none;
+}
+.input_wrap .psw_radio_label {
+  font-weight: 500;
+  font-size: 18px;
 }

@@ -328,18 +328,26 @@ const PswRadio = (props) => {
     setSelectValue(event.target.value);
   };
   return (
-    <div className="input_wrap">
-      <input
-        className="psw_radio"
-        type="radio"
-        id={val}
-        name={name}
-        defaultValue={val}
-        checked={selectValue === val}
-        onChange={handleChange}
-      />
-      <label htmlFor={val}>{val}</label>
-    </div>
+    <label htmlFor={val}>
+      <div
+        className={
+          selectValue === val ? "input_wrap input_wrap_focus" : "input_wrap"
+        }
+      >
+        <input
+          className="psw_radio"
+          type="radio"
+          id={val}
+          name={name}
+          defaultValue={val}
+          checked={selectValue === val}
+          onChange={handleChange}
+        />
+        <label className="psw_radio_label" htmlFor={val}>
+          {val}
+        </label>
+      </div>
+    </label>
   );
 };
 
