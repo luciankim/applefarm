@@ -48,6 +48,7 @@ const Join = () => {
 
   const [emailButtonColor, setEmailButtonColor] = useState("#0267f3"); //버튼색깔
   const [verifButtonColor, setVerifButtonColor] = useState("#b7b7b7");
+  const [joinButtonColor, setJoinButtonColor] = useState("#b7b7b7");
 
   const [currentAuthCode, setCurrentAuthCode] = useState(""); //인증코드 저장
 
@@ -281,11 +282,13 @@ const Join = () => {
         memberAccountnumber,
         depositorName,
       };
+      setJoinButtonColor("#0267f3");
       axios
         .post(backServer + "/member/join", obj)
         .then((res) => {
           if (res.data.message === "success") {
             console.log(res.data);
+
             navigate("/");
           } else {
             Swal.fire(
@@ -480,7 +483,11 @@ const Join = () => {
       </div>
       <div className=""></div>
       <div className="join-btn">
-        <Button3 text="가입하기" clickEvent={join} />
+        <Button3
+          text="가입하기"
+          clickEvent={join}
+          style={{ backgroundColor: joinButtonColor }}
+        />
       </div>
     </div>
   );
