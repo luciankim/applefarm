@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="kr.or.iei.admin.model.dao.AdminDao">
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from refund_tbl
+	</select>
+
+	<select id="selectRefundList" resultType="refund">
+		SELECT
+    R.REFUND_NO,
+    R.TRADE_NO,
+    R.PRODUCT_NO,
+    TO_CHAR(R.REFUND_DATE, 'YYYY-MM-DD') AS REFUND_DATE,
+    R.REFUND_REASON,
+    R.REFUND_STATUS,
+    TO_CHAR(T.TRADE_DATE, 'YYYY-MM-DD') AS TRADE_DATE,
+    SELLER.MEMBER_NICKNAME AS SELLER_NICKNAME,
+    BUYER.MEMBER_NICKNAME AS BUYER_NICKNAME
+FROM
+    REFUND_TBL R
+JOIN
+    TRADE_TBL T ON R.TRADE_NO = T.TRADE_NO
+JOIN
+    MEMBER_TBL SELLER ON T.TRADE_SELLER = SELLER.MEMBER_NO
+JOIN
+    MEMBER_TBL BUYER ON T.TRADE_BUYER = BUYER.MEMBER_NO
+	</select>
+
+	<update id="updateConfirmRefund">
+	    UPDATE REFUND_TBL
+	    SET REFUND_STATUS = 2
+	    WHERE REFUND_NO = #{refundNo}
+
+	</update>
+	
+	<update id="updateConfirmTrade">
+	    UPDATE TRADE_TBL
+	    SET TRADE_STATE = '환불'
+	    WHERE TRADE_NO = #{tradeNo}		
+	</update>
+
+	<update id="updateRejectRefund">
+		update refund_tbl set refund_status = 1 where refund_no =#{refundNo}
+	</update>
+	
+	<update id="updateRejectTrade">
+		update trade_tbl set TRADE_STATE = '구매확정' where trade_no =#{tradeNo}
+	</update>
+</mapper>

@@ -27,11 +27,3 @@
 .purchase-btn-box button {
   margin: 5px 20px;
 }
-
-.in-progress {
-  color: var(--main_01);
-}
-
-.rejected {
-  color: var(--main_02);
-}
