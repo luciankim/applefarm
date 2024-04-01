@@ -321,6 +321,27 @@ const Radio = (props) => {
   );
 };
 
+// 박성완
+const RadioPswDefault = (props) => {
+  const { name, val, selectValue, setSelectValue } = props;
+  const handleChange = (event) => {
+    setSelectValue(event.target.value);
+  };
+  return (
+    <div className="input_wrap radioPswDefault">
+      <input
+        type="radio"
+        id={val}
+        name={name}
+        defaultValue={val}
+        checked={selectValue === val}
+        onChange={handleChange}
+      />
+      <label htmlFor={val}>{val}</label>
+    </div>
+  );
+};
+
 export {
   Input,
   Input2,
@@ -339,6 +360,7 @@ export {
   MsgSuccess,
   MsgFail,
   Radio,
+  RadioPswDefault,
   Checkbox,
   CheckboxGroup,
   Textarea,
