@@ -366,7 +366,7 @@ const AddressModal = (props) => {
                     ref={input}
                   ></input>
                 </div>
-                {newAddressDefault == 1 ? (
+                {addressDefault == 1 ? (
                   ""
                 ) : (
                   <div className="address-default-check-box-wrap">
