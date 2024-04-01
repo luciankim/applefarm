@@ -238,7 +238,7 @@ const Join = () => {
     }
   };
 
-  /*비밀번호 정규식*/
+  /*비밀번호 정규식        나중에
   const pwChk = () => {
     const regPw =
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{4,16}$/;
@@ -249,7 +249,7 @@ const Join = () => {
       setCheckRegPw("영문,숫자,특수문자 조합 4~16자");
     }
   };
-
+*/
   /*비밀번호 확인*/
   const rePwChk = () => {
     if (memberPw === confirmPw) {
@@ -449,7 +449,7 @@ const Join = () => {
         setData={setMemberPw}
         checkMsg={checkRegPw}
         placeholder="영문,숫자,특수문자 조합 4~16자"
-        blurEvent={pwChk}
+        //blurEvent={pwChk}  나중에
       />
       <JoinInputWrap
         label="비밀번호확인"
