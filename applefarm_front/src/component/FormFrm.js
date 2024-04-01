@@ -322,14 +322,15 @@ const Radio = (props) => {
 };
 
 // 박성완
-const RadioPswDefault = (props) => {
+const PswRadio = (props) => {
   const { name, val, selectValue, setSelectValue } = props;
   const handleChange = (event) => {
     setSelectValue(event.target.value);
   };
   return (
-    <div className="input_wrap radioPswDefault">
+    <div className="input_wrap">
       <input
+        className="psw_radio"
         type="radio"
         id={val}
         name={name}
@@ -360,7 +361,7 @@ export {
   MsgSuccess,
   MsgFail,
   Radio,
-  RadioPswDefault,
+  PswRadio,
   Checkbox,
   CheckboxGroup,
   Textarea,

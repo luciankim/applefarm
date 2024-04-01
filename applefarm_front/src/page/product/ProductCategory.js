@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
 import axios from "axios";
-import { Radio } from "../../component/FormFrm";
+import { PswRadio } from "../../component/FormFrm";
 
 const ProductCategory = (props) => {
   const {
@@ -202,120 +202,134 @@ const ProductCategory = (props) => {
   }, [selectedCategory]);
 
   return (
-    <div>
-      {
-        <ArrMap //ul태그
-          arr={genArr}
-          name="gen"
-          selectValue={productGen}
-          setSelectValue={setProductGen}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={modelArr}
-          name="model"
-          selectValue={productModel}
-          setSelectValue={setProductModel}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={model2Arr}
-          name="model2"
-          selectValue={productModel2}
-          setSelectValue={setProductModel2}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={colorArr}
-          name="color"
-          selectValue={productColor}
-          setSelectValue={setProductColor}
-        />
-      }
-      {colorArr.indexOf(productColor) !== -1 ? (
-        <img
-          src={
-            "/image/categoryImage/" +
-            imageArr[colorArr.indexOf(productColor)] +
-            ".png"
-          }
-        />
-      ) : (
-        <></>
-      )}
-      {
-        <ArrMap //ul태그
-          arr={storageArr}
-          name="storage"
-          selectValue={productStorage}
-          setSelectValue={setProductStorage}
-        />
-      }
+    <div className="product-category-wrap">
+      {/*좌측 영역*/}
+      <div className="product-category-wrap-left">
+        {colorArr.indexOf(productColor) !== -1 ? (
+          <img
+            className="categoryImage"
+            src={
+              "/image/categoryImage/" +
+              imageArr[colorArr.indexOf(productColor)] +
+              ".png"
+            }
+          />
+        ) : (
+          <img
+            className="categoryImage"
+            src={"/image/categoryImage/iPhone_representation.png"}
+          />
+        )}
+      </div>
+      {/*//좌측 영역*/}
 
-      {
-        <ArrMap //ul태그
-          arr={memoryArr}
-          name="memory"
-          selectValue={productMemory}
-          setSelectValue={setProductMemory}
-        />
-      }
+      {/*우측 영역*/}
+      <div className="product-category-wrap-right">
+        {
+          <ArrMap //ul태그
+            arr={genArr}
+            name="gen"
+            selectValue={productGen}
+            setSelectValue={setProductGen}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={modelArr}
+            name="model"
+            selectValue={productModel}
+            setSelectValue={setProductModel}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={model2Arr}
+            name="model2"
+            selectValue={productModel2}
+            setSelectValue={setProductModel2}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={colorArr}
+            name="color"
+            selectValue={productColor}
+            setSelectValue={setProductColor}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={chipArr}
-          name="cbip"
-          selectValue={productChip}
-          setSelectValue={setProductChip}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={storageArr}
+            name="storage"
+            selectValue={productStorage}
+            setSelectValue={setProductStorage}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={cpuArr}
-          name="cpu"
-          selectValue={productCpu}
-          setSelectValue={setProductCpu}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={memoryArr}
+            name="memory"
+            selectValue={productMemory}
+            setSelectValue={setProductMemory}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={gpuArr}
-          name="gpu"
-          selectValue={productGpu}
-          setSelectValue={setProductGpu}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={chipArr}
+            name="cbip"
+            selectValue={productChip}
+            setSelectValue={setProductChip}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={sizeArr}
-          name="size"
-          selectValue={productSize}
-          setSelectValue={setProductSize}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={cpuArr}
+            name="cpu"
+            selectValue={productCpu}
+            setSelectValue={setProductCpu}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={connectivityArr}
-          name="connectivity"
-          selectValue={productConnectivity}
-          setSelectValue={setProductConnectivity}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={chargeArr}
-          name="charge"
-          selectValue={productCharge}
-          setSelectValue={setProductCharge}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={gpuArr}
+            name="gpu"
+            selectValue={productGpu}
+            setSelectValue={setProductGpu}
+          />
+        }
+
+        {
+          <ArrMap //ul태그
+            arr={sizeArr}
+            name="size"
+            selectValue={productSize}
+            setSelectValue={setProductSize}
+          />
+        }
+
+        {
+          <ArrMap //ul태그
+            arr={connectivityArr}
+            name="connectivity"
+            selectValue={productConnectivity}
+            setSelectValue={setProductConnectivity}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={chargeArr}
+            name="charge"
+            selectValue={productCharge}
+            setSelectValue={setProductCharge}
+          />
+        }
+      </div>
+      {/*//우측 영역*/}
     </div>
   );
 };
@@ -333,7 +347,7 @@ const ArrMap = (props) => {
         {arr.map((item, index) => {
           return (
             <li key={name + index}>
-              <Radio
+              <PswRadio
                 val={item}
                 name={name}
                 selectValue={selectValue}

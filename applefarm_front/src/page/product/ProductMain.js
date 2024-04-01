@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./product.css";
+import "./productMain.css";
 import axios from "axios";
 import { Radio } from "../../component/FormFrm";
 import ProductCategory from "./ProductCategory";
