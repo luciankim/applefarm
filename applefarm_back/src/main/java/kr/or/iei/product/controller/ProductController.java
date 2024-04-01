@@ -49,5 +49,18 @@ public class ProductController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+	@GetMapping(value = "/quality/{tableName}")
+	public ResponseEntity<ResponseDTO> selectQualityList(@PathVariable String tableName){
+		List list = productService.selectQualityList(tableName);
+		
+		if(list.size()==0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 
 }

@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProductDao {
 
 	List selectProductCategory(String table, String productLine);
+
+	List selectQualityList(String tableName);
 	
 	
 	

@@ -17,17 +17,55 @@ const QualitySelectFrm = (props) => {
 
   const [totalQuality, setTotalQuality] = useState();
 
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   // console.log(liquidCrystal);
   // console.log(backAndFront);
+  const tableName = "IPHONE_TBL";
 
-  useEffect((res) => {
-    // axios.get()
-  },[])
+  const [qualityList, setQualityList] = useState([]);
+
+  console.log(qualityList);
+  console.log(qualityList[0]);
+  console.log(qualityList[1]);
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/product/quality/" + tableName)
+      .then((res) => {
+        // console.log(res.data);
+        setQualityList(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   return (
     <div className="quality-select-total-wrap">
       <div className="quality-select-wrap">
         <div className="quality-select-title">품질 선택</div>
+
+        {/* {qualityList.map((item, index) => {
+          return (
+            <QualitySelectInputWrap
+              part={item.part}
+              type="radio"
+              className="radio radio4"
+              value1="정상"
+              id1="liquidCrystal1"
+              value2="경미한 잔기스"
+              id2="liquidCrystal2"
+              value3="심한 기스, 파손, 전면 뜸"
+              id3="liquidCrystal3"
+              value4="심각한 파손"
+              id4="liquidCrystal4"
+              name="liquidCrystal"
+              data={liquidCrystal}
+              setData={setLiquildCrystal}
+              img1="/image/default.png"
+            />
+          );
+        })} */}
 
         <QualitySelectInputWrap
           part="액정"
@@ -98,8 +136,6 @@ const QualitySelectFrm = (props) => {
           img1="/image/default.png"
         />
 
-        
-
         <div className="quality-select-half">
           <div>
             <QualitySelectInputWrap
@@ -113,7 +149,6 @@ const QualitySelectFrm = (props) => {
               name="power"
               data={power}
               setData={setPower}
-              
             />
           </div>
           <div>
@@ -128,7 +163,6 @@ const QualitySelectFrm = (props) => {
               name="camera"
               data={camera}
               setData={setCamera}
-              
             />
           </div>
         </div>
@@ -146,23 +180,21 @@ const QualitySelectFrm = (props) => {
               name="wifi"
               data={wifi}
               setData={setWifi}
-              
             />
           </div>
           <div>
-          <QualitySelectInputWrap
-            part="생체인식(지문/FACD ID)"
-            type="radio"
-            className="radio radio2"
-            value1="정상"
-            id1="biometrics1"
-            value2="불량,파손"
-            id2="biometrics2"
-            name="biometrics"
-            data={biometrics}
-            setData={setBiometrics}
-            
-          />
+            <QualitySelectInputWrap
+              part="생체인식(지문/FACD ID)"
+              type="radio"
+              className="radio radio2"
+              value1="정상"
+              id1="biometrics1"
+              value2="불량,파손"
+              id2="biometrics2"
+              name="biometrics"
+              data={biometrics}
+              setData={setBiometrics}
+            />
           </div>
         </div>
 
@@ -179,45 +211,42 @@ const QualitySelectFrm = (props) => {
               name="compass"
               data={compass}
               setData={setCompass}
-              
             />
           </div>
           <div>
-          <QualitySelectInputWrap
-            part="음성녹음"
-            type="radio"
-            className="radio radio2"
-            value1="정상"
-            id1="voiceRecording1"
-            value2="불량,파손"
-            id2="voiceRecording2"
-            name="voiceRecording"
-            data={voiceRecording}
-            setData={setVoiceRecording}
-            
-          />
+            <QualitySelectInputWrap
+              part="음성녹음"
+              type="radio"
+              className="radio radio2"
+              value1="정상"
+              id1="voiceRecording1"
+              value2="불량,파손"
+              id2="voiceRecording2"
+              name="voiceRecording"
+              data={voiceRecording}
+              setData={setVoiceRecording}
+            />
           </div>
         </div>
 
         <div>
           <div className="total-quality">
-          <QualitySelectInputWrap
-            part="선택된 품질"
-            type="radio"
-            className="radio radio4"
-            value1="A"
-            id1="totalQuality1"
-            value2="B"
-            id2="totalQuality2"
-            value3="C"
-            id3="totalQuality3"
-            value4="D"
-            id4="totalQuality4"
-            name="totalQuality"
-            data={totalQuality}
-            setData={setTotalQuality}
-            
-          />
+            <QualitySelectInputWrap
+              part="선택된 품질"
+              type="radio"
+              className="radio radio4"
+              value1="A"
+              id1="totalQuality1"
+              value2="B"
+              id2="totalQuality2"
+              value3="C"
+              id3="totalQuality3"
+              value4="D"
+              id4="totalQuality4"
+              name="totalQuality"
+              data={totalQuality}
+              setData={setTotalQuality}
+            />
           </div>
         </div>
       </div>
