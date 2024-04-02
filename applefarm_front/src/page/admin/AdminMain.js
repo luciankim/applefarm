@@ -5,6 +5,7 @@ import SideMenu from "../../component/SideMenu";
 import { useState } from "react";
 import "./admin.css";
 import BoardList from "../board/BoardList";
+import AdminMember from "./AdminMember";
 
 const AdminMain = () => {
   const [adminMenu, setAdminMenu] = useState([
@@ -30,7 +31,7 @@ const AdminMain = () => {
       <div className="admin-section-wrap">
         <Routes>
           {/* <Route path="/adminStat" element={<BoardList />} /> */}
-          {/* <Route path="/adminMember" element={<BoardList />} /> */}
+          <Route path="/manageMember" element={<AdminMember />} />
           {/* <Route path="/memberAccountNumber" element={<t />} /> */}
           <Route path="/manageBoard" element={<BoardList />} />
           {/* <Route path="/adminProduct" element={<AdminProduct />} /> */}

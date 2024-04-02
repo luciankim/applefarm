@@ -12,7 +12,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
-
+	
+	
+	//암호화
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	} 
+	
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		// TODO Auto-generated method stub
+		WebMvcConfigurer.super.addCorsMappings(registry);
+	}
 
 	
 	@Override
@@ -24,10 +36,5 @@ public class WebConfig implements WebMvcConfigurer{
 	}
 
 	
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		// TODO Auto-generated method stub
-		WebMvcConfigurer.super.addCorsMappings(registry);
-	}
 
 }

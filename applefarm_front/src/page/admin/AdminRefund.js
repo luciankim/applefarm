@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button1, Button2 } from "../../component/FormFrm";
+import { Button1, Button2, Select } from "../../component/FormFrm";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -49,8 +49,7 @@ const AdminRefund = () => {
               <th width="10%">구매자</th>
               <th width="10%">구매일</th>
               <th width="10%">신청일</th>
-              <th width="10%">상태</th>
-              <th width="15%">
+              <th width="10%">
                 <select onChange={(e) => setFilterStatus(e.target.value)}>
                   <option value="all">전체</option>
                   <option value="0">진행중</option>
@@ -58,6 +57,7 @@ const AdminRefund = () => {
                   <option value="2">승인</option>
                 </select>
               </th>
+              <th width="15%">환불관리</th>
             </tr>
           </thead>
           <tbody>
@@ -211,7 +211,9 @@ const RefundItem = (props) => {
       <td>{refund.buyerNickname}</td>
       <td>{refund.refundDate}</td>
       <td>{refund.tradeDate}</td>
-      <td className={statusClass}>{statusText}</td>
+      <td id="refundStatus" className={statusClass}>
+        {statusText}
+      </td>
       <td className="purchase-btn-box">
         {refundStatus === 0 && (
           <>

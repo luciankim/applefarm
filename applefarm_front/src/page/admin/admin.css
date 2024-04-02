@@ -29,9 +29,15 @@
 }
 
 .in-progress {
+  font-weight: 900;
+}
+
+.approved {
   color: var(--main_01);
+  font-weight: 900;
 }
 
 .rejected {
   color: var(--main_02);
+  font-weight: 900;
 }

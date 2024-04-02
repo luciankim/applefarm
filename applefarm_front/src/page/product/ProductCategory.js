@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
 import axios from "axios";
-import { Radio } from "../../component/FormFrm";
+import { PswRadio } from "../../component/FormFrm";
 
 const ProductCategory = (props) => {
   const {
     selectedCategory,
     setSelectedCategory,
-    //navitable,
+    //table,
     //naviProductLine,
     //naviProductGen,
   } = props;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
-  const [productLine, setProductLine] = useState("");
+  const [productLine, setProductLine] = useState(""); //useState(naviProductLine)
   const [productGen, setProductGen] = useState("");
   const [productModel, setProductModel] = useState("");
   const [productModel2, setProductModel2] = useState("");
@@ -74,7 +74,7 @@ const ProductCategory = (props) => {
 
   //원래는 속성으로 받아온 값을 써야 하는데, 일단은 임시로 아래처럼 직접 입력하였음
   const requestCategory = {
-    table: "IPHONE_TBL", //table: naviTable,
+    table: "IPHONE_TBL", //table: table,
     productLine: "iPhone", //productLine: naviProductLine,
   };
 
@@ -202,120 +202,136 @@ const ProductCategory = (props) => {
   }, [selectedCategory]);
 
   return (
-    <div>
-      {
-        <ArrMap //ul태그
-          arr={genArr}
-          name="gen"
-          selectValue={productGen}
-          setSelectValue={setProductGen}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={modelArr}
-          name="model"
-          selectValue={productModel}
-          setSelectValue={setProductModel}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={model2Arr}
-          name="model2"
-          selectValue={productModel2}
-          setSelectValue={setProductModel2}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={colorArr}
-          name="color"
-          selectValue={productColor}
-          setSelectValue={setProductColor}
-        />
-      }
-      {colorArr.indexOf(productColor) !== -1 ? (
-        <img
-          src={
-            "/image/categoryImage/" +
-            imageArr[colorArr.indexOf(productColor)] +
-            ".png"
-          }
-        />
-      ) : (
-        <></>
-      )}
-      {
-        <ArrMap //ul태그
-          arr={storageArr}
-          name="storage"
-          selectValue={productStorage}
-          setSelectValue={setProductStorage}
-        />
-      }
+    <div className="product-category-wrap">
+      {/*좌측 영역*/}
+      <div className="product-category-wrap-left">
+        <div>
+          {colorArr.indexOf(productColor) !== -1 ? (
+            <img
+              className="categoryImage"
+              src={
+                "/image/categoryImage/" +
+                imageArr[colorArr.indexOf(productColor)] +
+                ".png"
+              }
+            />
+          ) : (
+            <img
+              className="categoryImage"
+              src={"/image/categoryImage/iPhone_representation.png"}
+            />
+          )}
+        </div>
+      </div>
+      {/*//좌측 영역*/}
 
-      {
-        <ArrMap //ul태그
-          arr={memoryArr}
-          name="memory"
-          selectValue={productMemory}
-          setSelectValue={setProductMemory}
-        />
-      }
+      {/*우측 영역*/}
+      <div className="product-category-wrap-right">
+        {
+          <ArrMap //ul태그
+            arr={genArr}
+            name="gen"
+            selectValue={productGen}
+            setSelectValue={setProductGen}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={modelArr}
+            name="model"
+            selectValue={productModel}
+            setSelectValue={setProductModel}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={model2Arr}
+            name="model2"
+            selectValue={productModel2}
+            setSelectValue={setProductModel2}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={colorArr}
+            name="color"
+            selectValue={productColor}
+            setSelectValue={setProductColor}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={chipArr}
-          name="cbip"
-          selectValue={productChip}
-          setSelectValue={setProductChip}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={storageArr}
+            name="storage"
+            selectValue={productStorage}
+            setSelectValue={setProductStorage}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={cpuArr}
-          name="cpu"
-          selectValue={productCpu}
-          setSelectValue={setProductCpu}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={memoryArr}
+            name="memory"
+            selectValue={productMemory}
+            setSelectValue={setProductMemory}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={gpuArr}
-          name="gpu"
-          selectValue={productGpu}
-          setSelectValue={setProductGpu}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={chipArr}
+            name="cbip"
+            selectValue={productChip}
+            setSelectValue={setProductChip}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={sizeArr}
-          name="size"
-          selectValue={productSize}
-          setSelectValue={setProductSize}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={cpuArr}
+            name="cpu"
+            selectValue={productCpu}
+            setSelectValue={setProductCpu}
+          />
+        }
 
-      {
-        <ArrMap //ul태그
-          arr={connectivityArr}
-          name="connectivity"
-          selectValue={productConnectivity}
-          setSelectValue={setProductConnectivity}
-        />
-      }
-      {
-        <ArrMap //ul태그
-          arr={chargeArr}
-          name="charge"
-          selectValue={productCharge}
-          setSelectValue={setProductCharge}
-        />
-      }
+        {
+          <ArrMap //ul태그
+            arr={gpuArr}
+            name="gpu"
+            selectValue={productGpu}
+            setSelectValue={setProductGpu}
+          />
+        }
+
+        {
+          <ArrMap //ul태그
+            arr={sizeArr}
+            name="size"
+            selectValue={productSize}
+            setSelectValue={setProductSize}
+          />
+        }
+
+        {
+          <ArrMap //ul태그
+            arr={connectivityArr}
+            name="connectivity"
+            selectValue={productConnectivity}
+            setSelectValue={setProductConnectivity}
+          />
+        }
+        {
+          <ArrMap //ul태그
+            arr={chargeArr}
+            name="charge"
+            selectValue={productCharge}
+            setSelectValue={setProductCharge}
+          />
+        }
+      </div>
+      {/*//우측 영역*/}
     </div>
   );
 };
@@ -325,24 +341,63 @@ const ArrMap = (props) => {
   const name = props.name;
   const selectValue = props.selectValue;
   const setSelectValue = props.setSelectValue;
+  const table = props.table;
+
+  const optionTitle = () => {
+    if (name === "gen") {
+      return table === "iphone_tbl" ? "시리즈" : "세대";
+    } else if (name === "model2") {
+      return selectValue === "2018년" || "2019년" || "2020년"
+        ? "포트 수"
+        : "모델";
+    } else if (name === "model") {
+      return table === "macbook_tbl" ? "화면 크기" : "모델";
+    } else if (name === "color") {
+      return "색상";
+    } else if (name === "storage") {
+      return "저장 용량";
+    } else if (name === "memory") {
+      return "메모리(램)";
+    } else if (name === "chip") {
+      return "칩";
+    } else if (name === "cpu") {
+      return "CPU";
+    } else if (name === "gpu") {
+      return "GPU";
+    } else if (name === "connectivity") {
+      return "연결성";
+    } else if (name === "size") {
+      return "화면 크기";
+    } else if (name === "charge") {
+      return "충전 방식";
+    }
+  };
+
   if (arr.length === 0) {
     return <></>;
   } else {
     return (
-      <ul>
-        {arr.map((item, index) => {
-          return (
-            <li key={name + index}>
-              <Radio
-                val={item}
-                name={name}
-                selectValue={selectValue}
-                setSelectValue={setSelectValue}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      <div className="category-option">
+        <div>
+          <div className="category-option-title">{optionTitle()}</div>
+          <div className="category-option-select">{selectValue}</div>
+        </div>
+        <ul>
+          {arr.map((item, index) => {
+            return (
+              <li key={name + index}>
+                <PswRadio
+                  val={item}
+                  name={name}
+                  selectValue={selectValue}
+                  setSelectValue={setSelectValue}
+                  color={item} //colorArr일때만 활용됨
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 };

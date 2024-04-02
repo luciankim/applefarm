@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.util.PageInfo;
 
 @Mapper
 public interface MemberDao {
@@ -38,6 +39,13 @@ public interface MemberDao {
 
 	int join(Member member);
 
+	int memberTotalCount();
+
+	List selectMemberList(PageInfo pi);
+
+
+	Member selectId(String memberId);
+
 	int updateSearchUpdateBasicAddress(int memberNo);
 
 	int updateAddress(Address address);
@@ -45,6 +53,7 @@ public interface MemberDao {
 	int selectBasicAddressNo(int memberNo);
 
 	int updateBasicAddress(int addressNo);
+
 
 
 

@@ -17,6 +17,39 @@ const QualitySelectFrm = (props) => {
 
   const [totalQuality, setTotalQuality] = useState();
 
+  const [qualityState, setQualityState] = useState({});
+
+  const [score, setScore] = useState({});
+
+  const g = "";
+
+  const [totalScore, setTotalScore] = useState();
+
+  const handleQualityChange = (part, value) => {
+    const index = qualityList
+      .find((item) => item.part === part)
+      .productStatus.split("/")
+      .indexOf(value);
+    console.log(index);
+
+    // 선택된 품질에 해당하는 인덱스 값을 설정합니다.
+    setScore((prevScores) => ({
+      ...prevScores,
+      [part]: index,
+    }));
+
+    setQualityState((prev) => ({
+      ...prev,
+      [part]: value,
+    }));
+  };
+
+  const calculateTotalScore = () => {
+    const s = Object.values(score).reduce((total, num) => total + num, 0);
+
+    return s;
+  };
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
   // console.log(liquidCrystal);
   // console.log(backAndFront);
@@ -24,9 +57,7 @@ const QualitySelectFrm = (props) => {
 
   const [qualityList, setQualityList] = useState([]);
 
-  console.log(qualityList);
-  console.log(qualityList[0]);
-  console.log(qualityList[1]);
+  // console.log(qualityList);
 
   useEffect(() => {
     axios
@@ -45,38 +76,75 @@ const QualitySelectFrm = (props) => {
       <div className="quality-select-wrap">
         <div className="quality-select-title">품질 선택</div>
 
-        {/* {qualityList.map((item, index) => {
+        {qualityList.map((item, index) => {
+          const arr = item.productStatus.split("/");
+          // console.log(arr);
           return (
-            <QualitySelectInputWrap
-              part={item.part}
-              type="radio"
-              className="radio radio4"
-              value1="정상"
-              id1="liquidCrystal1"
-              value2="경미한 잔기스"
-              id2="liquidCrystal2"
-              value3="심한 기스, 파손, 전면 뜸"
-              id3="liquidCrystal3"
-              value4="심각한 파손"
-              id4="liquidCrystal4"
-              name="liquidCrystal"
-              data={liquidCrystal}
-              setData={setLiquildCrystal}
-              img1="/image/default.png"
-            />
+            <>
+              <QualitySelectInputWrap
+                key={item.part + index}
+                type="radio"
+                className={
+                  arr.length === 1
+                    ? "radio radio1"
+                    : arr.length === 2
+                    ? "radio radio2"
+                    : arr.length === 3
+                    ? "radio radio3"
+                    : arr.length === 4
+                    ? "radio radio4"
+                    : ""
+                }
+                part={item.part}
+                value1={arr[0]}
+                id1={arr[0] ? item.part + "1" : undefined}
+                value2={arr[1]}
+                id2={arr[1] ? item.part + "2" : undefined}
+                value3={arr[2]}
+                id3={arr[2] ? item.part + "3" : undefined}
+                value4={arr[3]}
+                id4={arr[3] ? item.part + "4" : undefined}
+                data={qualityState[item.part]} // 이 부분이 `qualityState` 객체에서 해당 `part`의 상태를 참조합니다.
+                setData={(value) => handleQualityChange(item.part, value)} // 이 부분이 상태를 설정하는 함수를 전달합니다.
+                name={item.part}
+                img1="/image/default.png"
+                onChange={(value) => handleQualityChange(item.part, value)}
+              />
+            </>
           );
-        })} */}
+        })}
 
         <QualitySelectInputWrap
+          type="radio"
+          className="radio radio4"
+          part="평점"
+          value1="A"
+          value2="B"
+          value3="C"
+          value4="D"
+          id1="score1"
+          id2="score2"
+          id3="score3"
+          id4="score4"
+          name="score"
+          data={totalQuality}
+          setData={setTotalQuality}
+        ></QualitySelectInputWrap>
+
+        <div>
+          <div>{calculateTotalScore()}</div>
+        </div>
+
+        {/* <QualitySelectInputWrap
           part="액정"
           type="radio"
           className="radio radio4"
-          value1="정상"
-          id1="liquidCrystal1"
+          
           value2="경미한 잔기스"
           id2="liquidCrystal2"
           value3="심한 기스, 파손, 전면 뜸"
-          id3="liquidCrystal3"
+          id3="liquidCrystal3"value1="정상"
+          id1="liquidCrystal1"
           value4="심각한 파손"
           id4="liquidCrystal4"
           name="liquidCrystal"
@@ -248,7 +316,7 @@ const QualitySelectFrm = (props) => {
               setData={setTotalQuality}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -413,22 +481,29 @@ const RadioInput = (props) => {
   const setData = props.setData;
 
   const changeData = (e) => {
-    setData(e.target.value);
+    // setData(e.target.value);
+    props.setData(e.target.value); // 수정된 코드
     console.log(e.target.value);
   };
 
   return (
-    <div className="quality-select-input-wrap">
-      <input
-        type={type}
-        id={id}
-        defaultValue={value}
-        className={className}
-        name={name}
-        onChange={changeData}
-      />
-      <label htmlFor={id}>{labelText}</label>
-    </div>
+    <>
+      {value !== undefined ? (
+        <div className="quality-select-input-wrap">
+          <input
+            type={type}
+            id={id}
+            defaultValue={value}
+            className={className}
+            name={name}
+            onChange={changeData}
+          />
+          <label htmlFor={id}>{labelText}</label>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 
