@@ -1,39 +1,52 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
 import axios from "axios";
-import { PswRadio } from "../../component/FormFrm";
+import { PswRadio, PswRadioQuality } from "../../component/FormFrm";
 
 const ProductCategory = (props) => {
   const {
+    table,
+    naviProductLine,
+
     selectedCategory,
     setSelectedCategory,
-    //table,
-    //naviProductLine,
-    //naviProductGen,
+
+    productLine,
+    setProductLine,
+    productGen,
+    setProductGen,
+    productModel,
+    setProductModel,
+    productModel2,
+    setProductModel2,
+    productColor,
+    setProductColor,
+    productImage,
+    setProductImage,
+    productStorage,
+    setProductStorage,
+    productMemory,
+    setProductMemory,
+    productChip,
+    setProductChip,
+    productCpu,
+    setProductCpu,
+    productGpu,
+    setProductGpu,
+    productSize,
+    setProductSize,
+    productConnectivity,
+    setProductConnectivity,
+    productCharge,
+    setProductCharge,
+
+    productQuality,
+    setProductQuality,
   } = props;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
-  const [productLine, setProductLine] = useState(""); //useState(naviProductLine)
-  const [productGen, setProductGen] = useState("");
-  const [productModel, setProductModel] = useState("");
-  const [productModel2, setProductModel2] = useState("");
-  const [productColor, setProductColor] = useState("");
-  const [productImage, setProductImage] = useState("");
-  const [productStorage, setProductStorage] = useState("");
-  const [productMemory, setProductMemory] = useState("");
-  const [productChip, setProductChip] = useState("");
-  const [productCpu, setProductCpu] = useState("");
-  const [productGpu, setProductGpu] = useState("");
-  const [productSize, setProductSize] = useState("");
-  const [productConnectivity, setProductConnectivity] = useState("");
-  const [productCharge, setProductCharge] = useState("");
-
   const [categoryArr, setCategoryArr] = useState([]);
-  //const [selectedCategory, setSelectedCategory] = useState(null);
-
-  //품질
-  const [productQuality, setProductQuality] = useState("");
 
   //카테고리 특정에 사용될 배열 변수
   const genArr = [];
@@ -62,6 +75,7 @@ const ProductCategory = (props) => {
     setProductSize("");
     setProductConnectivity("");
     setProductCharge("");
+    setProductQuality("");
 
     setColorArr([]);
     setImageArr([]);
@@ -75,12 +89,10 @@ const ProductCategory = (props) => {
     setChargeArr([]);
   };
 
-  //원래는 속성으로 받아온 값을 써야 하는데, 일단은 임시로 아래처럼 직접 입력하였음
   const requestCategory = {
-    table: "IPHONE_TBL", //table: table,
-    productLine: "iPhone", //productLine: naviProductLine,
+    table: table,
+    productLine: naviProductLine,
   };
-
   useEffect(() => {
     axios
       .post(backServer + "/product/category", requestCategory)
@@ -96,19 +108,21 @@ const ProductCategory = (props) => {
   }, []);
 
   //카테고리 1개 특정하기 위한 코드
+  //gen
   categoryArr.forEach((category) => {
     if (!genArr.includes(category.productGen)) {
       genArr.push(category.productGen);
     }
   });
+  //model
   categoryArr.forEach((category) => {
     if (
       (category.productLine === "iPhone" ||
-        "MacBook Pro" ||
-        "MacBook Air" ||
-        "Apple Watch Ultra" ||
-        "Apple Watch Series" ||
-        "Apple Watch SE") &&
+        category.productLine === "MacBook Pro" ||
+        category.productLine === "MacBook Air" ||
+        category.productLine === "Apple Watch Ultra" ||
+        category.productLine === "Apple Watch Series" ||
+        category.productLine === "Apple Watch SE") &&
       category.productGen === productGen &&
       //model컬럼에 null인게 하나라도 있으면
       //modelArr.length = 1
@@ -120,9 +134,11 @@ const ProductCategory = (props) => {
       modelArr.push(category.productModel);
     }
   });
+  //model2
   categoryArr.forEach((category) => {
     if (
-      (category.productLine === "MacBook Pro" || "MacBook Air") &&
+      (category.productLine === "MacBook Pro" ||
+        category.productLine === "MacBook Air") &&
       category.productGen === productGen &&
       category.productModel === productModel &&
       //model2컬럼에 null인게 하나라도 있으면
@@ -145,7 +161,8 @@ const ProductCategory = (props) => {
         "Apple Watch SE"
           ? category.productGen === productGen &&
             category.productModel === productModel
-          : category.productModel === "MacBook Pro" || "MacBook Air"
+          : category.productModel === "MacBook Pro" ||
+            category.productModel === "MacBook Air"
           ? category.productGen === productGen &&
             category.productModel === productModel &&
             category.productModel2 === productModel2
@@ -221,6 +238,7 @@ const ProductCategory = (props) => {
           ) : (
             <img
               className="categoryImage"
+              //아래 이미지는 추후 수정 필요
               src={"/image/categoryImage/iPhone_representation.png"}
             />
           )}
@@ -236,6 +254,7 @@ const ProductCategory = (props) => {
             name="gen"
             selectValue={productGen}
             setSelectValue={setProductGen}
+            table={table}
           />
         }
         {
@@ -244,6 +263,7 @@ const ProductCategory = (props) => {
             name="model"
             selectValue={productModel}
             setSelectValue={setProductModel}
+            table={table}
           />
         }
         {
@@ -252,6 +272,7 @@ const ProductCategory = (props) => {
             name="model2"
             selectValue={productModel2}
             setSelectValue={setProductModel2}
+            table={table}
           />
         }
         {
@@ -260,69 +281,70 @@ const ProductCategory = (props) => {
             name="color"
             selectValue={productColor}
             setSelectValue={setProductColor}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={storageArr}
             name="storage"
             selectValue={productStorage}
             setSelectValue={setProductStorage}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={memoryArr}
             name="memory"
             selectValue={productMemory}
             setSelectValue={setProductMemory}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={chipArr}
             name="cbip"
             selectValue={productChip}
             setSelectValue={setProductChip}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={cpuArr}
             name="cpu"
             selectValue={productCpu}
             setSelectValue={setProductCpu}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={gpuArr}
             name="gpu"
             selectValue={productGpu}
             setSelectValue={setProductGpu}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={sizeArr}
             name="size"
             selectValue={productSize}
             setSelectValue={setProductSize}
+            table={table}
           />
         }
-
         {
           <ArrMap //ul태그
             arr={connectivityArr}
             name="connectivity"
             selectValue={productConnectivity}
             setSelectValue={setProductConnectivity}
+            table={table}
           />
         }
         {
@@ -331,8 +353,20 @@ const ProductCategory = (props) => {
             name="charge"
             selectValue={productCharge}
             setSelectValue={setProductCharge}
+            table={table}
           />
         }
+        {selectedCategory ? (
+          <ArrMap //ul태그
+            arr={["A", "B", "C", "D"]}
+            name="quality"
+            selectValue={productQuality}
+            setSelectValue={setProductQuality}
+            table={table}
+          />
+        ) : (
+          ""
+        )}
       </div>
 
       {/*//우측 영역*/}
@@ -349,13 +383,15 @@ const ArrMap = (props) => {
 
   const optionTitle = () => {
     if (name === "gen") {
-      return table === "iphone_tbl" ? "시리즈" : "세대";
+      return table === "IPHONE_TBL" ? "시리즈" : "세대";
     } else if (name === "model2") {
-      return selectValue === "2018년" || "2019년" || "2020년"
+      return selectValue === "2018년" ||
+        selectValue === "2019년" ||
+        selectValue === "2020년"
         ? "포트 수"
         : "모델";
     } else if (name === "model") {
-      return table === "macbook_tbl" ? "화면 크기" : "모델";
+      return table === "MACBOOK_TBL" ? "화면 크기" : "모델";
     } else if (name === "color") {
       return "색상";
     } else if (name === "storage") {
@@ -374,6 +410,8 @@ const ArrMap = (props) => {
       return "화면 크기";
     } else if (name === "charge") {
       return "충전 방식";
+    } else if (name === "quality") {
+      return "품질";
     }
   };
 
@@ -386,17 +424,30 @@ const ArrMap = (props) => {
           <div className="category-option-title">{optionTitle()}</div>
           <div className="category-option-select">{selectValue}</div>
         </div>
-        <ul>
+        <ul className={name === "quality" ? "quality-option-ul" : ""}>
           {arr.map((item, index) => {
             return (
-              <li key={name + index}>
-                <PswRadio
-                  val={item}
-                  name={name}
-                  selectValue={selectValue}
-                  setSelectValue={setSelectValue}
-                  color={item} //colorArr일때만 활용됨
-                />
+              <li
+                key={name + index}
+                className={name === "quality" ? "quality-option-li" : ""}
+              >
+                {name === "quality" ? (
+                  <PswRadioQuality
+                    val={item}
+                    name={name}
+                    selectValue={selectValue}
+                    setSelectValue={setSelectValue}
+                    color={item} //colorArr일때만 활용됨
+                  />
+                ) : (
+                  <PswRadio
+                    val={item}
+                    name={name}
+                    selectValue={selectValue}
+                    setSelectValue={setSelectValue}
+                    color={item} //colorArr일때만 활용됨
+                  />
+                )}
               </li>
             );
           })}
