@@ -38,12 +38,12 @@ public class Member {
 	private String memberPhone;
 
 	@Schema(description = "회원 등급" ,  type="number")
-	private int memberType;
+	private int memberGrade;
 	
 	@Schema(description = "회원 계좌" , type="string")
 	private String memberAccountnumber;
 	
-	@Schema(description = "가입일", type="number")
+	@Schema(description = "가입일", type="string")
 	private Date enrollDate; 
 	
 	@Schema(description = "판매자 점수" , type="number")
