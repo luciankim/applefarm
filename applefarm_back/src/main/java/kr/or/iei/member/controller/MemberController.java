@@ -187,11 +187,11 @@ public class MemberController {
 	@PostMapping(value="/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
 		
-		Member m = memberService.login(member);
+		String accessToken = memberService.login(member);
 		
 		
-		if(m != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+		if(accessToken != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); //성공하면 토큰도 전달
 	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);

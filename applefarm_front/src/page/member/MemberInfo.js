@@ -1,13 +1,7 @@
 import { useState } from "react";
-import "./member.css";
 import SideMenu from "../../component/SideMenu";
-import { Route, Routes } from "react-router-dom";
-import Address from "./Address";
-import MemberWish from "./MemberWish";
-import MemberInfo from "./MemberInfo";
 
-//로그인 정보 가져오기
-const Mypage = () => {
+const MemberInfo = () => {
   const [myInfoMenu, setMyInfoMenu] = useState([
     { url: "loginInfo", text: "로그인 정보", active: false },
     { url: "sellerGrade", text: "판매자 등급", active: false },
@@ -22,9 +16,8 @@ const Mypage = () => {
     { url: "refundHistory", text: "환불내역", active: false },
     { url: "wish", text: "좋아요", active: false },
   ]);
-
   return (
-    <div className="mypage-wrap">
+    <>
       <div className="mypage-sideMenu">
         <div className="mypage-title">마이페이지</div>
         <div className="sideMenu-wrap">
@@ -37,15 +30,8 @@ const Mypage = () => {
           />
         </div>
       </div>
-      <div className="mypage-content">
-        <Routes>
-          <Route path="/address" element={<Address />}></Route>
-          <Route path="/wish" element={<MemberWish />}></Route>
-          <Route path="/loginInfo" element={<MemberInfo />} />
-        </Routes>
-      </div>
-    </div>
+    </>
   );
 };
 
-export default Mypage;
+export default MemberInfo;
