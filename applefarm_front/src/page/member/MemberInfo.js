@@ -1,11 +1,25 @@
 import { useEffect, useState } from "react";
 import SideMenu from "../../component/SideMenu";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const MemberInfo = () => {
+const MemberInfo = (props) => {
   const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  const isLogin = props.isLogin;
+
+  const navigate = useNavigate();
+
+  if (!isLogin) {
+    Swal.fire("로그인 후 이용 가능합니다.")
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {});
+  }
 
   useEffect(() => {
     axios
