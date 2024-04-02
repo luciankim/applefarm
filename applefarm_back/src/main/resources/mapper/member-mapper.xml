@@ -107,31 +107,13 @@
   
   
   
-  <select id="selectOneEmail" resultType="int">
+ 
   
   
-  select count(*) from member_tbl where member_email=#{memberEmail}
-  
-  </select>
-  
-  <select id="selectOneId" resultType="int">
-  
-  select count(*) from member_tbl where member_id=#{memberId}
-  
-  </select>
-  
-  <select id="selectOneNickName" resultType="int">
-  
-  select count(*) from member_tbl where member_nickname=#{memberNickName}
   
   
-  </select>
   
-  <insert id="join">
   
-  	insert into member_tbl values (MEMBER_SEQ.nextval,#{memberName}, #{memberNickName}, #{memberId}, #{memberPw}, #{memberEmail}, #{memberPhone}, 1,#{memberAccountnumber}, sysdate, 37,1,0)
-  
-  </insert>
   
  
   <select id="selectId" resultType="member">
