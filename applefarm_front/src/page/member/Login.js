@@ -84,7 +84,7 @@ const Login = () => {
             onKeyDown={handleKeyPress}
           />
           <div className="login-btn-box">
-            <Button2 text="로그인" clickEvent={login} />
+            <Button1 id="login-btn" text="로그인" clickEvent={login} />
           </div>
 
           <div className="login-search-box">
