@@ -1,23 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SideMenu from "../../component/SideMenu";
-import axios from "axios";
 
 const MemberInfo = () => {
-  const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
-
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-
-  useEffect(() => {
-    axios
-      .get(backServer + "/member")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  }, []);
-
   const [myInfoMenu, setMyInfoMenu] = useState([
     { url: "loginInfo", text: "로그인 정보", active: false },
     { url: "sellerGrade", text: "판매자 등급", active: false },

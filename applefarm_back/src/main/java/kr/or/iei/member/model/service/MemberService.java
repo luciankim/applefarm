@@ -177,6 +177,11 @@ public class MemberService {
 			
 		}
 
+		public Member selectId(String memberId) {
+			
+			return memberDao.selectId(memberId);
+		}
+
 
 		
 }
