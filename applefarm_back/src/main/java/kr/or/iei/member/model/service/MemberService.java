@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
 
@@ -23,6 +24,8 @@ public class MemberService {
 		private MemberDao memberDao;
 		@Autowired
 		private PagiNation pagination;
+		@Autowired
+		private JwtUtil jwtUtil;
 		
 		
 		@Transactional
@@ -152,14 +155,20 @@ public class MemberService {
 		}
 
 
-		public Member login(Member member) {
+		public String login(Member member) {
 			
 			Member m = memberDao.selectId(member.getMemberId());
 			
 			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 				
+				long expiredDateMs = 60*60*1000l;  //1시간 지정
 				
-				return m;
+				//아이디 인증 끝났을 때 토큰
+				String accessToken = jwtUtil.createToken(member.getMemberId(), expiredDateMs);
+				
+				System.out.println(accessToken); //accessToken은 클라이언트한테 줘야 함.
+				
+				return accessToken;
 			}else {
 				return null;
 			}
