@@ -1,4 +1,10 @@
-/* QualitySelectFrm */
+/* ProductInsert.js */
+.disPlayNone {
+  display: none;
+}
+/* --ProductInsert.js */
+
+/* ProductQualityInsert.js */
 .quality-select-total-wrap {
   width: 1200px;
   margin: 0 auto;
@@ -107,9 +113,6 @@
   justify-content: space-between;
 }
 
-quality-select-image2 {
-}
-
 .quality-select-image1 > img {
   display: block;
   width: 40%;
@@ -159,3 +162,4 @@ quality-select-image2 {
   width: 200px;
   height: 200px;
 }
+/* --ProductQualityInsert.js */
