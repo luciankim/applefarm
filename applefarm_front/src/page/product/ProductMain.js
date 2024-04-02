@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./product.css";
 import "./productMain.css";
 import ProductCategory from "./ProductCategory";
 import ProductSummary from "./ProductSummary";
