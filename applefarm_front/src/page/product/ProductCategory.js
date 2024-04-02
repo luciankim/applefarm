@@ -32,6 +32,9 @@ const ProductCategory = (props) => {
   const [categoryArr, setCategoryArr] = useState([]);
   //const [selectedCategory, setSelectedCategory] = useState(null);
 
+  //품질
+  const [productQuality, setProductQuality] = useState("");
+
   //카테고리 특정에 사용될 배열 변수
   const genArr = [];
   const modelArr = [];
@@ -331,6 +334,7 @@ const ProductCategory = (props) => {
           />
         }
       </div>
+
       {/*//우측 영역*/}
     </div>
   );

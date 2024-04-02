@@ -361,6 +361,45 @@ const PswRadio = (props) => {
   );
 };
 
+// 박성완
+const PswRadioQuality = (props) => {
+  const { name, val, selectValue, setSelectValue, color } = props;
+  const handleChange = (event) => {
+    setSelectValue(event.target.value);
+  };
+  return (
+    <label htmlFor={val}>
+      <div
+        className={
+          selectValue === val
+            ? "input_wrap_psw input_wrap_psw_focus"
+            : "input_wrap_psw"
+        }
+      >
+        <input
+          className="psw_radio"
+          type="radio"
+          id={val}
+          name={name}
+          defaultValue={val}
+          checked={selectValue === val}
+          onChange={handleChange}
+        />
+        <label className="psw_radio_label" htmlFor={val}>
+          {val}
+        </label>
+        {name === "color" ? (
+          <span className="psw_radio_span">
+            <img src={"/image/colorImage/" + color + ".png"} />
+          </span>
+        ) : (
+          <></>
+        )}
+      </div>
+    </label>
+  );
+};
+
 export {
   Input,
   Input2,
@@ -380,6 +419,7 @@ export {
   MsgFail,
   Radio,
   PswRadio,
+  PswRadioQuality,
   Checkbox,
   CheckboxGroup,
   Textarea,
