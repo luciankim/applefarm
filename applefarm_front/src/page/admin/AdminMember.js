@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button3 } from "../../component/FormFrm";
-import { DelModal } from "../member/Modal";
+
 import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -39,11 +38,11 @@ const AdminMember = () => {
             <tr>
               <th>회원번호</th>
               <th>회원아이디</th>
-              <th>회원등급</th>
+              <th>전화번호</th>
               <th>판매점수</th>
               <th>판매자등급</th>
               <th>가입일</th>
-              <th>선택</th>
+              <th>회원등급</th>
             </tr>
           </thead>
           <tbody>
@@ -97,13 +96,7 @@ const MemberItem = (props) => {
     <tr>
       <td>{member.memberNo}</td>
       <td>{member.memberId}</td>
-      <td>
-        {member.memberGrade === 1
-          ? "사용자"
-          : member.memberGrade === 2
-          ? "관리자"
-          : "블랙멤버"}
-      </td>
+      <td>{member.memberPhone}</td>
       <td>{member.sellerScore}</td>
       <td>{member.sellerGrade}</td>
       <td>{member.enrollDate}</td>

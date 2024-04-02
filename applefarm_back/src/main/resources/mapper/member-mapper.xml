@@ -104,16 +104,19 @@
 		address_no=#{addressNo}
 		<selectKey resultType="int" order="BEFORE"
 			keyProperty="addressNo">
-			select address_no from address_tbl where member_no=#{memberNo} and
+			select address_no from address_tbl where
+			member_no=#{memberNo} and
 			address_default = 1
 		</selectKey>
 	</update>
 	<select id="selectBasicAddressNo" resultType="int">
-		select address_no from address_tbl where member_no=#{memberNo} and
+		select address_no
+		from address_tbl where member_no=#{memberNo} and
 		address_default = 1
 	</select>
 	<update id="updateBasicAddress">
-		update address_tbl set address_default = 0 where address_no=#{addressNo}
+		update address_tbl set address_default = 0 where
+		address_no=#{addressNo}
 	</update>
 	<update id="updateAddress">
 		update address_tbl set address_name=#{addressName},
@@ -123,29 +126,42 @@
 	</update>
 
 	<select id="selectId" resultType="member">
-		select * from member_tbl where member_id=#{memberId}
+		select * from member_tbl where
+		member_id=#{memberId}
 	</select>
 
 	<select id="selectMemberList" resultType="member">
 		SELECT * FROM
-		(SELECT ROWNUM AS RNUM, M.* FROM
+		(SELECT
+		ROWNUM AS RNUM, M.* FROM
 		(SELECT
 		MEMBER_NO,
 		MEMBER_NAME,
 		MEMBER_NICKNAME,
+		MEMBER_PHONE,
 		MEMBER_ID,
 		MEMBER_GRADE,
-		MEMBER_PHONE,
 		SELLER_SCORE,
 		SELLER_GRADE,
 		TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
-		FROM MEMBER_TBL ORDER BY 1)M)
+		FROM MEMBER_TBL ORDER
+		BY 1)M)
 		WHERE RNUM BETWEEN #{start} AND #{end}
 	</select>
 
 	<update id="changeMemberGrade">
-		update member_tbl set member_grade = #{memberGrade} where
-		member_no=#{memberNo}
+		UPDATE member_tbl
+		SET member_grade = #{memberGrade},
+		member_black_time =
+		<choose>
+			<when test="memberGrade == 3">
+				SYSTIMESTAMP
+			</when>
+			<otherwise>
+				null
+			</otherwise>
+		</choose>
+		WHERE member_no = #{memberNo}
 	</update>
 
 
