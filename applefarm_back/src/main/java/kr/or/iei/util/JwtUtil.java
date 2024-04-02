@@ -34,12 +34,39 @@ public class JwtUtil {
 				.signWith(key,SignatureAlgorithm.HS256) //암호화할 때 사용할 키값 및 알고리즘
 				.compact(); //위 내용 종합해서 JWT 토큰 생성
 		
-				
-				
 		
+	}
+	
+	
+	
+	//매개변수로 토큰이 만료되었는지 체크
+	public boolean isExpired(String token) {
+		
+		SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
+		
+		return Jwts.parserBuilder()
+				.setSigningKey(key).build()
+				.parseClaimsJws(token)
+				.getBody().getExpiration().before(new Date());
 		
 		
 	}
+	
+	public String getMemberId(String token) {
+		
+		
+		SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
+		
+		return Jwts.parserBuilder()
+				.setSigningKey(key).build()
+				.parseClaimsJws(token)
+				.getBody().get("memberId",String.class);
+				
+		
+	}
+	
+	
+	
 
 }
 

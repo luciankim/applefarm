@@ -56,6 +56,11 @@
   font-family: ns-black;
   src: url(/public/font/NotoSansKR-Black.ttf);
 }
+@font-face {
+  font-family: esd-r;
+  src: url(/public/font/EastSeaDokdo-Regular.ttf);
+}
+
 
 html {
   height: 100%;

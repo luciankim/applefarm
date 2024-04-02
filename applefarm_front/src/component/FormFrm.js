@@ -365,7 +365,7 @@ const PswRadio = (props) => {
 
 // 박성완
 const PswRadioQuality = (props) => {
-  const { name, val, selectValue, setSelectValue, color } = props;
+  const { name, val, selectValue, setSelectValue } = props;
   const handleChange = (event) => {
     setSelectValue(event.target.value);
   };
@@ -374,8 +374,8 @@ const PswRadioQuality = (props) => {
       <div
         className={
           selectValue === val
-            ? "input_wrap_psw input_wrap_psw_focus"
-            : "input_wrap_psw"
+            ? "input_wrap_quality_psw input_wrap_psw_focus"
+            : "input_wrap_quality_psw"
         }
       >
         <input
@@ -390,13 +390,6 @@ const PswRadioQuality = (props) => {
         <label className="psw_radio_label" htmlFor={val}>
           {val}
         </label>
-        {name === "color" ? (
-          <span className="psw_radio_span">
-            <img src={"/image/colorImage/" + color + ".png"} />
-          </span>
-        ) : (
-          <></>
-        )}
       </div>
     </label>
   );

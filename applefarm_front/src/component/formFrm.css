@@ -147,9 +147,11 @@
 }
 
 /*박성완*/
+/*박성완- PswRadio*/
 .input_wrap_psw {
   width: 100%;
   border: 1px solid var(--gray_02);
+  box-sizing: border-box;
   border-radius: 10px;
   padding: 10px 15px;
   margin-top: 15px;
@@ -159,6 +161,7 @@
 }
 .input_wrap_psw.input_wrap_psw_focus {
   border: 3px solid var(--main_01);
+  box-sizing: border-box;
 }
 .input_wrap_psw > .psw_radio {
   display: none;
@@ -171,4 +174,27 @@
   object-fit: contain;
   width: 25px;
   height: 25px;
+}
+/*박성완 - PswRadioQuality*/
+.input_wrap_quality_psw {
+  width: 100%;
+  border: 1px solid var(--gray_02);
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center; /*input_wrap_psw에서 이거 한 줄 바뀜*/
+  align-items: center;
+}
+.input_wrap_quality_psw.input_wrap_psw_focus {
+  border: 3px solid var(--main_01);
+  box-sizing: border-box;
+}
+.input_wrap_quality_psw > .psw_radio {
+  display: none;
+}
+.input_wrap_quality_psw .psw_radio_label {
+  font-weight: 500;
+  font-size: 18px;
 }
