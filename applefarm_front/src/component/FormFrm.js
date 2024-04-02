@@ -334,7 +334,9 @@ const PswRadio = (props) => {
     <label htmlFor={val}>
       <div
         className={
-          selectValue === val ? "input_wrap input_wrap_focus" : "input_wrap"
+          selectValue === val
+            ? "input_wrap_psw input_wrap_psw_focus"
+            : "input_wrap_psw"
         }
       >
         <input
