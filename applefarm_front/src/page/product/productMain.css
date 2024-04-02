@@ -25,7 +25,7 @@
 }
 .product-category-wrap-left .categoryImage {
   width: 100%;
-  height: 700px;
+  height: 600px;
   object-fit: contain;
   border-radius: 20px;
 }
@@ -37,7 +37,6 @@
 -none : 대체 콘텐츠의 크기를 조절하지 않습니다.
 -scale-down : none과 contain 중 대체 콘텐츠의 크기가 더 작아지는 값을 선택합니다.
 */
-
 .product-category-wrap-right {
   flex-shrink: 0; /*화면 줄어들 시 0/1만큼 크기 축소 = 축소안함*/
   width: 350px;
@@ -61,6 +60,13 @@
   font-size: 15px;
   line-height: 35px;
 }
+.quality-option-ul {
+  display: flex;
+  justify-content: space-around;
+}
+.quality-option-li {
+  width: 80px;
+}
 /*
 <flex-grow> : 여백 분배
 -분자 : 해당 태그에 걸린 flex-grow의 값
@@ -77,3 +83,22 @@
 */
 
 /*--ProductCategory.js--*/
+
+/*ProductSummary*/
+.productSummary-wrap {
+  width: 100%;
+  margin-top: 70px;
+}
+.productSummary-box {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.productSummary-title {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+/*--ProductSummary*/
