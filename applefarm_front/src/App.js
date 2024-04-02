@@ -31,7 +31,6 @@ function App() {
             <Route path="/admin/*" element={<AdminMain />} />
             <Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
-            {/*제품별 메인을 아래처럼 컴포넌트 하나로 처리 불가능하다면 별 두개로 바꾸고...*/}
             <Route path="/product/*" element={<Product />} />
             <Route path="/mypage/loginInfo" element={<MemberInfo />} />
           </Routes>

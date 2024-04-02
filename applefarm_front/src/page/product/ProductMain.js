@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./productMain.css";
 import ProductCategory from "./ProductCategory";
 import ProductSummary from "./ProductSummary";
+import ProductChart from "./ProductChart";
 
 const ProductMain = (props) => {
   /*
@@ -9,8 +10,8 @@ const ProductMain = (props) => {
   const naviProductLine = props.naviProductLine;
   const naviProductGen = props.naviProductGen;
   */
-  const table = "IPHONE_TBL"; //반드시 대문자로 받을것!!
-  const naviProductLine = "iPhone";
+  const table = "MACBOOK_TBL"; //반드시 대문자로 받을것!!
+  const naviProductLine = "MacBook Pro";
   const naviProductGen = ""; //없을 경우 ""로 받을것!!
 
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -129,7 +130,14 @@ const ProductMain = (props) => {
         productCharge={productCharge}
         setProductCharge={setProductCharge}
       />
-      <ProductSummary selectedProduct={selectedProduct} />
+      <div className="productMain-middle-wrap">
+        <div className="productMain-middle-wrap-left">
+          <ProductSummary selectedProduct={selectedProduct} />
+          <ProductChart />
+          {/* https://recharts.org/en-US/guide/getting-started 여기서 4. Add interactions 활용*/}
+        </div>
+        <div className="productMain-middle-wrap-right">거래내역리스트</div>
+      </div>
     </div>
   );
 };

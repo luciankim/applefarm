@@ -89,6 +89,20 @@ const ProductCategory = (props) => {
     setChargeArr([]);
   };
 
+  //초기화
+  useEffect(() => {
+    setProductModel("");
+    setProductModel2("");
+    clear();
+    modelArr.length = 0;
+    model2Arr.length = 0;
+  }, [productGen]);
+  useEffect(() => {
+    setProductModel2("");
+    clear();
+    model2Arr.length = 0;
+  }, [productModel]);
+
   const requestCategory = {
     table: table,
     productLine: naviProductLine,
@@ -170,17 +184,6 @@ const ProductCategory = (props) => {
       )[0] //categoryArr이 배열이니까, 배열 자체가 아닌 배열의 값인 객체(위 로직의 결과는 반드시 1개임)를 값으로 저장.
     );
   }, [productGen, productModel, productModel2]);
-
-  //초기화
-  useEffect(() => {
-    setProductModel("");
-    setProductModel2("");
-    clear();
-  }, [productGen]);
-  useEffect(() => {
-    setProductModel2("");
-    clear();
-  }, [productModel]);
 
   //1개 특정된 카테고리의 컬럼별 데이터들을 ","로 구분해서 배열로 만듦
   useEffect(() => {

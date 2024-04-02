@@ -1,5 +1,20 @@
+import { useEffect, useState } from "react";
+
 const ProductSummary = (props) => {
   const selectedProduct = props.selectedProduct;
+
+  const [summaryQuality, setSummaryQuality] = useState("");
+  const [summaryCpu, setSummaryCpu] = useState("");
+  const [summaryGpu, setSummaryGpu] = useState("");
+  useEffect(() => {
+    setSummaryQuality(selectedProduct.productQuality + "급");
+  }, [selectedProduct]);
+  useEffect(() => {
+    setSummaryCpu("CPU(" + selectedProduct.productCpu + ")");
+  }, [selectedProduct]);
+  useEffect(() => {
+    setSummaryGpu("GPU(" + selectedProduct.productGpu + ")");
+  }, [selectedProduct]);
 
   return (
     <div className="productSummary-wrap">
@@ -9,9 +24,7 @@ const ProductSummary = (props) => {
           {
             //아이폰
             selectedProduct.productLine === "iPhone"
-              ? selectedProduct.productModel +
-                " " +
-                selectedProduct.productQuality
+              ? selectedProduct.productModel + " " + summaryQuality
               : //맥북
               selectedProduct.productLine === "MacBook Pro" ||
                 selectedProduct.productLine === "MacBook Air"
@@ -21,7 +34,7 @@ const ProductSummary = (props) => {
                 " " +
                 selectedProduct.productModel +
                 " " +
-                selectedProduct.productQuality
+                summaryQuality
               : //아이패드
               selectedProduct.productLine === "iPad Pro 12.9" ||
                 selectedProduct.productLine === "iPad Pro 11" ||
@@ -32,7 +45,7 @@ const ProductSummary = (props) => {
                 " " +
                 selectedProduct.productGen +
                 " " +
-                selectedProduct.productQuality
+                summaryQuality
               : //애플워치
               selectedProduct.productLine === "Apple Watch Ultra" ||
                 selectedProduct.productLine === "Apple Watch Series" ||
@@ -41,7 +54,7 @@ const ProductSummary = (props) => {
                 " " +
                 selectedProduct.productGen +
                 " " +
-                selectedProduct.productQuality
+                summaryQuality
               : //에어팟
               selectedProduct.productLine === "AirPods" ||
                 selectedProduct.productLine === "AirPods Pro" ||
@@ -50,7 +63,7 @@ const ProductSummary = (props) => {
                 " " +
                 selectedProduct.productGen +
                 " " +
-                selectedProduct.productQuality
+                summaryQuality
               : ""
           }
         </div>
@@ -67,7 +80,7 @@ const ProductSummary = (props) => {
                 (selectedProduct.productGen === "2018년" ||
                   selectedProduct.productGen === "2019년" ||
                   selectedProduct.productGen === "2020년")
-              ? selectedProduct.productCpu + " " + selectedProduct.productGpu
+              ? summaryCpu + " " + summaryGpu
               : selectedProduct.productLine === "MacBook Pro" ||
                 selectedProduct.productLine === "MacBook Air"
               ? selectedProduct.productChip
@@ -120,9 +133,7 @@ const ProductSummary = (props) => {
                 selectedProduct.productColor
               : selectedProduct.productLine === "MacBook Pro" ||
                 selectedProduct.productLine === "MacBook Air"
-              ? selectedProduct.productChip +
-                " " +
-                selectedProduct.productStorage +
+              ? selectedProduct.productStorage +
                 " " +
                 selectedProduct.productMemory +
                 " " +

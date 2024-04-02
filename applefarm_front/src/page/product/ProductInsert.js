@@ -11,14 +11,14 @@ const ProductInsert = (props) => {
     <div>
       {/*}
       <div className={page === 1 ? "displayBlock" : "displayNone"}>
-        <ProductCategoryInsert />
+        <ProductCategoryInsert setPage={setPage}/>
       </div>
       */}
       <div className={page === 2 ? "displayBlock" : "displayNone"}>
-        <ProductQualityInsert />
+        <ProductQualityInsert setPage={setPage} />
       </div>
       <div className={page === 3 ? "displayBlock" : "displayNone"}>
-        <ProductInsertLast />
+        <ProductInsertLast setPage={setPage} />
       </div>
     </div>
   );
