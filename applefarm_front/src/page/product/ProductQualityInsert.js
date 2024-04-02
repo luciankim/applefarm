@@ -1,9 +1,9 @@
 import axios from "axios";
-import "./product.css";
+import "./productInsert.css";
 import React, { useEffect, useState } from "react";
 import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
-const QualitySelectFrm = (props) => {
+const ProductQualityInsert = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [totalQuality, setTotalQuality] = useState();
@@ -13,9 +13,6 @@ const QualitySelectFrm = (props) => {
   const tableName = "IPHONE_TBL";
   const [qualityList, setQualityList] = useState([]);
   const [image, setImage] = useState({});
-
-
-
 
   const handleQualityChange = (part, value) => {
     const item = qualityList.find((item) => item.part === part);
@@ -44,7 +41,10 @@ const QualitySelectFrm = (props) => {
 
     setImage((prevImages) => ({
       ...prevImages,
-      [part]: imageName !== 'default' ? "/image/qualityImage/" + imageName + ".png" : undefined
+      [part]:
+        imageName !== "default"
+          ? "/image/qualityImage/" + imageName + ".png"
+          : undefined,
     }));
   };
 
@@ -54,13 +54,9 @@ const QualitySelectFrm = (props) => {
     return s;
   };
 
-  const prevPage = () => {
+  const prevPage = () => {};
 
-  };
-
-  const nextPage = () => {
-
-  };
+  const nextPage = () => {};
 
   //console.log(score); //{액정: 3, 뒷판&측면: 3, 잔상: 3, 디스플레이: 1}
   //console.log(qualityState); //{액정: '심각한 파손', 뒷판&측면: '휨', 잔상: '심한 잔상, 백화 3개 이상', 디스플레이: '불량, 멍, 얼룩, 줄'}
@@ -77,8 +73,6 @@ const QualitySelectFrm = (props) => {
   // total은 누산기(accumulator)로, 콜백의 반환값이 누적됩니다. 초기값은 reduce() 메서드의 두 번째 인자로 전달되며, 여기서는 0입니다.
   // num은 현재 처리되고 있는 배열의 요소입니다.
   // 콜백 함수의 몸체에서는 total + num을 계산하여, 배열의 모든 요소를 순회하며 누적 합을 구합니다.
-
-
 
   // console.log(calculateTotalScore() / qualityList.length);
   // console.log(qualityList);
@@ -195,14 +189,12 @@ const QualitySelectFrm = (props) => {
             setData={setTotalQuality}
             selectedGrade={grade} // 현재 선택된 grade를 전달
           ></QualitySelectInputWrap2>
-
-          
         ) : (
           ""
         )}
         <div className="quality-select-button">
-            <Button1 text="이전으로" onclick="prevPage" addId="gy"></Button1>
-            <Button1 text="다음으로" onclick="nextPage" addId="gy"></Button1>
+          <Button1 text="이전으로" onclick="prevPage" addId="gy"></Button1>
+          <Button1 text="다음으로" onclick="nextPage" addId="gy"></Button1>
         </div>
 
         {/* <div>
@@ -480,12 +472,11 @@ const ImageInput = (props) => {
         </div>
       ) : (
         <div className="quality-select-image2">
-          
-          <img src={img1} className={img1 ? "quality-image" : ""}/>
+          <img src={img1} className={img1 ? "quality-image" : ""} />
         </div>
       )}
     </>
   );
 };
 
-export default QualitySelectFrm;
+export default ProductQualityInsert;
