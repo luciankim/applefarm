@@ -21,15 +21,21 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.admin.model.service.AdminService;
+import kr.or.iei.board.model.service.BoardService;
+import kr.or.iei.member.model.service.MemberService;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/admin")
 @Tag(name = "ADMIN", description = "ADMIN API")
 public class AdminController {
-
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private BoardService boardService;
+	
 
 	@Operation(summary = "환불 신청 조회", description = "이 엔드포인트는 전체 환불 신청 목록을 조회합니다. 요청 페이지 번호를 기반으로 페이징 처리됩니다.")
 	@ApiResponses({ // 응답에 대한 설명
@@ -76,9 +82,13 @@ public class AdminController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
-		
 	}
 	
 	
-	
+	@GetMapping(value="/member/{reqPage}")
+	public ResponseEntity<ResponseDTO> memberList(@PathVariable int reqPage){
+		Map map = memberService.selectMemberList(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}	
 }

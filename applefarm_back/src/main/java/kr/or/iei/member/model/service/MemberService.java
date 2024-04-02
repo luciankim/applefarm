@@ -23,6 +23,7 @@ public class MemberService {
 		@Autowired
 		private PagiNation pagination;
 		
+		
 		@Transactional
 		public int insertAddress(Address address) {
 			int result = 0;
@@ -111,6 +112,21 @@ public class MemberService {
 					
 			
 			return result;
+		}
+
+		//관리자: 회원관리 기능
+		public Map selectMemberList(int reqPage) {
+			int numPerPage = 5;
+			int pageNaviSize = 5;
+			int totalCount = memberDao.memberTotalCount();
+			
+			//페이지 인포 객체
+			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+			List memberList = memberDao.selectMemberList(pi);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("memberList", memberList);
+			map.put("pi", pi);
+			return map;
 		}
 		
 }
