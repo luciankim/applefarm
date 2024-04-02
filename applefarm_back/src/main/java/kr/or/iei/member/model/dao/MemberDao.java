@@ -44,6 +44,18 @@ public interface MemberDao {
 	List selectMemberList(PageInfo pi);
 
 
+	Member selectId(String memberId);
+
+	int updateSearchUpdateBasicAddress(int memberNo);
+
+	int updateAddress(Address address);
+
+	int selectBasicAddressNo(int memberNo);
+
+	int updateBasicAddress(int addressNo);
+
+
+
 
 	
 }

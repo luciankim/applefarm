@@ -33,6 +33,7 @@ const Input = (props) => {
       onBlur={blurEvent}
       onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
       placeholder={placeholder}
+      disabled={disabled}
     />
   );
 };
@@ -143,13 +144,14 @@ const Button1 = (props) => {
   );
 };
 const Button2 = (props) => {
-  const { text, icon, clickEvent, disabled } = props;
+  const { text, icon, clickEvent, disabled, onKeyDown } = props;
   return (
     <button
       className="btn_form bg2"
       type="button"
       onClick={clickEvent}
       disabled={disabled}
+      onKeyDown={onKeyDown}
     >
       {text}
       {icon}
@@ -157,7 +159,7 @@ const Button2 = (props) => {
   );
 };
 const Button3 = (props) => {
-  const { text, icon, clickEvent, disabled, style } = props;
+  const { text, icon, clickEvent, disabled, style, onKeyDown } = props;
   return (
     <button
       className="btn_form bg3"
@@ -165,6 +167,7 @@ const Button3 = (props) => {
       onClick={clickEvent}
       disabled={disabled}
       style={style}
+      onKeyDown={onKeyDown}
     >
       {text}
       {icon}
@@ -322,23 +325,39 @@ const Radio = (props) => {
 };
 
 // 박성완
-const RadioPswDefault = (props) => {
-  const { name, val, selectValue, setSelectValue } = props;
+const PswRadio = (props) => {
+  const { name, val, selectValue, setSelectValue, color } = props;
   const handleChange = (event) => {
     setSelectValue(event.target.value);
   };
   return (
-    <div className="input_wrap radioPswDefault">
-      <input
-        type="radio"
-        id={val}
-        name={name}
-        defaultValue={val}
-        checked={selectValue === val}
-        onChange={handleChange}
-      />
-      <label htmlFor={val}>{val}</label>
-    </div>
+    <label htmlFor={val}>
+      <div
+        className={
+          selectValue === val ? "input_wrap input_wrap_focus" : "input_wrap"
+        }
+      >
+        <input
+          className="psw_radio"
+          type="radio"
+          id={val}
+          name={name}
+          defaultValue={val}
+          checked={selectValue === val}
+          onChange={handleChange}
+        />
+        <label className="psw_radio_label" htmlFor={val}>
+          {val}
+        </label>
+        {name === "color" ? (
+          <span className="psw_radio_span">
+            <img src={"/image/colorImage/" + color + ".png"} />
+          </span>
+        ) : (
+          <></>
+        )}
+      </div>
+    </label>
   );
 };
 
@@ -360,7 +379,7 @@ export {
   MsgSuccess,
   MsgFail,
   Radio,
-  RadioPswDefault,
+  PswRadio,
   Checkbox,
   CheckboxGroup,
   Textarea,

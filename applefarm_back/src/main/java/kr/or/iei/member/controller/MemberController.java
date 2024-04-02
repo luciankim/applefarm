@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -178,6 +179,27 @@ public class MemberController {
 	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	    }
 	} 
+	
+	@Operation(summary = "로그인", description = "회원 데이터를 입력 받아서 로그인")
+	@ApiResponses({ // 응답에 대한 작성 설명할 떄
+	        @ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
+	        @ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value="/login")
+	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
+		
+		Member m = memberService.login(member);
+		
+		
+		if(m != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+		
+		
+	}
 
 	
 	@Operation(summary = "주소록 추가", description = "주소록에 새 주소 추가")
@@ -229,6 +251,11 @@ public class MemberController {
 		}
 	}
 	
+	@Operation(summary = "기본배송지 변경", description = "주소록 목록에서 기본배송지 변경")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 값 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
 	@PatchMapping(value="/basicAddress")
 	public ResponseEntity<ResponseDTO> updateAddressDefault(@RequestBody Address address){
 		int result = memberService.updateAddressDefault(address);
@@ -240,6 +267,24 @@ public class MemberController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	@Operation(summary = "주소록 수정", description = "주소록 목록 중 해당 주소 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 값 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/address")
+	public ResponseEntity<ResponseDTO> updateAddress(@RequestBody Address address){
+		int result = memberService.updateAddress(address);
+		if(result==1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(500, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
 }
 	
 	

@@ -20,6 +20,11 @@ public class EmailSender {
 	private JavaMailSender sender;
 	
 	
+	
+	
+	
+	
+	
 	public String sendCode(String memberEmail) {
 		
 		 

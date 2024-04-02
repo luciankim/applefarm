@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,11 @@ public class MemberService {
 			result += memberDao.insertAddress(address);
 			return result;
 		}
+
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder; 
+
 
 		public Map selectAddress(int memberNo,int reqPage) {
 			//전체 배송지 리스트(기본배송지+나머지 배송지들)
@@ -80,6 +86,22 @@ public class MemberService {
 			result+= memberDao.updateAddressDefault1(address.getAddressNo());
 			return result;
 		}
+		@Transactional
+		public int updateAddress(Address address) {
+			System.out.println(address);
+			int result=0;
+			//기본배송지 1인 상태로 수정요청시 update전  기본배송지상태1인거 찾아서 기본배송지상태 0으로 변경
+			if(address.getAddressDefault()==1) {
+				int addressNo = memberDao.selectBasicAddressNo(address.getMemberNo());
+				result += memberDao.updateBasicAddress(addressNo);
+				//result += memberDao.updateSearchUpdateBasicAddress(address.getMemberNo());
+				result -=1;
+			}
+			result += memberDao.updateAddress(address);
+			return result;
+		}
+		
+
 		
 		public int selectOneEmail(String memberEmail) {
 			
@@ -128,5 +150,24 @@ public class MemberService {
 			map.put("pi", pi);
 			return map;
 		}
+
+
+		public Member login(Member member) {
+			
+			Member m = memberDao.selectId(member.getMemberId());
+			
+			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				
+				
+				return m;
+			}else {
+				return null;
+			}
+			
+			
+			
+		}
+
+
 		
 }
