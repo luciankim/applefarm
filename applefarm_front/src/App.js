@@ -9,11 +9,9 @@ import BoardMain from "./page/board/BoardMain";
 import Join from "./page/member/Join";
 import AdminMain from "./page/admin/AdminMain";
 import ProductMain from "./page/product/ProductMain";
-<<<<<<< HEAD
 import Login from "./page/member/Login";
-=======
 import QualitySelectFrm from "./page/product/QualitySelectFrm";
->>>>>>> main
+
 
 function App() {
   return (
