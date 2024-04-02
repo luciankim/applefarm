@@ -54,6 +54,8 @@ public interface MemberDao {
 
 	int updateBasicAddress(int addressNo);
 
+	List selectLike(int memberNo);
+
 
 
 

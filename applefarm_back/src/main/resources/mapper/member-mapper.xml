@@ -39,6 +39,34 @@
 		address_no=#{addressNo}
 	</update>
 
+	<select id="selectLike" resultType="like">
+		SELECT
+    		like_no,member_no,product_no,product_summary,product_price,product_quality,product_thumbnail,member_nickname
+			FROM
+    	(
+        	SELECT
+            	a.like_no,
+            	a.member_no,
+            	a.product_no,
+            	b.product_summary,
+            	b.product_price,
+            	b.product_quality,
+            	b.product_thumbnail,
+            	c.member_nickname,
+            	(SELECT COUNT(*) FROM trade_tbl WHERE product_no = a.product_no) AS trade
+        	FROM
+            	like_tbl a
+        	JOIN
+            	product_tbl b ON a.product_no = b.product_no
+        	JOIN
+            	member_tbl c ON b.member_no = c.member_no
+        	WHERE
+            	a.member_no = #{memberNo}
+    	) q
+	WHERE
+    	q.trade = 0
+	</select>
+
 
 	<select id="selectOneEmail" resultType="int">
 

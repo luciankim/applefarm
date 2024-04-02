@@ -168,6 +168,10 @@ public class MemberService {
 			
 		}
 
+		public List selectLike(int memberNo) {
+			return memberDao.selectLike(memberNo);
+		}
+
 
 		
 }
