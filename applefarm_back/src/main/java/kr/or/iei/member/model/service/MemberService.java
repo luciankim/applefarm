@@ -161,7 +161,7 @@ public class MemberService {
 			
 			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 				
-				long expiredDateMs = 60*60*1000l;  //1시간 지정
+				long expiredDateMs = 10*1*1000l;  //1시간 지정
 				
 				//아이디 인증 끝났을 때 토큰
 				String accessToken = jwtUtil.createToken(member.getMemberId(), expiredDateMs);
@@ -175,6 +175,11 @@ public class MemberService {
 			
 			
 			
+		}
+
+		public Member selectId(String memberId) {
+			
+			return memberDao.selectId(memberId);
 		}
 
 

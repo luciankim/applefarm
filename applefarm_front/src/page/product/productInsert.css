@@ -91,7 +91,7 @@
 
 .score-radio:checked + label {
   border: 3px solid var(--main_02);
-  background-color:  var(--main_02);
+  background-color: var(--main_02);
   color: white;
 }
 .score-radio {
@@ -132,7 +132,6 @@ quality-select-image2 {
 .quality-select-input-wrap > label {
   font-size: 18px;
   font-family: esd-r;
-  
 }
 
 .quality-select-half {

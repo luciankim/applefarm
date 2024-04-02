@@ -1,9 +1,9 @@
 import axios from "axios";
-import "./product.css";
+import "./productInsert.css";
 import React, { useEffect, useState } from "react";
 import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
-const QualitySelectFrm = (props) => {
+const ProductQualityInsert = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [totalQuality, setTotalQuality] = useState();
@@ -479,4 +479,4 @@ const ImageInput = (props) => {
   );
 };
 
-export default QualitySelectFrm;
+export default ProductQualityInsert;

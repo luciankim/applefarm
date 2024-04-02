@@ -10,7 +10,7 @@ const Login = (props) => {
   const [memberId, setMemberId] = useState(""); //아이디
   const [memberPw, setMemberPw] = useState(""); //비밀번호
 
-  const setIsLogin = props.setIsLogin;
+  const loginFunction = props.login;
 
   const navigate = useNavigate();
 
@@ -44,12 +44,7 @@ const Login = (props) => {
         .post(backServer + "/member/login", obj)
         .then((res) => {
           if (res.data.message === "success") {
-            console.log(res.data);
-
-            window.localStorage.setItem("token", res.data.data); //세션 대신에 로컬스토리에 저장해줌. 서버에서 클라이언트로 넘어옴.
-
-            setIsLogin(true); //로그인 성공했을 때 로그인 값을 true 로 변경
-
+            loginFunction(res.data.data);
             navigate("/");
           } else {
             Swal.fire("아이디 또는 비밀번호를 확인하세요.");
