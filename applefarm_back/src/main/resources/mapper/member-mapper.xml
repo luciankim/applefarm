@@ -143,6 +143,7 @@
 		MEMBER_GRADE,
 		SELLER_SCORE,
 		SELLER_GRADE,
+		MEMBER_BLACK_TIME,
 		TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
 		FROM MEMBER_TBL ORDER
 		BY 1)M)
@@ -155,7 +156,8 @@
 		member_black_time =
 		<choose>
 			<when test="memberGrade == 3">
-				SYSTIMESTAMP
+				TO_CHAR(SYSDATE, 'yyyy-mm-dd
+				hh24:mi:ss')
 			</when>
 			<otherwise>
 				null
@@ -164,5 +166,9 @@
 		WHERE member_no = #{memberNo}
 	</update>
 
+	<update id="updateBlackMemberGrade">
+		update member_tbl
+		set member_grade = #{memberGrade} where member_no =#{memberNo}
+	</update>
 
 </mapper>

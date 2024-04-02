@@ -60,8 +60,10 @@ public class Member {
 	
 	@Schema(description = "예금주명", type="string")
 	private String depositorName;
-
-}
+	
+	@Schema(description = "멤버 블랙 타임", type="String")
+	private String memberBlackTime;
+}	
 
 
 

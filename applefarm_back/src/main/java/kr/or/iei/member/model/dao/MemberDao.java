@@ -58,6 +58,10 @@ public interface MemberDao {
 
 	int changeMemberGrade(Member member);
 
+	void updateMemberGrader();
+
+	void updateBlackMemberGrade(Member member);
+
 
 
 

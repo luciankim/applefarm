@@ -42,7 +42,7 @@ const AdminReport = () => {
           <tbody>
             {boardList.map((board, index) => {
               return (
-                <BoardItem
+                <ReportItem
                   key={"board" + index}
                   board={board}
                   boardList={boardList}
@@ -63,7 +63,7 @@ const AdminReport = () => {
     </div>
   );
 };
-const BoardItem = (props) => {
+const ReportItem = (props) => {
   const board = props.board;
   const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
 
