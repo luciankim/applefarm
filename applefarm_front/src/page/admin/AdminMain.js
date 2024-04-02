@@ -6,7 +6,7 @@ import { useState } from "react";
 import "./admin.css";
 import BoardList from "../board/BoardList";
 import AdminMember from "./AdminMember";
-
+import AdminDashboard from "./AdminDashboardi";
 const AdminMain = () => {
   const [adminMenu, setAdminMenu] = useState([
     { url: "dashboard", text: "대시보드", active: false },
@@ -30,7 +30,7 @@ const AdminMain = () => {
       </div>
       <div className="admin-section-wrap">
         <Routes>
-          {/* <Route path="/adminStat" element={<BoardList />} /> */}
+          <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/manageMember" element={<AdminMember />} />
           {/* <Route path="/memberAccountNumber" element={<t />} /> */}
           <Route path="/manageBoard" element={<BoardList />} />

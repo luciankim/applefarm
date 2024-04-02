@@ -136,7 +136,7 @@ public class MemberService {
 			return result;
 		}
 
-		//관리자: 회원관리 기능
+		//-------------------------------관리자: 회원관리 기능 시작 -------------------------------//
 		public Map selectMemberList(int reqPage) {
 			int numPerPage = 5;
 			int pageNaviSize = 5;
@@ -145,12 +145,21 @@ public class MemberService {
 			//페이지 인포 객체
 			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 			List memberList = memberDao.selectMemberList(pi);
+			System.out.println("서비스 멤법리스트: " + memberList);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("memberList", memberList);
 			map.put("pi", pi);
 			return map;
 		}
-
+		
+		
+		public int changeMemberGrade(Member member) {
+			int result = memberDao.changeMemberGrade(member);
+			return result;
+		}
+		
+		
+//-------------------------------관리자: 회원관리 기능 끝 -------------------------------//
 
 		public Member login(Member member) {
 			
@@ -163,10 +172,9 @@ public class MemberService {
 			}else {
 				return null;
 			}
-			
-			
-			
 		}
+
+		
 
 
 		

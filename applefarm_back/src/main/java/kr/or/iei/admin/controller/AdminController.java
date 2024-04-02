@@ -22,6 +22,8 @@ import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.admin.model.service.AdminService;
 import kr.or.iei.board.model.service.BoardService;
+import kr.or.iei.member.model.dao.MemberDao;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 
 @CrossOrigin("*")
@@ -88,7 +90,21 @@ public class AdminController {
 	@GetMapping(value="/member/{reqPage}")
 	public ResponseEntity<ResponseDTO> memberList(@PathVariable int reqPage){
 		Map map = memberService.selectMemberList(reqPage);
+		System.out.println("controller : " + map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}	
+	
+	
+	@PatchMapping(value="/memberGrade")
+	public ResponseEntity<ResponseDTO> changeMemberGrade(@RequestBody Member member){
+		int result = memberService.changeMemberGrade(member);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 }

@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Button3 } from "../../component/FormFrm";
 import { DelModal } from "../member/Modal";
 import axios from "axios";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Pagination from "../../component/Pagination";
+
 const AdminMember = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [memberList, setMemberList] = useState([]);
@@ -14,19 +19,21 @@ const AdminMember = () => {
     axios
       .get(backServer + "/admin/member/" + reqPage)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.data);
+        setMemberList(res.data.data.memberList);
+        setPageInfo(res.data.data.pi);
       })
       .catch((res) => {
-        console.log(res.data);
+        console.log(res.data.data);
       });
-  }, []);
+  }, [reqPage]);
 
   return (
     <div className="mypage-current-wrap">
       <div className="mypage-current-title">
         <p className="admin-current-p">회원관리</p>
       </div>
-      <div className="member-like-tbl-box">
+      <div className="member-like-tbl-box" id="member-like-tbl-box">
         <table>
           <thead>
             <tr>
@@ -40,67 +47,74 @@ const AdminMember = () => {
             </tr>
           </thead>
           <tbody>
-            {memberList.map((like, index) => {
+            {memberList.map((member, index) => {
               return (
-                <LikeItem
-                  key={"like" + index}
-                  like={like}
-                  likeList={memberList}
-                  setLikeList={setMemberList}
+                <MemberItem
+                  key={"member" + index}
+                  member={member}
+                  memberList={memberList}
+                  setLMemberList={setMemberList}
                 />
               );
             })}
           </tbody>
         </table>
       </div>
+      <div className="admin-page-wrap">
+        <Pagination
+          pageInfo={pageInfo}
+          reqPage={reqPage}
+          setReqPage={setReqPage}
+        />
+      </div>
     </div>
   );
 };
 
-const LikeItem = (props) => {
-  const like = props.like;
-  const navigate = useNavigate();
-
-  //구매 페이지 이동 작성 예정
-  const purchase = () => {
-    //구매페이지 이동
-    navigate("/purchase", { state: { like: like } });
+const MemberItem = (props) => {
+  const member = props.member;
+  const [memberGrade, setMemberGrade] = useState(member.memberGrade);
+  const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
+  const changeGrade = (e) => {
+    const m = { memberNo: member.memberNo, memberGrade: e.target.value };
+    axios
+      .patch(backServer + "/admin/memberGrade", m)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message === "success") {
+          setMemberGrade(e.target.value);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
-
-  //모달
-  const likeList = props.likeList;
-  const setLikeList = props.setLikeList;
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
-  //좋아요 삭제
-  const likeDelFun = () => {
-    // 삭제 동작 처리 로직 작성 예정 -> 데이터 생성시 구현 예정
-    console.log(like);
-    const newLikeList = likeList.filter((item) => {
-      return item !== like;
-    });
-    setLikeList(newLikeList);
-    setModalOpen(false);
-  };
+  useEffect(() => {
+    setMemberGrade(member.memberGrade);
+  }, [member]);
 
   return (
     <tr>
-      <td>zz</td>
+      <td>{member.memberNo}</td>
+      <td>{member.memberId}</td>
       <td>
-        <div className="member-like-img-box">
-          <img src={like.img} />
-        </div>
+        {member.memberGrade === 1
+          ? "사용자"
+          : member.memberGrade === 2
+          ? "관리자"
+          : "블랙멤버"}
       </td>
-      <td className="likeName-td">{like.name}</td>
-      <td>{like.quality}</td>
-      <td>{like.price}</td>
-      <td>{like.seller}</td>
-      <td className="purchase-btn-box">
-        <Button3 text="구매하기" clickEvent={purchase} />
+      <td>{member.sellerScore}</td>
+      <td>{member.sellerGrade}</td>
+      <td>{member.enrollDate}</td>
+      <td>
+        <FormControl sx={{ m: 1 }}>
+          <Select value={memberGrade} onChange={changeGrade}>
+            <MenuItem value={1}>사용자</MenuItem>
+            <MenuItem value={2}>관리자</MenuItem>
+            <MenuItem value={3}>블랙</MenuItem>
+          </Select>
+        </FormControl>
       </td>
     </tr>
   );
