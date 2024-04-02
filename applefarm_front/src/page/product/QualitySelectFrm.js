@@ -201,8 +201,8 @@ const QualitySelectFrm = (props) => {
           ""
         )}
         <div className="quality-select-button">
-            <Button2 text="이전으로" onclick="prevPage"></Button2>
-            <Button2 text="다음으로" onclick="nextPage"></Button2>
+            <Button1 text="이전으로" onclick="prevPage" addId="gy"></Button1>
+            <Button1 text="다음으로" onclick="nextPage" addId="gy"></Button1>
         </div>
 
         {/* <div>
