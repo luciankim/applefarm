@@ -95,8 +95,9 @@
 	<insert id="join">
 
 		insert into member_tbl values
-		(MEMBER_SEQ.nextval,#{memberName},
-		
+		(
+		MEMBER_SEQ.nextval,
+		#{memberName},
 		#{memberNickName},
 		#{memberId},
 		#{memberPw}, 
@@ -108,7 +109,8 @@
 		37,
 		1,
 		0,
-		#{memberBlackTime}})
+		#{memberBlackTime}
+		)
 
 	</insert>
 
