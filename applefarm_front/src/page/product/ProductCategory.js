@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
 import axios from "axios";
-import { PswRadio, PswRadioQuality } from "../../component/FormFrm";
+import {
+  PswRadio,
+  PswRadioQuality,
+  selectedProduct,
+} from "../../component/FormFrm";
+import ProductSummary from "./ProductSummary";
 
 const ProductCategory = (props) => {
   const {
@@ -42,6 +47,7 @@ const ProductCategory = (props) => {
 
     productQuality,
     setProductQuality,
+    selectedProduct,
   } = props;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -225,9 +231,9 @@ const ProductCategory = (props) => {
   }, [selectedCategory]);
 
   return (
-    <div className="product-category-wrap">
+    <div className="productCategory-wrap">
       {/*좌측 영역*/}
-      <div className="product-category-wrap-left">
+      <div className="productCategory-wrap-left">
         <div>
           {colorArr.indexOf(productColor) !== -1 ? (
             <img
@@ -250,7 +256,7 @@ const ProductCategory = (props) => {
       {/*//좌측 영역*/}
 
       {/*우측 영역*/}
-      <div className="product-category-wrap-right">
+      <div className="productCategory-wrap-right">
         {
           <ArrMap //ul태그
             arr={genArr}
@@ -308,7 +314,7 @@ const ProductCategory = (props) => {
         {
           <ArrMap //ul태그
             arr={chipArr}
-            name="cbip"
+            name="chip"
             selectValue={productChip}
             setSelectValue={setProductChip}
             table={table}
@@ -370,9 +376,9 @@ const ProductCategory = (props) => {
         ) : (
           ""
         )}
+        <ProductSummary selectedProduct={selectedProduct} />
       </div>
-
-      {/*//우측 영역*/}
+      {/*--우측 영역*/}
     </div>
   );
 };
@@ -387,14 +393,10 @@ const ArrMap = (props) => {
   const optionTitle = () => {
     if (name === "gen") {
       return table === "IPHONE_TBL" ? "시리즈" : "세대";
-    } else if (name === "model2") {
-      return selectValue === "2018년" ||
-        selectValue === "2019년" ||
-        selectValue === "2020년"
-        ? "포트 수"
-        : "모델";
     } else if (name === "model") {
       return table === "MACBOOK_TBL" ? "화면 크기" : "모델";
+    } else if (name === "model2") {
+      return "모델";
     } else if (name === "color") {
       return "색상";
     } else if (name === "storage") {

@@ -7,13 +7,25 @@ const ProductSummary = (props) => {
   const [summaryCpu, setSummaryCpu] = useState("");
   const [summaryGpu, setSummaryGpu] = useState("");
   useEffect(() => {
-    setSummaryQuality(selectedProduct.productQuality + "급");
+    if (selectedProduct.productQuality) {
+      setSummaryQuality(selectedProduct.productQuality + "급");
+    } else {
+      setSummaryQuality("");
+    }
   }, [selectedProduct]);
   useEffect(() => {
-    setSummaryCpu("CPU(" + selectedProduct.productCpu + ")");
+    if (selectedProduct.productCpu) {
+      setSummaryCpu("CPU(" + selectedProduct.productCpu + ")");
+    } else {
+      setSummaryCpu("");
+    }
   }, [selectedProduct]);
   useEffect(() => {
-    setSummaryGpu("GPU(" + selectedProduct.productGpu + ")");
+    if (selectedProduct.productGpu) {
+      setSummaryGpu("GPU(" + selectedProduct.productGpu + ")");
+    } else {
+      setSummaryGpu("");
+    }
   }, [selectedProduct]);
 
   return (
