@@ -124,6 +124,13 @@
   font-weight: 600;
   margin-bottom: 60px;
 }
+.productChart-tab {
+  width: 90%;
+  margin-left: 100px;
+}
+.productChart-tab .productTab-wrap {
+  margin-bottom: 20px;
+}
 .productChart-content {
   font-size: 18px;
 }
