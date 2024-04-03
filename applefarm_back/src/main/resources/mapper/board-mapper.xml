@@ -3,7 +3,7 @@
 <mapper namespace="kr.or.iei.board.model.dao.BoardDao">
 	<select id="totalCount" resultType="int">
 		select count(*) from
-		board_tbl where board_hide=0
+		board_tbl where board_hide=0 and board_type=2
 	</select>
 
 	<select id="selectBoardList" resultType="board">
@@ -39,7 +39,8 @@
 
 	<insert id="insertBoard">
 		INSERT INTO BOARD_TBL VALUES(BOARD_SEQ.NEXTVAL, #{boardTitle},
-		#{boardContent}, #{memberNo},0, #{boardType}, #{productCategory}, 0, SYSDATE,
+		#{boardContent}, #{memberNo},0, #{boardType}, #{productCategory}, 0,
+		SYSDATE,
 		#{boardThumbnail})
 
 		<selectKey resultType="int" keyProperty="boardNo"
@@ -112,82 +113,123 @@
 		where board_no = #{boardNo}
 	</update>
 
-<insert id="insertComment" parameterType="BoardComment">
-    INSERT INTO comment_tbl 
-    VALUES (COMMENT_SEQ.nextval, #{boardNo}, #{commentWriter}, #{commentContent},
-    <choose>
-        <when test="selfRef == 0"> null </when>
-        <otherwise> #{selfRef} </otherwise>
-    </choose>,
-    0, sysdate)
-</insert>
+	<insert id="insertComment" parameterType="BoardComment">
+		INSERT INTO comment_tbl
+		VALUES (COMMENT_SEQ.nextval, #{boardNo},
+		#{commentWriter},
+		#{commentContent},
+		<choose>
+			<when test="selfRef == 0"> null </when>
+			<otherwise> #{selfRef} </otherwise>
+		</choose>
+		,
+		0, sysdate)
+	</insert>
 
-<select id="selectCommentList" resultType="BoardComment">
-	select * from comment_tbl where board_no = #{boardNo} order by 1
-</select>
-
-
-<delete id="deleteComment">
-	delete from comment_tbl where comment_no = #{commentNo}
-</delete>
-
-<select id="selectSearchBoardList" resultType="Board">
-    SELECT * FROM (
-        SELECT
-            ROWNUM AS rnum, d.*
-        FROM (
-            SELECT
-                b.board_no,
-                b.board_title,
-                m.member_nickname,
-                b.board_thumbnail,
-                TO_CHAR(b.board_date, 'yyyy-mm-dd hh24:mi:ss') AS board_date,
-                b.read_count
-            FROM
-                board_tbl b
-            JOIN
-                member_tbl m ON b.member_no = m.member_no
-            WHERE
-                b.board_type = 2
-                AND b.board_hide = 0
-                <choose>
-                    <when test="selectedValue == 1">
-                        <!-- 전체 검색 -->
-                        AND (b.board_title LIKE '%' || #{selectedKeyword} || '%'
-                            OR b.board_content LIKE '%' || #{selectedKeyword} || '%')
-                    </when>
-                    <when test="selectedValue == 2">
-                        <!-- 제목 검색 -->
-                        AND b.board_title LIKE '%' || #{selectedKeyword} || '%'
-                    </when>
-                    <when test="selectedValue == 3">
-                        <!-- 내용 검색 -->
-                        AND b.board_content LIKE '%' || #{selectedKeyword} || '%'
-                    </when>
-                </choose>
-            ORDER BY
-                b.board_no DESC
-        ) d
-    ) WHERE rnum BETWEEN #{pi.start} AND #{pi.end}
-		
-</select>
-
-<select id="totalSearchCount" resultType="int">
-    SELECT COUNT(*) FROM board_tbl
-    WHERE board_hide = 0 and board_type=2
-    <choose>
-        <when test="selectedValue == 1">
-            AND (board_title LIKE '%' || #{selectedKeyword} || '%' OR board_content LIKE '%' || #{selectedKeyword} || '%')
-        </when>
-        <when test="selectedValue == 2">
-            AND board_title LIKE '%' || #{selectedKeyword} || '%'
-        </when>
-        <when test="selectedValue == 3">
-            AND board_content LIKE '%' || #{selectedKeyword} || '%'
-        </when>
-    </choose>
-</select>
+	<select id="selectCommentList" resultType="BoardComment">
+		select * from
+		comment_tbl where board_no = #{boardNo} order by 1
+	</select>
 
 
+	<delete id="deleteComment">
+		delete from comment_tbl where comment_no =
+		#{commentNo}
+	</delete>
+
+	<select id="selectSearchBoardList" resultType="Board">
+		SELECT * FROM (
+		SELECT
+		ROWNUM AS rnum, d.*
+		FROM (
+		SELECT
+		b.board_no,
+		b.board_title,
+		m.member_nickname,
+		b.board_thumbnail,
+		TO_CHAR(b.board_date, 'yyyy-mm-dd hh24:mi:ss') AS board_date,
+		b.read_count
+		FROM
+		board_tbl b
+		JOIN
+		member_tbl m ON b.member_no =
+		m.member_no
+		WHERE
+		b.board_type = 2
+		AND b.board_hide = 0
+		<choose>
+			<when test="selectedValue == 1">
+				<!-- 전체 검색 -->
+				AND (b.board_title LIKE '%' || #{selectedKeyword} || '%'
+				OR
+				b.board_content LIKE '%' || #{selectedKeyword} || '%')
+			</when>
+			<when test="selectedValue == 2">
+				<!-- 제목 검색 -->
+				AND b.board_title LIKE '%' || #{selectedKeyword} || '%'
+			</when>
+			<when test="selectedValue == 3">
+				<!-- 내용 검색 -->
+				AND b.board_content LIKE '%' || #{selectedKeyword} || '%'
+			</when>
+		</choose>
+		ORDER BY
+		b.board_no DESC
+		) d
+		) WHERE rnum BETWEEN #{pi.start} AND
+		#{pi.end}
+
+	</select>
+
+	<select id="totalSearchCount" resultType="int">
+		SELECT COUNT(*) FROM board_tbl
+		WHERE board_hide = 0 and board_type=2
+		<choose>
+			<when test="selectedValue == 1">
+				AND (board_title LIKE '%' || #{selectedKeyword} ||
+				'%' OR board_content
+				LIKE '%' || #{selectedKeyword} || '%')
+			</when>
+			<when test="selectedValue == 2">
+				AND board_title LIKE '%' || #{selectedKeyword} || '%'
+			</when>
+			<when test="selectedValue == 3">
+				AND board_content LIKE '%' || #{selectedKeyword} ||
+				'%'
+			</when>
+		</choose>
+	</select>
+
+	<select id="totalBoardCount" resultType="int">
+		select count(*) from
+		board_tbl
+	</select>
+
+
+	<select id="selectTotalBoardList" resultType="board">
+		SELECT * FROM (
+		SELECT
+		ROWNUM AS rnum, d.* FROM (
+		SELECT
+		b.board_no,
+		b.board_title,
+		m.member_nickname,
+		b.board_thumbnail,
+		TO_CHAR(b.board_date, 'yyyy-mm-dd
+		hh24:mi:ss') AS board_date,
+		b.read_count
+		FROM
+		board_tbl b
+		JOIN
+		member_tbl m
+		ON b.member_no =
+		m.member_no
+		WHERE
+		b.board_type = 2 AND b.board_hide = 0
+		ORDER BY
+		b.board_no DESC
+		) d
+		) WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
 
 </mapper>

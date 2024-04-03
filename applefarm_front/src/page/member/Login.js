@@ -5,10 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const Login = () => {
+const Login = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [memberId, setMemberId] = useState(""); //아이디
   const [memberPw, setMemberPw] = useState(""); //비밀번호
+
+  const loginFunction = props.login;
 
   const navigate = useNavigate();
 
@@ -42,6 +44,7 @@ const Login = () => {
         .post(backServer + "/member/login", obj)
         .then((res) => {
           if (res.data.message === "success") {
+            loginFunction(res.data.data);
             navigate("/");
           } else {
             Swal.fire("아이디 또는 비밀번호를 확인하세요.");
@@ -51,11 +54,6 @@ const Login = () => {
           console.log(res.data);
         });
     }
-  };
-
-  /*회원가입*/
-  const join = () => {
-    navigate("/join");
   };
 
   return (
@@ -84,7 +82,7 @@ const Login = () => {
             onKeyDown={handleKeyPress}
           />
           <div className="login-btn-box">
-            <Button2 text="로그인" clickEvent={login} />
+            <Button1 id="login-btn" text="로그인" clickEvent={login} />
           </div>
 
           <div className="login-search-box">

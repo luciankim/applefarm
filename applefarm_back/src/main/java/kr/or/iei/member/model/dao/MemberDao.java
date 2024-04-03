@@ -40,9 +40,11 @@ public interface MemberDao {
 	int join(Member member);
 
 	int memberTotalCount();
-
+	
+	
+	//-------------------------------관리자: 회원관리 기능-------------------------------
 	List selectMemberList(PageInfo pi);
-
+	//-------------------------------관리자: 회원관리 기능-------------------------------
 
 	Member selectId(String memberId);
 
@@ -54,7 +56,15 @@ public interface MemberDao {
 
 	int updateBasicAddress(int addressNo);
 
+
 	List selectLike(int memberNo);
+
+	int changeMemberGrade(Member member);
+
+	void updateMemberGrader();
+
+	void updateBlackMemberGrade(Member member);
+
 
 
 

@@ -5,8 +5,8 @@ import { Select } from "../../component/FormFrm";
 import { useState } from "react";
 
 const Header = (props) => {
-  const isLogin = props.isLogin;
-  const logout = props.logout;
+  const isLogin = props.isLogin; //로그인 값 받아오기 (헤더에서 App.js)
+  const logout = props.logout; //(App.js)헤더에서 보낸 로그아웃 받아오기
 
   return (
     <header>
@@ -62,7 +62,7 @@ const LoginForm = (props) => {
     <div className="header-link">
       {isLogin ? (
         <>
-          <Link to="/member" title="마이페이지">
+          <Link to="/mypage/loginInfo" title="마이페이지">
             <span className="material-icons">face</span>
           </Link>
 

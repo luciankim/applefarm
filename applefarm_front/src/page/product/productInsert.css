@@ -1,7 +1,12 @@
-/* QualitySelectFrm */
+/* ProductInsert.js */
+.disPlayNone {
+  display: none;
+}
+/* --ProductInsert.js */
+
+/* ProductQualityInsert.js */
 .quality-select-total-wrap {
   width: 1200px;
-  /* background-color: rgb(233, 238, 208); */
   margin: 0 auto;
 }
 
@@ -15,7 +20,6 @@
 .quality-select-title {
   width: 100%;
   height: 100px;
-  /* background-color: aquamarine; */
   text-align: center;
   line-height: 100px;
   font-size: 30px;
@@ -26,7 +30,11 @@
   flex-direction: column;
   margin: 40px 0;
 }
-
+#gy {
+  width: 180px;
+  height: 50px;
+  margin-bottom: 80px;
+}
 .quality-type {
   display: flex;
   justify-content: space-between;
@@ -44,6 +52,7 @@
   cursor: pointer;
   float: left;
 }
+
 .radio3 + label {
   display: block;
   /* width: 250px; */
@@ -82,9 +91,19 @@
 }
 
 .radio:checked + label {
-  border: 3px solid blue;
+  border: 3px solid var(--main_01);
   color: black;
 }
+
+.score-radio:checked + label {
+  border: 3px solid var(--main_02);
+  background-color: var(--main_02);
+  color: white;
+}
+.score-radio {
+  display: none;
+}
+
 .radio {
   display: none;
 }
@@ -104,6 +123,7 @@
   display: block;
   width: 40%;
   margin: 0 auto;
+  margin-top: 50px;
   /* text-align: center; */
 }
 
@@ -113,7 +133,8 @@
 }
 
 .quality-select-input-wrap > label {
-  font-size: 13px;
+  font-size: 18px;
+  font-family: esd-r;
 }
 
 .quality-select-half {
@@ -129,3 +150,16 @@
   width: 70%;
   margin: 0 auto;
 }
+
+.quality-select-button {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 100px;
+}
+
+.quality-image {
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+}
+/* --ProductQualityInsert.js */

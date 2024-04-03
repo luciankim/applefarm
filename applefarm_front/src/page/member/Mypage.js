@@ -4,6 +4,7 @@ import SideMenu from "../../component/SideMenu";
 import { Route, Routes } from "react-router-dom";
 import Address from "./Address";
 import MemberWish from "./MemberWish";
+import MemberInfo from "./MemberInfo";
 
 //로그인 정보 가져오기
 const Mypage = () => {
@@ -40,6 +41,7 @@ const Mypage = () => {
         <Routes>
           <Route path="/address" element={<Address />}></Route>
           <Route path="/wish" element={<MemberWish />}></Route>
+          <Route path="/loginInfo" element={<MemberInfo />} />
         </Routes>
       </div>
     </div>

@@ -1,6 +1,7 @@
 package kr.or.iei.member.model.service;
 
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,117 +15,192 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
 
 @Service
 public class MemberService {
-		@Autowired
-		private MemberDao memberDao;
-		@Autowired
-		private PagiNation pagination;
-		
-		
-		@Transactional
-		public int insertAddress(Address address) {
-			int result = 0;
-			int memberNo = address.getMemberNo();
-			int count = memberDao.selectAddressCount(memberNo);
-			if(count == 0) {
-				address.setAddressDefault(1);
-			}else {
-				if(address.getAddressDefault()==1) {
-					result += memberDao.updateAddressDefault(memberNo);
-					result -= count;
-				}
-			}
-			result += memberDao.insertAddress(address);
-			return result;
-		}
-
-	
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder; 
+	private MemberDao memberDao;
+	@Autowired
+	private PagiNation pagination;
+	@Autowired
+	private JwtUtil jwtUtil;
 
+	@Transactional
+	public int insertAddress(Address address) {
+		int result = 0;
+		int memberNo = address.getMemberNo();
+		int count = memberDao.selectAddressCount(memberNo);
+		if (count == 0) {
+			address.setAddressDefault(1);
+		} else {
+			if (address.getAddressDefault() == 1) {
+				result += memberDao.updateAddressDefault(memberNo);
+				result -= count;
+			}
+		}
+		result += memberDao.insertAddress(address);
+		return result;
+	}
 
-		public Map selectAddress(int memberNo,int reqPage) {
-			//전체 배송지 리스트(기본배송지+나머지 배송지들)
-			ArrayList<Address> list = new ArrayList<Address>();
-			//기본배송지
-			Address basicAddress = memberDao.selectAddressBasic(memberNo);
-			list.add(basicAddress);
-			//기본배송지 제외한 배송지 리스트
-			int numPerPage = 3;	//페이지당 행 수 -> 성공 후 수정
-			int pageNaviSize = 5;
-			int totalCount = memberDao.addressNoBasicTotalCount(memberNo);
-			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-			HashMap<String, Object> data = new HashMap<String, Object>();
-			data.put("memberNo", memberNo);
-			data.put("start", pi.getStart());
-			data.put("end", pi.getEnd());
-			List<Address> addressList = memberDao.selectAddressList(data);
-			if(!addressList.isEmpty()) {
-				for (Address a : addressList) {
-					list.add(a);
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	public Map selectAddress(int memberNo, int reqPage) {
+		// 전체 배송지 리스트(기본배송지+나머지 배송지들)
+		ArrayList<Address> list = new ArrayList<Address>();
+		// 기본배송지
+		Address basicAddress = memberDao.selectAddressBasic(memberNo);
+		list.add(basicAddress);
+		// 기본배송지 제외한 배송지 리스트
+		int numPerPage = 3; // 페이지당 행 수 -> 성공 후 수정
+		int pageNaviSize = 5;
+		int totalCount = memberDao.addressNoBasicTotalCount(memberNo);
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("memberNo", memberNo);
+		data.put("start", pi.getStart());
+		data.put("end", pi.getEnd());
+		List<Address> addressList = memberDao.selectAddressList(data);
+		if (!addressList.isEmpty()) {
+			for (Address a : addressList) {
+				list.add(a);
+			}
+		}
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("addressList", list);
+		map.put("pi", pi);
+		return map;
+	}
+
+	@Transactional
+	public int deleteAddress(int addressNo) {
+		return memberDao.deleteAddress(addressNo);
+	}
+
+	@Transactional
+	public int updateAddressDefault(Address address) {
+		int result = memberDao.updateAddressDefault(address.getMemberNo());
+		result -= memberDao.selectAddressCount(address.getMemberNo());
+		result += memberDao.updateAddressDefault1(address.getAddressNo());
+		return result;
+	}
+
+	@Transactional
+	public int updateAddress(Address address) {
+		System.out.println(address);
+		int result = 0;
+		// 기본배송지 1인 상태로 수정요청시 update전 기본배송지상태1인거 찾아서 기본배송지상태 0으로 변경
+		if (address.getAddressDefault() == 1) {
+			int addressNo = memberDao.selectBasicAddressNo(address.getMemberNo());
+			result += memberDao.updateBasicAddress(addressNo);
+			// result += memberDao.updateSearchUpdateBasicAddress(address.getMemberNo());
+			result -= 1;
+		}
+		result += memberDao.updateAddress(address);
+		return result;
+	}
+
+	public int selectOneEmail(String memberEmail) {
+
+		int duplicationEmail = memberDao.selectOneEmail(memberEmail);
+
+		return duplicationEmail;
+	}
+
+	public int selectOneId(String memberId) {
+
+		int duplicationId = memberDao.selectOneId(memberId);
+
+		return duplicationId;
+	}
+
+	public int selectOneNickName(String memberNickName) {
+		int duplicationNickName = memberDao.selectOneNickName(memberNickName);
+		return duplicationNickName;
+	}
+/*
+	@Transactional
+	public int join(Member member) {
+
+		int result = memberDao.join(member);
+
+		return result;
+	}
+*/
+	// -------------------------------관리자: 회원관리 기능 시작
+	// -------------------------------//
+	public Map selectMemberList(int reqPage) {
+		int numPerPage = 5;
+		int pageNaviSize = 5;
+		int totalCount = memberDao.memberTotalCount();
+
+		// 페이지 인포 객체
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List<Member> memberList = memberDao.selectMemberList(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memberList", memberList);
+		map.put("pi", pi);
+
+		// 30초 시간 계산 : 블랙
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+		
+		//블랙 지정 시간 계산
+		for (Member member : memberList) {
+			//LocalDateTime 클래스를 이용한 특정 시간 셈
+			// 문자열을 LocalDateTime으로 파싱
+			String blackTimeString = member.getMemberBlackTime();
+			if (blackTimeString != null) {
+				LocalDateTime blackTime = LocalDateTime.parse(blackTimeString, formatter);
+				LocalDateTime whiteTime = blackTime.plusSeconds(15);
+				if (now.isAfter(whiteTime)) {
+					 member.setMemberGrade(1);
+	                 memberDao.updateBlackMemberGrade(member);
+					
+				} else {
+					System.out.println(member.getMemberName() + " 이용정지");
 				}
 			}
-			HashMap<String, Object> map  = new HashMap<String, Object>();
-			map.put("addressList",list);
-			map.put("pi", pi);
-			return map;
-		}
-		
-		@Transactional
-		public int deleteAddress(int addressNo) {
-			return memberDao.deleteAddress(addressNo);
-		}
-		
-		@Transactional
-		public int updateAddressDefault(Address address) {
-			int result = memberDao.updateAddressDefault(address.getMemberNo());
-			result -= memberDao.selectAddressCount(address.getMemberNo());
-			result+= memberDao.updateAddressDefault1(address.getAddressNo());
-			return result;
-		}
-		@Transactional
-		public int updateAddress(Address address) {
-			System.out.println(address);
-			int result=0;
-			//기본배송지 1인 상태로 수정요청시 update전  기본배송지상태1인거 찾아서 기본배송지상태 0으로 변경
-			if(address.getAddressDefault()==1) {
-				int addressNo = memberDao.selectBasicAddressNo(address.getMemberNo());
-				result += memberDao.updateBasicAddress(addressNo);
-				//result += memberDao.updateSearchUpdateBasicAddress(address.getMemberNo());
-				result -=1;
-			}
-			result += memberDao.updateAddress(address);
-			return result;
-		}
-		
-
-		
-		public int selectOneEmail(String memberEmail) {
-			
-			int duplicationEmail = memberDao.selectOneEmail(memberEmail);
-			
-			
-			return duplicationEmail;
 		}
 
+		return map;
+	}
 
-		public int selectOneId(String memberId) {
-			
-			
-			int duplicationId = memberDao.selectOneId(memberId);
-			
-			return duplicationId;
+	public int changeMemberGrade(Member member) {
+		int result = memberDao.changeMemberGrade(member);
+		return result;
+	}
+
+//-------------------------------관리자: 회원관리 기능 끝 -------------------------------//
+
+	public String login(Member member) {
+
+		Member m = memberDao.selectId(member.getMemberId());
+
+		if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+
+			long expiredDateMs = 10 * 1 * 1000l; // 1시간 지정
+
+			// 아이디 인증 끝났을 때 토큰
+			String accessToken = jwtUtil.createToken(member.getMemberId(), expiredDateMs);
+
+			System.out.println(accessToken); // accessToken은 클라이언트한테 줘야 함.
+
+			return accessToken;
+		} else {
+			return null;
 		}
+	}
 
+	public Member selectId(String memberId) {
 
-		public int selectOneNickName(String memberNickName) {
-			int duplicationNickName = memberDao.selectOneNickName(memberNickName);
-			return duplicationNickName;
-		}
+		return memberDao.selectId(memberId);
+	}
+
 
 
 		@Transactional
@@ -135,7 +211,8 @@ public class MemberService {
 			
 			return result;
 		}
-
+		
+		/*
 		//관리자: 회원관리 기능
 		public Map selectMemberList(int reqPage) {
 			int numPerPage = 5;
@@ -150,8 +227,9 @@ public class MemberService {
 			map.put("pi", pi);
 			return map;
 		}
+		*/
 
-
+		/*
 		public Member login(Member member) {
 			
 			Member m = memberDao.selectId(member.getMemberId());
@@ -167,11 +245,12 @@ public class MemberService {
 			
 			
 		}
-
+		 */
 		public List selectLike(int memberNo) {
 			return memberDao.selectLike(memberNo);
 		}
 
 
 		
+
 }

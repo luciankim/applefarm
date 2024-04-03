@@ -41,3 +41,64 @@
   color: var(--main_02);
   font-weight: 900;
 }
+
+#member-like-tbl-box > table thead tr th {
+  padding: 10px;
+  border-top: 1px solid #252525;
+  border-bottom: 1px solid #9d9d9d;
+  background-color: var(--main_01);
+  color: white;
+  font-family: ns-l;
+  font-weight: 400;
+}
+
+#member-like-tbl-box table {
+  padding-bottom: 0;
+}
+
+#member-like-tbl-box {
+  border-bottom: 1px solid #9d9d9d;
+}
+
+.date-select-wrap {
+  padding: 10px;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #9d9d9d;
+  background-color: #fbfbfb;
+}
+
+.date-select-wrap button {
+  margin: 10px;
+  font-size: 14px;
+  font-family: ns-r;
+}
+
+.date-select-wrap > div > div > button:first-child {
+}
+
+.date-select-wrap > div > div {
+  flex-grow: 1;
+}
+
+.date-select-wrap label {
+  font-size: 18px;
+}
+
+.date-select-wrap input {
+  width: 100px;
+  font-size: 16px;
+}
+
+.date-select-wrap > div > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.date-select-wrap > div > div:last-child button {
+  margin: 10px 0;
+}
+
+.admin-product-tbl th:first-child div {
+  width: 130px;
+  font-size: 16px;
+}

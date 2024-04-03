@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -187,11 +188,11 @@ public class MemberController {
 	@PostMapping(value="/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
 		
-		Member m = memberService.login(member);
+		String accessToken = memberService.login(member);
 		
 		
-		if(m != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+		if(accessToken != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); //성공하면 토큰도 전달
 	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
@@ -285,6 +286,7 @@ public class MemberController {
 		}
 	}
 	
+
 	@Operation(summary = "좋아요 조회",description = "좋아요 전체 목록 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
@@ -296,9 +298,31 @@ public class MemberController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
+
+	
+	@GetMapping
+	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute String memberId){
+		
+		Member member = memberService.selectId(memberId);
+		
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus()); 
+		
+		
+		
+	} 
+	
 }
 	
 	
 	
+
+
+
+
+
+
+
+
 	
 	

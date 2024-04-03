@@ -38,13 +38,13 @@ public class Member {
 	private String memberPhone;
 
 	@Schema(description = "회원 등급" ,  type="number")
-	private int memberType;
+	private int memberGrade;
 	
 	@Schema(description = "회원 계좌" , type="string")
 	private String memberAccountnumber;
 	
-	@Schema(description = "가입일", type="number")
-	private Date enrollDate; 
+	@Schema(description = "가입일", type="string")
+	private String enrollDate; 
 	
 	@Schema(description = "판매자 점수" , type="number")
 	private int sellerScore;
@@ -60,8 +60,10 @@ public class Member {
 	
 	@Schema(description = "예금주명", type="string")
 	private String depositorName;
-
-}
+	
+	@Schema(description = "멤버 블랙 타임", type="String")
+	private String memberBlackTime;
+}	
 
 
 

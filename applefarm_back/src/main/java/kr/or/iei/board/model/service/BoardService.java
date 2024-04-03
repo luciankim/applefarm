@@ -138,5 +138,18 @@ public class BoardService {
 		return map;
 	}
 
+	public Map selectAdminBoardList(int reqPage) {
+		int numPerPage = 10; //페이지당 게시물 수
+		int pageNaviSize = 5; //페이지 네비 사이즈
+		//전체 게시판 게시물 수 불러오기 : 1: 공지사항  2: 자유게시판  3 : 뽐내기   4: 매거진
+		int totalCount = boardDao.totalBoardCount();		//총 게시물 수
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = boardDao.selectTotalBoardList(pi);
+
+		
+		
+		return null;
+	}
+
 
 }

@@ -29,6 +29,8 @@ public interface BoardDao {
 	int deleteComment(int commentNo);
 	List selectSearchBoardList(String selectedValue, String selectedKeyword, PageInfo pi);
 	int totalSearchCount(String selectedValue, String selectedKeyword);
+	int totalBoardCount();
+	List selectTotalBoardList(PageInfo pi);
 
 
 }
