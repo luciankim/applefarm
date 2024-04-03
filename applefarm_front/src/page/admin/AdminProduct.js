@@ -8,19 +8,20 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import { Select } from "../../component/FormFrm";
+import { Checkbox } from "@mui/material";
 
 const AdminProduct = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [boardList, setBoardList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
   const [startDate, setStartDate] = useState(dayjs("2023-11-07"));
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState(dayjs("2024-04-02"));
+  const filterStartDate = startDate.format("YYYY-MM-DD");
+  const filterEndDate = endDate.format("YYYY-MM-DD");
   const [activeButton, setActiveButton] = useState(null); // 추가: 활성 버튼 상태
   const [age, setAge] = useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const [checkedList, setCheckedList] = useState([]);
   // 1개월 버튼 클릭 시
   const oneMonth = () => {
     const today = dayjs();
@@ -51,7 +52,59 @@ const AdminProduct = () => {
     setActiveButton("all"); // 추가: 버튼 활성 상태 설정
   };
 
-  const options = ["아이폰", "아이패드"];
+  const options = [
+    { value: "0", label: "전체" },
+    { value: "1", label: "Mac" },
+    { value: "2", label: "iPad" },
+    { value: "3", label: "Watch" },
+    { value: "4", label: "iPhone" },
+    { value: "5", label: "AirPods" },
+  ];
+  const [selectedValue, setSelectedValue] = useState(0);
+
+  const selectChange = (event) => {
+    setSelectedValue(event.target.value);
+    console.log("상품구분:", event.target.value);
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        backServer +
+          "/admin/memberProduct/" +
+          selectedValue +
+          "/" +
+          filterStartDate +
+          "/" +
+          filterEndDate +
+          "/" +
+          reqPage
+      )
+      .then((res) => {
+        setProductList(res.data.data.adminProductList);
+        setPageInfo(res.data.data.pi);
+        console.log(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [reqPage, startDate, endDate]);
+
+  const checkHide = () => {
+    const checkedObject = {};
+    checkedList.forEach((value, index) => {
+      checkedObject[`item${index}`] = value; // 각 값(value)을 특정 키(item0, item1, ...)와 연결하여 객체 생성
+    });
+    axios
+      .get(backServer + "/admin/hideProduct/" + checkedList)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
+
   return (
     <div className="mypage-current-wrap">
       <div className="mypage-current-title">
@@ -105,6 +158,7 @@ const AdminProduct = () => {
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "black" }}
+                  onClick={checkHide}
                 >
                   숨기기
                 </Button>
@@ -118,23 +172,28 @@ const AdminProduct = () => {
           <thead>
             <tr>
               <th width="15%">
-                <Select options={options} />
+                <Select
+                  options={options}
+                  addId="admin-product-select"
+                  changeEvent={selectChange}
+                />
               </th>
               <th width="30%">제목</th>
-              <th width="15%">아이디</th>
+              <th width="15%">작성자</th>
               <th width="15%">작성일</th>
               <th width="10%">숨김상태</th>
               <th width="10%">체크박스</th>
             </tr>
           </thead>
           <tbody>
-            {boardList.map((board, index) => {
+            {productList.map((product, index) => {
               return (
-                <ReportItem
-                  key={"board" + index}
-                  board={board}
-                  boardList={boardList}
-                  setBoardList={setBoardList}
+                <ProductItem
+                  key={"product" + index}
+                  product={product}
+                  setProductList={setProductList}
+                  checkedList={checkedList}
+                  setCheckedList={setCheckedList}
                 />
               );
             })}
@@ -152,17 +211,32 @@ const AdminProduct = () => {
   );
 };
 
-const ReportItem = (props) => {
-  const board = props.board;
-  const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
+const ProductItem = (props) => {
+  const { product, checkedList, setCheckedList } = props;
+  console.log("변경전", checkedList); // 변경된 checkedList 확인
+
+  const checkboxChange = (productNo) => {
+    setCheckedList((checkedList) => {
+      if (checkedList.includes(productNo)) {
+        // 이미 선택된 상품일 경우, 선택 해제
+        return checkedList.filter((item) => item !== productNo);
+      } else {
+        // 선택되지 않은 상품일 경우, 선택
+        return [...checkedList, productNo]; // 새로운 배열에 productNo 추가
+      }
+    });
+  };
 
   return (
     <tr>
-      <td>dd1</td>
-      <td>dd2</td>
-      <td>3dd</td>
-      <td>dd4</td>
-      <td>5dd</td>
+      <td>아이폰</td>
+      <td>{product.productTitle}</td>
+      <td>{product.memberName}</td>
+      <td>{product.productDate}</td>
+      <td>{product.productHide === "0" ? "공개" : "비공개"}</td>
+      <td>
+        <Checkbox onChange={() => checkboxChange(product.productNo)} />
+      </td>
     </tr>
   );
 };

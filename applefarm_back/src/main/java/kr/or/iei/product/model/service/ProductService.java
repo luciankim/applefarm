@@ -2,13 +2,16 @@ package kr.or.iei.product.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.iei.admin.model.dto.AdminProduct;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductCategory;
+import kr.or.iei.util.PageInfo;
 
 @Service
 public class ProductService {
@@ -27,6 +30,14 @@ public class ProductService {
 		
 		return productDao.selectQualityList(tableName);
 	}
+
 	
+
+
+
+
+	
+
+
 	
 }

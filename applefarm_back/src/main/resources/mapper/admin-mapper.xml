@@ -13,33 +13,42 @@
 		R.REFUND_NO,
 		R.TRADE_NO,
 		R.PRODUCT_NO,
-		TO_CHAR(R.REFUND_DATE, 'YYYY-MM-DD') AS REFUND_DATE,
+		TO_CHAR(R.REFUND_DATE, 'YYYY-MM-DD') AS
+		REFUND_DATE,
 		R.REFUND_REASON,
 		R.REFUND_STATUS,
-		TO_CHAR(T.TRADE_DATE, 'YYYY-MM-DD') AS TRADE_DATE,
+		TO_CHAR(T.TRADE_DATE,
+		'YYYY-MM-DD') AS TRADE_DATE,
 		SELLER.MEMBER_NICKNAME AS SELLER_NICKNAME,
-		BUYER.MEMBER_NICKNAME AS BUYER_NICKNAME 
+		BUYER.MEMBER_NICKNAME AS BUYER_NICKNAME
 		FROM
 		REFUND_TBL R
 		JOIN
-		TRADE_TBL T ON R.TRADE_NO = T.TRADE_NO
+		TRADE_TBL T
+		ON R.TRADE_NO = T.TRADE_NO
 		JOIN
-		MEMBER_TBL SELLER ON T.TRADE_SELLER = SELLER.MEMBER_NO
+		MEMBER_TBL
+		SELLER ON T.TRADE_SELLER =
+		SELLER.MEMBER_NO
 		JOIN
-		MEMBER_TBL BUYER ON T.TRADE_BUYER = BUYER.MEMBER_NO ORDER BY 1 DESC
+		MEMBER_TBL BUYER ON
+		T.TRADE_BUYER = BUYER.MEMBER_NO
+		ORDER BY 1 DESC
 	</select>
 
 	<update id="updateConfirmRefund">
 		UPDATE REFUND_TBL
 		SET REFUND_STATUS = 2
-		WHERE REFUND_NO = #{refundNo}
+		WHERE REFUND_NO
+		= #{refundNo}
 
 	</update>
 
 	<update id="updateConfirmTrade">
 		UPDATE TRADE_TBL
 		SET TRADE_STATE = '환불'
-		WHERE TRADE_NO = #{tradeNo}
+		WHERE TRADE_NO
+		= #{tradeNo}
 	</update>
 
 	<update id="updateRejectRefund">
@@ -51,4 +60,24 @@
 		update trade_tbl set TRADE_STATE = '구매확정' where
 		trade_no =#{tradeNo}
 	</update>
+
+	<select id="productTotalCount" resultType="int">
+		select count(*) from
+		product_tbl
+	</select>
+
+	<select id="selectProductList" resultType="adminProduct">
+		SELECT
+			P.*,
+			M.MEMBER_NAME
+		FROM
+			PRODUCT_TBL P
+		JOIN
+			MEMBER_TBL M ON P.MEMBER_NO = M.MEMBER_NO
+		WHERE
+			to_char(P.PRODUCT_DATE,'yyyy-mm-dd') between #{filterStartDate} and #{filterEndDate}
+	</select>
+
+
+
 </mapper>

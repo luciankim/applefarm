@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.admin.model.dto.AdminProduct;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.util.PageInfo;
 
@@ -16,6 +17,8 @@ public interface AdminDao {
 	int updateConfirmTrade(Refund refund);
 	int updateRejectRefund(Refund refund);
 	int updateRejectTrade(Refund refund);
+	int productTotalCount();
+	List selectProductList(AdminProduct ap);
 
 
 }
