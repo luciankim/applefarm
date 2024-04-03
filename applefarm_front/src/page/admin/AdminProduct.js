@@ -21,9 +21,7 @@ const AdminProduct = () => {
   const filterEndDate = endDate.format("YYYY-MM-DD");
   const [activeButton, setActiveButton] = useState(null); // 추가: 활성 버튼 상태
   const [age, setAge] = useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const [checkedList, setCheckedList] = useState([]);
   // 1개월 버튼 클릭 시
   const oneMonth = () => {
     const today = dayjs();
@@ -53,8 +51,7 @@ const AdminProduct = () => {
     setEndDate(today);
     setActiveButton("all"); // 추가: 버튼 활성 상태 설정
   };
-  console.log("시작일", filterStartDate);
-  console.log("종료일", filterEndDate);
+
   const options = [
     { value: "0", label: "전체" },
     { value: "1", label: "Mac" },
@@ -92,6 +89,17 @@ const AdminProduct = () => {
         console.log(res.data);
       });
   }, [reqPage, startDate, endDate]);
+
+  const checkHide = (checkedList) => {
+    axios
+      .post(backServer + "/admin/hideProduct", checkedList)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
 
   return (
     <div className="mypage-current-wrap">
@@ -146,6 +154,7 @@ const AdminProduct = () => {
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "black" }}
+                  onClick={checkHide}
                 >
                   숨기기
                 </Button>
@@ -175,11 +184,12 @@ const AdminProduct = () => {
           <tbody>
             {productList.map((product, index) => {
               return (
-                <ReportItem
+                <ProductItem
                   key={"product" + index}
                   product={product}
-                  productList={productList}
                   setProductList={setProductList}
+                  checkedList={checkedList}
+                  setCheckedList={setCheckedList}
                 />
               );
             })}
@@ -197,8 +207,21 @@ const AdminProduct = () => {
   );
 };
 
-const ReportItem = (props) => {
-  const product = props.product;
+const ProductItem = (props) => {
+  const { product, checkedList, setCheckedList } = props;
+  console.log("변경전", checkedList); // 변경된 checkedList 확인
+
+  const checkboxChange = (productNo) => {
+    setCheckedList((checkedList) => {
+      if (checkedList.includes(productNo)) {
+        // 이미 선택된 상품일 경우, 선택 해제
+        return checkedList.filter((item) => item !== productNo);
+      } else {
+        // 선택되지 않은 상품일 경우, 선택
+        return [...checkedList, productNo]; // 새로운 배열에 productNo 추가
+      }
+    });
+  };
 
   return (
     <tr>
@@ -208,7 +231,7 @@ const ReportItem = (props) => {
       <td>{product.productDate}</td>
       <td>{product.productHide === "0" ? "공개" : "비공개"}</td>
       <td>
-        <Checkbox />
+        <Checkbox onChange={() => checkboxChange(product.productNo)} />
       </td>
     </tr>
   );

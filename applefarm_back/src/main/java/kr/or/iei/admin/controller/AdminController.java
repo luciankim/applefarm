@@ -93,7 +93,6 @@ public class AdminController {
 	@GetMapping(value="/member/{reqPage}")
 	public ResponseEntity<ResponseDTO> memberList(@PathVariable int reqPage){
 		Map map = memberService.selectMemberList(reqPage);
-		System.out.println("controller : " + map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}	
@@ -120,5 +119,14 @@ public class AdminController {
 	}
 	
 	
+	@PostMapping(value="/hideProduct")
+	public ResponseEntity<ResponseDTO> changeIntoHide(@RequestBody String checkedList){
+		System.out.println("hidelist" + checkedList);
+		return null;
+	}
+	
+	
+//	String[] checkedItems = checkedList.split(",");
+//	System.out.println("checkBox: " + checkedItems);	
 
 }
