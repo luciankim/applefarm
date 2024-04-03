@@ -312,6 +312,15 @@ public class MemberController {
 		
 	} 
 	
+	
+	
+	//@GetMapping(value="/info")
+	//public ResponseEntity<ResponseDTO> memberInfo(){
+		
+		//Member member = memberService.getMemberInfo();
+		
+	//}
+	
 }
 	
 	
