@@ -71,7 +71,7 @@ function App() {
         <section className="inner-wrap">
           <Routes>
             <Route path="/ref" element={<Ref />} />
-            <Route path="/mypage/*" element={<Mypage />} />
+            <Route path="/mypage/*" element={<Mypage isLogin={isLogin} />} />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
             <Route path="/board/*" element={<BoardMain />} />
             <Route path="/join" element={<Join />} />
@@ -80,10 +80,6 @@ function App() {
 
             {/*setIsLogin을 줘야 값이 변경되니까*/}
             <Route path="/product/*" element={<Product />} />
-            <Route
-              path="/mypage/loginInfo"
-              element={<MemberInfo isLogin={isLogin} />}
-            />
           </Routes>
         </section>
       </main>
