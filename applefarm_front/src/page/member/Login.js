@@ -56,11 +56,6 @@ const Login = (props) => {
     }
   };
 
-  /*회원가입*/
-  const join = () => {
-    navigate("/join");
-  };
-
   return (
     <>
       <div className="login-wrap">
