@@ -158,6 +158,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 .input_wrap_psw.input_wrap_psw_focus {
   border: 3px solid var(--main_01);
@@ -169,6 +170,7 @@
 .input_wrap_psw .psw_radio_label {
   font-weight: 500;
   font-size: 18px;
+  cursor: pointer;
 }
 .input_wrap_psw .psw_radio_span img {
   object-fit: contain;
@@ -186,6 +188,7 @@
   display: flex;
   justify-content: center; /*input_wrap_psw에서 이거 한 줄 바뀜*/
   align-items: center;
+  cursor: pointer;
 }
 .input_wrap_quality_psw.input_wrap_psw_focus {
   border: 3px solid var(--main_01);
@@ -197,4 +200,5 @@
 .input_wrap_quality_psw .psw_radio_label {
   font-weight: 500;
   font-size: 18px;
+  cursor: pointer;
 }

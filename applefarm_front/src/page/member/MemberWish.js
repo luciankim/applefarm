@@ -10,10 +10,10 @@ const MemberWish = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [status, setStatus] = useState(false);
-  const memberNo = 45; //==> 로그인 구현이후 수정필요
+  //const memberNo = 45; //==> 로그인 구현이후 수정필요
   useEffect(() => {
     axios
-      .get(backServer + "/member/likeList/" + memberNo)
+      .get(backServer + "/member/likeList")
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "success") {
@@ -128,7 +128,7 @@ const LikeItem = (props) => {
       </td>
       <td className="likeName-td">{like.productSummary}</td>
       <td>{like.productQuality}</td>
-      <td>{like.productPrice}</td>
+      <td>{like.productPrice.toLocaleString()}원</td>
       <td>{like.memberNickName}</td>
       <td className="purchase-btn-box">
         <Button3 text="구매하기" clickEvent={purchase} />

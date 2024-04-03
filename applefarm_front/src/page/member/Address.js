@@ -20,7 +20,7 @@ const Address = () => {
   const plusModal = () => {
     setModalOpen(true);
   };
-  const memberNo = 45; //임의로 설정 -> 로그인 구현후 수정 필요
+  //const memberNo = 45; //임의로 설정 -> 로그인 구현후 수정 필요
   /*
   useEffect(() => {
     console.log(status);
@@ -28,7 +28,7 @@ const Address = () => {
   useEffect(() => {
     //주소록 불러오기
     axios
-      .get(backServer + "/member/addressList/" + memberNo + "/" + reqpage)
+      .get(backServer + "/member/addressList/" + reqpage)
       .then((res) => {
         //console.log(res.data);
         console.log(res.data.data);
