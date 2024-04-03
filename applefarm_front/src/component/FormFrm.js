@@ -5,24 +5,12 @@ import { createContext, useContext } from "react";
 
 //  ---------Input---------- 완료: 240324, 상태관리:자식
 const Input = (props) => {
-  const {
-    data,
-    setData,
-    type,
-    id,
-    blurEvent,
-    placeholder,
-    disabled,
-    onKeyDown,
-  } = props;
+  const { data, setData, type, id, blurEvent, placeholder, disabled, onKeyUp } =
+    props;
   const changeData = (e) => {
     setData(e.target.value);
   };
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      onKeyDown(); // 엔터 키가 눌리면 전달받은 onKeyPress 함수 호출
-    }
-  };
+
   return (
     <input
       className="input_form"
@@ -31,9 +19,9 @@ const Input = (props) => {
       value={data}
       onChange={changeData}
       onBlur={blurEvent}
-      onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
       placeholder={placeholder}
       disabled={disabled}
+      onKeyUp={onKeyUp}
     />
   );
 };

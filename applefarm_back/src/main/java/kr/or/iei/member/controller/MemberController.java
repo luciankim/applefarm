@@ -332,12 +332,19 @@ public class MemberController {
 	
 	
 	
-	//@GetMapping(value="/info")
-	//public ResponseEntity<ResponseDTO> memberInfo(){
+	@GetMapping(value="/info")
+	public ResponseEntity<ResponseDTO> memberInfo(@RequestAttribute int memberNo){
 		
-		//Member member = memberService.getMemberInfo();
+		Member member = memberService.getMemberInfo(memberNo);
 		
-	//}
+		System.out.println(memberNo);
+		
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		
+		
+		
+	}
 	
 }
 	

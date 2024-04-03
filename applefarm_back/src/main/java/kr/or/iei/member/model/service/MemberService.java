@@ -191,7 +191,7 @@ public class MemberService {
 			long expiredDateMs = 60 * 60 * 1000l; // 1시간 지정
 
 			// 아이디 인증 끝났을 때 토큰
-			String accessToken = jwtUtil.createToken(member.getMemberNo(), expiredDateMs);
+			String accessToken = jwtUtil.createToken(m.getMemberNo(), expiredDateMs);
 
 			System.out.println(accessToken); // accessToken은 클라이언트한테 줘야 함.
 
@@ -266,7 +266,14 @@ public class MemberService {
 			
 		}
 
+
+		public Member getMemberInfo(int memberNo) {
+			
+			
+			return memberDao.getMemberInfo(memberNo);
+		}
 		
+
 
 
 		
