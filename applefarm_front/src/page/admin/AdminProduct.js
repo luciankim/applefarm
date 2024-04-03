@@ -20,8 +20,9 @@ const AdminProduct = () => {
   const filterStartDate = startDate.format("YYYY-MM-DD");
   const filterEndDate = endDate.format("YYYY-MM-DD");
   const [activeButton, setActiveButton] = useState(null); // 추가: 활성 버튼 상태
-  const [age, setAge] = useState("");
   const [checkedList, setCheckedList] = useState([]);
+  const [productHideChange, setProductHideChange] = useState(false); // 숨김 상태 변경 감지 상태 추가
+
   // 1개월 버튼 클릭 시
   const oneMonth = () => {
     const today = dayjs();
@@ -54,11 +55,11 @@ const AdminProduct = () => {
 
   const options = [
     { value: "0", label: "전체" },
-    { value: "1", label: "Mac" },
-    { value: "2", label: "iPad" },
-    { value: "3", label: "Watch" },
-    { value: "4", label: "iPhone" },
-    { value: "5", label: "AirPods" },
+    { value: "IPHONE_TBL", label: "IPHONE" },
+    { value: "MACBOOK_TBL", label: "MACBOOK" },
+    { value: "IPAD_TBL", label: "IPAD" },
+    { value: "WATCH_TBL", label: "WATCH" },
+    { value: "AIRPODS_TBL", label: "AIRPODS" },
   ];
   const [selectedValue, setSelectedValue] = useState(0);
 
@@ -88,7 +89,7 @@ const AdminProduct = () => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [reqPage, startDate, endDate]);
+  }, [reqPage, startDate, endDate, selectedValue, productHideChange]);
 
   const checkHide = () => {
     const checkedObject = {};
@@ -96,9 +97,24 @@ const AdminProduct = () => {
       checkedObject[`item${index}`] = value; // 각 값(value)을 특정 키(item0, item1, ...)와 연결하여 객체 생성
     });
     axios
-      .get(backServer + "/admin/hideProduct/" + checkedList)
+      .patch(backServer + "/admin/hideProduct", checkedObject)
       .then((res) => {
+        setProductHideChange(!productHideChange);
+      })
+      .catch((res) => {
         console.log(res.data);
+      });
+  };
+
+  const checkUnHide = () => {
+    const checkedObject = {};
+    checkedList.forEach((value, index) => {
+      checkedObject[`item${index}`] = value; // 각 값(value)을 특정 키(item0, item1, ...)와 연결하여 객체 생성
+    });
+    axios
+      .patch(backServer + "/admin/unHideProduct", checkedObject)
+      .then((res) => {
+        setProductHideChange(!productHideChange);
       })
       .catch((res) => {
         console.log(res.data);
@@ -154,14 +170,25 @@ const AdminProduct = () => {
                 value={endDate}
                 onChange={(date) => setEndDate(date)}
               />
-              <div>
-                <Button
-                  variant="contained"
-                  style={{ backgroundColor: "black" }}
-                  onClick={checkHide}
-                >
-                  숨기기
-                </Button>
+              <div className="btnWrap">
+                <div>
+                  <Button
+                    variant="contained"
+                    style={{ backgroundColor: "black" }}
+                    onClick={checkHide}
+                  >
+                    숨김
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    variant="contained"
+                    style={{ backgroundColor: "var(--main_01" }}
+                    onClick={checkUnHide}
+                  >
+                    공개
+                  </Button>
+                </div>
               </div>
             </DemoContainer>
           </LocalizationProvider>
@@ -194,6 +221,7 @@ const AdminProduct = () => {
                   setProductList={setProductList}
                   checkedList={checkedList}
                   setCheckedList={setCheckedList}
+                  setProductHideChange={setProductHideChange}
                 />
               );
             })}
@@ -213,7 +241,11 @@ const AdminProduct = () => {
 
 const ProductItem = (props) => {
   const { product, checkedList, setCheckedList } = props;
-  console.log("변경전", checkedList); // 변경된 checkedList 확인
+  const [productHide, setProductHide] = useState(product.productHide);
+
+  useEffect(() => {
+    setProductHide(product.productHide);
+  }, [product.productHide]);
 
   const checkboxChange = (productNo) => {
     setCheckedList((checkedList) => {

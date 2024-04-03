@@ -1,6 +1,6 @@
 package kr.or.iei.admin.controller;
 
-
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,6 @@ public class AdminController {
 	private BoardService boardService;
 	@Autowired
 	private ProductService productService;
-	
 
 	@Operation(summary = "환불 신청 조회", description = "이 엔드포인트는 전체 환불 신청 목록을 조회합니다. 요청 페이지 번호를 기반으로 페이징 처리됩니다.")
 	@ApiResponses({ // 응답에 대한 설명
@@ -56,7 +55,6 @@ public class AdminController {
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 
-	
 	@Operation(summary = "환불 승인", description = "이 엔드포인트는 접수된 환불 신청 건을 승인합니다. 환불번호와 거래번호를 기반으로 환불 상태 및 거래 상태를 업데이트합니다.")
 	@ApiResponses({ // 응답에 대한 설명
 			@ApiResponse(responseCode = "200", description = "응답 메시지 확인"),
@@ -64,80 +62,79 @@ public class AdminController {
 	@PatchMapping(value = "/refundConfirm")
 	public ResponseEntity<ResponseDTO> refundConfirm(@RequestBody Refund refund) {
 		int result = adminService.confirmRefund(refund);
-		if(result > 0) {
+		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}else {
+		} else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	
 
 	@Operation(summary = "환불 거절", description = "이 엔드포인트는 접수된 환불 신청 건을 거절합니다. 환불번호와 거래번호를 기반으로 환불 상태 및 거래 상태를 업데이트합니다.")
 	@ApiResponses({ // 응답에 대한 설명
 			@ApiResponse(responseCode = "200", description = "응답 메시지 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PatchMapping(value="/refundReject")
-	public ResponseEntity<ResponseDTO> refundReject(@RequestBody Refund refund){
+	@PatchMapping(value = "/refundReject")
+	public ResponseEntity<ResponseDTO> refundReject(@RequestBody Refund refund) {
 		int result = adminService.rejectRefund(refund);
-		if(result > 0) {
+		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}else {
+		} else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	
-	
-	@GetMapping(value="/member/{reqPage}")
-	public ResponseEntity<ResponseDTO> memberList(@PathVariable int reqPage){
+
+	@GetMapping(value = "/member/{reqPage}")
+	public ResponseEntity<ResponseDTO> memberList(@PathVariable int reqPage) {
 		Map map = memberService.selectMemberList(reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-	}	
-	
-	
-	@PatchMapping(value="/memberGrade")
-	public ResponseEntity<ResponseDTO> changeMemberGrade(@RequestBody Member member){
+	}
+
+	@PatchMapping(value = "/memberGrade")
+	public ResponseEntity<ResponseDTO> changeMemberGrade(@RequestBody Member member) {
 		int result = memberService.changeMemberGrade(member);
-		if(result > 0) {
+		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}else {
+		} else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	
 
-	@GetMapping(value="/memberProduct/{selectedValue}/{filterStartDate}/{filterEndDate}/{reqPage}" )
-	public ResponseEntity<ResponseDTO> productList(@PathVariable String selectedValue, @PathVariable String filterStartDate, @PathVariable String filterEndDate, @PathVariable int reqPage){
+	@GetMapping(value = "/memberProduct/{selectedValue}/{filterStartDate}/{filterEndDate}/{reqPage}")
+	public ResponseEntity<ResponseDTO> productList(@PathVariable String selectedValue,
+			@PathVariable String filterStartDate, @PathVariable String filterEndDate, @PathVariable int reqPage) {
 		Map map = adminService.selectProductList(selectedValue, filterStartDate, filterEndDate, reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
-	
-	
-	@GetMapping(value="/hideProduct/{checkedList}")
-	public ResponseEntity<ResponseDTO> changeIntoHide(@PathVariable String checkedList){
-		System.out.println("controller : " +checkedList);
-		//넘어온 값 hidelist{"item0":4,"item1":1,"item2":3}
-	    // Jackson ObjectMapper를 사용하여 JSON 문자열을 Map으로 변환합니다.
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Map<String, Object> map = objectMapper.readValue(checkedList, Map.class);
-//        		
-//        System.out.println("controller zz" + map );
-		
-		
-		return null;
+
+	@PatchMapping(value = "/hideProduct")
+	public ResponseEntity<ResponseDTO> changeIntoHide(@RequestBody HashMap<String, Object> checkedObject) {
+		int result = adminService.changeIntoHide(checkedObject);
+		if (result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
-	
 
-	
-
-//	String[] checkedItems = checkedList.split(",");
-//	System.out.println("checkBox: " + checkedItems);	
-
+	@PatchMapping(value = "/unHideProduct")
+	public ResponseEntity<ResponseDTO> changeIntoUnHide(@RequestBody HashMap<String, Object> checkedObject) {
+		int result = adminService.changeIntoUnHide(checkedObject);
+		if (result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 }

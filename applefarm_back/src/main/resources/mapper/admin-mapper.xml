@@ -68,16 +68,43 @@
 
 	<select id="selectProductList" resultType="adminProduct">
 		SELECT
-			P.*,
-			M.MEMBER_NAME
+		P.*,
+		M.MEMBER_NAME
 		FROM
-			PRODUCT_TBL P
+		PRODUCT_TBL P
 		JOIN
-			MEMBER_TBL M ON P.MEMBER_NO = M.MEMBER_NO
+		MEMBER_TBL M ON P.MEMBER_NO = M.MEMBER_NO
 		WHERE
-			to_char(P.PRODUCT_DATE,'yyyy-mm-dd') between #{filterStartDate} and #{filterEndDate}
+		(TO_CHAR(P.PRODUCT_DATE, 'yyyy-mm-dd') BETWEEN #{filterStartDate} AND #{filterEndDate})
+		AND (
+		(#{selectedValue} IN ('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL') AND P.TABLE_NAME = #{selectedValue})
+		OR
+		(#{selectedValue} NOT IN ('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL') AND P.TABLE_NAME IN ('IPHONE_TBL', 'MACBOOK_TBL',
+		'IPAD_TBL', 'AIRPODS_TBL', 'WATCH_TBL'))
+		)
+
 	</select>
 
+	<update id="updateHide">
+		UPDATE product_tbl
+		SET product_hide = 1
+		WHERE product_no IN
+		<foreach item="item" collection="list" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</update>
 
+	<update id="updateUnHide">
+		UPDATE product_tbl
+		set product_hide = 0
+		where product_no in
+		<foreach item="item" collection="list" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</update>
 
 </mapper>
