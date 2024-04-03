@@ -18,12 +18,12 @@ public class JwtUtil {
 	@Value("${jwt.secret}")
 	private String secret;
 	
-	public String createToken(String memberId, long expiredDateMs) {
+	public String createToken(int memberNo, long expiredDateMs) {
 		
 		
 		//토큰 만들기
 		Claims claims = Jwts.claims(); //누구 id 인지 저장 (회원 식별)
-		claims.put("memberId",memberId); //회원 아이디 불러와서 저장 (회원 식별)
+		claims.put("memberNo",memberNo); //회원 아이디 불러와서 저장 (회원 식별)
 		
 		SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());  //문자열 비밀번호를 이용해서 암호화코드 생성
 		

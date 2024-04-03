@@ -179,14 +179,19 @@ public class MemberService {
 
 	public String login(Member member) {
 
-		Member m = memberDao.selectNo(member.getMemberNo());
+		
+		int memberNo = memberDao.OneMemberNo(member.getMemberId());
+		
+		Member m = memberDao.selectNo(memberNo);
+		
+		
 
 		if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 
 			long expiredDateMs = 60 * 60 * 1000l; // 1시간 지정
 
 			// 아이디 인증 끝났을 때 토큰
-			String accessToken = jwtUtil.createToken(member.getMemberId(), expiredDateMs);
+			String accessToken = jwtUtil.createToken(member.getMemberNo(), expiredDateMs);
 
 			System.out.println(accessToken); // accessToken은 클라이언트한테 줘야 함.
 

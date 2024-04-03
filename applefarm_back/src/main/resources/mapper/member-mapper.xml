@@ -198,5 +198,12 @@
 		update member_tbl
 		set member_grade = #{memberGrade} where member_no =#{memberNo}
 	</update>
+	
+	<select id="OneMemberNo" resultType="int">
+	
+	
+	select member_no from member_tbl where member_id =#{memberId}
+	
+	</select>
 
 </mapper>
