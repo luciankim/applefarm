@@ -10,7 +10,7 @@ const ProductQualityInsert = (props) => {
   const [grade, setGrade] = useState();
   const [qualityState, setQualityState] = useState({});
   const [score, setScore] = useState({});
-  const tableName = "AIRPODS_TBL";
+  const tableName = "IPHONE_TBL";
   const [qualityList, setQualityList] = useState([]);
   const [image, setImage] = useState({});
 

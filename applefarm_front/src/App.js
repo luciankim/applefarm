@@ -78,7 +78,7 @@ function App() {
             <Route path="/join" element={<Join />} />
             <Route path="/admin/*" element={<AdminMain />} />
             <Route path="/login" element={<Login login={login} />} />
-            <Route path="/purchase" element={<Payment />} />
+            <Route path="/purchase" element={<Payment isLogin={isLogin} />} />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
             <Route path="/product/*" element={<Product />} />
           </Routes>
