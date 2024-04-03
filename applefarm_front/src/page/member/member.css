@@ -215,43 +215,84 @@
 }
 .payment-title {
   text-align: center;
-  padding: 0px 0px 50px 0px;
+  padding: 0px 0px 15px 0px;
   font-size: 20px;
   font-family: ns-b;
 }
 .payment-content > div {
-  margin: 0 auto;
-}
-.payment-product-info {
-  display: flex;
-  align-items: center;
+  margin: 30px auto;
   width: 90%;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
   background-color: #fafafc;
 }
-.payment-product-info-detail > div:first-child {
+.payment-product,
+.payment-delivery {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.payment-product-detail > div:first-child {
   padding-bottom: 5px;
 }
-.payment-product-info-detail > div:first-child > span {
+.payment-product-detail > div:first-child > span {
   font-family: ns-b;
 }
-.payment-product-info-detail > div:nth-child(2) > span,
-.payment-product-info > div:last-child > div {
+.payment-product-detail > div:nth-child(2) > span,
+.payment-product > div:last-child > div {
   font-family: ns-b;
   padding-right: 10px;
 }
-
-.payment-product-info > div {
-  padding: 10px;
+.payment-product > div {
   font-size: 18px;
 }
-.payment-product-info > div:nth-child(2) {
+.payment-product > div:nth-child(2) {
   flex: 1;
 }
 .payment-img-box > img {
   width: 200px;
   height: 200px;
+}
+.payment-sub-title {
+  font-size: 18px;
+  font-family: ns-b;
+  padding: 0px 0px 10px 10px;
+}
+.payment-delivery-detail > div:last-child {
+  padding-right: 10px;
+}
+.payment-delivery-detail > table > tbody > tr > td:first-child {
+  padding-right: 40px;
+}
+.payment-delivery-detail > table > tbody > tr > td {
+  padding: 5px 0px;
+}
+.payment-delivery-detail
+  > table
+  > tbody
+  > tr:last-child
+  > td:not(:first-child) {
+  padding-right: 5px;
+}
+.delivery-address-btn {
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-right: 10px;
+}
+
+.delivery-address-btn:active {
+  background-color: #0071e3;
+  color: white;
+  font-family: ns-b;
+}
+.payment-purchase-btn-box {
+  margin: 30px auto;
+  width: 90%;
+  padding: 30px;
 }
 /* 사이드메뉴 */
 

@@ -202,7 +202,7 @@ const AddressModal = (props) => {
     }
   };
   ////////////////////////////////////////////////////////////////////
-  const memberNo = 45; //로그인 구현 이후 로그인 정보 불러오기(테스트사용중)
+  //const memberNo = 45; //로그인 구현 이후 로그인 정보 불러오기(테스트사용중)
   const addressEnroll = () => {
     if (
       nameReq.test(newAddressName) &&
@@ -212,7 +212,6 @@ const AddressModal = (props) => {
       newAddressDetail !== "" //필요여부 수정 예정
     ) {
       const obj = {
-        memberNo,
         addressName: newAddressName,
         addressPhone: newAddressPhone,
         zipcode: newZipcode,
@@ -247,7 +246,6 @@ const AddressModal = (props) => {
       newAddressDetail !== "" //필요여부 수정 예정
     ) {
       const obj = {
-        memberNo,
         addressNo,
         addressName: newAddressName,
         addressPhone: newAddressPhone,

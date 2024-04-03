@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 
 import kr.or.iei.EmailSender;
@@ -209,7 +210,8 @@ public class MemberController {
 		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
 	})
 	@PostMapping(value = "/address")
-	public ResponseEntity<ResponseDTO> insertAddress(@RequestBody Address address){
+	public ResponseEntity<ResponseDTO> insertAddress(@RequestBody Address address,@RequestAttribute int memberNo){
+		address.setMemberNo(memberNo);
 		System.out.println(address);
 		int result = memberService.insertAddress(address);
 		//System.out.println(result);
@@ -228,8 +230,8 @@ public class MemberController {
 		@ApiResponse(responseCode = "200", description = "응답 data 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생"),
 	})
-	@GetMapping(value = "/addressList/{memberNo}/{reqPage}")
-	public ResponseEntity<ResponseDTO> selectAddress(@PathVariable int memberNo,@PathVariable int reqPage){
+	@GetMapping(value = "/addressList/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectAddress(@RequestAttribute int memberNo,@PathVariable int reqPage){
 		Map map = memberService.selectAddress(memberNo,reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -292,8 +294,8 @@ public class MemberController {
 		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})
-	@GetMapping(value = "/likeList/{memberNo}")
-	public ResponseEntity<ResponseDTO> selectLikeList(@PathVariable int memberNo){
+	@GetMapping(value = "/likeList")
+	public ResponseEntity<ResponseDTO> selectLikeList(@RequestAttribute int memberNo){
 		List list = memberService.selectLike(memberNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -315,6 +317,20 @@ public class MemberController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	@Operation(summary = "기본배송지 조회",description = "기본배송지만 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/basicAddress")
+	public ResponseEntity<ResponseDTO> basicAddress(@RequestAttribute int memberNo){
+		Address address= memberService.basicAddress(memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", address);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	
+	
 	
 	
 	
