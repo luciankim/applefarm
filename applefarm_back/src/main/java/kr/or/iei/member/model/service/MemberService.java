@@ -254,7 +254,11 @@ public class MemberService {
 		public List selectLike(int memberNo) {
 			return memberDao.selectLike(memberNo);
 		}
-
+		public int deleteLike(int likeNo) {
+			return memberDao.deleteLike(likeNo);
+		}
+		
+		
 		public Member selectNo(int memberNo) {
 			
 			return memberDao.selectNo(memberNo);
@@ -262,11 +266,14 @@ public class MemberService {
 			
 		}
 
+
 		public Member getMemberInfo(int memberNo) {
 			
 			
 			return memberDao.getMemberInfo(memberNo);
 		}
+		
+
 
 
 		

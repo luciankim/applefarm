@@ -9,6 +9,7 @@ const MemberWish = () => {
   const [likeList, setLikeList] = useState([]);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const [status, setStatus] = useState(false);
   const memberNo = 45; //==> 로그인 구현이후 수정필요
   useEffect(() => {
     axios
@@ -22,7 +23,7 @@ const MemberWish = () => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, []);
+  }, [status]);
 
   return (
     <div className="mypage-current-wrap">
@@ -56,6 +57,8 @@ const MemberWish = () => {
                     like={like}
                     likeList={likeList}
                     setLikeList={setLikeList}
+                    setStatus={setStatus}
+                    status={status}
                   />
                 );
               })}
@@ -68,12 +71,15 @@ const MemberWish = () => {
 };
 const LikeItem = (props) => {
   const like = props.like;
+  const setStatus = props.setStatus;
+  const status = props.status;
   const navigate = useNavigate();
+  const backServer = process.env.REACT_APP_BACK_SERVER;
 
   //구매 페이지 이동 작성 예정
   const purchase = () => {
     //구매페이지 이동
-    navigate("/purchase", { state: { like: like } });
+    navigate("/purchase", { state: { product: like } });
   };
 
   //모달
@@ -85,9 +91,21 @@ const LikeItem = (props) => {
   const showModal = () => {
     setModalOpen(true);
   };
+  //console.log(like.likeNo);
   //좋아요 삭제
   const likeDelFun = () => {
     // 삭제 동작 처리 로직 작성 예정 -> 데이터 생성시 구현 예정
+    axios
+      .delete(backServer + "/member/like/" + like.likeNo)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message === "success") {
+          setStatus(!status);
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
     console.log(like);
     const newLikeList = likeList.filter((item) => {
       return item !== like;

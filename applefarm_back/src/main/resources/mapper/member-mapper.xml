@@ -66,8 +66,11 @@
     	) q
 	WHERE
     	q.trade = 0
+    order by 1 desc
 	</select>
-
+	<delete id="deleteLike">
+		delete from like_tbl where like_no=#{likeNo}
+	</delete>
 
 	<select id="selectOneEmail" resultType="int">
 
