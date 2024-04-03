@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import MemberInfo from "./page/member/MemberInfo";
 import Product from "./page/product/Product";
 import axios from "axios";
+import Payment from "./page/member/Payment";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -77,7 +78,7 @@ function App() {
             <Route path="/join" element={<Join />} />
             <Route path="/admin/*" element={<AdminMain />} />
             <Route path="/login" element={<Login login={login} />} />
-
+            <Route path="/purchase" element={<Payment />} />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
             <Route path="/product/*" element={<Product />} />
           </Routes>

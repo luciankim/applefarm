@@ -29,7 +29,7 @@ const Login = (props) => {
     );
   };
 
-  const inputKeyboard = (e) => {
+  const enter = (e) => {
     if (e.keyCode === 13 && memberId !== "" && memberPw !== "") {
       login();
     }
@@ -77,6 +77,7 @@ const Login = (props) => {
             data={memberPw}
             setData={setMemberPw}
             placeholder="비밀번호를 입력하세요."
+            onKeyUp={enter}
           />
           <div className="login-btn-box">
             <Button1 id="login-btn" text="로그인" clickEvent={login} />
@@ -102,7 +103,7 @@ const LoginInput = (props) => {
   const data = props.data;
   const setData = props.setData;
   const placeholder = props.placeholder;
-  const onKeyPress = props.onKeyPress;
+  const onKeyUp = props.onKeyUp;
 
   return (
     <div className="join-input-wrap">
@@ -117,7 +118,7 @@ const LoginInput = (props) => {
             type={type}
             content={content}
             placeholder={placeholder}
-            onKeyPress={onKeyPress}
+            onKeyUp={onKeyUp}
           />
         </div>
       </div>
