@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import kr.or.iei.admin.model.service.AdminService;
 import kr.or.iei.board.model.service.BoardService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+import kr.or.iei.product.model.service.ProductService;
 
 @CrossOrigin("*")
 @RestController
@@ -36,6 +38,8 @@ public class AdminController {
 	private MemberService memberService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private ProductService productService;
 	
 
 	@Operation(summary = "환불 신청 조회", description = "이 엔드포인트는 전체 환불 신청 목록을 조회합니다. 요청 페이지 번호를 기반으로 페이징 처리됩니다.")
@@ -108,6 +112,13 @@ public class AdminController {
 	}
 	
 
+	@GetMapping(value="/memberProduct/{selectedValue}/{filterStartDate}/{filterEndDate}/{reqPage}" )
+	public ResponseEntity<ResponseDTO> productList(@PathVariable String selectedValue, @PathVariable String filterStartDate, @PathVariable String filterEndDate, @PathVariable int reqPage){
+		Map map = adminService.selectProductList(selectedValue, filterStartDate, filterEndDate, reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
 	
 
 }

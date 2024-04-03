@@ -8,14 +8,17 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import { Select } from "../../component/FormFrm";
+import { Checkbox } from "@mui/material";
 
 const AdminProduct = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [boardList, setBoardList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
   const [startDate, setStartDate] = useState(dayjs("2023-11-07"));
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState(dayjs("2024-04-02"));
+  const filterStartDate = startDate.format("YYYY-MM-DD");
+  const filterEndDate = endDate.format("YYYY-MM-DD");
   const [activeButton, setActiveButton] = useState(null); // 추가: 활성 버튼 상태
   const [age, setAge] = useState("");
   const handleChange = (event) => {
@@ -50,8 +53,46 @@ const AdminProduct = () => {
     setEndDate(today);
     setActiveButton("all"); // 추가: 버튼 활성 상태 설정
   };
+  console.log("시작일", filterStartDate);
+  console.log("종료일", filterEndDate);
+  const options = [
+    { value: "0", label: "전체" },
+    { value: "1", label: "Mac" },
+    { value: "2", label: "iPad" },
+    { value: "3", label: "Watch" },
+    { value: "4", label: "iPhone" },
+    { value: "5", label: "AirPods" },
+  ];
+  const [selectedValue, setSelectedValue] = useState(0);
 
-  const options = ["아이폰", "아이패드"];
+  const selectChange = (event) => {
+    setSelectedValue(event.target.value);
+    console.log("상품구분:", event.target.value);
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        backServer +
+          "/admin/memberProduct/" +
+          selectedValue +
+          "/" +
+          filterStartDate +
+          "/" +
+          filterEndDate +
+          "/" +
+          reqPage
+      )
+      .then((res) => {
+        setProductList(res.data.data.adminProductList);
+        setPageInfo(res.data.data.pi);
+        console.log(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [reqPage, startDate, endDate]);
+
   return (
     <div className="mypage-current-wrap">
       <div className="mypage-current-title">
@@ -118,23 +159,27 @@ const AdminProduct = () => {
           <thead>
             <tr>
               <th width="15%">
-                <Select options={options} />
+                <Select
+                  options={options}
+                  addId="admin-product-select"
+                  changeEvent={selectChange}
+                />
               </th>
               <th width="30%">제목</th>
-              <th width="15%">아이디</th>
+              <th width="15%">작성자</th>
               <th width="15%">작성일</th>
               <th width="10%">숨김상태</th>
               <th width="10%">체크박스</th>
             </tr>
           </thead>
           <tbody>
-            {boardList.map((board, index) => {
+            {productList.map((product, index) => {
               return (
                 <ReportItem
-                  key={"board" + index}
-                  board={board}
-                  boardList={boardList}
-                  setBoardList={setBoardList}
+                  key={"product" + index}
+                  product={product}
+                  productList={productList}
+                  setProductList={setProductList}
                 />
               );
             })}
@@ -153,16 +198,18 @@ const AdminProduct = () => {
 };
 
 const ReportItem = (props) => {
-  const board = props.board;
-  const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
+  const product = props.product;
 
   return (
     <tr>
-      <td>dd1</td>
-      <td>dd2</td>
-      <td>3dd</td>
-      <td>dd4</td>
-      <td>5dd</td>
+      <td>아이폰</td>
+      <td>{product.productTitle}</td>
+      <td>{product.memberName}</td>
+      <td>{product.productDate}</td>
+      <td>{product.productHide === "0" ? "공개" : "비공개"}</td>
+      <td>
+        <Checkbox />
+      </td>
     </tr>
   );
 };

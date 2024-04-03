@@ -13,7 +13,7 @@ const BoardWrite = () => {
   const [productCategory, setProductCategory] = useState(null);
   const [boardFile, setBoardFile] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
-  const [memberNo, setMemberNo] = useState(21);
+  const [memberNo, setMemberNo] = useState(46);
   //사용자 화면 출력용 state (화면전송시 사용하지 않음)
   const [fileList, setFileList] = useState([]); //화면출력용 애들이 변수명이랑 같음
   const [boardThumbnail, setBoardThumbnail] = useState(null); //썸네일 미리보기
