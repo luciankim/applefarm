@@ -67,6 +67,8 @@ public interface MemberDao {
 
 	int OneMemberNo(String memberId);
 
+	int deleteLike(int likeNo);
+
 
 
 
