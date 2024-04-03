@@ -46,7 +46,6 @@ public interface MemberDao {
 	List selectMemberList(PageInfo pi);
 	//-------------------------------관리자: 회원관리 기능-------------------------------
 
-	Member selectId(String memberId);
 
 	int updateSearchUpdateBasicAddress(int memberNo);
 
@@ -56,11 +55,23 @@ public interface MemberDao {
 
 	int updateBasicAddress(int addressNo);
 
+	List selectLike(int memberNo);
+
 	int changeMemberGrade(Member member);
 
 	void updateMemberGrader();
 
 	void updateBlackMemberGrade(Member member);
+
+	Member selectNo(int memberNo);
+
+	int OneMemberNo(String memberId);
+
+	Member getMemberInfo(int memberNo);
+
+	int deleteLike(int likeNo);
+
+
 
 
 

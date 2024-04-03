@@ -121,7 +121,7 @@ public class MemberService {
 		int duplicationNickName = memberDao.selectOneNickName(memberNickName);
 		return duplicationNickName;
 	}
-
+/*
 	@Transactional
 	public int join(Member member) {
 
@@ -129,7 +129,7 @@ public class MemberService {
 
 		return result;
 	}
-
+*/
 	// -------------------------------관리자: 회원관리 기능 시작
 	// -------------------------------//
 	public Map selectMemberList(int reqPage) {
@@ -179,14 +179,19 @@ public class MemberService {
 
 	public String login(Member member) {
 
-		Member m = memberDao.selectId(member.getMemberId());
+		
+		int memberNo = memberDao.OneMemberNo(member.getMemberId());
+		
+		Member m = memberDao.selectNo(memberNo);
+		
+		
 
 		if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 
-			long expiredDateMs = 10 * 1 * 1000l; // 1시간 지정
+			long expiredDateMs = 60 * 60 * 1000l; // 1시간 지정
 
 			// 아이디 인증 끝났을 때 토큰
-			String accessToken = jwtUtil.createToken(member.getMemberId(), expiredDateMs);
+			String accessToken = jwtUtil.createToken(m.getMemberNo(), expiredDateMs);
 
 			System.out.println(accessToken); // accessToken은 클라이언트한테 줘야 함.
 
@@ -196,9 +201,85 @@ public class MemberService {
 		}
 	}
 
-	public Member selectId(String memberId) {
+	public Member selectId(int memberNo) {
 
-		return memberDao.selectId(memberId);
+		return memberDao.selectNo(memberNo);
 	}
+
+
+
+		@Transactional
+		public int join(Member member) {
+			
+			int result = memberDao.join(member);
+					
+			
+			return result;
+		}
+		
+		/*
+		//관리자: 회원관리 기능
+		public Map selectMemberList(int reqPage) {
+			int numPerPage = 5;
+			int pageNaviSize = 5;
+			int totalCount = memberDao.memberTotalCount();
+			
+			//페이지 인포 객체
+			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+			List memberList = memberDao.selectMemberList(pi);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("memberList", memberList);
+			map.put("pi", pi);
+			return map;
+		}
+		*/
+
+		/*
+		public Member login(Member member) {
+			
+			Member m = memberDao.selectId(member.getMemberId());
+			
+			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				
+				
+				return m;
+			}else {
+				return null;
+			}
+			
+			
+			
+		}
+		 */
+		public List selectLike(int memberNo) {
+			return memberDao.selectLike(memberNo);
+		}
+		public int deleteLike(int likeNo) {
+			return memberDao.deleteLike(likeNo);
+		}
+		
+		
+		public Member selectNo(int memberNo) {
+			
+			return memberDao.selectNo(memberNo);
+			
+			
+		}
+
+
+		public Member getMemberInfo(int memberNo) {
+			
+			
+			return memberDao.getMemberInfo(memberNo);
+		}
+
+		public Address basicAddress(int memberNo) {
+			return memberDao.selectAddressBasic(memberNo);
+		}
+		
+
+
+
+		
 
 }

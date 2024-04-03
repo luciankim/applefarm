@@ -29,10 +29,9 @@ const Login = (props) => {
     );
   };
 
-  // 엔터 키를 누를 때 로그인 버튼 클릭
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      onkeydown(); // 전달받은 onKeyDown 함수 호출
+  const enter = (e) => {
+    if (e.keyCode === 13 && memberId !== "" && memberPw !== "") {
+      login();
     }
   };
 
@@ -56,11 +55,6 @@ const Login = (props) => {
     }
   };
 
-  /*회원가입*/
-  const join = () => {
-    navigate("/join");
-  };
-
   return (
     <>
       <div className="login-wrap">
@@ -75,7 +69,6 @@ const Login = (props) => {
             data={memberId}
             setData={setMemberId}
             placeholder="아이디를 입력하세요."
-            onKeyDown={handleKeyPress}
           />
           <LoginInput
             label="비밀번호"
@@ -84,7 +77,7 @@ const Login = (props) => {
             data={memberPw}
             setData={setMemberPw}
             placeholder="비밀번호를 입력하세요."
-            onKeyDown={handleKeyPress}
+            onKeyUp={enter}
           />
           <div className="login-btn-box">
             <Button1 id="login-btn" text="로그인" clickEvent={login} />
@@ -110,7 +103,7 @@ const LoginInput = (props) => {
   const data = props.data;
   const setData = props.setData;
   const placeholder = props.placeholder;
-  const onKeyDown = props.onKeyDown;
+  const onKeyUp = props.onKeyUp;
 
   return (
     <div className="join-input-wrap">
@@ -125,7 +118,7 @@ const LoginInput = (props) => {
             type={type}
             content={content}
             placeholder={placeholder}
-            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
           />
         </div>
       </div>

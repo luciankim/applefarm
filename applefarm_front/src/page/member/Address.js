@@ -20,7 +20,7 @@ const Address = () => {
   const plusModal = () => {
     setModalOpen(true);
   };
-  const memberNo = 22; //임의로 설정 -> 로그인 구현후 수정예정
+  //const memberNo = 45; //임의로 설정 -> 로그인 구현후 수정 필요
   /*
   useEffect(() => {
     console.log(status);
@@ -28,10 +28,10 @@ const Address = () => {
   useEffect(() => {
     //주소록 불러오기
     axios
-      .get(backServer + "/member/addressList/" + memberNo + "/" + reqpage)
+      .get(backServer + "/member/addressList/" + reqpage)
       .then((res) => {
         //console.log(res.data);
-        //console.log(res.data.data);
+        console.log(res.data.data);
         if (res.data.message === "success") {
           setAddressList(res.data.data.addressList);
           setPageinfo(res.data.data.pi);
@@ -53,7 +53,7 @@ const Address = () => {
       <div className="address-list-wrap">
         {addressList === null ? (
           ""
-        ) : addressList.length !== 0 ? (
+        ) : addressList[0] !== null ? (
           <>
             <div className="address-list">
               <ul>
@@ -94,6 +94,7 @@ const Address = () => {
       </div>
       {modalOpen && (
         <AddressModal
+          modalOpen={modalOpen}
           setModalOpen={setModalOpen}
           status={status}
           setStatus={setStatus}
@@ -247,23 +248,18 @@ const AddressItem = (props) => {
       )}
       {updateModalOpen && (
         <AddressModal
+          modalOpen={updateModalOpen}
           setModalOpen={setUpdateModalOpen}
           status={status}
           setStatus={setStatus}
-          addressName={addressName}
-          setAddressName={setAddressName}
-          addressPhone={addressPhone}
-          setAddressPhone={setAddressPhone}
-          zipcode={zipcode}
-          setZipcode={setZipcode}
-          address={address}
-          setAddress={setAddress}
-          addressDetail={addressDetail}
-          setAddressDetail={setAddressDetail}
-          addressDefault={addressDefault}
-          setAddressDefault={setAddressDefault}
+          addressName={item.addressName}
+          addressPhone={item.addressPhone}
+          zipcode={item.zipcode}
+          address={item.address}
+          addressDetail={item.addressDetail}
+          addressDefault={item.addressDefault}
           whatModal={whatModal}
-          addressNo={addressNo}
+          addressNo={item.addressNo}
         />
       )}
     </>
