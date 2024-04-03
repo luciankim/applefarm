@@ -14,5 +14,6 @@ npm install react-daum-postcode
 npm install react-modal
 
 2024-04-03
-npm install @mui/x-date-pickers
-npm install dayjs
+npm install @mui/x-date-pickers --MUI 'UI 기반 날짜 선택 기능'을 제공
+npm install dayjs --날짜/시간 연산 기능 등을  제공
+npm install recharts --차트

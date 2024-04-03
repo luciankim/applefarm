@@ -3,6 +3,9 @@ import "./productMain.css";
 import ProductCategory from "./ProductCategory";
 import ProductSummary from "./ProductSummary";
 import ProductChart from "./ProductChart";
+import ProductList from "./ProductList";
+import ProductRecentTrade from "./ProductRecentTrade";
+import ProductTab from "./ProductTab";
 
 const ProductMain = (props) => {
   /*
@@ -50,7 +53,6 @@ const ProductMain = (props) => {
       productConnectivity: productConnectivity,
       productCharge: productCharge,
       productQuality: productQuality,
-      setProductQuality: setProductQuality,
     });
   }, [
     productLine,
@@ -69,6 +71,11 @@ const ProductMain = (props) => {
     productCharge,
     productQuality,
   ]);
+
+  const [productMainTab, setProductMainTab] = useState("CHART");
+  const changeMainTab = (e) => {
+    setProductMainTab(e.target.id);
+  };
 
   //<화면 출력 순서>
   //카테고리js
@@ -129,17 +136,57 @@ const ProductMain = (props) => {
         setProductConnectivity={setProductConnectivity}
         productCharge={productCharge}
         setProductCharge={setProductCharge}
+        selectedProduct={selectedProduct}
       />
-      <div className="productMain-middle-wrap">
-        <div className="productMain-middle-wrap-left">
-          <ProductSummary selectedProduct={selectedProduct} />
-          <ProductChart />
-          {/* https://recharts.org/en-US/guide/getting-started 여기서 4. Add interactions 활용*/}
+
+      {/*탭*/}
+      <ProductTab
+        productTab={productMainTab}
+        changeTab={changeMainTab}
+        tabNameArr={["LIST", "CHART", "RECENT", "REFUND&DELIVERY"]}
+      />
+
+      <div className="productMain-content-wrap">
+        <div className="productMain-content">
+          <div
+            className={
+              productMainTab === "LIST" ? "" : "productMain-content-hide"
+            }
+          >
+            <ProductList />
+          </div>
+          <div
+            className={
+              productMainTab === "CHART" ? "" : "productMain-content-hide"
+            }
+          >
+            {/*productQuality가 undefined또는null인거 조심!!!*/}
+            <ProductChart productQuality={productQuality} />
+          </div>
+          <div
+            className={
+              productMainTab === "RECENT" ? "" : "productMain-content-hide"
+            }
+          >
+            <ProductRecentTrade />
+          </div>
+          <div
+            className={
+              productMainTab === "REFUND&DELIVERY"
+                ? ""
+                : "productMain-content-hide"
+            }
+          >
+            <div>환불 배송 규정</div>
+          </div>
         </div>
-        <div className="productMain-middle-wrap-right">거래내역리스트</div>
       </div>
     </div>
   );
 };
 
 export default ProductMain;
+
+/*
+uselocation usenavigation??
+*/
