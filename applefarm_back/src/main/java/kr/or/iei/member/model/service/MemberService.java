@@ -121,7 +121,7 @@ public class MemberService {
 		int duplicationNickName = memberDao.selectOneNickName(memberNickName);
 		return duplicationNickName;
 	}
-
+/*
 	@Transactional
 	public int join(Member member) {
 
@@ -129,7 +129,7 @@ public class MemberService {
 
 		return result;
 	}
-
+*/
 	// -------------------------------관리자: 회원관리 기능 시작
 	// -------------------------------//
 	public Map selectMemberList(int reqPage) {
@@ -200,5 +200,57 @@ public class MemberService {
 
 		return memberDao.selectId(memberId);
 	}
+
+
+
+		@Transactional
+		public int join(Member member) {
+			
+			int result = memberDao.join(member);
+					
+			
+			return result;
+		}
+		
+		/*
+		//관리자: 회원관리 기능
+		public Map selectMemberList(int reqPage) {
+			int numPerPage = 5;
+			int pageNaviSize = 5;
+			int totalCount = memberDao.memberTotalCount();
+			
+			//페이지 인포 객체
+			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+			List memberList = memberDao.selectMemberList(pi);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("memberList", memberList);
+			map.put("pi", pi);
+			return map;
+		}
+		*/
+
+		/*
+		public Member login(Member member) {
+			
+			Member m = memberDao.selectId(member.getMemberId());
+			
+			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				
+				
+				return m;
+			}else {
+				return null;
+			}
+			
+			
+			
+		}
+		 */
+		public List selectLike(int memberNo) {
+			return memberDao.selectLike(memberNo);
+		}
+
+
+		
 
 }
