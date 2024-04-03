@@ -90,9 +90,13 @@ const AdminProduct = () => {
       });
   }, [reqPage, startDate, endDate]);
 
-  const checkHide = (checkedList) => {
+  const checkHide = () => {
+    const checkedObject = {};
+    checkedList.forEach((value, index) => {
+      checkedObject[`item${index}`] = value; // 각 값(value)을 특정 키(item0, item1, ...)와 연결하여 객체 생성
+    });
     axios
-      .post(backServer + "/admin/hideProduct", checkedList)
+      .get(backServer + "/admin/hideProduct/" + checkedList)
       .then((res) => {
         console.log(res.data);
       })

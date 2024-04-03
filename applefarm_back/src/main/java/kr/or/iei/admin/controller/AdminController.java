@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -48,9 +51,7 @@ public class AdminController {
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@GetMapping(value = "/manageRefund/{reqPage}")
 	public ResponseEntity<ResponseDTO> refundList(@PathVariable int reqPage) {
-		System.out.println("Controller : " + reqPage);
 		Map map = adminService.selectRefundList(reqPage);
-		System.out.println("controller : " + map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
@@ -119,13 +120,23 @@ public class AdminController {
 	}
 	
 	
-	@PostMapping(value="/hideProduct")
-	public ResponseEntity<ResponseDTO> changeIntoHide(@RequestBody String checkedList){
-		System.out.println("hidelist" + checkedList);
+	@GetMapping(value="/hideProduct/{checkedList}")
+	public ResponseEntity<ResponseDTO> changeIntoHide(@PathVariable String checkedList){
+		System.out.println("controller : " +checkedList);
+		//넘어온 값 hidelist{"item0":4,"item1":1,"item2":3}
+	    // Jackson ObjectMapper를 사용하여 JSON 문자열을 Map으로 변환합니다.
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        Map<String, Object> map = objectMapper.readValue(checkedList, Map.class);
+//        		
+//        System.out.println("controller zz" + map );
+		
+		
 		return null;
 	}
 	
+
 	
+
 //	String[] checkedItems = checkedList.split(",");
 //	System.out.println("checkBox: " + checkedItems);	
 
