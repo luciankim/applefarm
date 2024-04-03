@@ -96,6 +96,7 @@
   padding: 0px 0px 5px 16px;
   display: flex;
   align-items: center;
+  margin-top: 5px;
 }
 .address-default-check-box-wrap > input {
   margin-right: 10px;
@@ -108,4 +109,12 @@
 .address-disable-input {
   color: #545454;
   cursor: default;
+}
+.address-checkmsg {
+  color: red;
+  font-size: 13px;
+  position: absolute;
+}
+.address-active {
+  background-color: red;
 }
