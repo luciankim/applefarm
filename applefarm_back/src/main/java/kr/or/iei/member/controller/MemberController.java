@@ -301,9 +301,9 @@ public class MemberController {
 
 	
 	@GetMapping
-	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute String memberId){
+	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute int memberNo){
 		
-		Member member = memberService.selectId(memberId);
+		Member member = memberService.selectNo(memberNo);
 		
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus()); 

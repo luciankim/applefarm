@@ -52,7 +52,7 @@ public class JwtUtil {
 		
 	}
 	
-	public String getMemberId(String token) {
+	public int getMemberNo(String token) {
 		
 		
 		SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
@@ -60,7 +60,7 @@ public class JwtUtil {
 		return Jwts.parserBuilder()
 				.setSigningKey(key).build()
 				.parseClaimsJws(token)
-				.getBody().get("memberId",String.class);
+				.getBody().get("memberNo",Integer.class);
 				
 		
 	}

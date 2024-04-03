@@ -179,11 +179,11 @@ public class MemberService {
 
 	public String login(Member member) {
 
-		Member m = memberDao.selectId(member.getMemberId());
+		Member m = memberDao.selectNo(member.getMemberNo());
 
 		if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 
-			long expiredDateMs = 10 * 1 * 1000l; // 1시간 지정
+			long expiredDateMs = 60 * 60 * 1000l; // 1시간 지정
 
 			// 아이디 인증 끝났을 때 토큰
 			String accessToken = jwtUtil.createToken(member.getMemberId(), expiredDateMs);
@@ -196,9 +196,9 @@ public class MemberService {
 		}
 	}
 
-	public Member selectId(String memberId) {
+	public Member selectId(int memberNo) {
 
-		return memberDao.selectId(memberId);
+		return memberDao.selectNo(memberNo);
 	}
 
 
@@ -248,6 +248,13 @@ public class MemberService {
 		 */
 		public List selectLike(int memberNo) {
 			return memberDao.selectLike(memberNo);
+		}
+
+		public Member selectNo(int memberNo) {
+			
+			return memberDao.selectNo(memberNo);
+			
+			
 		}
 
 

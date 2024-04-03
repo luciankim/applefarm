@@ -153,9 +153,9 @@
 		where address_no=#{addressNo}
 	</update>
 
-	<select id="selectId" resultType="member">
+	<select id="selectNo" resultType="member">
 		select * from member_tbl where
-		member_id=#{memberId}
+		member_No=#{memberNo}
 	</select>
 
 	<select id="selectMemberList" resultType="member">
