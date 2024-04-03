@@ -286,11 +286,42 @@ public class MemberController {
 		}
 	}
 	
+
+	@Operation(summary = "좋아요 조회",description = "좋아요 전체 목록 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/likeList/{memberNo}")
+	public ResponseEntity<ResponseDTO> selectLikeList(@PathVariable int memberNo){
+		List list = memberService.selectLike(memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@Operation(summary = "좋아요 삭제",description = "해당 좋아요 삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@DeleteMapping(value = "/like/{likeNo}")
+	public ResponseEntity<ResponseDTO> deleteLike(@PathVariable int likeNo){
+		int result = memberService.deleteLike(likeNo);
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	
 	
 	@GetMapping
-	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute String memberId){
+	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute int memberNo){
 		
-		Member member = memberService.selectId(memberId);
+		Member member = memberService.selectNo(memberNo);
 		
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus()); 
@@ -299,6 +330,21 @@ public class MemberController {
 		
 	} 
 	
+	
+	
+	@GetMapping(value="/info")
+	public ResponseEntity<ResponseDTO> memberInfo(@RequestAttribute int memberNo){
+		
+		Member member = memberService.getMemberInfo(memberNo);
+		
+		System.out.println(memberNo);
+		
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		
+		
+		
+	}
 	
 }
 	

@@ -38,8 +38,8 @@ public class LoginInterceptor implements HandlerInterceptor{
 		}
 		
 		//인증 정보 정상, 만료되기 전 상태 -> 정상요청 -> 이후 컨트롤러에서 로그인한 회원 아이디를 사용할 수 있도록 아이디를 추출해서 등록
-		String memberId = jwtUtil.getMemberId(token);
-		request.setAttribute("memberId", memberId);
+		int memberNo = jwtUtil.getMemberNo(token);
+		request.setAttribute("memberNo", memberNo);
 		return true;
 		
 		
