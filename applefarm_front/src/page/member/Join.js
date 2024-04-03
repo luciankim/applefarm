@@ -117,8 +117,11 @@ const Join = () => {
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegEmail("이미 사용중인 이메일입니다.");
-          } else {
+            setBtnDisabledForEmail(true); //이메일 인증 버튼 비활
+            setVerifButtonColor("#b7b7b7"); // 인증코드 버튼 파란색으로
+          } else if (res.data.message === "not duplication") {
             setCheckRegEmail("");
+            setBtnDisabledForEmail(false); //이메일 인증 버튼 비활
           }
         })
         .catch((res) => {
