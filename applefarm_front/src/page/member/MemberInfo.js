@@ -24,7 +24,7 @@ const MemberInfo = (props) => {
 
   useEffect(() => {
     axios
-      .get(backServer + "/member")
+      .get(backServer + "/member/info")
       .then((res) => {
         console.log(res.data);
       })
