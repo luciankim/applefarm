@@ -67,6 +67,13 @@ const AddressModal = (props) => {
     addressDefault,
     setAddressDefault,
     whatModal,
+    setDeliveryAddress,
+    setDeliveryAddressDetail,
+    setDeliveryAddressName,
+    setDeliveryAddressPhone,
+    setDeliveryZipcode,
+    setDeliveryAddressNo,
+    delivery,
   } = props;
   const status = props.status;
   const setStatus = props.setStatus;
@@ -129,36 +136,19 @@ const AddressModal = (props) => {
   const addressReq = /^\s*$/;
   const addressDetailReq = /^s*$/;
 
-  //값 확인용
-  const [isName, setIsName] = useState(false);
-  const [isPhone, setIsPhone] = useState(false);
-  const [isAddress, setIsAddress] = useState(false);
-  const [isAddressDetail, setIsAddressDetail] = useState(false);
-
-  useState(() => {
-    console.log("name : " + isName);
-    console.log("phone :" + isPhone);
-    console.log("address :" + isAddress);
-    console.log("addressDetail :" + isAddressDetail);
-  }, [isName, isPhone, isAddress, isAddressDetail]);
-
   const nameChk = () => {
     if (!nameReq.test(newAddressName)) {
       setNameCheck("올바른 이름을 입력해주세요(2-50자).");
-      setIsName(false);
     } else {
       setNameCheck("");
-      setIsName(true);
     }
   };
 
   const phoneChk = () => {
     if (!phoneReq.test(newAddressPhone)) {
       setPhoneCheck("올바른 전화번호를 입력해주세요");
-      setIsPhone(false);
     } else {
       setPhoneCheck("");
-      setIsPhone(true);
     }
   };
 
@@ -188,21 +178,13 @@ const AddressModal = (props) => {
   const addressDetailChk = () => {
     if (newAddressDetail == "") {
       setAddressDetailCheck("상세주소를 입력해주세요");
-      setIsAddressDetail(false);
     } else {
       setAddressDetailCheck("");
-      setIsAddressDetail(true);
     }
   };
-  const addressChange = () => {
-    if (newAddress != "") {
-      setIsAddress(false);
-    } else {
-      setIsAddress(true);
-    }
-  };
+
   ////////////////////////////////////////////////////////////////////
-  //const memberNo = 45; //로그인 구현 이후 로그인 정보 불러오기(테스트사용중)
+  //새 주소 등록
   const addressEnroll = () => {
     if (
       nameReq.test(newAddressName) &&
@@ -226,6 +208,13 @@ const AddressModal = (props) => {
         .then((res) => {
           console.log(res.data);
           if (res.data.message === "success") {
+            if (delivery === "deliveryPlus") {
+              setDeliveryAddress(newAddress);
+              setDeliveryAddressDetail(newAddressDetail);
+              setDeliveryAddressName(newAddressName);
+              setDeliveryZipcode(newZipcode);
+              setDeliveryAddressPhone(newAddressPhone);
+            }
             setModalOpen(false);
             setStatus(!status);
           }
@@ -281,7 +270,9 @@ const AddressModal = (props) => {
             </span>
           </div>
           <div className="modal-content">
-            <div className="modal-title">주소 변경</div>
+            <div className="modal-title">
+              {whatModal === "update" ? "주소 변경" : "주소 추가"}
+            </div>
             <div className="address-input-wrap">
               <div>
                 <label htmlFor="addressName">이름</label>
@@ -341,7 +332,6 @@ const AddressModal = (props) => {
                 value={newAddress}
                 readOnly
                 placeholder="우편번호 입력 후, 자동 입력됩니다"
-                onChange={addressChange}
               ></input>
             </div>
             <div className="address-input-wrap">
@@ -376,15 +366,22 @@ const AddressModal = (props) => {
               )}
             </div>
             <div className="address-input-wrap">
-              {whatModal === "update" ? (
-                <button className="address-modal-btn" onClick={addressUpdate}>
-                  수정
-                </button>
-              ) : (
-                <button className="address-modal-btn" onClick={addressEnroll}>
-                  등록
-                </button>
-              )}
+              <button
+                className="address-modal-btn address-ok-btn"
+                onClick={whatModal === "update" ? addressUpdate : addressEnroll}
+                disabled={
+                  !nameReq.test(newAddressName) ||
+                  !phoneReq.test(newAddressPhone) ||
+                  newZipcode === "" ||
+                  newZipcode === undefined ||
+                  newAddress === "" ||
+                  newAddress === undefined ||
+                  newAddressDetail === undefined ||
+                  newAddressDetail === ""
+                }
+              >
+                {whatModal === "update" ? "수정" : "등록"}
+              </button>
               <button className="address-modal-btn" onClick={closeModal}>
                 취소
               </button>
@@ -395,4 +392,53 @@ const AddressModal = (props) => {
     </div>
   );
 };
-export { DelModal, AddressModal };
+const RequestModal = (props) => {
+  const { setOpenRequest, openRequest } = props;
+  const modalBackground = useRef();
+  //모달 닫기
+  const closeModal = () => {
+    setOpenRequest(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setOpenRequest(false);
+    }
+  };
+  const requestFun = () => {
+    setOpenRequest(false);
+  };
+  return (
+    <div>
+      <div className="modal" ref={modalBackground} onClick={modalBack}>
+        <div className="modal-content-wrap  modal-round">
+          <div className="close-icon-wrap">
+            <span className="material-icons close-icon" onClick={closeModal}>
+              highlight_off
+            </span>
+          </div>
+          <div className="modal-content">
+            <div className="modal-title">배송 요청사항</div>
+            <div className="request-message">
+              <div>요청사항 없음</div>
+              <div>문 앞에 놓아주세요</div>
+              <div>경비실에 맡겨 주세요</div>
+              <div>파손 위험 상품입니다. 배송 시 주의해주세요</div>
+              <div>
+                <div>직접 입력</div>
+                <textarea placeholder="내용을 입력해주세요"></textarea>
+              </div>
+            </div>
+            <button className="request-btn" onClick={closeModal}>
+              취소
+            </button>
+            <button className="request-btn" onClick={requestFun}>
+              적용하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export { DelModal, AddressModal, RequestModal };

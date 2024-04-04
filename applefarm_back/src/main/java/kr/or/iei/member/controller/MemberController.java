@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -244,6 +247,7 @@ public class MemberController {
 	})
 	@DeleteMapping(value = "/address/{addressNo}") 
 	public ResponseEntity<ResponseDTO> deleteAddress(@PathVariable int addressNo){
+		System.out.println(addressNo);
 		int result = memberService.deleteAddress(addressNo);
 		if(result>0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -277,7 +281,8 @@ public class MemberController {
 		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
 	})
 	@PatchMapping(value="/address")
-	public ResponseEntity<ResponseDTO> updateAddress(@RequestBody Address address){
+	public ResponseEntity<ResponseDTO> updateAddress(@RequestBody Address address,@RequestAttribute int memberNo){
+		address.setMemberNo(memberNo);
 		int result = memberService.updateAddress(address);
 		if(result==1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -328,7 +333,17 @@ public class MemberController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", address);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
-	
+	@Operation(summary = "전체배송지 조회",description = "기본배송지 최우선 순으로 전체 배송지 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/allAddress")
+	public ResponseEntity<ResponseDTO> alladdress(@RequestAttribute int memberNo){
+		List list = memberService.allAddress(memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 	
 	
 	
