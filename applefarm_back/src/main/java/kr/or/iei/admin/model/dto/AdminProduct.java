@@ -62,6 +62,8 @@ public class AdminProduct {
 	private String filterStartDate;
 	private String filterEndDate;
 	
-
+	//페이징
+	private int start;
+	private int end;
 
 }	

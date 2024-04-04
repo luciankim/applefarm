@@ -12,13 +12,13 @@ import kr.or.iei.util.PageInfo;
 
 @Mapper
 public interface AdminDao {
-	int totalCount(); 					//환불 건수 전체 조회
+	int totalCount(int selectedValue); 					//환불 건수 전체 조회
 	List selectRefundList(Refund rf);
 	int updateConfirmRefund(Refund refund);
 	int updateConfirmTrade(Refund refund);
 	int updateRejectRefund(Refund refund);
 	int updateRejectTrade(Refund refund);
-	int productTotalCount();
+	int productTotalCount(AdminProduct ap);
 	List selectProductList(AdminProduct ap);
 	int updateHide(List<Object> values);
 	int updateUnHide(List<Object> values);
@@ -26,6 +26,7 @@ public interface AdminDao {
 	int changeReportStatus(Report report);
 	int hidePost(Report report);
 	int blackMember(Report report);
+	int reportTotalCount(int selectedValue);
 
 
 }

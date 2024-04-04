@@ -4,8 +4,14 @@
 <mapper namespace="kr.or.iei.admin.model.dao.AdminDao">
 
 	<select id="totalCount" resultType="int">
-		select count(*) from
-		refund_tbl
+		<choose>
+			<when test="reportType == 3"> 
+				select count(*) from refund_tbl
+			</when>
+			<otherwise>
+				select count(*) from refund_tbl where refund_status = #{selectedValue}  
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="selectRefundList" resultType="refund">
@@ -70,22 +76,11 @@
 	</update>
 
 	<select id="productTotalCount" resultType="int">
-		select count(*) from
-		product_tbl
-	</select>
-
-	<select id="selectProductList" resultType="adminProduct">
-		SELECT
-		P.*,
-		M.MEMBER_NAME
-		FROM
+		SELECT COUNT(*) FROM
 		PRODUCT_TBL P
-		JOIN
-		MEMBER_TBL M ON P.MEMBER_NO =
-		M.MEMBER_NO
-		WHERE
-		(TO_CHAR(P.PRODUCT_DATE, 'yyyy-mm-dd') BETWEEN
-		#{filterStartDate} AND #{filterEndDate})
+		WHERE (TO_CHAR(P.PRODUCT_DATE, 'yyyy-mm-dd') BETWEEN
+		#{filterStartDate} AND
+		#{filterEndDate})
 		AND (
 		(#{selectedValue} IN
 		('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
@@ -99,6 +94,40 @@
 		'IPAD_TBL',
 		'AIRPODS_TBL', 'WATCH_TBL'))
 		)
+	</select>
+
+
+
+
+	<select id="selectProductList" resultType="adminProduct">
+		SELECT *
+		FROM (
+		SELECT
+		rownum AS rnum, Q.*
+		FROM (
+		SELECT P.*, M.MEMBER_NAME
+		FROM PRODUCT_TBL P
+		JOIN MEMBER_TBL M ON P.MEMBER_NO = M.MEMBER_NO
+		WHERE
+		(TO_CHAR(P.PRODUCT_DATE, 'yyyy-mm-dd') BETWEEN #{filterStartDate} AND
+		#{filterEndDate})
+		AND (
+		(#{selectedValue} IN ('IPHONE_TBL',
+		'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL') AND P.TABLE_NAME
+		= #{selectedValue})
+		OR
+		(#{selectedValue} NOT IN ('IPHONE_TBL',
+		'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL') AND P.TABLE_NAME
+		IN ('IPHONE_TBL', 'MACBOOK_TBL',
+		'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL'))
+		)
+		) Q
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
+
 	</select>
 
 	<update id="updateHide">
@@ -168,6 +197,12 @@
 				WHERE PRODUCT_NO =
 				#{reportTarget}
 			</when>
+			<when test="reportType == 4">   <!-- 상품테이블 -->
+				UPDATE COMMENT_TBL
+				SET COMMENT_HIDE = 1
+				WHERE COMMENT_NO =
+				#{reportTarget}
+			</when>
 			<otherwise>
 				UPDATE board_tbl
 				SET BOARD_HIDE = 1
@@ -180,9 +215,22 @@
 
 	<update id="blackMember">
 		update MEMBER_TBL
-		set MEMBER_GRADE = 3, member_black_time = TO_CHAR(SYSDATE, 'yyyy-mm-dd
-				hh24:mi:ss')
-		where MEMBER_NO = #{reportedMember}
+		set MEMBER_GRADE = 3,
+		member_black_time = TO_CHAR(SYSDATE, 'yyyy-mm-dd
+		hh24:mi:ss')
+		where
+		MEMBER_NO = #{reportedMember}
 	</update>
+
+	<select id="reportTotalCount" resultType="int">
+	<choose>
+			<when test="reportType == 3">   <!-- 상품테이블 -->
+				select count(*) from report_tbl
+			</when>
+			<otherwise>
+			select count(*) from report_tbl where report_status = #{selectedValue}
+			</otherwise>
+		</choose>
+	</select>
 
 </mapper>

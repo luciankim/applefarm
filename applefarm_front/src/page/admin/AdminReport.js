@@ -27,7 +27,7 @@ const AdminReport = () => {
     axios
       .get(backServer + "/admin/memberReport/" + reqPage + "/" + selectedValue)
       .then((res) => {
-        console.log(res.data.data.reportList);
+        console.log(res.data.data);
         setReportList(res.data.data.reportList);
         setPageInfo(res.data.data.pi);
       })

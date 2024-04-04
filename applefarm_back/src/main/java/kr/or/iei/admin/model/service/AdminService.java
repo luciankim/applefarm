@@ -34,7 +34,7 @@ public class AdminService {
 	public Map selectRefundList(int reqPage, int selectedValue) {
 		int numPerPage = 10; // 한 페이지당 게시물 수
 		int pageNaviSize = 5; // 페이지 네비게이션 길이
-		int totalCount = adminDao.totalCount(); // 전체 게시물 수(전체 페이지 수 계산을 위함)
+		int totalCount = adminDao.totalCount(selectedValue); // 전체 게시물 수(전체 페이지 수 계산을 위함)
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount); // 페이징 처리에 필요한 값을 계산해서 객체로
 		Refund rf = new Refund();
 		rf.setSelectedValue(selectedValue);
@@ -62,22 +62,24 @@ public class AdminService {
 	}
 
 	public Map selectProductList(String selectedValue, String filterStartDate, String filterEndDate, int reqPage) {
-		int numPerPage = 10; // 한페이지당 게시물 수
-		int pageNaviSize = 5; // 페이지 네비게이션 길이
-		int totalCount = adminDao.productTotalCount(); // 전체 게시물 수(전체 페이지 수 계산을 위함)
-		// 페이징 처리에 필요한 값을 계산해서 객체로 리턴받음
-		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-
 		AdminProduct ap = new AdminProduct();
 		ap.setFilterStartDate(filterStartDate);
 		ap.setFilterEndDate(filterEndDate);
 		ap.setSelectedValue(selectedValue);
+		int numPerPage = 2; // 한페이지당 게시물 수
+		int pageNaviSize = 5; // 페이지 네비게이션 길이
+		int totalCount = adminDao.productTotalCount(ap); // 전체 게시물 수(전체 페이지 수 계산을 위함)
+		// 페이징 처리에 필요한 값을 계산해서 객체로 리턴받음
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		ap.setStart(pi.getStart());
+		ap.setEnd(pi.getEnd());
 		List list = adminDao.selectProductList(ap);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		// 날짜를 YYYY-MM-DD로 변경
 		map.put("adminProductList", list);
 		map.put("pi", pi);
 		map.put("totalCount", totalCount);
+		System.out.println("행복" + pi);
 		return map;
 	}
 
@@ -96,7 +98,7 @@ public class AdminService {
 	public Map selectReportList(int reqPage, int selectedValue) {
 		int numPerPage = 10; // 한페이지당 게시물 수
 		int pageNaviSize = 5; // 페이지 네비게이션 길이
-		int totalCount = adminDao.productTotalCount(); // 전체 게시물 수(전체 페이지 수 계산을 위함)
+		int totalCount = adminDao.reportTotalCount(selectedValue); // 전체 게시물 수(전체 페이지 수 계산을 위함)
 		// 페이징 처리에 필요한 값을 계산해서 객체로 리턴받음
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 		Report rp = new Report();

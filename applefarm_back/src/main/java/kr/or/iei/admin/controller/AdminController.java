@@ -110,6 +110,7 @@ public class AdminController {
 	@GetMapping(value = "/memberProduct/{selectedValue}/{filterStartDate}/{filterEndDate}/{reqPage}")
 	public ResponseEntity<ResponseDTO> productList(@PathVariable String selectedValue,
 			@PathVariable String filterStartDate, @PathVariable String filterEndDate, @PathVariable int reqPage) {
+				System.out.println("controller" + selectedValue);
 		Map map = adminService.selectProductList(selectedValue, filterStartDate, filterEndDate, reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

@@ -65,7 +65,6 @@ const AdminProduct = () => {
 
   const selectChange = (event) => {
     setSelectedValue(event.target.value);
-    console.log("상품구분:", event.target.value);
   };
 
   useEffect(() => {
@@ -84,7 +83,7 @@ const AdminProduct = () => {
       .then((res) => {
         setProductList(res.data.data.adminProductList);
         setPageInfo(res.data.data.pi);
-        console.log(res.data.data);
+        console.log("Zz", res.data.data.pi);
       })
       .catch((res) => {
         console.log(res.data);

@@ -16,7 +16,8 @@ const AdminMember = () => {
     axios
       .get(backServer + "/admin/member/" + reqPage)
       .then((res) => {
-        console.log(res.data.data);
+        console.log("최초결과", res.data.data.pi);
+
         setMemberList(res.data.data.memberList);
         setPageInfo(res.data.data.pi);
       })
@@ -86,10 +87,6 @@ const MemberItem = (props) => {
         console.log(res);
       });
   };
-  useEffect(() => {
-    setMemberGrade(member.memberGrade);
-    console.log("함수 호출", setMemberGrade(member.memberGrade));
-  }, [member]);
 
   return (
     <tr>

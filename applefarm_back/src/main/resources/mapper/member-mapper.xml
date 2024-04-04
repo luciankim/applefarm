@@ -42,31 +42,31 @@
 
 	<select id="selectLike" resultType="like">
 		SELECT
-    		like_no,member_no,product_no,product_summary,product_price,product_quality,product_thumbnail,member_nickname
-			FROM
-    	(
-        	SELECT
-            	a.like_no,
-            	a.member_no,
-            	a.product_no,
-            	b.product_summary,
-            	b.product_price,
-            	b.product_quality,
-            	b.product_thumbnail,
-            	c.member_nickname,
-            	(SELECT COUNT(*) FROM trade_tbl WHERE product_no = a.product_no) AS trade
-        	FROM
-            	like_tbl a
-        	JOIN
-            	product_tbl b ON a.product_no = b.product_no
-        	JOIN
-            	member_tbl c ON b.member_no = c.member_no
-        	WHERE
-            	a.member_no = #{memberNo}
-    	) q
-	WHERE
-    	q.trade = 0
-    order by 1 desc
+		like_no,member_no,product_no,product_summary,product_price,product_quality,product_thumbnail,member_nickname
+		FROM
+		(
+		SELECT
+		a.like_no,
+		a.member_no,
+		a.product_no,
+		b.product_summary,
+		b.product_price,
+		b.product_quality,
+		b.product_thumbnail,
+		c.member_nickname,
+		(SELECT COUNT(*) FROM trade_tbl WHERE product_no = a.product_no) AS trade
+		FROM
+		like_tbl a
+		JOIN
+		product_tbl b ON a.product_no = b.product_no
+		JOIN
+		member_tbl c ON b.member_no = c.member_no
+		WHERE
+		a.member_no = #{memberNo}
+		) q
+		WHERE
+		q.trade = 0
+		order by 1 desc
 	</select>
 	<delete id="deleteLike">
 		delete from like_tbl where like_no=#{likeNo}
@@ -103,12 +103,12 @@
 		#{memberName},
 		#{memberNickName},
 		#{memberId},
-		#{memberPw}, 
+		#{memberPw},
 		#{memberEmail},
-		#{memberPhone}, 
+		#{memberPhone},
 		1,
 		#{memberAccountnumber},
-		sysdate, 
+		sysdate,
 		37,
 		1,
 		0,
@@ -173,7 +173,8 @@
 	</select>
 
 	<select id="selectBlackMemberCheckList" resultType="member">
-		SELECT * FROM MEMBER_TBL where member_grade =3 
+		SELECT * FROM
+		MEMBER_TBL where member_grade =3
 	</select>
 
 	<update id="changeMemberGrade">
@@ -194,25 +195,34 @@
 
 	<update id="updateBlackMemberGrade">
 		update member_tbl
-		set member_grade = #{memberGrade}, member_black_time=#{memberBlackTime} where member_no =#{memberNo}
+		set member_grade = #{memberGrade},
+		member_black_time=#{memberBlackTime} where member_no =#{memberNo}
 	</update>
-	
+
 	<select id="OneMemberNo" resultType="int">
-	
-	
-	select member_no from member_tbl where member_id =#{memberId}
-	
+
+
+		select member_no from member_tbl where member_id =#{memberId}
+
 	</select>
-	
-	
+
+
 	<select id="getMemberInfo" resultType="member">
-	
-	select * from member_tbl where member_no = #{memberNo}
-	
+
+		select * from member_tbl where member_no = #{memberNo}
+
 	</select>
-	
+
 
 	<select id="selectMemberList" resultType="member">
-		select * from member_tbl
+		SELECT *
+		FROM (
+		SELECT rownum AS rnum, M.*
+		FROM (
+		SELECT *
+		FROM member_tbl
+		) M
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
 </mapper>
