@@ -102,7 +102,6 @@ const ProductInsertLastFrm = (props) => {
   //filePreviews 상태가 변경될 때마다
   //(즉, 새로운 파일 미리보기가 생성될 때마다) 원하는 함수를 호출
   useEffect(() => {
-    console.log("유즈이펙트");
     if (filePreviews.length > 0) {
       handleImageSelect(filePreviews[0]);
     }
@@ -228,15 +227,10 @@ const ProductInsertLastFrm = (props) => {
                   </div>
                 ))}
               </div>
-              <div>대표 이미지 선택: ㅁ클릭</div>
             </td>
           </tr>
 
-          <tr>
-            <td colSpan={2} className="insert-btn">
-              <button onClick={writeBtn}>완료</button>
-            </td>
-          </tr>
+
         </tbody>
       </table>
     </div>

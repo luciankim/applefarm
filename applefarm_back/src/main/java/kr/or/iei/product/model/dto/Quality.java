@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Quality {
 	private String tableName;
 	private String part;
+	private String part2;
 	private String productStatus;
 	private String productStatusImage;
 }

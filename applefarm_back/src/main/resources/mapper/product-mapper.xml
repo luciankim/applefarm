@@ -16,4 +16,22 @@
 	<select id="selectQualityList" resultType="quality">
 		select * from quality_tbl where table_name = #{tableName}
 	</select>
+	
+	<insert id="insertProduct">
+		insert into product_tbl 
+		values
+		(product_seq.nextval,#{memberNo},#{productQuality},#{productTitle},
+		#{productExplain},#{productPrice},sysdate,0,#{productLine},#{productGen},#{productModel},
+		#{productModel2},#{productColor},#{productStorage},#{productMemory},#{productChip},#{productCpu},#{productGpu},#{productSize},#{productConnectivity},
+		#{productCharge},#{productThumbnail},#{productSummary},#{tableName}
+		)
+		<selectKey resultType="int" keyProperty="productNo" order="AFTER">
+			select max(product_no) from product_tbl
+		</selectKey>
+	</insert>
+	
+	<insert id="insertProductFile">
+	insert into product_file_tbl values
+	(product_file_seq.nextval,#{productNo},#{filename},#{filepath})
+	</insert>
 </mapper>
