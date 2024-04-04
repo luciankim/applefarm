@@ -8,10 +8,23 @@ import ProductTab from "./ProductTab";
 const ProductInsert = (props) => {
   //탭
   const progressArr = ["제품 선택", "품질 선택", "세부 내용"];
-  const [pip, setPip] = useState(progressArr[0]); //pip = progressInsertProgress
+  const [pip, setPip] = useState(progressArr[2]); //pip = progressInsertProgress
   const changePip = (e) => {
     setPip(e.target.value);
   };
+
+  //박근열
+  const [grade, setGrade] = useState(null);
+  const [partOrder, setPartOrder] = useState([]);
+
+  const [title, setTitle] = useState(); //제목
+  const [content, setContent] = useState(); //내용
+  const [price, setPrice] = useState(); //가격
+  const [file, setFile] = useState([]); //이미지
+  const [thumbnail, setThumbnail] = useState(); //대표이미지
+
+  const insert = () => {};
+  //박근열
 
   return (
     <div className="productInsert-wrap">
@@ -23,10 +36,31 @@ const ProductInsert = (props) => {
         <ProductCategoryInsert />
       </div>
       <div className={pip === progressArr[1] ? "" : "displayNone"}>
-        <ProductQualityInsert />
+        <ProductQualityInsert
+          grade={grade}
+          setGrade={setGrade}
+          partOrder={partOrder}
+          setPartOrder={setPartOrder}
+        />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
-        <ProductInsertLast />
+        <ProductInsertLast 
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          price={price}
+          setPrice={setPrice}
+          file={file}
+          setFile={setFile}
+          thumbnail={thumbnail}
+          setThumbnail={setThumbnail}
+          insert={insert}
+          grade={grade}
+          setGrade={setGrade}
+          partOrder={partOrder}
+          setPartOrder={setPartOrder}
+        />
       </div>
       <div className="pip-bar">
         <NextBtn pip={pip} changePip={setPip} />
