@@ -343,11 +343,10 @@
   padding: 30px;
   font-size: 14px;
 }
-.address-item-radio {
-}
+
 .payment-address-list {
   margin-top: 10px;
-  height: 500px;
+  max-height: 500px;
   overflow-y: auto;
 }
 .payment-address-list::-webkit-scrollbar {
@@ -381,10 +380,17 @@
 .payment-info-address > div {
   padding: 2.5px 0px;
 }
+.address-item-radio {
+  display: none;
+}
+.address-item-wrap > input:checked + div {
+  border: 2px solid #0071e3;
+}
+/*
 .address-select {
   border: 1.5px solid #0071e3;
 }
-
+*/
 .delivery-request-btn-box {
   text-align: center;
   width: 100%;

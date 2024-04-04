@@ -131,11 +131,15 @@
 }
 .request-message > div {
   font-size: 14px;
+  padding: 0px 10px 15px 10px;
+  cursor: pointer;
+}
+.request-message > div:not(:last-child) {
+  font-size: 14px;
   padding: 15px 10px;
   cursor: pointer;
 }
 .request-message > div > textarea {
-  margin-top: 8px;
   padding: 5px;
   width: 100%;
   border: 1px solid #ccc;
@@ -147,7 +151,7 @@
 .request-message > div > textarea::placeholder {
   color: #ccc;
 }
-.request-message > div:not(:last-child) {
+.request-message > div:not(:nth-child(n + 5)) {
   border-bottom: 1px solid var(--gray_07);
 }
 .request-btn {
@@ -156,4 +160,15 @@
 .request-btn:last-child {
   background-color: var(--main_01);
   color: white;
+}
+.request-active {
+  border: 2px solid #0267f3;
+}
+.request-chk {
+  color: #0267f3;
+  position: absolute;
+  right: 50px;
+}
+.request-option {
+  font-family: ns-b;
 }

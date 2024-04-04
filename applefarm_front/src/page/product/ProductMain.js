@@ -13,9 +13,9 @@ const ProductMain = (props) => {
   const naviProductLine = props.naviProductLine;
   const naviProductGen = props.naviProductGen;
   */
-  const table = "MACBOOK_TBL"; //반드시 대문자로 받을것!!
-  const naviProductLine = "MacBook Pro";
-  const naviProductGen = ""; //없을 경우 ""로 받을것!!
+  const table = "IPHONE_TBL"; //반드시 대문자로 받을것!!
+  const naviProductLine = "iPhone";
+  const naviProductGen = "iPhone 15 Series"; //없을 경우 ""로 받을것!!
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -84,8 +84,7 @@ const ProductMain = (props) => {
   return (
     <div className="productMain">
       <div className="productMain-title">
-        {/*
-        table === "iphone_tbl"
+        {table === "iphone_tbl"
           ? "iPhone"
           : table === "macbook_tbl"
           ? "MacBook"
@@ -95,14 +94,13 @@ const ProductMain = (props) => {
           ? "Apple Watch"
           : table === "airpods_tbl"
           ? "에어팟"
-          : ""
-          */}
-        {"iPhone"}
+          : ""}
       </div>
       <ProductCategory
         /*axios용*/
         table={table}
         naviProductLine={naviProductLine}
+        naviProductGen={naviProductGen}
         /*--axios용*/
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

@@ -28,7 +28,7 @@ const Address = () => {
   useEffect(() => {
     //주소록 불러오기
     axios
-      .get(backServer + "/member/addressList/" + reqpage)
+      .get(backServer + "/member/address/" + reqpage)
       .then((res) => {
         //console.log(res.data);
         console.log(res.data.data);

@@ -251,16 +251,14 @@ public class MemberService {
 			
 			return memberDao.getMemberInfo(memberNo);
 		}
-
+		
+		
 		public Address basicAddress(int memberNo) {
 			return memberDao.selectAddressBasic(memberNo);
 		}
 
 		
 		
-
-
-
 		
 
 }

@@ -149,14 +149,28 @@ button[disabled] {
 }
 
 /* 네비게이션 바 스타일링 */
-
+/*박성완*/
 .nav {
   display: flex;
   justify-content: center;
   border-top: 1px solid #dedede;
   border-bottom: 1px solid #dedede;
   position: relative; /* 드롭다운 위치를 위한 기준점 추가 */
+  /**/
+  position: fixed;
+  top: 155.5px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+.nav:has(ul:hover) ~ section.inner-wrap {
+  /*ul을 자식으로 가진 nav태그,
+  그것의 인접요소로서 section태그이면서 .inner-wrap클래스를 가진 것을 대상으로 함.*/
+  opacity: 0.1;
+}
+/*--박성완*/
 
 .nav > ul {
   width: 900px;
@@ -178,8 +192,20 @@ button[disabled] {
 }
 
 .navMenu-li {
-  position: relative; /* 드롭다운 메뉴 위치 조정을 위해 추가 */
+  /*position: relative;*/ /* 드롭다운 메뉴 위치 조정을 위해 추가 */
+  /*↑ 박성완이 지움*/
 }
+/*박성완*/
+.nav > ul {
+  position: relative;
+}
+.dropdown-relative {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  position: relative;
+}
+/*--박성완*/
 
 .nav a {
   display: block;
@@ -193,12 +219,15 @@ button[disabled] {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 190px;
+  /*min-width: 190px;*/ /*박성완이 아래 width로 바꿈*/
+  min-width: 900px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   /* border: 1px solid #fff; */
   z-index: 1;
   top: 100%; /* 부모 요소(.navMenu-li)의 하단에 위치 */
   left: 0; /* 부모 요소의 왼쪽 정렬 */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 20px;
 }
 
 .dropdown-content a {
@@ -209,6 +238,35 @@ button[disabled] {
   text-align: left;
 }
 
+/*박성완*/
+.dropdown-content > li {
+  margin-bottom: 20px;
+}
+.dropdown-content > li > a {
+  font-size: 18px;
+}
+.dropdown-content > li > ul > li > a {
+  padding: 3px 0px;
+  padding-left: 25px;
+  margin: 5px 0;
+}
+.drop-iPhone > li {
+  width: 33%;
+}
+.drop-MacBook > li {
+  width: 50%;
+}
+.drop-iPad > li {
+  width: 20%;
+}
+.drop-Watch > li {
+  width: 33%;
+}
+.drop-AirPods > li {
+  width: 33%;
+}
+/*--박성완*/
+
 /* 네비게이션 메뉴 항목에 마우스 호버 시 - 상위 링크 */
 .navMenu-li a:hover,
 .navMenu-li:hover > a {
@@ -218,7 +276,11 @@ button[disabled] {
 
 /* 드롭다운 메뉴를 표시하는 부분 - 호버 시 드롭다운 메뉴 표시 */
 .navMenu-li:hover .dropdown-content {
-  display: block;
+  /*display: block;*/
+  /*박성완이 이거 지우고 아래 세 줄 추가*/
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 /* 드롭다운 메뉴 항목에 마우스 호버 시 - 드롭다운 메뉴 항목 */
