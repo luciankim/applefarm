@@ -12,7 +12,7 @@ import kr.or.iei.util.PageInfo;
 @Mapper
 public interface AdminDao {
 	int totalCount(); 					//환불 건수 전체 조회
-	List selectRefundList(PageInfo pi);
+	List selectRefundList(Refund rf);
 	int updateConfirmRefund(Refund refund);
 	int updateConfirmTrade(Refund refund);
 	int updateRejectRefund(Refund refund);
