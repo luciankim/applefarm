@@ -195,7 +195,7 @@ const AdminProduct = () => {
         </div>
       </div>
       <div className="member-like-tbl-box" id="member-like-tbl-box">
-        <table className="admin-product-tbl">
+        <table className="admin-tbl">
           <thead>
             <tr>
               <th width="15%">
@@ -261,7 +261,19 @@ const ProductItem = (props) => {
 
   return (
     <tr>
-      <td>아이폰</td>
+      <td>
+        {product.tableName === "IPHONE_TBL"
+          ? "아이폰"
+          : product.tableName === "MACBOOK_TBL"
+          ? "맥북"
+          : product.tableName === "IPAD_TBL"
+          ? "아이팬드"
+          : product.tableName === "AIRPODS_TBL"
+          ? "에어팟"
+          : product.tableName === "WATCH_TBL"
+          ? "애플워치"
+          : "전체"}
+      </td>
       <td>{product.productTitle}</td>
       <td>{product.memberName}</td>
       <td>{product.productDate}</td>

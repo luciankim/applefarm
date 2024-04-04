@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,7 +11,6 @@ const AdminMember = () => {
   const [memberList, setMemberList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -33,7 +31,7 @@ const AdminMember = () => {
         <p className="admin-current-p">회원관리</p>
       </div>
       <div className="member-like-tbl-box" id="member-like-tbl-box">
-        <table>
+        <table className="admin-tbl">
           <thead>
             <tr>
               <th>회원번호</th>
@@ -81,7 +79,7 @@ const MemberItem = (props) => {
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "success") {
-          setMemberGrade(e.target.value);
+          setMemberGrade(m.memberGrade);
         }
       })
       .catch((res) => {
@@ -90,6 +88,7 @@ const MemberItem = (props) => {
   };
   useEffect(() => {
     setMemberGrade(member.memberGrade);
+    console.log("함수 호출", setMemberGrade(member.memberGrade));
   }, [member]);
 
   return (
@@ -100,7 +99,7 @@ const MemberItem = (props) => {
       <td>{member.sellerScore}</td>
       <td>{member.sellerGrade}</td>
       <td>{member.enrollDate}</td>
-      <td>
+      <td className="member-td">
         <FormControl sx={{ m: 1 }}>
           <Select value={memberGrade} onChange={changeGrade}>
             <MenuItem value={1}>사용자</MenuItem>

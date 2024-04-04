@@ -93,9 +93,8 @@
 .date-select-wrap > div > div:last-child button {
   margin: 10px 0;
 } */
-.admin-product-tbl th:first-child div {
+.admin-tbl th:first-child div {
   width: 130px;
-  font-size: 16px;
 }
 
 #admin-product-select {
@@ -110,4 +109,13 @@
 .btnWrap {
   text-align: right;
   display: flex;
+}
+
+.admin-tbl td {
+  font-size: 14px;
+}
+
+.member-td div {
+  margin: 0;
+  height: 40px;
 }

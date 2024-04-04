@@ -13,14 +13,16 @@
 		R.REFUND_NO,
 		R.TRADE_NO,
 		R.PRODUCT_NO,
-		TO_CHAR(R.REFUND_DATE, 'YYYY-MM-DD') AS
+		TO_CHAR(R.REFUND_DATE,
+		'YYYY-MM-DD') AS
 		REFUND_DATE,
 		R.REFUND_REASON,
 		R.REFUND_STATUS,
 		TO_CHAR(T.TRADE_DATE,
 		'YYYY-MM-DD') AS TRADE_DATE,
 		SELLER.MEMBER_NICKNAME AS SELLER_NICKNAME,
-		BUYER.MEMBER_NICKNAME AS BUYER_NICKNAME
+		BUYER.MEMBER_NICKNAME AS
+		BUYER_NICKNAME
 		FROM
 		REFUND_TBL R
 		JOIN
@@ -33,7 +35,13 @@
 		JOIN
 		MEMBER_TBL BUYER ON
 		T.TRADE_BUYER = BUYER.MEMBER_NO
-		ORDER BY 1 DESC
+		WHERE
+		(#{selectedValue} IN (0, 1, 2) AND R.REFUND_STATUS =
+		#{selectedValue})
+		OR
+		(#{selectedValue} NOT IN (0, 1, 2))
+		ORDER BY
+		R.REFUND_NO DESC
 	</select>
 
 	<update id="updateConfirmRefund">
@@ -73,18 +81,24 @@
 		FROM
 		PRODUCT_TBL P
 		JOIN
-		MEMBER_TBL M ON P.MEMBER_NO = M.MEMBER_NO
+		MEMBER_TBL M ON P.MEMBER_NO =
+		M.MEMBER_NO
 		WHERE
-		(TO_CHAR(P.PRODUCT_DATE, 'yyyy-mm-dd') BETWEEN #{filterStartDate} AND #{filterEndDate})
+		(TO_CHAR(P.PRODUCT_DATE, 'yyyy-mm-dd') BETWEEN
+		#{filterStartDate} AND #{filterEndDate})
 		AND (
-		(#{selectedValue} IN ('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
-		'WATCH_TBL') AND P.TABLE_NAME = #{selectedValue})
+		(#{selectedValue} IN
+		('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL')
+		AND P.TABLE_NAME = #{selectedValue})
 		OR
-		(#{selectedValue} NOT IN ('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
-		'WATCH_TBL') AND P.TABLE_NAME IN ('IPHONE_TBL', 'MACBOOK_TBL',
-		'IPAD_TBL', 'AIRPODS_TBL', 'WATCH_TBL'))
+		(#{selectedValue} NOT IN
+		('IPHONE_TBL', 'MACBOOK_TBL', 'IPAD_TBL', 'AIRPODS_TBL',
+		'WATCH_TBL')
+		AND P.TABLE_NAME IN ('IPHONE_TBL', 'MACBOOK_TBL',
+		'IPAD_TBL',
+		'AIRPODS_TBL', 'WATCH_TBL'))
 		)
-
 	</select>
 
 	<update id="updateHide">
@@ -105,6 +119,70 @@
 			close=")">
 			#{item}
 		</foreach>
+	</update>
+
+	<select id="selectReportList" resultType="report">
+		SELECT
+		R.REPORT_NO,
+		R.REPORT_TYPE,
+		R.REPORT_TARGET,
+		R.REPORT_CONTENT,
+		TO_CHAR(R.REPORT_DATE,
+		'YYYY-MM-DD') AS REPORT_DATE,
+		R.REPORTING_MEMBER,
+		R.REPORTED_MEMBER,
+		R.REPORT_STATUS,
+		TO_CHAR(R.REPORT_ACTION_DATE, 'YYYY-MM-DD') AS
+		REPORT_ACTION_DATE,
+		RPT.MEMBER_NAME AS REPORTING_MEMBER_NAME,
+		RPD.MEMBER_NAME AS REPORTED_MEMBER_NAME
+		FROM
+		REPORT_TBL R
+		JOIN
+		MEMBER_TBL
+		RPT ON R.REPORTING_MEMBER = RPT.MEMBER_NO
+		JOIN
+		MEMBER_TBL RPD ON
+		R.REPORTED_MEMBER = RPD.MEMBER_NO
+		WHERE
+		(#{selectedValue} IN (0, 1, 2)
+		AND R.REPORT_STATUS = #{selectedValue})
+		OR
+		(#{selectedValue} NOT IN (0,
+		1, 2))
+		ORDER BY R.REPORT_NO DESC
+	</select>
+
+	<!-- 1. reportStatus 업데이트 -->
+	<update id="changeReportStatus">
+		UPDATE report_TBL
+		SET report_status = #{reportStatus}
+		WHERE report_no = #{reportNo}
+	</update>
+
+	<update id="hidePost">
+		<choose>
+			<when test="reportType == 1">   <!-- 상품테이블 -->
+				UPDATE product_tbl
+				SET PRODUCT_HIDE = 1
+				WHERE PRODUCT_NO =
+				#{reportTarget}
+			</when>
+			<otherwise>
+				UPDATE board_tbl
+				SET BOARD_HIDE = 1
+				WHERE BOARD_NO =
+				#{reportTarget}
+			</otherwise>
+		</choose>
+	</update>
+
+
+	<update id="blackMember">
+		update MEMBER_TBL
+		set MEMBER_GRADE = 3, member_black_time = TO_CHAR(SYSDATE, 'yyyy-mm-dd
+				hh24:mi:ss')
+		where MEMBER_NO = #{reportedMember}
 	</update>
 
 </mapper>
