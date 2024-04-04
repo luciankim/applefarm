@@ -102,13 +102,40 @@ const ProductInsert = (props) => {
   useEffect(() => {
     if (pip === "등록 취소") {
       navigate("/product/main"); //아직 메인페이지 경로 없음
-    } else {
-      navigate("/product/insert");
     }
   }, [pip]);
 
-  console.log("pip : " + pip);
-  console.log("nextBtnActive : " + nextBtnActive);
+  //ProductQualityInsert.js로 넘겨줄 속성
+  const [grade, setGrade] = useState(null);
+  const [partOrder, setPartOrder] = useState([]);
+
+  //ProductInsertLast.js로 넘겨줄 속성
+  const [title, setTitle] = useState(); //제목
+  const [content, setContent] = useState(); //내용
+  const [price, setPrice] = useState(); //가격
+  const [file, setFile] = useState([]); //이미지
+  const [thumbnail, setThumbnail] = useState(); //대표이미지
+
+  //insert 하기 위해 서버 오픈
+  useEffect(() => {
+    if (
+      title &&
+      content &&
+      price &&
+      file &&
+      thumbnail &&
+      pip === progressArr[progressArr.length - 1]
+    ) {
+      /*
+      const insert = () => {
+        //여기에 서버로 가서 insert하는 axios코드
+        //navigate("/product/main"); //아직 메인페이지 경로 없음
+      };
+      */
+    }
+  }, [pip]);
+
+  //박근열
 
   return (
     <div className="productInsert-wrap">
@@ -162,19 +189,44 @@ const ProductInsert = (props) => {
         />
       </div>
       <div className={pip === progressArr[1] ? "" : "displayNone"}>
-        <ProductQualityInsert />
-        {/*컴포넌트들에 changeBtnActiveTrue, changeBtnActiveFalse, pip 넘겨줘야해*/}
+        <ProductQualityInsert
+          /*nextBtn용*/
+          changeBtnActiveTrue={changeBtnActiveTrue}
+          changeBtnActiveFalse={changeBtnActiveFalse}
+          //원래ProductQualityInsert용
+          grade={grade}
+          setGrade={setGrade}
+          partOrder={partOrder}
+          setPartOrder={setPartOrder}
+        />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
-        <ProductInsertLast />
-        {/*컴포넌트들에 changeBtnActiveTrue, changeBtnActiveFalse, pip 넘겨줘야해*/}
+        <ProductInsertLast
+          /*nextBtn용*/
+          changeBtnActiveTrue={changeBtnActiveTrue}
+          changeBtnActiveFalse={changeBtnActiveFalse}
+          //ProductInsertLast
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          price={price}
+          setPrice={setPrice}
+          file={file}
+          setFile={setFile}
+          thumbnail={thumbnail}
+          setThumbnail={setThumbnail}
+          grade={grade}
+          setGrade={setGrade}
+          partOrder={partOrder}
+          setPartOrder={setPartOrder}
+        />
       </div>
       <div className="productInsert-nextBtn">
         <ProductInsertBtn
           progressArr={progressArr}
           pip={pip}
           changePip={changePip}
-          nextBtnActive={nextBtnActive}
         />
       </div>
     </div>
