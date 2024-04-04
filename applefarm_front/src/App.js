@@ -15,6 +15,7 @@ import MemberInfo from "./page/member/MemberInfo";
 import Product from "./page/product/Product";
 import axios from "axios";
 import Payment from "./page/member/Payment";
+import Nav from "./page/common/Nav";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -65,10 +66,24 @@ function App() {
     }
   }, []);
 
+  //박성완 - Nav.js 정보
+  const [table, setTable] = useState("");
+  const [naviProductLine, setNaviProductLine] = useState("");
+  const [naviProductGen, setNaviProductGen] = useState("");
+
   return (
     <div className="wrap">
-      <Header isLogin={isLogin} logout={logout} /> {/*여기는 isLogin 값*/}
+      <header>
+        <Header isLogin={isLogin} logout={logout} /> {/*여기는 isLogin 값*/}
+      </header>
       <main className="container">
+        <Nav
+          table={table}
+          naviProductLine={naviProductLine}
+          setNaviProductLine={setNaviProductLine}
+          naviProductGen={naviProductGen}
+          setNaviProductGen={setNaviProductGen}
+        />
         <section className="inner-wrap">
           <Routes>
             <Route path="/ref" element={<Ref />} />

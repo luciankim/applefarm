@@ -9,7 +9,7 @@ const Header = (props) => {
   const logout = props.logout; //(App.js)헤더에서 보낸 로그아웃 받아오기
 
   return (
-    <header>
+    <>
       <div className="topbar"></div>
       <div className="header">
         <LogoForm />
@@ -17,8 +17,7 @@ const Header = (props) => {
       <div className="header2">
         <LoginForm isLogin={isLogin} logout={logout} />
       </div>
-      <NavMenu />
-    </header>
+    </>
   );
 };
 
@@ -89,129 +88,6 @@ const LoginForm = (props) => {
         </>
       )}
     </div>
-  );
-};
-
-const NavMenu = () => {
-  return (
-    <nav className="nav">
-      <ul>
-        <li className="navMenu-li">
-          <Link to="#">Mac</Link>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="#">MacBook Air</Link>
-            </li>
-            <li>
-              <Link to="#">MacBook Pro</Link>
-            </li>
-            <li>
-              <Link to="#">iMac</Link>
-            </li>
-            <li>
-              <Link to="#">Mac mini</Link>
-            </li>
-            <li>
-              <Link to="#">Mac Studio</Link>
-            </li>
-            <li>
-              <Link to="#">Mac Pro</Link>
-            </li>
-          </ul>
-        </li>
-        <li className="navMenu-li">
-          <Link to="#">iPad</Link>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="#">iPad Pro</Link>
-            </li>
-            <li>
-              <Link to="#">iPad</Link>
-            </li>
-            <li>
-              <Link to="#">iPad mini</Link>
-            </li>
-          </ul>
-        </li>
-        <li className="navMenu-li">
-          <Link to="#">iPhone</Link>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="#">iPhone 15 Pro</Link>
-            </li>
-            <li>
-              <Link to="#">iPhone 15</Link>
-            </li>
-            <li>
-              <Link to="#">iPhone 14</Link>
-            </li>
-            <li>
-              <Link to="#">iPhone 13</Link>
-            </li>
-            <li>
-              <Link to="#">iPhone SE</Link>
-            </li>
-          </ul>
-        </li>
-        <li className="navMenu-li">
-          <Link to="#">Watch</Link>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="#">Apple Watch Series 9</Link>
-            </li>
-            <li>
-              <Link to="#">Apple Watch Ultra 2</Link>
-            </li>
-            <li>
-              <Link to="#">Apple Watch SE</Link>
-            </li>
-            <li>
-              <Link to="#">Apple Watch Nike</Link>
-            </li>
-            <li>
-              <Link to="#">Apple Watch Goods</Link>
-            </li>
-          </ul>
-        </li>
-        <li className="navMenu-li">
-          <Link to="#">AirPods</Link>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="#">AirPods 2세대</Link>
-            </li>
-            <li>
-              <Link to="#">AirPods 3세대</Link>
-            </li>
-            <li>
-              <Link to="#">AirPods Pro 2세대</Link>
-            </li>
-            <li>
-              <Link to="#">AirPods Max</Link>
-            </li>
-          </ul>
-        </li>
-        <li className="navMenu-li">
-          <Link to="#">Community</Link>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="">공지사항</Link>
-            </li>
-            <li>
-              <Link to="/board/list">자유게시판</Link>
-            </li>
-            <li>
-              <Link to="#">질문게시판</Link>
-            </li>
-            <li>
-              <Link to="#">뽐내기게시판</Link>
-            </li>
-            <li>
-              <Link to="#">매거진</Link>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
   );
 };
 

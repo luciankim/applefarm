@@ -8,6 +8,7 @@ const ProductCategory = (props) => {
   const {
     table,
     naviProductLine,
+    naviProductGen,
 
     selectedCategory,
     setSelectedCategory,

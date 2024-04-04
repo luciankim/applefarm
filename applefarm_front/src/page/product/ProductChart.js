@@ -17,8 +17,8 @@ const ProductChart = (props) => {
   const termArr = ["1개월", "3개월", "6개월", "1년"];
   const [term, setTerm] = useState(termArr[0]);
   //탭
-  const changeChartTab = (e) => {
-    setTerm(e.target.id);
+  const changeTerm = (e) => {
+    setTerm(e.target.value);
   };
   //axios
   useEffect(() => {}, [productQuality, term]);
@@ -93,7 +93,20 @@ const ProductChart = (props) => {
   return (
     <div className="productChart">
       <div className="productChart-title">시세</div>
-      <div className="productChart-tab">
+      <div className="productChart-button">
+        <div className="productChart-btns">
+          {termArr.map((termItem, index) => {
+            return (
+              <Btn
+                key={termItem + term + index}
+                bg={term === termItem ? "bg1" : "bg2"}
+                text={termItem}
+                value={termItem}
+                clickEvent={changeTerm}
+              />
+            );
+          })}
+        </div>
         {/*
         <ProductTab
           productTab={term}
@@ -108,3 +121,17 @@ const ProductChart = (props) => {
 };
 
 export default ProductChart;
+
+const Btn = (props) => {
+  const { bg, text, value, clickEvent } = props;
+  return (
+    <button
+      className={"button_form " + bg}
+      type="button"
+      onClick={clickEvent}
+      value={value}
+    >
+      {text}
+    </button>
+  );
+};

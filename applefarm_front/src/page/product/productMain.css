@@ -124,9 +124,33 @@
   font-weight: 600;
   margin-bottom: 60px;
 }
-.productChart-tab {
+.productChart-button {
   width: 90%;
   margin-left: 100px;
+  position: relative;
+  z-index: 10;
+}
+.productChart-button > .productChart-btns {
+  position: absolute;
+}
+.productChart-button > .productChart-btns > .button_form {
+  padding: 9px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-family: ns-b;
+  line-height: 1.5;
+  text-align: center;
+  transition: all 0.2s;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.productChart-button > .productChart-btns > .bg1 {
+  background-color: var(--main_01);
+}
+.productChart-button > .productChart-btns > .bg2 {
+  background-color: var(--gray_04);
 }
 
 /*
