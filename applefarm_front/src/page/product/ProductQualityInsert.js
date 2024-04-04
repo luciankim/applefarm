@@ -5,16 +5,33 @@ import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
 const ProductQualityInsert = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  console.log(props);
+  //
+  // const [grade, setGrade] = useState();
+  // const [partOrder, setPartOrder] = useState([]);
+  const grade = props.grade;
+  const setGrade = props.setGrade;
+  const partOrder = props.partOrder;
+  const setPartOrder = props.setPartOrder;
+  const changeBtnActiveTrue = props.changeBtnActiveTrue;
+  const changeBtnActiveFalse = props.changeBtnActiveFalse;
 
-  const [totalQuality, setTotalQuality] = useState();
-  const [grade, setGrade] = useState();
-  const [qualityState, setQualityState] = useState({});
   const [score, setScore] = useState({});
-  const tableName = "IPHONE_TBL";
-  const [qualityList, setQualityList] = useState([]);
+  const [tableName, setTableName] = useState("MACBOOK_TBL");
   const [image, setImage] = useState({});
+  const [qualityState, setQualityState] = useState({});
+  const [qualityList, setQualityList] = useState([]);
 
-  const handleQualityChange = (part, value) => {
+  useEffect(() => {
+    if (Object.keys(score).length === qualityList.length) {
+      changeBtnActiveTrue();
+    } else {
+      changeBtnActiveFalse();
+    }
+  }, [Object.keys(score).length]);
+
+  // 품질목록 선택할때마다 도는 함수
+  const handleQualityChange = (part, value, index_) => {
     const item = qualityList.find((item) => item.part === part);
 
     const index = qualityList
@@ -27,12 +44,20 @@ const ProductQualityInsert = (props) => {
       : "default";
 
     // console.log(index); // 선택된 품질에 해당하는 인덱스 값을 설정합니다.
-    console.log(imageName);
+
+    // setQualityHistory((prev) => {
+    //   ...prev,
+    //    [part]: imageName,
+    // })
 
     setScore((prevScores) => ({
       ...prevScores,
       [part]: index,
     }));
+
+    const obj = { part: part, value: value };
+    partOrder[index_] = obj;
+    setPartOrder(partOrder);
 
     setQualityState((prev) => ({
       ...prev,
@@ -48,44 +73,22 @@ const ProductQualityInsert = (props) => {
     }));
   };
 
+  //품목 선택할때마다 점수 변경
   const calculateTotalScore = () => {
     const s = Object.values(score).reduce((total, num) => total + num + 1, 0);
 
     return s;
   };
 
-  const prevPage = () => {};
-
-  const nextPage = () => {};
-
-  //console.log(score); //{액정: 3, 뒷판&측면: 3, 잔상: 3, 디스플레이: 1}
-  //console.log(qualityState); //{액정: '심각한 파손', 뒷판&측면: '휨', 잔상: '심한 잔상, 백화 3개 이상', 디스플레이: '불량, 멍, 얼룩, 줄'}
-
-  // console.log(Object.keys(score).length);
-  // console.log(qualityList.length);
-
-  //Object.values() 메서드는 객체(obj)의 열거 가능한 속성 값들을 배열로 반환
-  //score 객체가 {액정: 1, 배터리: 2}라면, Object.values(score)는 [1, 2]를 반환
-  //reduce() 메서드는 배열의 각 요소에 대해 주어진 "리듀서(reducer)" 함수를 실행하고, 하나의 결과값을 반환합니다.
-
-  // 이 메서드는 두 개의 인자를 받습니다: 콜백 함수와 초기값입니다.
-  // 콜백 함수는 네 개의 인자를 받을 수 있습니다. 이 예제에서는 첫 번째 인자(total)와 두 번째 인자(num)만 사용합니다.
-  // total은 누산기(accumulator)로, 콜백의 반환값이 누적됩니다. 초기값은 reduce() 메서드의 두 번째 인자로 전달되며, 여기서는 0입니다.
-  // num은 현재 처리되고 있는 배열의 요소입니다.
-  // 콜백 함수의 몸체에서는 total + num을 계산하여, 배열의 모든 요소를 순회하며 누적 합을 구합니다.
-
-  // console.log(calculateTotalScore() / qualityList.length);
-  // console.log(qualityList);
-
-  // if(qualityList.length < calculateTotalScore() < qualityList.length*1.5){
-  //   setGrade('a');
-  // }
-
   useEffect(() => {
-    // console.log(Object.keys(score).length);
-    // console.log(qualityList.length);
-    // console.log(calculateTotalScore());
+    // console.log(qualityHistory);
+    console.log(qualityState);
+    console.log(partOrder);
+    console.log(grade);
+  }, [qualityState]);
 
+  // 품목 선택할때마다 점수 등급 설정
+  useEffect(() => {
     if (calculateTotalScore() / qualityList.length < 1.4) {
       setGrade("A");
     } else if (calculateTotalScore() / qualityList.length < 1.8) {
@@ -96,21 +99,27 @@ const ProductQualityInsert = (props) => {
       setGrade("D");
     }
 
-    console.log(calculateTotalScore() / qualityList.length);
-    console.log(grade);
-    console.log(image);
+    // console.log(calculateTotalScore() / qualityList.length);
+    // console.log(grade);
+    // console.log(image);
   }, [handleQualityChange]);
 
-  useEffect(() => {
-    setTotalQuality(grade);
-  }, [grade]);
-
+  const arr = new Array();
+  // 품질 참조 리스트 불러오기
   useEffect(() => {
     axios
       .get(backServer + "/product/quality/" + tableName)
       .then((res) => {
         // console.log(res.data);
         setQualityList(res.data.data);
+
+        for (let i = 0; i < res.data.data.length; i++) {
+          // console.log(res.data.data[i]);
+          const obj = null;
+          arr.push(obj);
+        }
+
+        setPartOrder(arr);
       })
       .catch((res) => {
         console.log(res);
@@ -153,7 +162,8 @@ const ProductQualityInsert = (props) => {
               value4={arr[3]}
               id4={arr[3] ? item.part + "4" : undefined}
               data={qualityState[item.part]} // 이 부분이 `qualityState` 객체에서 해당 `part`의 상태를 참조합니다.
-              setData={(value) => handleQualityChange(item.part, value)}
+              //value전달
+              setData={(value) => handleQualityChange(item.part, value, index)}
               // 이 부분이 상태를 설정하는 함수를 전달합니다.
               name={item.part}
               // img1={
@@ -185,8 +195,8 @@ const ProductQualityInsert = (props) => {
             id3="score3"
             id4="score4"
             name="score"
-            data={totalQuality}
-            setData={setTotalQuality}
+            data={grade}
+            setData={setGrade}
             selectedGrade={grade} // 현재 선택된 grade를 전달
           ></QualitySelectInputWrap2>
         ) : (

@@ -1,6 +1,7 @@
 package kr.or.iei.admin.model.service;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,20 @@ public class AdminService {
 		map.put("pi", pi);
 		map.put("totalCount", totalCount);
 		return map;
+	}
+
+
+    @Transactional
+    public int changeIntoHide(HashMap<String, Object> checkedObject) {
+        List<Object> values = new ArrayList(checkedObject.values());
+        return adminDao.updateHide(values);
+    }
+
+
+    @Transactional
+	public int changeIntoUnHide(HashMap<String, Object> checkedObject) {
+        List<Object> values = new ArrayList(checkedObject.values());
+		return adminDao.updateUnHide(values);
 	}
 }
 

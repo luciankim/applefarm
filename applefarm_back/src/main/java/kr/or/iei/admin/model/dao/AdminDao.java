@@ -19,6 +19,8 @@ public interface AdminDao {
 	int updateRejectTrade(Refund refund);
 	int productTotalCount();
 	List selectProductList(AdminProduct ap);
+	int updateHide(List<Object> values);
+	int updateUnHide(List<Object> values);
 
 
 }

@@ -9,7 +9,7 @@
 }
 .productTab {
   width: 100%;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid var(--line_01);
 }
 .productTab > li {
   float: left;
@@ -30,7 +30,7 @@
   border-left-width: 1px;
 }
 .productTab > li.active-productTab {
-  border: 2px solid #000;
+  border: 2px solid var(--line_01);
   border-bottom: none;
   height: 62px;
   margin-bottom: -2px;

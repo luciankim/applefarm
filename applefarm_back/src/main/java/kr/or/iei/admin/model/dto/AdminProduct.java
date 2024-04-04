@@ -51,6 +51,7 @@ public class AdminProduct {
 	private String productCharge;
 	private String productThumbnail;
 	private String productSummary;
+	private String tableName;
 
 	//회원테이블
 	private String memberName;

@@ -37,8 +37,8 @@ const AdminRefund = () => {
       <div className="mypage-current-title">
         <p className="admin-current-p">환불관리</p>
       </div>
-      <div className="member-like-tbl-box">
-        <table>
+      <div className="member-like-tbl-box" id="member-like-tbl-box">
+        <table className="admin-product-tbl">
           <thead>
             <tr>
               <th colSpan={2} width="25%">

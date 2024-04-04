@@ -93,11 +93,13 @@ const ProductChart = (props) => {
   return (
     <div className="productChart">
       <div className="productChart-title">시세</div>
-      <ProductTab
-        productTab={term}
-        changeTab={changeChartTab}
-        tabNameArr={termArr}
-      />
+      <div className="productChart-tab">
+        <ProductTab
+          productTab={term}
+          changeTab={changeChartTab}
+          tabNameArr={termArr}
+        />
+      </div>
       <div className="productChart-content">{renderLineChart}</div>
     </div>
   );
