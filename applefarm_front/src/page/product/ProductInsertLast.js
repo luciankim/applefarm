@@ -14,7 +14,7 @@ const ProductInsertLast = (props) => {
   const content = props.content;
   const setContent = props.setContent;
   const price = props.price;
-  const setPrice = props.setPrice;  
+  const setPrice = props.setPrice;
   const file = props.file;
   const setFile = props.setFile;
   const thumbnail = props.thumbnail;
@@ -22,12 +22,13 @@ const ProductInsertLast = (props) => {
 
   const backServer = process.env.REACT_WEB_BACK_SERVER;
 
-  const insert = props.insert;
-
   const grade = props.grade;
   const setGrade = props.setGrade;
   const partOrder = props.partOrder;
   const setPartOrder = props.setPartOrder;
+
+  const changeBtnActiveTrue = props.changeBtnActiveTrue;
+  const changeBtnActiveFalse = props.changeBtnActiveFalse;
 
   //화면 출력용
   const [fileList, setFileList] = useState([]); //이미지 미리보기
@@ -35,21 +36,18 @@ const ProductInsertLast = (props) => {
 
   const writeBtn = () => {
     if (title && content && price && file && thumbnail) {
-      console.log("제목: ", title); //필수
-      console.log("내용: ", content);
-      console.log("가격: ", price);
-      console.log("파일: ", file);
-      console.log("대표이미지: ", thumbnail);
-      console.log(grade);
-      console.log(partOrder);
-      console.log("등록 완료");
-
-      axios.post()
+      axios.post();
     }
-    
   };
 
- 
+  //버튼 조건문
+  useEffect(() => {
+    if (title && content && price && file && thumbnail) {
+      changeBtnActiveTrue();
+    } else {
+      changeBtnActiveFalse();
+    }
+  }, [title, content, price, file, thumbnail]);
 
   return (
     <div className="insert-last-write-wrap">

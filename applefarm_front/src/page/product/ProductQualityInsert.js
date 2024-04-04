@@ -13,6 +13,8 @@ const ProductQualityInsert = (props) => {
   const setGrade = props.setGrade;
   const partOrder = props.partOrder;
   const setPartOrder = props.setPartOrder;
+  const changeBtnActiveTrue = props.changeBtnActiveTrue;
+  const changeBtnActiveFalse = props.changeBtnActiveFalse;
 
   const [score, setScore] = useState({});
   const [tableName, setTableName] = useState("MACBOOK_TBL");
@@ -20,7 +22,13 @@ const ProductQualityInsert = (props) => {
   const [qualityState, setQualityState] = useState({});
   const [qualityList, setQualityList] = useState([]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (Object.keys(score).length === qualityList.length) {
+      changeBtnActiveTrue();
+    } else {
+      changeBtnActiveFalse();
+    }
+  }, [Object.keys(score).length]);
 
   // 품질목록 선택할때마다 도는 함수
   const handleQualityChange = (part, value, index_) => {
