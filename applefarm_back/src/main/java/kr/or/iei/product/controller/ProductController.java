@@ -78,7 +78,6 @@ public class ProductController {
 	
 	@PostMapping
 	public ResponseEntity<ResponseDTO> insertProduct(@ModelAttribute Product product,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println(1);
 		//회원번호
 		product.setMemberNo(memberNo);
 		
