@@ -50,7 +50,7 @@ const ProductChart = (props) => {
   const renderLineChart = (
     <LineChart
       width={1080}
-      height={700}
+      height={600}
       data={data}
       margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
     >
@@ -94,11 +94,13 @@ const ProductChart = (props) => {
     <div className="productChart">
       <div className="productChart-title">시세</div>
       <div className="productChart-tab">
+        {/*
         <ProductTab
           productTab={term}
           changeTab={changeChartTab}
           tabNameArr={termArr}
         />
+        */}
       </div>
       <div className="productChart-content">{renderLineChart}</div>
     </div>

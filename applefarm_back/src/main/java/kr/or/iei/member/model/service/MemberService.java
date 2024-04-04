@@ -234,7 +234,9 @@ public class MemberService {
 		public int deleteLike(int likeNo) {
 			return memberDao.deleteLike(likeNo);
 		}
-		
+		public List allAddress(int memberNo) {
+			return memberDao.selectAddress(memberNo);
+		}
 		
 		public Member selectNo(int memberNo) {
 			
