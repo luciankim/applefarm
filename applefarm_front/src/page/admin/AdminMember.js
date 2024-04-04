@@ -100,7 +100,7 @@ const MemberItem = (props) => {
       <td>{member.sellerScore}</td>
       <td>{member.sellerGrade}</td>
       <td>{member.enrollDate}</td>
-      <td>
+      <td className="member-td">
         <FormControl sx={{ m: 1 }}>
           <Select value={memberGrade} onChange={changeGrade}>
             <MenuItem value={1}>사용자</MenuItem>
