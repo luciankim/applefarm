@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./productMain.css";
 import axios from "axios";
-import {
-  PswRadio,
-  PswRadioQuality,
-  selectedProduct,
-} from "../../component/FormFrm";
+import { PswRadio, PswRadioQuality } from "../../component/FormFrm";
 import ProductSummary from "./ProductSummary";
 
 const ProductCategory = (props) => {
@@ -48,6 +44,10 @@ const ProductCategory = (props) => {
     productQuality,
     setProductQuality,
     selectedProduct,
+
+    changeBtnActiveTrue,
+    changeBtnActiveFalse,
+    pip,
   } = props;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -230,6 +230,98 @@ const ProductCategory = (props) => {
     }
   }, [selectedCategory]);
 
+  //ProductInsert.js에서 "품질선택"으로 넘어가기 위한 조건 ->changeBtnActive
+  const productArr = [
+    "iPhone",
+    "MacBook Pro",
+    "MacBook Air",
+    "iPad Pro 12.9",
+    "iPad Pro 11",
+    "iPad Air",
+    "iPad Mini",
+    "iPad",
+    "Apple Watch Ultra",
+    "Apple Watch Series",
+    "Apple Watch SE",
+    "AirPods Max",
+    "AirPods Pro",
+    "AirPods",
+  ];
+  useEffect(() => {
+    if (pip) {
+      //pip가 notundefined이거나 notnull일때. 즉 pip가 true일때. 즉 productInsert.js에서 넘어왔을 때.
+      if (productArr.indexOf(selectedProduct.productLine) >= 11) {
+        //에어팟
+        if (selectedProduct.productColor && selectedProduct.productCharge) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 8) {
+        //애플워치
+        if (
+          selectedProduct.productColor &&
+          selectedProduct.productSize &&
+          selectedProduct.productConnectivity
+        ) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 3) {
+        //아이패드
+        if (
+          selectedProduct.productColor &&
+          selectedProduct.productStorage &&
+          selectedProduct.productConnectivity
+        ) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 1) {
+        //맥북
+        //2018~2020년
+        if (
+          selectedProduct.productGen === "2018년" ||
+          selectedProduct.productGen === "2019년" ||
+          selectedProduct.productGen === "2020년"
+        ) {
+          if (
+            selectedProduct.productColor &&
+            selectedProduct.productStorage &&
+            selectedProduct.productMemory &&
+            selectedProduct.productCpu &&
+            selectedProduct.productGpu
+          ) {
+            changeBtnActiveTrue();
+          } else {
+            changeBtnActiveFalse();
+          }
+          //M1이후
+        } else if (
+          selectedProduct.productColor &&
+          selectedProduct.productStorage &&
+          selectedProduct.productMemory &&
+          selectedProduct.productChip
+        ) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 0) {
+        //아이폰
+        if (selectedProduct.productColor && selectedProduct.productStorage) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else {
+        changeBtnActiveFalse();
+      }
+    }
+  }, [selectedProduct]);
+
   return (
     <div className="productCategory-wrap">
       {/*좌측 영역*/}
@@ -365,7 +457,7 @@ const ProductCategory = (props) => {
             table={table}
           />
         }
-        {selectedCategory ? (
+        {selectedCategory && !pip ? (
           <ArrMap //ul태그
             arr={["A", "B", "C", "D"]}
             name="quality"

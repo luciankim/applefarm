@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+
 import "./productInsert.css";
 import ReactQuill from "react-quill";
 import { Button1 } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
+
 
 const ProductInsertLastFrm = (props) => {
   //정의
@@ -18,7 +20,6 @@ const ProductInsertLastFrm = (props) => {
   const setPrice = props.setPrice;
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
-
   const file = props.file;
   const setFile = props.setFile;
 
@@ -95,7 +96,17 @@ const ProductInsertLastFrm = (props) => {
       const arr = fileArray.map((file) => file.name);
       setFileList(arr); // 파일 이름 목록 상태 업데이트
     }
+    console.log("changeFile종료");
   };
+
+  //filePreviews 상태가 변경될 때마다
+  //(즉, 새로운 파일 미리보기가 생성될 때마다) 원하는 함수를 호출
+  useEffect(() => {
+    console.log("유즈이펙트");
+    if (filePreviews.length > 0) {
+      handleImageSelect(filePreviews[0]);
+    }
+  }, [filePreviews]);
 
   const handleImageSelect = (selectedPreview) => {
     setSelectedImage(selectedPreview.dataUrl); // 선택된 이미지의 Data URL을 상태에 저장
@@ -123,7 +134,7 @@ const ProductInsertLastFrm = (props) => {
   // }, [thumbnail]);
 
   useEffect(() => {
-    console.log(selectedImage);
+    // console.log(selectedImage);
   }, [handleImageSelect]);
 
   return (
@@ -194,8 +205,7 @@ const ProductInsertLastFrm = (props) => {
           <tr style={{ height: "100px" }}>
             <th>사진등록</th>
             <td className="thumbnail-area">
-              <input type="file" onChange={changeFile} multiple id="upload1"/>
-            
+              <input type="file" onChange={changeFile} multiple id="upload1" />
             </td>
           </tr>
           <tr style={{ height: "200px" }}>
@@ -207,8 +217,12 @@ const ProductInsertLastFrm = (props) => {
                     <img
                       src={preview.dataUrl}
                       alt="Preview"
-                      className={`file-preview-image ${selectedImage === preview.dataUrl ? "selected-image" : ""}`}
-                      
+                      // className={`file-preview-image ${selectedImage === preview.dataUrl ? "selected-image" : ""}`}
+                      className={
+                        selectedImage === preview.dataUrl
+                          ? "file-preview-image selected-image"
+                          : "file-preview-image"
+                      }
                       onClick={() => handleImageSelect(preview)}
                     />
                   </div>
