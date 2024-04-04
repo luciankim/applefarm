@@ -172,24 +172,8 @@
 		member_No=#{memberNo}
 	</select>
 
-	<select id="selectMemberList" resultType="member">
-		SELECT * FROM
-		(SELECT
-		ROWNUM AS RNUM, M.* FROM
-		(SELECT
-		MEMBER_NO,
-		MEMBER_NAME,
-		MEMBER_NICKNAME,
-		MEMBER_PHONE,
-		MEMBER_ID,
-		MEMBER_GRADE,
-		SELLER_SCORE,
-		SELLER_GRADE,
-		MEMBER_BLACK_TIME,
-		TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
-		FROM MEMBER_TBL ORDER
-		BY 1)M)
-		WHERE RNUM BETWEEN #{start} AND #{end}
+	<select id="selectBlackMemberCheckList" resultType="member">
+		SELECT * FROM MEMBER_TBL where member_grade =3 
 	</select>
 
 	<update id="changeMemberGrade">
@@ -210,7 +194,7 @@
 
 	<update id="updateBlackMemberGrade">
 		update member_tbl
-		set member_grade = #{memberGrade} where member_no =#{memberNo}
+		set member_grade = #{memberGrade}, member_black_time=#{memberBlackTime} where member_no =#{memberNo}
 	</update>
 	
 	<select id="OneMemberNo" resultType="int">
@@ -228,4 +212,7 @@
 	</select>
 	
 
+	<select id="selectMemberList" resultType="member">
+		select * from member_tbl
+	</select>
 </mapper>

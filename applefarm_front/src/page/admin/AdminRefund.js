@@ -15,7 +15,7 @@ const AdminRefund = () => {
     { value: 1, label: "거절" },
     { value: 2, label: "승인" },
   ];
-  const [selectedValue, setSelectedValue] = useState(0);
+  const [selectedValue, setSelectedValue] = useState(3);
 
   const selectChange = (event) => {
     setSelectedValue(event.target.value);
@@ -52,7 +52,7 @@ const AdminRefund = () => {
         <p className="admin-current-p">환불관리</p>
       </div>
       <div className="member-like-tbl-box" id="member-like-tbl-box">
-        <table className="admin-product-tbl">
+        <table className="admin-tbl">
           <thead>
             <tr>
               <th colSpan={2} width="25%">

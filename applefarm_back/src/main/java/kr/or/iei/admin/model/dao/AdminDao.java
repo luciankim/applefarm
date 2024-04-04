@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
 import kr.or.iei.admin.model.dto.Refund;
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -21,6 +22,10 @@ public interface AdminDao {
 	List selectProductList(AdminProduct ap);
 	int updateHide(List<Object> values);
 	int updateUnHide(List<Object> values);
+	List selectReportList(Report rp);
+	int changeReportStatus(Report report);
+	int hidePost(Report report);
+	int blackMember(Report report);
 
 
 }

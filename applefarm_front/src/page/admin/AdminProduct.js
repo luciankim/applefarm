@@ -195,7 +195,7 @@ const AdminProduct = () => {
         </div>
       </div>
       <div className="member-like-tbl-box" id="member-like-tbl-box">
-        <table className="admin-product-tbl">
+        <table className="admin-tbl">
           <thead>
             <tr>
               <th width="15%">
