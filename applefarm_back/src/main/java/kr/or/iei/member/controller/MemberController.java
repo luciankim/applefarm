@@ -233,7 +233,7 @@ public class MemberController {
 		@ApiResponse(responseCode = "200", description = "응답 data 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생"),
 	})
-	@GetMapping(value = "/addressList/{reqPage}")
+	@GetMapping(value = "/address/{reqPage}")
 	public ResponseEntity<ResponseDTO> selectAddress(@RequestAttribute int memberNo,@PathVariable int reqPage){
 		Map map = memberService.selectAddress(memberNo,reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
@@ -299,7 +299,7 @@ public class MemberController {
 		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})
-	@GetMapping(value = "/likeList")
+	@GetMapping(value = "/like")
 	public ResponseEntity<ResponseDTO> selectLikeList(@RequestAttribute int memberNo){
 		List list = memberService.selectLike(memberNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
@@ -322,17 +322,20 @@ public class MemberController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
-	@Operation(summary = "기본배송지 조회",description = "기본배송지만 조회")
+	
+	@Operation(summary = "배송지 조회",description = "기본배송지+전체배송지 리스트 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 확인"),
 		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
 	})
 	@GetMapping(value = "/basicAddress")
 	public ResponseEntity<ResponseDTO> basicAddress(@RequestAttribute int memberNo){
+		
 		Address address= memberService.basicAddress(memberNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", address);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
+	
 	@Operation(summary = "전체배송지 조회",description = "기본배송지 최우선 순으로 전체 배송지 리스트 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),

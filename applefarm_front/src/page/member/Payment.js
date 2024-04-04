@@ -1,6 +1,6 @@
 import { Select, stepLabelClasses } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AddressModal, DelModal, RequestModal } from "./Modal";
@@ -23,7 +23,6 @@ const Payment = (props) => {
   const [deliveryAddressDetail, setDeliveryAddressDetail] = useState("");
   const [deliveryAddressName, setDeliveryAddressName] = useState("");
   const [deliveryAddressPhone, setDeliveryAddressPhone] = useState("");
-  const [deliveryAddressRequest, setDeliveryAddressRequest] = useState("");
 
   if (!isLogin) {
     Swal.fire("로그인 후 이용 가능합니다.")
@@ -32,7 +31,7 @@ const Payment = (props) => {
       })
       .catch(() => {});
   }
-  console.log(product);
+  //console.log(product);
   if (product === null) {
     Swal.fire("상품 정보가 없습니다.")
       .then(() => {
@@ -54,24 +53,33 @@ const Payment = (props) => {
           setDeliveryZipcode(data.zipcode);
           setDeliveryAddress(data.address);
           setDeliveryAddressDetail(data.addressDetail);
+          setDeliveryAddressNo(data.addressNo);
         }
       })
       .catch((res) => {
         console.log(res.data);
       });
   }, []);
+  /*
   useEffect(() => {
     console.log("주소록");
     console.log(addressList);
-  }, [setAddressList]);
+  }, [setAddressList]);*/
   useEffect(() => {
     //전체 주소록 불러오기
     axios
       .get(backServer + "/member/allAddress")
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         if (res.data.message === "success") {
           setAddressList(res.data.data);
+          /*
+          const data = res.data.data[0];
+          setDeliveryAddressName(data.addressName);
+          setDeliveryAddressPhone(data.addressPhone);
+          setDeliveryZipcode(data.zipcode);
+          setDeliveryAddress(data.address);
+          setDeliveryAddressDetail(data.addressDetail);*/
         }
       })
       .catch((res) => {
@@ -109,122 +117,63 @@ const Payment = (props) => {
     setOpenRequest(true);
   };
 
-  //const [options, setOptions] = useState(["요청사항 없음", "부재중"]);
-
-  //결제 시 like_tbl에 있을 시 delete, trade_tbl에 insert
+  const [selectOption, setSelectOption] = useState("");
+  const [freeMessage, setFreeMessage] = useState("");
+  const [deliveryAddressRequest, setDeliveryAddressRequest] =
+    useState("요청사항 없음");
+  const [options, setOptions] = useState([
+    { text: "요청사항 없음", active: true },
+    { text: "문 앞에 놓아주세요", active: false },
+    { text: "경비실에 맡겨 주세요", active: false },
+    { text: "파손 위험 상품입니다. 배송 시 주의해주세요", active: false },
+    { text: "직접 입력", active: false },
+  ]);
+  //console.log(product);
+  //결제 시 like_tbl에 있을 시 delete(안없애도 될 것 같기도=>이미 거래 상태면 좋아요 조회 X상태 ), trade_tbl에 insert
   //결제하기
-  //
+  const buyProduct = () => {
+    console.log("구매하기");
+  };
   return (
-    <div className="payment-wrap">
-      <div className="payment-title">주문 / 결제</div>
-      <div className="payment-content">
-        <div className="payment-info-wrap">
-          <div className="payment-sub-title">상품 정보</div>
-          <div className="payment-info">
-            <div className="payment-product">
-              <div className="payment-img-box">
-                <img src={product.productThumbnail} />
-              </div>
-              <div className="payment-product-detail">
-                <div>
-                  <span>{product.memberNickName}</span>
-                  님의 product
-                </div>
-                <div>
-                  <span>{product.productSummary}</span>
-                  <span>{product.productQuality}급</span>
-                </div>
-              </div>
-              <div>
-                <div>{product.productPrice.toLocaleString()}원</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="payment-info-wrap">
-          <div className="payment-sub-title">
-            배송 주소
-            <div className="payment-adress-plus" onClick={plusAddress}>
-              {" "}
-              + 새 주소 추가
-            </div>
-            {modalOpen && (
-              <AddressModal
-                modalOpen={modalOpen}
-                setModalOpen={setModalOpen}
-                status={status}
-                setStatus={setStatus}
-                setDeliveryAddress={setDeliveryAddress}
-                setDeliveryAddressDetail={setDeliveryAddressDetail}
-                setDeliveryAddressName={setDeliveryAddressName}
-                setDeliveryAddressPhone={setDeliveryAddressPhone}
-                setDeliveryZipcode={setDeliveryZipcode}
-                setDeliveryAddressNo={setDeliveryAddressNo}
-                delivery="deliveryPlus"
-              />
-            )}
-          </div>
-          <div className="payment-info">
-            <div className="payment-delivery">
-              {deliveryAddress === "" ? (
-                ""
-              ) : (
-                <>
-                  <div className="payment-delivery-detail">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>받는분</td>
-                          <td colSpan={3}>{deliveryAddressName}</td>
-                        </tr>
-                        <tr>
-                          <td>연락처</td>
-                          <td colSpan={3}>{deliveryAddressPhone}</td>
-                        </tr>
-                        <tr>
-                          <td>배송 주소</td>
-                          <td>({deliveryZipcode})</td>
-                          <td>{deliveryAddress}</td>
-                          <td>{deliveryAddressDetail}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+    <>
+      {product !== null ? (
+        <div className="payment-wrap">
+          <div className="payment-title">주문 / 결제</div>
+          <div className="payment-content">
+            <div className="payment-info-wrap">
+              <div className="payment-sub-title">상품 정보</div>
+              <div className="payment-info">
+                <div className="payment-product">
+                  <div className="payment-img-box">
+                    <img src={product.productThumbnail} />
+                  </div>
+                  <div className="payment-product-detail">
+                    <div>
+                      <span>{product.memberNickName}</span>
+                      님의 product
+                    </div>
+                    <div>
+                      <span>{product.productSummary}</span>
+                      <span>{product.productQuality}급</span>
+                    </div>
                   </div>
                   <div>
-                    <button
-                      className="delivery-address-btn"
-                      onClick={addressShow}
-                    >
-                      주소록
-                    </button>
+                    <div>{product.productPrice.toLocaleString()}원</div>
                   </div>
-                </>
-              )}
+                </div>
+              </div>
             </div>
-            <div className="delivery-request-btn-box">
-              <button className="delivery-request-btn" onClick={requestModal}>
-                {deliveryAddressRequest === ""
-                  ? "요청사항 없음"
-                  : deliveryAddressRequest}
-              </button>
-              <span className="material-icons delivery-request-icon">
-                chevron_right
-              </span>
-            </div>
-            {openRequest && (
-              <RequestModal
-                setOpenRequest={setOpenRequest}
-                openRequest={openRequest}
-              />
-            )}
-          </div>
-          {openAddress && (
-            <div className="payment-address-list">
-              {addressList.map((item, index) => {
-                return (
-                  <AddressItem
-                    key={"address" + index}
-                    item={item}
+            <div className="payment-info-wrap">
+              <div className="payment-sub-title">
+                배송 주소
+                <div className="payment-adress-plus" onClick={plusAddress}>
+                  {" "}
+                  + 새 주소 추가
+                </div>
+                {modalOpen && (
+                  <AddressModal
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
                     status={status}
                     setStatus={setStatus}
                     setDeliveryAddress={setDeliveryAddress}
@@ -233,33 +182,124 @@ const Payment = (props) => {
                     setDeliveryAddressPhone={setDeliveryAddressPhone}
                     setDeliveryZipcode={setDeliveryZipcode}
                     setDeliveryAddressNo={setDeliveryAddressNo}
-                    setOpenAddress={setOpenAddress}
-                    openAddress={openAddress}
+                    delivery="deliveryPlus"
                   />
-                );
-              })}
+                )}
+              </div>
+              <div className="payment-info">
+                {deliveryAddress === "" ? (
+                  ""
+                ) : (
+                  <>
+                    <div className="payment-delivery">
+                      <div className="payment-delivery-detail">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>받는분</td>
+                              <td colSpan={3}>{deliveryAddressName}</td>
+                            </tr>
+                            <tr>
+                              <td>연락처</td>
+                              <td colSpan={3}>{deliveryAddressPhone}</td>
+                            </tr>
+                            <tr>
+                              <td>배송 주소</td>
+                              <td>({deliveryZipcode})</td>
+                              <td>{deliveryAddress}</td>
+                              <td>{deliveryAddressDetail}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <button
+                          className="delivery-address-btn"
+                          onClick={addressShow}
+                        >
+                          주소록
+                        </button>
+                      </div>
+                    </div>
+                    <div className="delivery-request-btn-box">
+                      <button
+                        className="delivery-request-btn"
+                        onClick={requestModal}
+                      >
+                        {deliveryAddressRequest}
+                      </button>
+                      <span className="material-icons delivery-request-icon">
+                        chevron_right
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {openRequest && (
+                  <RequestModal
+                    setOpenRequest={setOpenRequest}
+                    openRequest={openRequest}
+                    options={options}
+                    setOptions={setOptions}
+                    deliveryAddressRequest={deliveryAddressRequest}
+                    setDeliveryAddressRequest={setDeliveryAddressRequest}
+                    freeMessage={freeMessage}
+                    setFreeMessage={setFreeMessage}
+                    selectOption={selectOption}
+                    setSelectOption={setSelectOption}
+                  />
+                )}
+              </div>
+              {openAddress && (
+                <div className="payment-address-list">
+                  {addressList.map((item, index) => {
+                    return (
+                      <AddressItem
+                        key={"address" + index}
+                        item={item}
+                        status={status}
+                        setStatus={setStatus}
+                        setDeliveryAddress={setDeliveryAddress}
+                        setDeliveryAddressDetail={setDeliveryAddressDetail}
+                        setDeliveryAddressName={setDeliveryAddressName}
+                        setDeliveryAddressPhone={setDeliveryAddressPhone}
+                        setDeliveryZipcode={setDeliveryZipcode}
+                        setDeliveryAddressNo={setDeliveryAddressNo}
+                        setOpenAddress={setOpenAddress}
+                        openAddress={openAddress}
+                        deliveryAddressNo={deliveryAddressNo}
+                      />
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          )}
+            <div className="payment-agree-message">
+              <input
+                type="checkbox"
+                id="agreeChk"
+                name="agreeChk"
+                onChange={agreeFunc}
+              ></input>
+              <label htmlFor="agreeChk">
+                단순변심으로 인한 환불은 불가합니다.
+              </label>
+            </div>
+            <div className="payment-purchase-btn-box">
+              <button
+                className="payment-purchase-btn"
+                disabled={agreeChk || deliveryAddress === ""}
+                onClick={buyProduct}
+              >
+                결제하기
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="payment-agree-message">
-          <input
-            type="checkbox"
-            id="agreeChk"
-            name="agreeChk"
-            onChange={agreeFunc}
-          ></input>
-          <label htmlFor="agreeChk">단순변심으로 인한 환불은 불가합니다.</label>
-        </div>
-        <div className="payment-purchase-btn-box">
-          <button
-            className="payment-purchase-btn"
-            disabled={agreeChk || deliveryAddress === ""}
-          >
-            결제하기
-          </button>
-        </div>
-      </div>
-    </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 const AddressItem = (props) => {
@@ -273,39 +313,39 @@ const AddressItem = (props) => {
     setDeliveryAddressPhone,
     setDeliveryZipcode,
     setDeliveryAddressNo,
+    deliveryAddressNo,
     setOpenAddress,
     openAddress,
   } = props;
-  const [selected, setSelected] = useState();
-
-  const handleRadioClick = (e) => {
-    setSelected(e.target.value);
-    setDeliveryAddress(item.address);
-    setDeliveryAddressDetail(item.addressDetail);
-    setDeliveryAddressName(item.addressName);
-    setDeliveryZipcode(item.zipcode);
-    setDeliveryAddressPhone(item.addressPhone);
-    setOpenAddress(!openAddress);
-  };
-
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
+  //const [selected, setSelected] = useState();
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [delModalOpen, setDelModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
-  const [addressNo, setAddressNo] = useState(item.addressNo);
-  const [addressName, setAddressName] = useState(item.addressName);
-  const [addressPhone, setAddressPhone] = useState(item.addressPhone);
-  const [zipcode, setZipcode] = useState(item.zipcode);
-  const [address, setAddress] = useState(item.address);
-  const [addressDetail, setAddressDetail] = useState(item.addressDetail);
-  const [addressDefault, setAddressDefault] = useState(item.addressDefault);
+  const [addressNo, setAddressNo] = useState("");
+  /*
+  const [addressName, setAddressName] = useState("");
+  const [addressPhone, setAddressPhone] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [addressDefault, setAddressDefault] = useState("");*/
   const whatModal = "update";
 
+  const handleRadioClick = (e) => {
+    console.log(e.target.value);
+    setAddressNo(e.target.value);
+    //setSelected(e.target.value);
+    setDeliveryAddressNo(item.addressNo);
+    setDeliveryAddress(item.address);
+    setDeliveryAddressDetail(item.addressDetail);
+    setDeliveryAddressName(item.addressName);
+    setDeliveryZipcode(item.zipcode);
+    setDeliveryAddressPhone(item.addressPhone);
+    //setOpenAddress(!openAddress);
+  };
   /*
   useEffect(() => {
     setAddressNo(item.addressNo);
@@ -317,9 +357,6 @@ const AddressItem = (props) => {
     setAddressDefault(item.addressDefault);
   }, [item]);
 */
-
-  useEffect(() => {});
-
   const updatModalFun = () => {
     setUpdateModalOpen(true);
   };
@@ -341,22 +378,17 @@ const AddressItem = (props) => {
       });
   };
   return (
-    <>
-      <div
-        className={
-          selected === item.addressNo
-            ? "address-item address-select"
-            : "address-item"
-        }
-      >
-        <input
-          className="address-item-radio"
-          type="radio"
-          name="addressItem"
-          id={item.addressNo}
-          value={item.addressNo}
-          onChange={handleRadioClick}
-        />
+    <div className="address-item-wrap">
+      <input
+        className="address-item-radio"
+        type="radio"
+        name="address"
+        id={item.addressNo}
+        defaultValue={item.addressNo}
+        onChange={handleRadioClick}
+        checked={deliveryAddressNo === item.addressNo}
+      />
+      <div className="address-item">
         <label htmlFor={item.addressNo}>
           <div className="payment-info-address">
             <div className="address-info-name">
@@ -419,7 +451,7 @@ const AddressItem = (props) => {
           delivery="deliveryUpdate"
         />
       )}
-    </>
+    </div>
   );
 };
 export default Payment;
