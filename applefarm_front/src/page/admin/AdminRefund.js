@@ -3,10 +3,24 @@ import { Button1, Button2, Select } from "../../component/FormFrm";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Pagination from "../../component/Pagination";
 
 const AdminRefund = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
   const [refundList, setRefundList] = useState([]); //환불 리스트 데이터 상태변수: 컴포넌트 렌더링 시 환불 리스트를 저장하고 화면에 표시
+
+  const options = [
+    { value: 3, label: "전체" },
+    { value: 0, label: "진행중" },
+    { value: 1, label: "거절" },
+    { value: 2, label: "승인" },
+  ];
+  const [selectedValue, setSelectedValue] = useState(0);
+
+  const selectChange = (event) => {
+    setSelectedValue(event.target.value);
+    console.log("환불구분:", event.target.value);
+  };
 
   //페이지 네비게이션
   const [pageInfo, setPageInfo] = useState({});
@@ -18,9 +32,9 @@ const AdminRefund = () => {
   //환불 리스트 조회하기
   useEffect(() => {
     axios
-      .get(backServer + "/admin/manageRefund/" + reqPage)
+      .get(backServer + "/admin/manageRefund/" + reqPage + "/" + selectedValue)
       .then((res) => {
-        console.log("환불내역", res.data.data);
+        console.log("환불내역", res.data.data.refundList);
 
         //페이지 관련 정보 수신 및 Set 처리
         setRefundList(res.data.data.refundList);
@@ -30,7 +44,7 @@ const AdminRefund = () => {
       .catch((res) => {
         console.log(res);
       });
-  }, []);
+  }, [reqPage, selectedValue]);
 
   return (
     <div className="mypage-current-wrap">
@@ -50,12 +64,11 @@ const AdminRefund = () => {
               <th width="10%">구매일</th>
               <th width="10%">신청일</th>
               <th width="10%">
-                <select onChange={(e) => setFilterStatus(e.target.value)}>
-                  <option value="all">전체</option>
-                  <option value="0">진행중</option>
-                  <option value="1">거절</option>
-                  <option value="2">승인</option>
-                </select>
+                <Select
+                  options={options}
+                  addId="admin-product-select"
+                  changeEvent={selectChange}
+                />
               </th>
               <th width="15%">환불관리</th>
             </tr>
@@ -76,6 +89,13 @@ const AdminRefund = () => {
             })}
           </tbody>
         </table>
+      </div>
+      <div className="admin-page-wrap">
+        <Pagination
+          pageInfo={pageInfo}
+          reqPage={reqPage}
+          setReqPage={setReqPage}
+        />
       </div>
     </div>
   );
@@ -205,7 +225,7 @@ const RefundItem = (props) => {
           <img src={refund.img} />
         </div>
       </td>
-      <td className="likeName-td">{refund.refundReason}</td>
+      <td className="likeName-td">{refund.productSummary}</td>
       <td>{refund.refundReason}</td>
       <td>{refund.sellerNickname}</td>
       <td>{refund.buyerNickname}</td>
