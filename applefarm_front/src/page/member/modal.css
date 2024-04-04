@@ -11,7 +11,9 @@
   justify-content: center;
   align-items: center;
 }
-
+.modal-round {
+  border-radius: 15px;
+}
 .modal-content-wrap {
   background-color: white;
   padding: 20px;
@@ -47,7 +49,7 @@
   cursor: default;
 }
 .modal-title {
-  font-size: 18px;
+  font-size: 17px;
   font-family: ns-b;
   padding: 10px 0px;
 }
@@ -83,7 +85,8 @@
 .zipcode-btn:hover {
   text-shadow: 0px 0px 0px black;
 }
-.address-modal-btn {
+.address-modal-btn,
+.request-btn {
   padding: 10px 15px;
   background-color: #ffffff;
   border: 1px solid #ccc;
@@ -117,4 +120,40 @@
 }
 .address-active {
   background-color: red;
+}
+.address-ok-btn:disabled {
+  background-color: var(--gray_08);
+}
+/*요청사항 모달*/
+.request-message {
+  text-align: left;
+  padding: 10px;
+}
+.request-message > div {
+  font-size: 14px;
+  padding: 15px 10px;
+  cursor: pointer;
+}
+.request-message > div > textarea {
+  margin-top: 8px;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  resize: none;
+  height: 100px;
+}
+.request-message > div > textarea::placeholder {
+  color: #ccc;
+}
+.request-message > div:not(:last-child) {
+  border-bottom: 1px solid var(--gray_07);
+}
+.request-btn {
+  padding: 10px 13px;
+}
+.request-btn:last-child {
+  background-color: var(--main_01);
+  color: white;
 }

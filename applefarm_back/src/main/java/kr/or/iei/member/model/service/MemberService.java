@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
@@ -143,30 +144,6 @@ public class MemberService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("memberList", memberList);
 		map.put("pi", pi);
-
-		// 30초 시간 계산 : 블랙
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-		
-		//블랙 지정 시간 계산
-		for (Member member : memberList) {
-			//LocalDateTime 클래스를 이용한 특정 시간 셈
-			// 문자열을 LocalDateTime으로 파싱
-			String blackTimeString = member.getMemberBlackTime();
-			if (blackTimeString != null) {
-				LocalDateTime blackTime = LocalDateTime.parse(blackTimeString, formatter);
-				LocalDateTime whiteTime = blackTime.plusSeconds(15);
-				if (now.isAfter(whiteTime)) {
-					 member.setMemberGrade(1);
-	                 memberDao.updateBlackMemberGrade(member);
-					
-				} else {
-					System.out.println(member.getMemberName() + " 이용정지");
-				}
-			}
-		}
-
 		return map;
 	}
 
@@ -257,7 +234,9 @@ public class MemberService {
 		public int deleteLike(int likeNo) {
 			return memberDao.deleteLike(likeNo);
 		}
-		
+		public List allAddress(int memberNo) {
+			return memberDao.selectAddress(memberNo);
+		}
 		
 		public Member selectNo(int memberNo) {
 			
@@ -276,6 +255,8 @@ public class MemberService {
 		public Address basicAddress(int memberNo) {
 			return memberDao.selectAddressBasic(memberNo);
 		}
+
+		
 		
 
 

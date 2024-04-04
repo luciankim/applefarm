@@ -32,7 +32,6 @@ public class Refund {
 	private int refundStatus;
 	
 	
-	
 	//Join
 	@Schema(description = "구매자", type="string")
 	private String sellerNickname;
@@ -42,6 +41,15 @@ public class Refund {
 	
 	@Schema(description = "거래일", type="string")
 	private String tradeDate;
+	
+	@Schema(description = "상품요약", type="string")
+	private String productSummary;
+	
+	
+	//Filter
+	@Schema(description = "환불필터", type="int")
+	private int selectedValue;
+
 	
 }
 

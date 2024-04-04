@@ -24,6 +24,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.dto.Refund;
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.admin.model.service.AdminService;
 import kr.or.iei.board.model.service.BoardService;
 import kr.or.iei.member.model.dto.Member;
@@ -48,9 +49,9 @@ public class AdminController {
 	@ApiResponses({ // 응답에 대한 설명
 			@ApiResponse(responseCode = "200", description = "응답 메시지 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@GetMapping(value = "/manageRefund/{reqPage}")
-	public ResponseEntity<ResponseDTO> refundList(@PathVariable int reqPage) {
-		Map map = adminService.selectRefundList(reqPage);
+	@GetMapping(value = "/manageRefund/{reqPage}/{selectedValue}")
+	public ResponseEntity<ResponseDTO> refundList(@PathVariable int reqPage, @PathVariable int selectedValue) {
+		Map map = adminService.selectRefundList(reqPage, selectedValue);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
@@ -137,4 +138,29 @@ public class AdminController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+	
+	@GetMapping(value="/memberReport/{reqPage}/{selectedValue}")
+	public ResponseEntity<ResponseDTO> reportMember(@PathVariable int reqPage, @PathVariable int selectedValue){
+		System.out.println("cont" + selectedValue);
+		Map map = adminService.selectReportList(reqPage, selectedValue);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	
+	@PatchMapping(value = "/reportStatus")
+	public ResponseEntity<ResponseDTO> changeReportStatus(@RequestBody Report report) {
+		System.out.println("allreport" + report);
+		int result = adminService.changeReportStatus(report);
+		if (result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 }
+
+
