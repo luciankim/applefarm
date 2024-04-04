@@ -48,9 +48,9 @@ public class AdminController {
 	@ApiResponses({ // 응답에 대한 설명
 			@ApiResponse(responseCode = "200", description = "응답 메시지 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@GetMapping(value = "/manageRefund/{reqPage}")
-	public ResponseEntity<ResponseDTO> refundList(@PathVariable int reqPage) {
-		Map map = adminService.selectRefundList(reqPage);
+	@GetMapping(value = "/manageRefund/{reqPage}/{selectedValue}")
+	public ResponseEntity<ResponseDTO> refundList(@PathVariable int reqPage, @PathVariable int selectedValue) {
+		Map map = adminService.selectRefundList(reqPage, selectedValue);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
