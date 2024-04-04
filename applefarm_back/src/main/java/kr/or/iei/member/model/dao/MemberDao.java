@@ -71,6 +71,8 @@ public interface MemberDao {
 
 	int deleteLike(int likeNo);
 
+	List<Member> selectBlackMemberCheckList();
+
 
 
 

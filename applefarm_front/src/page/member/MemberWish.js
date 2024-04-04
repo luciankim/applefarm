@@ -13,7 +13,7 @@ const MemberWish = () => {
   //const memberNo = 45; //==> 로그인 구현이후 수정필요
   useEffect(() => {
     axios
-      .get(backServer + "/member/likeList")
+      .get(backServer + "/member/like")
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "success") {

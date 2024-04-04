@@ -34,6 +34,8 @@ const ProductInsert = (props) => {
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
   const [selectedProduct, setSelectedProduct] = useState({}); //객체
+
+  //ProductInsert.js 버전 setSelectedProduct
   useEffect(() => {
     setSelectedProduct({
       productLine: productLine,
@@ -126,16 +128,76 @@ const ProductInsert = (props) => {
       thumbnail &&
       pip === progressArr[progressArr.length - 1]
     ) {
-      /*
+      //partOrder는 따로 post
       const insert = () => {
         //여기에 서버로 가서 insert하는 axios코드
         //navigate("/product/main"); //아직 메인페이지 경로 없음
+
+        const form = new FormData();
+        form.append("productTitle", title);
+        form.append("productExplain", content);
+        form.append("productPrice", price);
+        form.append("productQuality", grade);
+        form.append("productThumbnail", thumbnail);
+        form.append("productSummary", summaryFind());
+
+        for (let i = 0; i < file.length; i++) {
+          form.append("productFile", file[i]);
+        }
       };
-      */
     }
   }, [pip]);
 
-  //박근열
+  //selectedProduct.productSummary 구하기
+  const summaryFind = () => {
+    const summaryQuality = selectedProduct.productQuality + "급";
+    //데이터에 설명 추가
+
+    const summary =
+      selectedProduct.productLine === "iPhone"
+        ? selectedProduct.productModel + " " + summaryQuality
+        : //맥북
+        selectedProduct.productLine === "MacBook Pro" ||
+          selectedProduct.productLine === "MacBook Air"
+        ? selectedProduct.productLine +
+          " " +
+          selectedProduct.productGen +
+          " " +
+          selectedProduct.productModel +
+          " " +
+          summaryQuality
+        : //아이패드
+        selectedProduct.productLine === "iPad Pro 12.9" ||
+          selectedProduct.productLine === "iPad Pro 11" ||
+          selectedProduct.productLine === "iPad Air" ||
+          selectedProduct.productLine === "iPand Mini" ||
+          selectedProduct.productLine === "iPad"
+        ? selectedProduct.productLine +
+          " " +
+          selectedProduct.productGen +
+          " " +
+          summaryQuality
+        : //애플워치
+        selectedProduct.productLine === "Apple Watch Ultra" ||
+          selectedProduct.productLine === "Apple Watch Series" ||
+          selectedProduct.productLine === "Apple Watch SE"
+        ? selectedProduct.productLine +
+          " " +
+          selectedProduct.productGen +
+          " " +
+          summaryQuality
+        : //에어팟
+        selectedProduct.productLine === "AirPods" ||
+          selectedProduct.productLine === "AirPods Pro" ||
+          selectedProduct.productLine === "AirPods Max"
+        ? selectedProduct.productLine +
+          " " +
+          selectedProduct.productGen +
+          " " +
+          summaryQuality
+        : "";
+    return summary;
+  };
 
   return (
     <div className="productInsert-wrap">

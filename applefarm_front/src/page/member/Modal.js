@@ -393,8 +393,20 @@ const AddressModal = (props) => {
   );
 };
 const RequestModal = (props) => {
-  const { setOpenRequest, openRequest } = props;
+  const {
+    setOpenRequest,
+    openRequest,
+    options,
+    setOptions,
+    setDeliveryAddressRequest,
+    deliveryAddressRequest,
+    freeMessage,
+    setFreeMessage,
+    selectOption,
+    setSelectOption,
+  } = props;
   const modalBackground = useRef();
+  const [isFree, setIsFree] = useState(false);
   //모달 닫기
   const closeModal = () => {
     setOpenRequest(false);
@@ -405,7 +417,49 @@ const RequestModal = (props) => {
       setOpenRequest(false);
     }
   };
-  const requestFun = () => {
+  useEffect(() => {
+    const copyOptions = [...options];
+    copyOptions.forEach((item) => {
+      if (item.text === selectOption) {
+        item.active = true;
+        if (selectOption === "직접 입력") {
+          setIsFree(true);
+        }
+      } else {
+        item.active = false;
+      }
+    });
+    setOptions(copyOptions);
+  }, [setOpenRequest]);
+  const changeOption = (index) => {
+    const copyOptions = [...options];
+    copyOptions.forEach((item) => {
+      item.active = false;
+    });
+    copyOptions[index].active = true;
+    if (copyOptions[index].text !== "직접 입력") {
+      setIsFree(false);
+    } else {
+      setIsFree(true);
+    }
+    setSelectOption(copyOptions[index].text);
+    setOptions(copyOptions);
+  };
+  //const [selectOption, setSelectOption] = useState("");
+  //const [freeMessage, setFreeMessage] = useState("");
+  const changeData = (e) => {
+    setFreeMessage(e.target.value);
+  };
+  //적용하기
+  const requestGo = () => {
+    //console.log(freeMessage);
+    //console.log(selectOption);
+    if (selectOption === "직접 입력") {
+      setDeliveryAddressRequest(freeMessage);
+    } else {
+      setDeliveryAddressRequest(selectOption);
+      setFreeMessage("");
+    }
     setOpenRequest(false);
   };
   return (
@@ -420,19 +474,41 @@ const RequestModal = (props) => {
           <div className="modal-content">
             <div className="modal-title">배송 요청사항</div>
             <div className="request-message">
-              <div>요청사항 없음</div>
-              <div>문 앞에 놓아주세요</div>
-              <div>경비실에 맡겨 주세요</div>
-              <div>파손 위험 상품입니다. 배송 시 주의해주세요</div>
-              <div>
-                <div>직접 입력</div>
-                <textarea placeholder="내용을 입력해주세요"></textarea>
+              {options.map((item, index) => {
+                return (
+                  <div key={"option" + index}>
+                    <div
+                      className={item.active ? "request-option" : ""}
+                      onClick={() => {
+                        changeOption(index);
+                      }}
+                    >
+                      {item.text}
+                      {item.active ? (
+                        <span className="material-icons request-chk">
+                          check
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              <div className="free-box">
+                {isFree && (
+                  <textarea
+                    value={freeMessage}
+                    placeholder="내용을 입력해주세요"
+                    onChange={changeData}
+                  ></textarea>
+                )}
               </div>
             </div>
             <button className="request-btn" onClick={closeModal}>
               취소
             </button>
-            <button className="request-btn" onClick={requestFun}>
+            <button className="request-btn" onClick={requestGo}>
               적용하기
             </button>
           </div>
