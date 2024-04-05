@@ -134,6 +134,18 @@ const ProductInsert = (props) => {
     ) {
       //const insert = () => {}
       //partOrder는 따로 post
+
+        //partOrder객체의 각 value값을 key-value쌍으로 변환작업
+        //[{part2 : 'DISPAY',value:'정상'}] -> {DISPLAY : '정상'}
+        //reduce함수(배열요소 순회 함수) - (누적,현제요소,현제요소 인덱스, 호출한배열),(초기값설정 - 여기는 빈 객체로 설정)
+
+        const partObject = partOrder.reduce((acc, item) =>
+        {
+          acc[item.part2] = item.value;
+          return acc;
+        },{}
+        )
+        console.log(partObject);
       
         //여기에 서버로 가서 insert하는 axios코드
         //navigate("/product/main"); //아직 메인페이지 경로 없음
@@ -149,7 +161,6 @@ const ProductInsert = (props) => {
         for (let i = 0; i < file.length; i++) {
           form.append("productFile", file[i]);
         }
-
         form.append("productLine",selectedProduct.productLine);
         form.append("productGen",selectedProduct.productGen);
         form.append("productModel",selectedProduct.productModel);
@@ -167,21 +178,112 @@ const ProductInsert = (props) => {
         form.append("productCharge",selectedProduct.productCharge);
         form.append("tableName",table);
 
-        console.log(form);
-        console.log(1);
+        if(table=="MACBOOK_TBL"){
+          form.append("displayScreen",partObject.DISPLAY_SCREEN);
+          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
+          form.append("burnIn",partObject.BURN_IN);
+          form.append("display",partObject.DISPLAY);
+          form.append("keyboard",partObject.KEYBOARD);
+          form.append("ports",partObject.PORTS);
+          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
+          form.append("wirelessConffectivity",partObject.WIRELESS_CONNECTIVITY);
+          form.append("camera",partObject.CAMERA);
+          form.append("microphone",partObject.MICROPHONE);
+          form.append("speakersAudioJack",partObject.SPEAKERS_AUDIO_JACK);
+          form.append("biometricAuthentication",partObject.BIOMETRIC_AUTHENTICATION);
+          form.append("power",partObject.POWER);
+          form.append("voiceRecording",partObject.VOICE_RECORDING);
+          form.append("trackpad",partObject.TRACKPAD);
+          form.append("operation",partObject.OPERATION);
+        }
+        else if(table=="IPHONE_TBL"){
+          form.append("displayScreen",partObject.DISPLAY_SCREEN);
+          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
+          form.append("burnIn",partObject.BURN_IN);
+          form.append("display",partObject.DISPLAY);
+          form.append("power",partObject.POWER);
+          form.append("camera",partObject.CAMERA);
+          form.append("wifi",partObject.WIFI);
+          form.append("biometricAuthentication",partObject.BIOMETRIC_AUTHENTICATION);
+          form.append("compass",partObject.COMPASS);
+          form.append("voiceRecording",partObject.VOICE_RECORDING);
+        }
+        else if(table=="IPAD_TBL"){
+          form.append("displayScreen",partObject.DISPLAY_SCREEN);
+          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
+          form.append("burnIn",partObject.BURN_IN);
+          form.append("display",partObject.DISPLAY);
+          form.append("keyboard",partObject.KEYBOARD);
+          form.append("ports",partObject.PORTS);
+          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
+          form.append("wirelessConffectivity",partObject.WIRELESS_CONNECTIVITY);
+          form.append("camera",partObject.CAMERA);
+          form.append("microphone",partObject.MICROPHONE);
+          form.append("speakersAudioJack",partObject.SPEAKERS_AUDIO_JACK);
+          form.append("biometricAuthentication",partObject.BIOMETRIC_AUTHENTICATION);
+          form.append("power",partObject.POWER);
+          form.append("voiceRecording",partObject.VOICE_RECORDING);
+          form.append("operation",partObject.OPERATION);
+        }
+        else if(table=="WATCH_TBL"){
+          form.append("displayScreen",partObject.DISPLAY_SCREEN);
+          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
+          form.append("burnIn",partObject.BURN_IN);
+          form.append("display",partObject.DISPLAY);
+          form.append("digitalCrownButton",partObject.DIGITAL_CROWN_BUTTON);
+          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
+          form.append("wirelessConffectivity",partObject.WIRELESS_CONNECTIVITY);
+          form.append("microphone",partObject.MICROPHONE);
+          form.append("speaker",partObject.SPEAKER);
+          form.append("power",partObject.POWER);
+          form.append("voiceRecording",partObject.VOICE_RECORDING);
+          form.append("operation",partObject.OPERATION);
+        }
+        else if(table=="AIRPODS_TBL"){
+          form.append("soundQuality",partObject.SOUND_QUALITY);
+          form.append("connectionStability",partObject.CONNECTION_STABILITY);
+          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
+          form.append("exterior",partObject.EXTERIOR);
+          form.append("charging",partObject.CHARGING);
+          form.append("touchSensor",partObject.TOUCH_SENSOR);
+        }
 
-        axios.post(backServer + "/product",form,{
+        
+
+        
+        //console.log(form);
+
+
+        //테이블에 따라서 품질내역을 요청하는 url이 달라잠
+        //상품품질내역 등록
+        let url;
+        if (table === "IPHONE_TBL"){
+          url = backServer+"/product/iphone";
+        }else if(table === "MACBOOK_TBL"){
+          url = backServer+"/product/macbook";
+        }else if(table === "IPAD_TBL"){
+          url = backServer+"/product/ipad";
+        }else if(table === "WATCH_TBL"){
+          url = backServer+"/product/watch";
+        }else if(table === "AIRPODS_TBL"){
+          url = backServer+"/product/airpods";
+        }
+
+        //상품 등록
+        axios.post(url,form,{
           headers:{
             contentType:"multipart/form-data",
             processData : false,
           },
         })
-        .then((res)=>{
-          console.log(res.data);
-        })  
-        .catch((res)=>{
-          console.log(res);
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((res) => {
+            console.log(res);
         })
+
+        
     }
   }, [pip]);
 
