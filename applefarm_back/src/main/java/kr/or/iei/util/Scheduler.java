@@ -14,7 +14,7 @@ public class Scheduler {
 	
 	@Scheduled(fixedRate = 300000) //10초, miliseconds
 	public void updateMembmerGrade() {
-		System.out.println("scheduling");
+		System.out.println("-------------scheduling------------");
         adminService.blackTimeOut();
 	}
 }

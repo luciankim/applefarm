@@ -119,3 +119,12 @@
   margin: 0;
   height: 40px;
 }
+
+.sideMenu-wrap a:hover {
+  color: #0267f3;
+  font-weight: 900;
+}
+
+a:visited {
+  color: #b7b7b7;
+}
