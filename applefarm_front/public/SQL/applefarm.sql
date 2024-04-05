@@ -88,6 +88,7 @@ CREATE TABLE TRADE_TBL (
 	ADDRESS_PHONE	            CHAR(13)		        NOT NULL,
 	ADDRESS_REQUEST	            VARCHAR2(200)		    NOT NULL,
 	INVOICE_NUMBER	            VARCHAR2(30)		    NULL                -- �����ڰ� �����Ϸ��� �Ǹ��ڰ� �ǸŹ�ǰ �ù躸���鼭 ���?
+	PAYMENT_NUMBER				NUMBER					NULL
 );
 CREATE SEQUENCE TRADE_SEQ;
 

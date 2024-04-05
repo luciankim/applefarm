@@ -17,6 +17,11 @@
 		select * from quality_tbl where table_name = #{tableName}
 	</select>
 	
+
+	<select id="selectOneProduct" resultType="product">
+		select * from product_tbl where product_no = #{productNo}
+	</select>
+
 	<insert id="insertProduct">
 		insert into product_tbl 
 		values
@@ -34,4 +39,5 @@
 	insert into product_file_tbl values
 	(product_file_seq.nextval,#{productNo},#{filename},#{filepath})
 	</insert>
+
 </mapper>

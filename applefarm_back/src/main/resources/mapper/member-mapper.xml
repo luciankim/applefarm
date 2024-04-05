@@ -42,13 +42,14 @@
 
 	<select id="selectLike" resultType="like">
 		SELECT
-		like_no,member_no,product_no,product_summary,product_price,product_quality,product_thumbnail,member_nickname
+		q.*
 		FROM
 		(
 		SELECT
 		a.like_no,
 		a.member_no,
 		a.product_no,
+        b.member_no as seller_no,
 		b.product_summary,
 		b.product_price,
 		b.product_quality,
@@ -64,8 +65,6 @@
 		WHERE
 		a.member_no = #{memberNo}
 		) q
-		WHERE
-		q.trade = 0
 		order by 1 desc
 	</select>
 	<delete id="deleteLike">
