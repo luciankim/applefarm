@@ -15,6 +15,12 @@ const CompletePayment = (props) => {
       .catch(() => {});
   }
   console.log(productNo);
+  const detailOrder = () => {
+    navigate("/member/detailOrder/" + productNo);
+  };
+  const purchaseHistory = () => {
+    navigate("/member/purchaseHistory/" + productNo);
+  };
   return (
     <div className="completePayment-wrap">
       <div className="completePayment-content">
@@ -25,8 +31,8 @@ const CompletePayment = (props) => {
           </h3>
         </div>
         <div className="completePayment-btn-box">
-          <button>주문상세보기</button>
-          <button>구매내역보기</button>
+          <button onClick={detailOrder}>주문상세보기</button>
+          <button onClick={purchaseHistory}>구매내역보기</button>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.trade.model.dao.TradeDao;
 import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
@@ -29,7 +30,9 @@ public class MemberService {
 	private JwtUtil jwtUtil;
 	@Autowired
 	private ProductDao productDao;
-
+	@Autowired
+	private TradeDao tradeDao;
+	
 	@Transactional
 	public int insertAddress(Address address) {
 		int result = 0;
@@ -246,9 +249,11 @@ public class MemberService {
 			Address address= memberDao.selectAddressBasic(memberNo);
 			//상품 정보
 			Product product = productDao.selectOneProduct(productNo);
+			int tradeExist = tradeDao.selectExistTrade(productNo);
 			map.put("member", member);
 			map.put("address", address);
 			map.put("product",product);
+			map.put("tradeExist",tradeExist);
 			return map;
 		}
 		

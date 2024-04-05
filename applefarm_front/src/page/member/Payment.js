@@ -17,7 +17,9 @@ const Payment = (props) => {
   const [status, setStatus] = useState(false);
   const [product, setProduct] = useState([]);
   const [member, setMember] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0); //1,000,000
+  const [tradeExist, setTradeExist] = useState(0); //거래내역 존재하는지 확인용 값
+
   //배송주소
   const [deliveryAddressNo, setDeliveryAddressNo] = useState("");
   const [deliveryZipcode, setDeliveryZipcode] = useState("");
@@ -35,15 +37,22 @@ const Payment = (props) => {
   }
 
   //console.log(product);
-
+  console.log(tradeExist);
   useEffect(() => {
-    //구매자 정보 가져오기////기본배송지 불러오기//상품정보가져오기
+    //구매자 정보+기본배송지+상품정보+판매유무 가져오기
     axios
       .get(backServer + "/member/paymentInfo/" + productNo)
       .then((res) => {
-        console.log(res.data);
         if (res.data.message === "success") {
-          //setAddress(res.data.data);
+          setTradeExist(res.data.data.tradeExist);
+          if (res.data.data.tradeExist > 0) {
+            //거래가 진행중(예약,결제완료 등등)일 시 구매페이지 노출 안되도록
+            Swal.fire("거래 완료된 상품입니다.")
+              .then(() => {
+                navigate(-1);
+              })
+              .catch(() => {});
+          }
           setMember(res.data.data.member);
           setProduct(res.data.data.product);
           setPrice(res.data.data.product.productPrice.toLocaleString());
@@ -60,24 +69,6 @@ const Payment = (props) => {
         console.log(res.data);
       });
   }, []);
-  /*
-  axios
-    .get(backServer + "/member")
-    .then((res) => {
-      console.log(res.data);
-      if (res.data.message === "success") {
-        setMember(res.data.data);
-      }
-    })
-    .catch((res) => {
-      console.log(res);
-    });
-*/
-  /*
-  useEffect(() => {
-    console.log("주소록");
-    console.log(addressList);
-  }, [setAddressList]);*/
   useEffect(() => {
     //전체 주소록 불러오기
     axios
@@ -86,13 +77,6 @@ const Payment = (props) => {
         //console.log(res.data);
         if (res.data.message === "success") {
           setAddressList(res.data.data);
-          /*
-          const data = res.data.data[0];
-          setDeliveryAddressName(data.addressName);
-          setDeliveryAddressPhone(data.addressPhone);
-          setDeliveryZipcode(data.zipcode);
-          setDeliveryAddress(data.address);
-          setDeliveryAddressDetail(data.addressDetail);*/
         }
       })
       .catch((res) => {
@@ -144,96 +128,117 @@ const Payment = (props) => {
   //console.log(product);
 
   //결제하기
-  //const [member, setMember] = useState([]);
   const buyProduct = () => {
-    console.log("구매하기");
+    //거래테이블에 있는지 조회하고 있으면 거래요청 막고 이전페이지 이동
+    //(동시 결제페이지 있었고 이후 한명이 먼저 결제완료 시 결제 요청받지 않도록)
+    axios
+      .get(backServer + "/trade/exist/" + product.productNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setTradeExist(res.data.data);
+          if (res.data.data > 0) {
+            Swal.fire("거래 완료된 상품입니다.")
+              .then(() => {
+                navigate(-1);
+              })
+              .catch(() => {});
+          } else {
+            //결제창
+            const { IMP } = window;
+            IMP.init("imp14207253");
+            const date = new Date();
+            const dateString =
+              date.getFullYear() +
+              "" +
+              (date.getMonth() + 1) +
+              "" +
+              date.getDate() +
+              "" +
+              date.getHours() +
+              "" +
+              date.getMinutes() +
+              "" +
+              date.getSeconds() +
+              "" +
+              date.getMilliseconds();
+            const paymentNumber =
+              product.productNo + dateString + member.memberNo;
+            const obj = {
+              merchant_uid: paymentNumber, //거래정보
+              name: product.productSummary, //상품정보
+              amount: product.productPrice,
+              buyer_email: member.memberEmail, //회원정보
+              buyer_name: member.memberName,
+              buyer_tel: member.memberPhone,
+              buyer_addr: deliveryAddress + " " + deliveryAddressDetail, //배송정보
+              buyer_postcode: deliveryZipcode,
+            };
 
-    const { IMP } = window;
-    IMP.init("imp14207253");
-    const date = new Date();
-    const dateString =
-      date.getFullYear() +
-      "" +
-      (date.getMonth() + 1) +
-      "" +
-      date.getDate() +
-      "" +
-      date.getHours() +
-      "" +
-      date.getMinutes() +
-      "" +
-      date.getSeconds() +
-      "" +
-      date.getMilliseconds();
-    //console.log(dateString);
-    const paymentNumber = product.productNo + dateString;
-    const obj = {
-      merchant_uid: paymentNumber, //거래정보
-      name: product.productSummary, //상품정보
-      amount: product.productPrice,
-      buyer_email: member.memberEmail, //회원정보
-      buyer_name: member.memberName,
-      buyer_tel: member.memberPhone,
-      buyer_addr: deliveryAddress + " " + deliveryAddressDetail, //배송정보
-      buyer_postcode: deliveryZipcode,
-    };
-    IMP.request_pay(
-      {
-        pg: "html5_inicis.INIpayTest",
-        pay_method: "card",
-        merchant_uid: obj.merchant_uid,
-        name: obj.name,
-        amount: obj.amount,
-        buyer_email: obj.buyer_email,
-        buyer_name: obj.buyer_name,
-        buyer_tel: obj.buyer_tel,
-        buyer_addr: obj.buyer_addr,
-        buyer_postcode: obj.buyer_postcode,
-      },
-      function (rsp) {
-        // callback
-        if (rsp.success) {
-          console.log(rsp);
-          //alert("결제 성공");
-          //관련정보 trade_tbl에 insert
-          //조회 후 결제완료 페이지 이동
-          const trade = {
-            paymentNumber: paymentNumber,
-            tradeSeller: product.memberNo,
-            productNo: product.productNo,
-            tradePrice: product.productPrice,
-            zipcode: deliveryZipcode,
-            address: deliveryAddress,
-            addressDetail: deliveryAddressDetail,
-            addressName: deliveryAddressName,
-            addressPhone: deliveryAddressPhone,
-            addressRequest: deliveryAddressRequest,
-          };
-          axios
-            .post(backServer + "/trade", trade)
-            .then((res) => {
-              console.log(res.data);
-              if (res.data.message === "success") {
-                navigate("/completePayment/" + trade.productNo);
-              } else {
-                alert("서버 오류 관리자에게 문의해주세요.");
+            IMP.request_pay(
+              {
+                pg: "html5_inicis.INIpayTest",
+                pay_method: "card",
+                merchant_uid: obj.merchant_uid,
+                name: obj.name,
+                amount: obj.amount,
+                buyer_email: obj.buyer_email,
+                buyer_name: obj.buyer_name,
+                buyer_tel: obj.buyer_tel,
+                buyer_addr: obj.buyer_addr,
+                buyer_postcode: obj.buyer_postcode,
+              },
+              function (rsp) {
+                // callback
+                if (rsp.success) {
+                  console.log(rsp);
+                  //alert("결제 성공");
+                  //관련정보 trade_tbl에 insert
+                  //조회 후 결제완료 페이지 이동
+                  const trade = {
+                    paymentNumber: paymentNumber,
+                    tradeSeller: product.memberNo,
+                    productNo: product.productNo,
+                    tradePrice: product.productPrice,
+                    zipcode: deliveryZipcode,
+                    address: deliveryAddress,
+                    addressDetail: deliveryAddressDetail,
+                    addressName: deliveryAddressName,
+                    addressPhone: deliveryAddressPhone,
+                    addressRequest: deliveryAddressRequest,
+                  };
+                  axios
+                    .post(backServer + "/trade", trade)
+                    .then((res) => {
+                      console.log(res.data);
+                      if (res.data.message === "success") {
+                        navigate("/completePayment/" + trade.productNo);
+                      } else {
+                        alert("서버 오류 관리자에게 문의해주세요.");
+                      }
+                    })
+                    .catch((res) => {
+                      console.log(res.data);
+                    });
+                } else {
+                  console.log(rsp);
+                }
               }
-            })
-            .catch((res) => {
-              console.log(res.data);
-            });
-        } else {
-          console.log(rsp);
+            );
+          }
         }
-      }
-    );
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
   return (
     <>
-      {product !== null &&
-      product !== undefined &&
-      member !== null &&
-      member !== undefined ? (
+      {!isLogin ||
+      product === null ||
+      product === undefined ||
+      tradeExist > 0 ? (
+        ""
+      ) : (
         <div className="payment-wrap">
           <div className="payment-title">주문 / 결제</div>
           <div className="payment-content">
@@ -398,8 +403,6 @@ const Payment = (props) => {
             </div>
           </div>
         </div>
-      ) : (
-        ""
       )}
     </>
   );

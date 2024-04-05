@@ -9,4 +9,6 @@ public interface TradeDao {
 
 	int insertTrade(Trade trade);
 
+	int selectExistTrade(int productNo);
+
 }
