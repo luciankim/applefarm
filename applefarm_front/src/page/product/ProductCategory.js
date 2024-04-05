@@ -6,9 +6,9 @@ import ProductSummary from "./ProductSummary";
 
 const ProductCategory = (props) => {
   const {
-    table,
-    naviProductLine,
-    naviProductGen,
+    navTable,
+    navProductLine,
+    navProductGen,
 
     selectedCategory,
     setSelectedCategory,
@@ -98,6 +98,25 @@ const ProductCategory = (props) => {
 
   //초기화
   useEffect(() => {
+    setProductLine("");
+    setProductGen("");
+    setProductModel("");
+    setProductModel2("");
+    clear();
+    genArr.length = 0;
+    modelArr.length = 0;
+    model2Arr.length = 0;
+  }, [navTable]);
+  useEffect(() => {
+    setProductGen("");
+    setProductModel("");
+    setProductModel2("");
+    clear();
+    genArr.length = 0;
+    modelArr.length = 0;
+    model2Arr.length = 0;
+  }, [productLine]);
+  useEffect(() => {
     setProductModel("");
     setProductModel2("");
     clear();
@@ -110,10 +129,7 @@ const ProductCategory = (props) => {
     model2Arr.length = 0;
   }, [productModel]);
 
-  const requestCategory = {
-    table: table,
-    productLine: naviProductLine,
-  };
+  const requestCategory = { table: navTable, productLine: navProductLine };
   useEffect(() => {
     axios
       .post(backServer + "/product/category", requestCategory)
@@ -126,7 +142,7 @@ const ProductCategory = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, []);
+  }, [navProductLine]);
 
   //카테고리 1개 특정하기 위한 코드
   //gen
@@ -356,7 +372,7 @@ const ProductCategory = (props) => {
             name="gen"
             selectValue={productGen}
             setSelectValue={setProductGen}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -365,7 +381,7 @@ const ProductCategory = (props) => {
             name="model"
             selectValue={productModel}
             setSelectValue={setProductModel}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -374,7 +390,7 @@ const ProductCategory = (props) => {
             name="model2"
             selectValue={productModel2}
             setSelectValue={setProductModel2}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -383,7 +399,7 @@ const ProductCategory = (props) => {
             name="color"
             selectValue={productColor}
             setSelectValue={setProductColor}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -392,7 +408,7 @@ const ProductCategory = (props) => {
             name="storage"
             selectValue={productStorage}
             setSelectValue={setProductStorage}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -401,7 +417,7 @@ const ProductCategory = (props) => {
             name="memory"
             selectValue={productMemory}
             setSelectValue={setProductMemory}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -410,7 +426,7 @@ const ProductCategory = (props) => {
             name="chip"
             selectValue={productChip}
             setSelectValue={setProductChip}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -419,7 +435,7 @@ const ProductCategory = (props) => {
             name="cpu"
             selectValue={productCpu}
             setSelectValue={setProductCpu}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -428,7 +444,7 @@ const ProductCategory = (props) => {
             name="gpu"
             selectValue={productGpu}
             setSelectValue={setProductGpu}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -437,7 +453,7 @@ const ProductCategory = (props) => {
             name="size"
             selectValue={productSize}
             setSelectValue={setProductSize}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -446,7 +462,7 @@ const ProductCategory = (props) => {
             name="connectivity"
             selectValue={productConnectivity}
             setSelectValue={setProductConnectivity}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -455,7 +471,7 @@ const ProductCategory = (props) => {
             name="charge"
             selectValue={productCharge}
             setSelectValue={setProductCharge}
-            table={table}
+            navTable={navTable}
           />
         }
         {selectedCategory && !pip ? (
@@ -464,7 +480,7 @@ const ProductCategory = (props) => {
             name="quality"
             selectValue={productQuality}
             setSelectValue={setProductQuality}
-            table={table}
+            navTable={navTable}
           />
         ) : (
           ""
@@ -481,7 +497,7 @@ const ArrMap = (props) => {
   const name = props.name;
   const selectValue = props.selectValue;
   const setSelectValue = props.setSelectValue;
-  const table = props.table;
+  const table = props.navTable;
 
   const optionTitle = () => {
     if (name === "gen") {

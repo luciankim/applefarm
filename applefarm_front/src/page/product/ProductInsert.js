@@ -1,4 +1,9 @@
-import { useBlocker, useNavigate } from "react-router-dom";
+import {
+  useBlocker,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import ProductQualityInsert from "./ProductQualityInsert";
 import ProductInsertLast from "./ProductInsertLast";
 import { useEffect, useState } from "react";
@@ -7,20 +12,25 @@ import ProductCategory from "./ProductCategory";
 import axios from "axios";
 
 const ProductInsert = (props) => {
+  //https://heycoding.tistory.com/72#3.2.%20useNavigate
+
   /*
-  const table = props.table; //"iphone_tbl"
-  const naviProductLine = props.naviProductLine;
-  const naviProductGen = props.naviProductGen;
+  const table = props.table;
+  const navProductLine = props.navProductLine;
+  const navProductGen = props.navProductGen;
   */
-  //임시로 ↓↓
-  const table = "MACBOOK_TBL"; //반드시 대문자로 받을것!!
-  const naviProductLine = "MacBook Pro";
-  const naviProductGen = ""; //없을 경우 ""로 받을것!!
+  const location = useLocation();
+  const { nav } = location.state;
+  const [navTable, setNavTable] = useState(nav.table);
+  const [navProductLine, setNavProductLine] = useState(nav.navProductLine);
+  const [navProductGen, setNavProductGen] = useState(nav.navProductGen);
 
   //ProductCategory.js로 넘겨줄 데이터
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [productLine, setProductLine] = useState(naviProductLine);
-  const [productGen, setProductGen] = useState(naviProductGen);
+  const [productLine, setProductLine] = useState(navProductLine);
+  const [productGen, setProductGen] = useState(
+    navProductGen ? navProductGen : ""
+  );
   const [productModel, setProductModel] = useState("");
   const [productModel2, setProductModel2] = useState("");
   const [productColor, setProductColor] = useState("");
@@ -134,54 +144,55 @@ const ProductInsert = (props) => {
     ) {
       //const insert = () => {}
       //partOrder는 따로 post
-      
-        //여기에 서버로 가서 insert하는 axios코드
-        //navigate("/product/main"); //아직 메인페이지 경로 없음
 
-        const form = new FormData();
-        form.append("productTitle", title);
-        form.append("productExplain", content);
-        form.append("productPrice", price);
-        form.append("productQuality", grade);
-        form.append("thumbnail", thumbnail);
-        form.append("productSummary", summaryFind());
+      //여기에 서버로 가서 insert하는 axios코드
+      //navigate("/product/main"); //아직 메인페이지 경로 없음
 
-        for (let i = 0; i < file.length; i++) {
-          form.append("productFile", file[i]);
-        }
+      const form = new FormData();
+      form.append("productTitle", title);
+      form.append("productExplain", content);
+      form.append("productPrice", price);
+      form.append("productQuality", grade);
+      form.append("thumbnail", thumbnail);
+      form.append("productSummary", summaryFind());
 
-        form.append("productLine",selectedProduct.productLine);
-        form.append("productGen",selectedProduct.productGen);
-        form.append("productModel",selectedProduct.productModel);
-        form.append("productModel2",selectedProduct.productModel2);
-        form.append("productColor",selectedProduct.productColor);
-        form.append("productColor",selectedProduct.productColor)
-        form.append("productImage",selectedProduct.productImage);
-        form.append("productStorage",selectedProduct.productStorage);
-        form.append("productMemory",selectedProduct.productMemory);
-        form.append("productChip",selectedProduct.productChip);
-        form.append("productCpu",selectedProduct.productCpu);
-        form.append("productGpu",selectedProduct.productGpu);
-        form.append("productSize",selectedProduct.productSize);
-        form.append("productConnectivity",selectedProduct.productConnectivity);
-        form.append("productCharge",selectedProduct.productCharge);
-        form.append("tableName",table);
+      for (let i = 0; i < file.length; i++) {
+        form.append("productFile", file[i]);
+      }
 
-        console.log(form);
-        console.log(1);
+      form.append("productLine", selectedProduct.productLine);
+      form.append("productGen", selectedProduct.productGen);
+      form.append("productModel", selectedProduct.productModel);
+      form.append("productModel2", selectedProduct.productModel2);
+      form.append("productColor", selectedProduct.productColor);
+      form.append("productColor", selectedProduct.productColor);
+      form.append("productImage", selectedProduct.productImage);
+      form.append("productStorage", selectedProduct.productStorage);
+      form.append("productMemory", selectedProduct.productMemory);
+      form.append("productChip", selectedProduct.productChip);
+      form.append("productCpu", selectedProduct.productCpu);
+      form.append("productGpu", selectedProduct.productGpu);
+      form.append("productSize", selectedProduct.productSize);
+      form.append("productConnectivity", selectedProduct.productConnectivity);
+      form.append("productCharge", selectedProduct.productCharge);
+      form.append("tableName", navTable);
 
-        axios.post(backServer + "/product",form,{
-          headers:{
-            contentType:"multipart/form-data",
-            processData : false,
+      console.log(form);
+      console.log(1);
+
+      axios
+        .post(backServer + "/product", form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
           },
         })
-        .then((res)=>{
+        .then((res) => {
           console.log(res.data);
-        })  
-        .catch((res)=>{
-          console.log(res);
         })
+        .catch((res) => {
+          console.log(res);
+        });
     }
   }, [pip]);
 
@@ -249,8 +260,8 @@ const ProductInsert = (props) => {
           changeBtnActiveFalse={changeBtnActiveFalse}
           pip={pip}
           /*axios용*/
-          table={table}
-          naviProductLine={naviProductLine}
+          navTable={navTable}
+          navProductLine={navProductLine}
           /*selectedCategory, selectProduct용*/
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
