@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./member.css";
 import SideMenu from "../../component/SideMenu";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import Address from "./Address";
 import MemberWish from "./MemberWish";
 import MemberInfo from "./MemberInfo";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
@@ -20,6 +21,19 @@ const Mypage = (props) => {
       })
       .catch(() => {});
   }
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
   const [myInfoMenu, setMyInfoMenu] = useState([
     { url: "loginInfo", text: "로그인 정보", active: false },
     { url: "sellerGrade", text: "판매자 등급", active: false },
@@ -51,9 +65,12 @@ const Mypage = (props) => {
       </div>
       <div className="mypage-content">
         <Routes>
-          <Route path="/address" element={<Address />}></Route>
-          <Route path="/wish" element={<MemberWish />}></Route>
-          <Route path="/loginInfo" element={<MemberInfo isLogin={isLogin} />} />
+          <Route path="/address" element={<Address member={member} />}></Route>
+          <Route path="/wish" element={<MemberWish member={member} />}></Route>
+          <Route
+            path="/loginInfo"
+            element={<MemberInfo isLogin={isLogin} member={member} />}
+          />
         </Routes>
       </div>
     </div>

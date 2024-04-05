@@ -422,3 +422,35 @@
   font-size: 14px;
   color: #b7b7b7;
 }
+
+/*로그인 정보*/
+
+.info-input {
+  border: none;
+  border-bottom: 1px solid #bfbfbf;
+  width: 400px;
+}
+
+.input-change-btn {
+  padding-left: 20px;
+}
+
+.change-btn,
+.cancel-btn {
+  background-color: white;
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 10px;
+  color: #b7b7b7;
+}
+
+.delete-btn {
+  border: none;
+  background-color: white;
+  color: #b7b7b7;
+}
+
+.delete-btn:hover {
+  text-decoration: underline;
+}

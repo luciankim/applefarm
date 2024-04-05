@@ -113,7 +113,7 @@ const Join = () => {
 
     if (regEmail.test(memberEmail)) {
       axios
-        .post(backServer + "/member/email/" + memberEmail)
+        .get(backServer + "/member/email/" + memberEmail)
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegEmail("이미 사용중인 이메일입니다.");
@@ -137,7 +137,7 @@ const Join = () => {
   const sendVerifCode = () => {
     if (memberEmail !== "") {
       axios
-        .post(backServer + "/member/sendCode/" + memberEmail)
+        .post(backServer + "/member/email/" + memberEmail)
         .then((res) => {
           if (res.data.message === "success") {
             const authCode = res.data.data;
@@ -190,7 +190,7 @@ const Join = () => {
 
     if (regId.test(memberId)) {
       axios
-        .post(backServer + "/member/id/" + memberId)
+        .get(backServer + "/member/id/" + memberId)
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegId("이미 사용중인 아이디입니다.");
@@ -210,7 +210,7 @@ const Join = () => {
 
     if (regNickName.test(memberNickName)) {
       axios
-        .post(backServer + "/member/nickName/" + memberNickName)
+        .get(backServer + "/member/nickName/" + memberNickName)
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegNickName("이미 사용중인 닉네임입니다.");

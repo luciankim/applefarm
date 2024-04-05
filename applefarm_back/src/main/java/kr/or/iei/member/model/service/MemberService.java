@@ -272,6 +272,12 @@ public class MemberService {
 			
 			return memberDao.getMemberInfo(memberNo);
 		}
+
+		public int updateEmail(Member member) {
+			
+			return memberDao.updateEmail(member);
+		}
+
 		
 
 

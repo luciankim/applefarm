@@ -222,10 +222,17 @@
 	
 	
 	<select id="getMemberInfo" resultType="member">
-	
+
 	select * from member_tbl where member_no = #{memberNo}
 	
 	</select>
+	
+	<update id="updateEmail">
+	
+		update member_tbl set member_email = #{memberEmail} where member_no = #{memberNo}
+	
+	</update>
+	
 	
 
 </mapper>

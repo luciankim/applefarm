@@ -71,6 +71,10 @@ public interface MemberDao {
 
 	int deleteLike(int likeNo);
 
+	int updateEmail(Member member);
+
+	
+
 
 
 

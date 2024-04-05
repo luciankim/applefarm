@@ -49,7 +49,7 @@ public class MemberController {
 	@ApiResponses({ // 응답에 대한 작성 설명할 떄
 		@ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping("/email/{memberEmail}")
+	@GetMapping("/email/{memberEmail}")
 	public ResponseEntity<ResponseDTO> verifEmail(@PathVariable String memberEmail){
 		
 		
@@ -77,11 +77,44 @@ public class MemberController {
 		
 	}
 	
+	@Operation(summary = "로그인 정보 이메일 중복체크", description = "매개변수로 전달한 이메일 사용 여부 조회")
+	@ApiResponses({ // 응답에 대한 작성 설명할 떄
+		@ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping("/emailChk/{memberEmail}")
+	public ResponseEntity<ResponseDTO> emailChk(@PathVariable String memberEmail){
+		
+		
+		
+		int duplicationEmail = memberService.selectOneEmail(memberEmail);
+		
+		System.out.println(memberEmail + duplicationEmail);
+		
+		
+		
+		if (duplicationEmail == 0) {
+
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "not duplication", null);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+				
+				
+
+			} else {
+
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "duplication", null);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+
+			}
+			
+	
+		
+	}
+	
 	@Operation(summary = "이메일로 인증코드 발송", description = "매개변수로 전달한 이메일로 인증코드 발송")
 	@ApiResponses({ // 응답에 대한 작성 설명할 떄
 		@ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping("/sendCode/{memberEmail}")
+	@PostMapping("/email/{memberEmail}")
 	public ResponseEntity<ResponseDTO> sendEmail(@PathVariable String memberEmail){
 		
 		String authCode = emailSender.sendCode(memberEmail);
@@ -97,7 +130,7 @@ public class MemberController {
 	@ApiResponses({ // 응답에 대한 작성 설명할 떄
 		@ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping("/id/{memberId}")
+	@GetMapping("/id/{memberId}")
 	public ResponseEntity<ResponseDTO> selectOneId(@PathVariable String memberId){
 		
 		int duplicationId = memberService.selectOneId(memberId);
@@ -123,10 +156,12 @@ public class MemberController {
 	@ApiResponses({ // 응답에 대한 작성 설명할 떄
 		@ApiResponse(responseCode = "200", description = "응답 message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping("/nickName/{memberNickName}")
+	@GetMapping("/nickName/{memberNickName}")
 	public ResponseEntity<ResponseDTO> selectOneNickName(@PathVariable String memberNickName){
 		
 		int duplicationNickName = memberService.selectOneNickName(memberNickName);
+		
+		
 		
 		if (duplicationNickName == 0) {
 
@@ -345,6 +380,39 @@ public class MemberController {
 		
 		
 	}
+	
+	
+	
+	@Operation(summary ="이메일 수정",description = "이메일 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/updateEmail")
+	public ResponseEntity<ResponseDTO> updateEmail(@RequestBody Member member){
+		
+		int result = memberService.updateEmail(member);
+		
+		System.out.println(member);
+		
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 }
 	
