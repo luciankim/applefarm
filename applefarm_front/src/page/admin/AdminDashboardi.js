@@ -1,7 +1,9 @@
 const AdminDashboard = () => {
   return (
-    <div>
-      <h1>대시보드</h1>
+    <div className="mypage-current-wrap">
+      <div className="mypage-current-title">
+        <p className="admin-current-p">대시보드</p>
+      </div>
     </div>
   );
 };
