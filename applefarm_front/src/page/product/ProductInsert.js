@@ -19,6 +19,9 @@ const ProductInsert = (props) => {
   const navProductLine = props.navProductLine;
   const navProductGen = props.navProductGen;
   */
+  // const table = "MACBOOK_TBL";//임시로 생성
+  // const [navTable, setNavTable] = useState(nav.table);
+
   const location = useLocation();
   const { nav } = location.state;
   const [navTable, setNavTable] = useState(nav.table);
@@ -142,28 +145,52 @@ const ProductInsert = (props) => {
       thumbnail &&
       pip === progressArr[progressArr.length - 1]
     ) {
-      //const insert = () => {}
-      //partOrder는 따로 post
-
-
         //partOrder객체의 각 value값을 key-value쌍으로 변환작업
         //[{part2 : 'DISPAY',value:'정상'}] -> {DISPLAY : '정상'}
         //reduce함수(배열요소 순회 함수) - (누적,현제요소,현제요소 인덱스, 호출한배열),(초기값설정 - 여기는 빈 객체로 설정)
-
         const partObject = partOrder.reduce((acc, item) =>
         {
           acc[item.part2] = item.value;
           return acc;
         },{}
         )
-        console.log(partObject);
+        //console.log(partObject);
       
-        //여기에 서버로 가서 insert하는 axios코드
+
         //navigate("/product/main"); //아직 메인페이지 경로 없음
 
 
       //여기에 서버로 가서 insert하는 axios코드
       //navigate("/product/main"); //아직 메인페이지 경로 없음
+
+      const form = new FormData();
+      form.append("productTitle", title);
+      form.append("productExplain", content);
+      form.append("productPrice", price);
+      form.append("productQuality", grade);
+      form.append("thumbnail", thumbnail);
+      form.append("productSummary", summaryFind());
+
+      for (let i = 0; i < file.length; i++) {
+        form.append("productFile", file[i]);
+      }
+
+      form.append("productLine", selectedProduct.productLine);
+      form.append("productGen", selectedProduct.productGen);
+      form.append("productModel", selectedProduct.productModel);
+      form.append("productModel2", selectedProduct.productModel2);
+      form.append("productColor", selectedProduct.productColor);
+      form.append("productColor", selectedProduct.productColor);
+      form.append("productImage", selectedProduct.productImage);
+      form.append("productStorage", selectedProduct.productStorage);
+      form.append("productMemory", selectedProduct.productMemory);
+      form.append("productChip", selectedProduct.productChip);
+      form.append("productCpu", selectedProduct.productCpu);
+      form.append("productGpu", selectedProduct.productGpu);
+      form.append("productSize", selectedProduct.productSize);
+      form.append("productConnectivity", selectedProduct.productConnectivity);
+      form.append("productCharge", selectedProduct.productCharge);
+      form.append("tableName", navTable);
 
 
         for (let i = 0; i < file.length; i++) {
@@ -259,8 +286,11 @@ const ProductInsert = (props) => {
         
 
         
-        //console.log(form);
+        
 
+        
+
+      
 
         //테이블에 따라서 품질내역을 요청하는 url이 달라잠
         //상품품질내역 등록
@@ -290,55 +320,6 @@ const ProductInsert = (props) => {
           .catch((res) => {
             console.log(res);
         })
-
-        
-
-      const form = new FormData();
-      form.append("productTitle", title);
-      form.append("productExplain", content);
-      form.append("productPrice", price);
-      form.append("productQuality", grade);
-      form.append("thumbnail", thumbnail);
-      form.append("productSummary", summaryFind());
-
-      for (let i = 0; i < file.length; i++) {
-        form.append("productFile", file[i]);
-      }
-
-      form.append("productLine", selectedProduct.productLine);
-      form.append("productGen", selectedProduct.productGen);
-      form.append("productModel", selectedProduct.productModel);
-      form.append("productModel2", selectedProduct.productModel2);
-      form.append("productColor", selectedProduct.productColor);
-      form.append("productColor", selectedProduct.productColor);
-      form.append("productImage", selectedProduct.productImage);
-      form.append("productStorage", selectedProduct.productStorage);
-      form.append("productMemory", selectedProduct.productMemory);
-      form.append("productChip", selectedProduct.productChip);
-      form.append("productCpu", selectedProduct.productCpu);
-      form.append("productGpu", selectedProduct.productGpu);
-      form.append("productSize", selectedProduct.productSize);
-      form.append("productConnectivity", selectedProduct.productConnectivity);
-      form.append("productCharge", selectedProduct.productCharge);
-      form.append("tableName", navTable);
-
-      console.log(form);
-      console.log(1);
-
-      axios
-        .post(backServer + "/product", form, {
-          headers: {
-            contentType: "multipart/form-data",
-            processData: false,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((res) => {
-          console.log(res);
-        });
-
     }
   }, [pip]);
 
