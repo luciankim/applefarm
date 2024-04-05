@@ -40,4 +40,5 @@ public class Product {
 	private String productCharge;
 	private String productThumbnail;
 	private String productSummary;
+	private String tableName;
 }

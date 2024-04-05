@@ -5,7 +5,7 @@ import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
 const ProductQualityInsert = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  console.log(props);
+  // console.log(props);
   //
   // const [grade, setGrade] = useState();
   // const [partOrder, setPartOrder] = useState([]);
@@ -31,7 +31,7 @@ const ProductQualityInsert = (props) => {
   }, [Object.keys(score).length]);
 
   // 품질목록 선택할때마다 도는 함수
-  const handleQualityChange = (part, value, index_) => {
+  const handleQualityChange = (part, value, index_,part2) => {
     const item = qualityList.find((item) => item.part === part);
 
     const index = qualityList
@@ -55,7 +55,8 @@ const ProductQualityInsert = (props) => {
       [part]: index,
     }));
 
-    const obj = { part: part, value: value };
+    //const obj = { part: part, value: value };
+    const obj = {part2 : part2,value:value};
     partOrder[index_] = obj;
     setPartOrder(partOrder);
 
@@ -82,9 +83,9 @@ const ProductQualityInsert = (props) => {
 
   useEffect(() => {
     // console.log(qualityHistory);
-    console.log(qualityState);
-    console.log(partOrder);
-    console.log(grade);
+    // console.log(qualityState);
+    // console.log(partOrder);
+    // console.log(grade);
   }, [qualityState]);
 
   // 품목 선택할때마다 점수 등급 설정
@@ -163,7 +164,7 @@ const ProductQualityInsert = (props) => {
               id4={arr[3] ? item.part + "4" : undefined}
               data={qualityState[item.part]} // 이 부분이 `qualityState` 객체에서 해당 `part`의 상태를 참조합니다.
               //value전달
-              setData={(value) => handleQualityChange(item.part, value, index)}
+              setData={(value) => handleQualityChange(item.part, value, index,item.part2)}
               // 이 부분이 상태를 설정하는 함수를 전달합니다.
               name={item.part}
               // img1={
@@ -202,10 +203,6 @@ const ProductQualityInsert = (props) => {
         ) : (
           ""
         )}
-        <div className="quality-select-button">
-          <Button1 text="이전으로" onclick="prevPage" addId="gy"></Button1>
-          <Button1 text="다음으로" onclick="nextPage" addId="gy"></Button1>
-        </div>
 
         {/* <div>
           <div>{calculateTotalScore()}</div>

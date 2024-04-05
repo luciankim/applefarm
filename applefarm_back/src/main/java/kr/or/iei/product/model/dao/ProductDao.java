@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.product.model.dto.Product;
 
+import kr.or.iei.product.model.dto.ProductFile;
+
+
 @Mapper
 public interface ProductDao {
 
@@ -13,7 +16,13 @@ public interface ProductDao {
 
 	List selectQualityList(String tableName);
 
+
 	Product selectOneProduct(int productNo);
+
+	int insertProduct(Product product);
+
+	int insertProductFile(ProductFile pf);
+
 	
 	
 	

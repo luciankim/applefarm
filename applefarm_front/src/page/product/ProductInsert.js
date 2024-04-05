@@ -4,6 +4,7 @@ import ProductInsertLast from "./ProductInsertLast";
 import { useEffect, useState } from "react";
 import ProductTab from "./ProductTab";
 import ProductCategory from "./ProductCategory";
+import axios from "axios";
 
 const ProductInsert = (props) => {
   /*
@@ -118,6 +119,9 @@ const ProductInsert = (props) => {
   const [file, setFile] = useState([]); //이미지
   const [thumbnail, setThumbnail] = useState(); //대표이미지
 
+  //서버 변수
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   //insert 하기 위해 서버 오픈
   useEffect(() => {
     if (
@@ -128,8 +132,9 @@ const ProductInsert = (props) => {
       thumbnail &&
       pip === progressArr[progressArr.length - 1]
     ) {
+      //const insert = () => {}
       //partOrder는 따로 post
-      const insert = () => {
+      
         //여기에 서버로 가서 insert하는 axios코드
         //navigate("/product/main"); //아직 메인페이지 경로 없음
 
@@ -138,13 +143,45 @@ const ProductInsert = (props) => {
         form.append("productExplain", content);
         form.append("productPrice", price);
         form.append("productQuality", grade);
-        form.append("productThumbnail", thumbnail);
+        form.append("thumbnail", thumbnail);
         form.append("productSummary", summaryFind());
 
         for (let i = 0; i < file.length; i++) {
           form.append("productFile", file[i]);
         }
-      };
+
+        form.append("productLine",selectedProduct.productLine);
+        form.append("productGen",selectedProduct.productGen);
+        form.append("productModel",selectedProduct.productModel);
+        form.append("productModel2",selectedProduct.productModel2);
+        form.append("productColor",selectedProduct.productColor);
+        form.append("productColor",selectedProduct.productColor)
+        form.append("productImage",selectedProduct.productImage);
+        form.append("productStorage",selectedProduct.productStorage);
+        form.append("productMemory",selectedProduct.productMemory);
+        form.append("productChip",selectedProduct.productChip);
+        form.append("productCpu",selectedProduct.productCpu);
+        form.append("productGpu",selectedProduct.productGpu);
+        form.append("productSize",selectedProduct.productSize);
+        form.append("productConnectivity",selectedProduct.productConnectivity);
+        form.append("productCharge",selectedProduct.productCharge);
+        form.append("tableName",table);
+
+        console.log(form);
+        console.log(1);
+
+        axios.post(backServer + "/product",form,{
+          headers:{
+            contentType:"multipart/form-data",
+            processData : false,
+          },
+        })
+        .then((res)=>{
+          console.log(res.data);
+        })  
+        .catch((res)=>{
+          console.log(res);
+        })
     }
   }, [pip]);
 
