@@ -60,6 +60,8 @@ const ProductQualityInsert = (props) => {
     partOrder[index_] = obj;
     setPartOrder(partOrder);
 
+    
+
     setQualityState((prev) => ({
       ...prev,
       [part]: value,

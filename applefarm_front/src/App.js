@@ -70,9 +70,16 @@ function App() {
   }, []);
 
   //박성완 - Nav.js 정보
-  const [table, setTable] = useState("");
-  const [naviProductLine, setNaviProductLine] = useState("");
-  const [naviProductGen, setNaviProductGen] = useState("");
+  /*
+  const [table, setTable] = useState("IPHONE_TBL");
+  const [navProductLine, setNavProductLine] = useState("iPhone");
+  const [navProductGen, setNavProductGen] = useState("iPhone 15 Series");
+  */
+  /*
+  const table = "IPHONE_TBL"; //반드시 대문자로 받을것!!
+  const navProductLine = "iPhone";
+  const navProductGen = "iPhone 15 Series"; //없을 경우 ""로 받을것!!
+  */
 
   return (
     <div className="wrap">
@@ -81,11 +88,14 @@ function App() {
       </header>
       <main className="container">
         <Nav
+        /*
           table={table}
-          naviProductLine={naviProductLine}
-          setNaviProductLine={setNaviProductLine}
-          naviProductGen={naviProductGen}
-          setNaviProductGen={setNaviProductGen}
+          setTable={setTable}
+          navProductLine={navProductLine}
+          setNavProductLine={setNavProductLine}
+          navProductGen={navProductGen}
+          setNavProductGen={setNavProductGen}
+          */
         />
         <section className="inner-wrap">
           <Routes>
@@ -105,7 +115,18 @@ function App() {
               element={<CompletePayment isLogin={isLogin} />}
             />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
-            <Route path="/product/*" element={<Product />} />
+            <Route
+              path="/product/*"
+              element={
+                <Product
+                /*
+                  table={table}
+                  navProductLine={navProductLine}
+                  navProductGen={navProductGen}
+                  */
+                />
+              }
+            />
           </Routes>
         </section>
       </main>

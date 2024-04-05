@@ -135,7 +135,7 @@ public class AdminService {
 	public void blackTimeOut() {
 		System.out.println("right now!");
 		List<Member> blackMemberCheckList = memberDao.selectBlackMemberCheckList();
-		System.out.println("memberslit"  + blackMemberCheckList);
+		System.out.println("----------scheduling-------- memberslit"  + blackMemberCheckList);
 		// 시간 계산 : 블랙
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

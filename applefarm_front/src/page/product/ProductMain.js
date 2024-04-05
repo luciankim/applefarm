@@ -6,21 +6,37 @@ import ProductChart from "./ProductChart";
 import ProductList from "./ProductList";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";
+import { useLocation } from "react-router-dom";
 
 const ProductMain = (props) => {
-  /*
-  const table = props.table; //"iphone_tbl"
-  const naviProductLine = props.naviProductLine;
-  const naviProductGen = props.naviProductGen;
-  */
-  const table = "IPHONE_TBL"; //반드시 대문자로 받을것!!
-  const naviProductLine = "iPhone";
-  const naviProductGen = "iPhone 15 Series"; //없을 경우 ""로 받을것!!
+  //const { table, navProductLine, navProductGen } = props;
+  const location = useLocation();
+  const [navTable, setNavTable] = useState(location.state.navTable);
+  const [navProductLine, setNavProductLine] = useState(
+    location.state.navProductLine
+  );
+  const [navProductGen, setNavProductGen] = useState(
+    location.state.navProductGen
+  );
+  console.log(location.state.navTable); //확인
+  useEffect(() => {
+    setNavTable(location.state.navTable);
+    setNavProductLine(location.state.navProductLine);
+    setNavProductGen(location.state.navProductGen);
+    setProductLine(location.state.navProductLine);
+    setProductGen(navProductGen ? navProductGen : "");
+  }, [
+    location.state.navTable,
+    location.state.navProductLine,
+    location.state.navProductGen,
+  ]);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const [productLine, setProductLine] = useState(naviProductLine);
-  const [productGen, setProductGen] = useState(naviProductGen);
+  const [productLine, setProductLine] = useState(navProductLine);
+  const [productGen, setProductGen] = useState(
+    navProductGen ? navProductGen : ""
+  );
   const [productModel, setProductModel] = useState("");
   const [productModel2, setProductModel2] = useState("");
   const [productColor, setProductColor] = useState("");
@@ -84,23 +100,23 @@ const ProductMain = (props) => {
   return (
     <div className="productMain">
       <div className="productMain-title">
-        {table === "iphone_tbl"
+        {navTable === "IPHONE_TBL"
           ? "iPhone"
-          : table === "macbook_tbl"
+          : navTable === "MACBOOK_TBL"
           ? "MacBook"
-          : table === "ipad_tbl"
+          : navTable === "IPAD_TBL"
           ? "iPad"
-          : table === "watch_tbl"
+          : navTable === "WATCH_TBL"
           ? "Apple Watch"
-          : table === "airpods_tbl"
+          : navTable === "AIRPODS_TBL"
           ? "에어팟"
           : ""}
       </div>
       <ProductCategory
         /*axios용*/
-        table={table}
-        naviProductLine={naviProductLine}
-        naviProductGen={naviProductGen}
+        navTable={navTable}
+        navProductLine={navProductLine}
+        navProductGen={navProductGen}
         /*--axios용*/
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
