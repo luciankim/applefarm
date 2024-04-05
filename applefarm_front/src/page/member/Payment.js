@@ -1,13 +1,13 @@
 import { Select, stepLabelClasses } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AddressModal, DelModal, RequestModal } from "./Modal";
 
 const Payment = (props) => {
-  const location = useLocation();
-  const product = location.state.product;
+  const pramas = useParams();
+  const productNo = pramas.productNo;
   const navigate = useNavigate();
   const isLogin = props.isLogin;
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -15,7 +15,9 @@ const Payment = (props) => {
   const [agreeChk, setAgreeChk] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState(false);
-
+  const [product, setProduct] = useState([]);
+  const [member, setMember] = useState([]);
+  const [price, setPrice] = useState(0);
   //배송주소
   const [deliveryAddressNo, setDeliveryAddressNo] = useState("");
   const [deliveryZipcode, setDeliveryZipcode] = useState("");
@@ -31,23 +33,21 @@ const Payment = (props) => {
       })
       .catch(() => {});
   }
+
   //console.log(product);
-  if (product === null) {
-    Swal.fire("상품 정보가 없습니다.")
-      .then(() => {
-        navigate("/");
-      })
-      .catch(() => {});
-  }
+
   useEffect(() => {
-    //기본배송지 불러오기
+    //구매자 정보 가져오기////기본배송지 불러오기//상품정보가져오기
     axios
-      .get(backServer + "/member/basicAddress")
+      .get(backServer + "/member/paymentInfo/" + productNo)
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data);
         if (res.data.message === "success") {
           //setAddress(res.data.data);
-          const data = res.data.data;
+          setMember(res.data.data.member);
+          setProduct(res.data.data.product);
+          setPrice(res.data.data.product.productPrice.toLocaleString());
+          const data = res.data.data.address;
           setDeliveryAddressName(data.addressName);
           setDeliveryAddressPhone(data.addressPhone);
           setDeliveryZipcode(data.zipcode);
@@ -60,6 +60,19 @@ const Payment = (props) => {
         console.log(res.data);
       });
   }, []);
+  /*
+  axios
+    .get(backServer + "/member")
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.message === "success") {
+        setMember(res.data.data);
+      }
+    })
+    .catch((res) => {
+      console.log(res);
+    });
+*/
   /*
   useEffect(() => {
     console.log("주소록");
@@ -129,14 +142,98 @@ const Payment = (props) => {
     { text: "직접 입력", active: false },
   ]);
   //console.log(product);
-  //결제 시 like_tbl에 있을 시 delete(안없애도 될 것 같기도=>이미 거래 상태면 좋아요 조회 X상태 ), trade_tbl에 insert
+
   //결제하기
+  //const [member, setMember] = useState([]);
   const buyProduct = () => {
     console.log("구매하기");
+
+    const { IMP } = window;
+    IMP.init("imp14207253");
+    const date = new Date();
+    const dateString =
+      date.getFullYear() +
+      "" +
+      (date.getMonth() + 1) +
+      "" +
+      date.getDate() +
+      "" +
+      date.getHours() +
+      "" +
+      date.getMinutes() +
+      "" +
+      date.getSeconds() +
+      "" +
+      date.getMilliseconds();
+    //console.log(dateString);
+    const paymentNumber = product.productNo + dateString;
+    const obj = {
+      merchant_uid: paymentNumber, //거래정보
+      name: product.productSummary, //상품정보
+      amount: product.productPrice,
+      buyer_email: member.memberEmail, //회원정보
+      buyer_name: member.memberName,
+      buyer_tel: member.memberPhone,
+      buyer_addr: deliveryAddress + " " + deliveryAddressDetail, //배송정보
+      buyer_postcode: deliveryZipcode,
+    };
+    IMP.request_pay(
+      {
+        pg: "html5_inicis.INIpayTest",
+        pay_method: "card",
+        merchant_uid: obj.merchant_uid,
+        name: obj.name,
+        amount: obj.amount,
+        buyer_email: obj.buyer_email,
+        buyer_name: obj.buyer_name,
+        buyer_tel: obj.buyer_tel,
+        buyer_addr: obj.buyer_addr,
+        buyer_postcode: obj.buyer_postcode,
+      },
+      function (rsp) {
+        // callback
+        if (rsp.success) {
+          console.log(rsp);
+          //alert("결제 성공");
+          //관련정보 trade_tbl에 insert
+          //조회 후 결제완료 페이지 이동
+          const trade = {
+            paymentNumber: paymentNumber,
+            tradeSeller: product.memberNo,
+            productNo: product.productNo,
+            tradePrice: product.productPrice,
+            zipcode: deliveryZipcode,
+            address: deliveryAddress,
+            addressDetail: deliveryAddressDetail,
+            addressName: deliveryAddressName,
+            addressPhone: deliveryAddressPhone,
+            addressRequest: deliveryAddressRequest,
+          };
+          axios
+            .post(backServer + "/trade", trade)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.message === "success") {
+                navigate("/completePayment/" + trade.productNo);
+              } else {
+                alert("서버 오류 관리자에게 문의해주세요.");
+              }
+            })
+            .catch((res) => {
+              console.log(res.data);
+            });
+        } else {
+          console.log(rsp);
+        }
+      }
+    );
   };
   return (
     <>
-      {product !== null ? (
+      {product !== null &&
+      product !== undefined &&
+      member !== null &&
+      member !== undefined ? (
         <div className="payment-wrap">
           <div className="payment-title">주문 / 결제</div>
           <div className="payment-content">
@@ -148,17 +245,22 @@ const Payment = (props) => {
                     <img src={product.productThumbnail} />
                   </div>
                   <div className="payment-product-detail">
+                    {/*
                     <div>
                       <span>{product.memberNickName}</span>
                       님의 product
                     </div>
+                    
+                    */}
                     <div>
                       <span>{product.productSummary}</span>
-                      <span>{product.productQuality}급</span>
+                      {/**
+                       <span>{product.productQuality}급</span>
+                       */}
                     </div>
                   </div>
                   <div>
-                    <div>{product.productPrice.toLocaleString()}원</div>
+                    <div>{price}원</div>
                   </div>
                 </div>
               </div>
@@ -344,7 +446,7 @@ const AddressItem = (props) => {
     setDeliveryAddressName(item.addressName);
     setDeliveryZipcode(item.zipcode);
     setDeliveryAddressPhone(item.addressPhone);
-    //setOpenAddress(!openAddress);
+    setOpenAddress(!openAddress);
   };
   /*
   useEffect(() => {

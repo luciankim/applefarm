@@ -1,7 +1,7 @@
 import Header from "./page/common/Header";
 import Footer from "./page/common/Footer";
 import "./page/common/default.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Ref from "./page/common/Ref";
 import Mypage from "./page/member/Mypage";
 import MemberWish from "./page/member/MemberWish";
@@ -16,8 +16,11 @@ import Product from "./page/product/Product";
 import axios from "axios";
 import Payment from "./page/member/Payment";
 import Nav from "./page/common/Nav";
+import CompletePayment from "./page/member/CompletePayment";
+import Swal from "sweetalert2";
 
 function App() {
+  const navigate = useNavigate();
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const obj = JSON.parse(window.localStorage.getItem("member"));
   const [isLogin, setIsLogin] = useState(obj ? true : false); //로그인상태를 체크하는 state
@@ -93,7 +96,14 @@ function App() {
             <Route path="/join" element={<Join />} />
             <Route path="/admin/*" element={<AdminMain />} />
             <Route path="/login" element={<Login login={login} />} />
-            <Route path="/purchase" element={<Payment isLogin={isLogin} />} />
+            <Route
+              path="/purchase/:productNo"
+              element={<Payment isLogin={isLogin} />}
+            />
+            <Route
+              path="/completePayment/:productNo"
+              element={<CompletePayment isLogin={isLogin} />}
+            />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
             <Route path="/product/*" element={<Product />} />
           </Routes>
