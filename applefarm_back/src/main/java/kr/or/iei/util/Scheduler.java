@@ -12,7 +12,7 @@ public class Scheduler {
 	@Autowired
 	private AdminService adminService;
 	
-	@Scheduled(fixedRate = 300000) //10초, miliseconds
+	@Scheduled(fixedRate = 1000000) // miliseconds
 	public void updateMembmerGrade() {
 		System.out.println("-------------scheduling------------");
         adminService.blackTimeOut();

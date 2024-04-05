@@ -128,3 +128,46 @@
 a:visited {
   color: #b7b7b7;
 }
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0;
+}
+
+.summary div {
+  width: calc((100% / 3) - 15px);
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.summary div p {
+  font-size: 18px;
+}
+.charts {
+  border: 1px solid rgb(204, 204, 204);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+.rank-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rank-wrap div {
+  text-align: center;
+  width: 430px;
+  padding: 0 70px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.rank-wrap div ul li {
+  text-align: left;
+}
