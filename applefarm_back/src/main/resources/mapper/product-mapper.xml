@@ -12,11 +12,16 @@
 		where product_line = #{productLine}
 		order by rownum desc
 	</select>
-	
+	 
 	<select id="selectQualityList" resultType="quality">
 		select * from quality_tbl where table_name = #{tableName}
 	</select>
 	
+
+	<select id="selectOneProduct" resultType="product">
+		select * from product_tbl where product_no = #{productNo}
+	</select>
+
 	<insert id="insertProduct">
 		insert into product_tbl 
 		values
@@ -34,6 +39,7 @@
 	insert into product_file_tbl values
 	(product_file_seq.nextval,#{productNo},#{filename},#{filepath})
 	</insert>
+
 	
 	<insert id="insertIphoneQualityHistory">
 		insert into IPHONE_QUALITY_HISTORY_TBL values
@@ -74,4 +80,5 @@
 			airpods_quality_history_seq.nextval,#{productNo},#{soundQuality},#{connectionStability},#{batteryEfficiency},#{exterior},#{charging},#{touchSensor}
 		)
 	</insert>
+
 </mapper>

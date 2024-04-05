@@ -5,7 +5,7 @@ import SideMenu from "../../component/SideMenu";
 import { useState } from "react";
 import "./admin.css";
 import AdminMember from "./AdminMember";
-import AdminDashboard from "./AdminDashboardi";
+import AdminDashboard from "./AdminDashboard";
 import AdminReport from "./AdminReport";
 import AdminProduct from "./AdminProduct";
 
