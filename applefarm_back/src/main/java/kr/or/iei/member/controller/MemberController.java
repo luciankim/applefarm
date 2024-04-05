@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
@@ -323,17 +322,20 @@ public class MemberController {
 		}
 	}
 	
-	@Operation(summary = "배송지 조회",description = "기본배송지+전체배송지 리스트 조회")
+	@Operation(summary = "상품,회원정보 조회",description = "상품, 회원, 기본배송지 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 확인"),
 		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
 	})
-	@GetMapping(value = "/basicAddress")
-	public ResponseEntity<ResponseDTO> basicAddress(@RequestAttribute int memberNo){
-		
-		Address address= memberService.basicAddress(memberNo);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", address);
+	@GetMapping(value = "/paymentInfo/{productNo}")
+	public ResponseEntity<ResponseDTO> paymentInfo(@RequestAttribute int memberNo,@PathVariable int productNo){
+		Map map = memberService.selectPaymentInfo(memberNo,productNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		
+		//Address address= memberService.basicAddress(memberNo);
+		//ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", address);
+		//return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
 	@Operation(summary = "전체배송지 조회",description = "기본배송지 최우선 순으로 전체 배송지 리스트 조회")
@@ -348,7 +350,7 @@ public class MemberController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	
+
 	
 	
 	

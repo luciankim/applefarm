@@ -1,7 +1,5 @@
 package kr.or.iei.member.model.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,10 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.product.model.dao.ProductDao;
+import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
@@ -28,6 +27,8 @@ public class MemberService {
 	private PagiNation pagination;
 	@Autowired
 	private JwtUtil jwtUtil;
+	@Autowired
+	private ProductDao productDao;
 
 	@Transactional
 	public int insertAddress(Address address) {
@@ -237,6 +238,20 @@ public class MemberService {
 		public List allAddress(int memberNo) {
 			return memberDao.selectAddress(memberNo);
 		}
+		public Map selectPaymentInfo(int memberNo, int productNo) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			//회원 정보
+			Member member = memberDao.getMemberInfo(memberNo);
+			//주소 정보
+			Address address= memberDao.selectAddressBasic(memberNo);
+			//상품 정보
+			Product product = productDao.selectOneProduct(productNo);
+			map.put("member", member);
+			map.put("address", address);
+			map.put("product",product);
+			return map;
+		}
+		
 		
 		public Member selectNo(int memberNo) {
 			
@@ -256,6 +271,8 @@ public class MemberService {
 		public Address basicAddress(int memberNo) {
 			return memberDao.selectAddressBasic(memberNo);
 		}
+
+		
 
 		
 		
