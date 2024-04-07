@@ -7,40 +7,34 @@
   font-size: 60px;
   margin-bottom: 60px;
 }
-/*...ProductCategory.js를 거친 후에*/
-.productMain-middle-wrap {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 50px;
+.productMain-content-wrap {
+  width: 100%;
 }
-.productMain-middle-wrap-left {
-  width: 700px;
-}
-.product-category-wrap-right {
-  width: 350px;
-  height: auto;
+.productMain-content-hide {
+  display: none;
 }
 /*--ProductMain.js--*/
 
 /*ProductCategory.js*/
-.product-category-wrap {
+.productCategory-wrap {
   display: flex;
   justify-content: space-between;
 }
-.product-category-wrap-left {
+.productCategory-wrap-left {
   width: 700px;
   height: auto; /*sticky 쓸려면 부모요소에 높이 있어야함. 그래서 auto로 넣었음.*/
 }
-.product-category-wrap-left > div {
+.productCategory-wrap-left > div {
   width: 100%;
-  top: 300px; /*stkcky 사용시 top,bottom,left,right중 하나는 있어야.*/
+  top: 350px; /*stkcky 사용시 top,bottom,left,right중 하나는 있어야.*/
   position: sticky;
 }
-.product-category-wrap-left .categoryImage {
+.productCategory-wrap-left .categoryImage {
   width: 100%;
   height: 600px;
   object-fit: contain;
   border-radius: 20px;
+  margin-bottom: 10px;
 }
 /*
 <object-fit>
@@ -50,26 +44,23 @@
 -none : 대체 콘텐츠의 크기를 조절하지 않습니다.
 -scale-down : none과 contain 중 대체 콘텐츠의 크기가 더 작아지는 값을 선택합니다.
 */
-.product-category-wrap-right {
+.productCategory-wrap-right {
   flex-shrink: 0; /*화면 줄어들 시 0/1만큼 크기 축소 = 축소안함*/
   width: 350px;
 }
-.product-category-wrap-right > .category-option {
+.category-option {
   margin-bottom: 70px;
 }
-.product-category-wrap-right > .category-option > div {
+.category-option > div {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.product-category-wrap-right > .category-option > div > .category-option-title {
+.category-option > div > .category-option-title {
   font-size: 24px;
   font-weight: 600;
 }
-.product-category-wrap-right
-  > .category-option
-  > div
-  > .category-option-select {
+.category-option > div > .category-option-select {
   font-size: 15px;
   line-height: 35px;
 }
@@ -97,28 +88,78 @@
 
 /*--ProductCategory.js--*/
 
-/*ProductSummary*/
+/*ProductSummary.js*/
 .productSummary-wrap {
   width: 100%;
 }
 .productSummary-box {
   width: 100%;
-  height: 150px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .productSummary-title {
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 .productSummary-content {
-  font-size: 20px;
+  font-size: 18px;
+  margin: 10px 0px;
 }
 .productSummary-content-detail {
   font-size: 18px;
   font-family: ns-l;
 }
+/*--ProductSummary.js*/
 
-/*--ProductSummary*/
+/*ProductChart.js*/
+.productChart {
+  width: 90%;
+  margin: 0 auto;
+}
+.productChart-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 60px;
+}
+.productChart-button {
+  width: 90%;
+  margin-left: 100px;
+  position: relative;
+  z-index: 10;
+}
+.productChart-button > .productChart-btns {
+  position: absolute;
+}
+.productChart-button > .productChart-btns > .button_form {
+  padding: 9px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-family: ns-b;
+  line-height: 1.5;
+  text-align: center;
+  transition: all 0.2s;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.productChart-button > .productChart-btns > .bg1 {
+  background-color: var(--main_01);
+}
+.productChart-button > .productChart-btns > .bg2 {
+  background-color: var(--gray_04);
+}
+
+/*
+.productChart-tab .productTab-wrap {
+  margin-bottom: 20px;
+}
+*/
+.productChart-content {
+  font-size: 18px;
+}
+
+/*--ProductChart.js*/

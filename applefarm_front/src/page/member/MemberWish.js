@@ -10,12 +10,11 @@ const MemberWish = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [status, setStatus] = useState(false);
-  const memberNo = 45; //==> 로그인 구현이후 수정필요
   useEffect(() => {
     axios
-      .get(backServer + "/member/likeList/" + memberNo)
+      .get(backServer + "/member/like")
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         if (res.data.message === "success") {
           setLikeList(res.data.data);
         }
@@ -24,13 +23,12 @@ const MemberWish = () => {
         console.log(res.data);
       });
   }, [status]);
-
   return (
     <div className="mypage-current-wrap">
-      <div className="mypage-current-title">
+      <h3 className="mypage-current-title">
         {/**<span className="material-icons like-icon">favorite</span>  */}
         좋아요
-      </div>
+      </h3>
       <div className="member-like-tbl-box">
         {likeList.length === 0 ? (
           <div className="no-like-list">
@@ -43,7 +41,6 @@ const MemberWish = () => {
               <tr>
                 <th>LIKE</th>
                 <th colSpan={2}>ITEM</th>
-                <th>QUALITY</th>
                 <th>PRICE</th>
                 <th>SELLER</th>
                 <th>PURCHASE</th>
@@ -79,7 +76,8 @@ const LikeItem = (props) => {
   //구매 페이지 이동 작성 예정
   const purchase = () => {
     //구매페이지 이동
-    navigate("/purchase", { state: { product: like } });
+    const productNo = like.productNo;
+    navigate("/purchase/" + productNo);
   };
 
   //모달
@@ -122,17 +120,40 @@ const LikeItem = (props) => {
         </span>
       </td>
       <td>
-        <div className="member-like-img-box">
-          <img src={like.productThumbnail} />
+        <div
+          className={
+            like.trade === 0
+              ? "member-like-img-box"
+              : "member-like-img-box  sold-out-img-box"
+          }
+        >
+          <div>
+            <img
+              src={like.productThumbnail}
+              className={like.trade === 0 ? "like-img" : "sold-out-first-img"}
+            />
+          </div>
+          {like.trade === 0 ? (
+            ""
+          ) : (
+            <div>
+              <img src="/image/soldout.png" className="sold-out-img"></img>
+            </div>
+          )}
         </div>
       </td>
       <td className="likeName-td">{like.productSummary}</td>
-      <td>{like.productQuality}</td>
-      <td>{like.productPrice}</td>
+      <td>{like.productPrice.toLocaleString()}원</td>
       <td>{like.memberNickName}</td>
-      <td className="purchase-btn-box">
-        <Button3 text="구매하기" clickEvent={purchase} />
-      </td>
+      {like.trade === 0 ? (
+        <td className="purchase-btn-box">
+          <Button3 text="구매하기" clickEvent={purchase} />
+        </td>
+      ) : (
+        <td className="sold-out-btn-box">
+          <Button3 text="구매불가" />
+        </td>
+      )}
       <td>
         {modalOpen && (
           <DelModal

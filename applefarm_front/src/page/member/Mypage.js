@@ -6,8 +6,11 @@ import Address from "./Address";
 import MemberWish from "./MemberWish";
 import MemberInfo from "./MemberInfo";
 import Swal from "sweetalert2";
+
 import axios from "axios";
 import DeleteMember from "./DeleteMember";
+
+import DetailOrder from "./DetailOrder";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
@@ -67,8 +70,6 @@ const Mypage = (props) => {
       </div>
       <div className="mypage-content">
         <Routes>
-          <Route path="/address" element={<Address member={member} />}></Route>
-          <Route path="/wish" element={<MemberWish member={member} />}></Route>
           <Route
             path="/loginInfo"
             element={<MemberInfo member={member} logout={logout} />}
@@ -77,6 +78,11 @@ const Mypage = (props) => {
             path="/deleteMember"
             element={<DeleteMember member={member} logout={logout} />}
           />
+
+          <Route path="/address" element={<Address />}></Route>
+          <Route path="/wish" element={<MemberWish />}></Route>
+
+          <Route path="/detailOrder/:productNo" element={<DetailOrder />} />
         </Routes>
       </div>
     </div>

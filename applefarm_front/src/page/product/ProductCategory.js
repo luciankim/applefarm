@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./productMain.css";
 import axios from "axios";
 import { PswRadio, PswRadioQuality } from "../../component/FormFrm";
+import ProductSummary from "./ProductSummary";
 
 const ProductCategory = (props) => {
   const {
-    table,
-    naviProductLine,
+    navTable,
+    navProductLine,
+    navProductGen,
 
     selectedCategory,
     setSelectedCategory,
@@ -42,6 +44,11 @@ const ProductCategory = (props) => {
 
     productQuality,
     setProductQuality,
+    selectedProduct,
+
+    changeBtnActiveTrue,
+    changeBtnActiveFalse,
+    pip,
   } = props;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -91,6 +98,25 @@ const ProductCategory = (props) => {
 
   //초기화
   useEffect(() => {
+    setProductLine("");
+    setProductGen("");
+    setProductModel("");
+    setProductModel2("");
+    clear();
+    genArr.length = 0;
+    modelArr.length = 0;
+    model2Arr.length = 0;
+  }, [navTable]);
+  useEffect(() => {
+    setProductGen("");
+    setProductModel("");
+    setProductModel2("");
+    clear();
+    genArr.length = 0;
+    modelArr.length = 0;
+    model2Arr.length = 0;
+  }, [productLine]);
+  useEffect(() => {
     setProductModel("");
     setProductModel2("");
     clear();
@@ -103,10 +129,7 @@ const ProductCategory = (props) => {
     model2Arr.length = 0;
   }, [productModel]);
 
-  const requestCategory = {
-    table: table,
-    productLine: naviProductLine,
-  };
+  const requestCategory = { table: navTable, productLine: navProductLine };
   useEffect(() => {
     axios
       .post(backServer + "/product/category", requestCategory)
@@ -119,7 +142,7 @@ const ProductCategory = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, []);
+  }, [navProductLine]);
 
   //카테고리 1개 특정하기 위한 코드
   //gen
@@ -224,10 +247,102 @@ const ProductCategory = (props) => {
     }
   }, [selectedCategory]);
 
+  //ProductInsert.js에서 "품질선택"으로 넘어가기 위한 조건 ->changeBtnActive
+  const productArr = [
+    "iPhone",
+    "MacBook Pro",
+    "MacBook Air",
+    "iPad Pro 12.9",
+    "iPad Pro 11",
+    "iPad Air",
+    "iPad Mini",
+    "iPad",
+    "Apple Watch Ultra",
+    "Apple Watch Series",
+    "Apple Watch SE",
+    "AirPods Max",
+    "AirPods Pro",
+    "AirPods",
+  ];
+  useEffect(() => {
+    if (pip) {
+      //pip가 notundefined이거나 notnull일때. 즉 pip가 true일때. 즉 productInsert.js에서 넘어왔을 때.
+      if (productArr.indexOf(selectedProduct.productLine) >= 11) {
+        //에어팟
+        if (selectedProduct.productColor && selectedProduct.productCharge) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 8) {
+        //애플워치
+        if (
+          selectedProduct.productColor &&
+          selectedProduct.productSize &&
+          selectedProduct.productConnectivity
+        ) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 3) {
+        //아이패드
+        if (
+          selectedProduct.productColor &&
+          selectedProduct.productStorage &&
+          selectedProduct.productConnectivity
+        ) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 1) {
+        //맥북
+        //2018~2020년
+        if (
+          selectedProduct.productGen === "2018년" ||
+          selectedProduct.productGen === "2019년" ||
+          selectedProduct.productGen === "2020년"
+        ) {
+          if (
+            selectedProduct.productColor &&
+            selectedProduct.productStorage &&
+            selectedProduct.productMemory &&
+            selectedProduct.productCpu &&
+            selectedProduct.productGpu
+          ) {
+            changeBtnActiveTrue();
+          } else {
+            changeBtnActiveFalse();
+          }
+          //M1이후
+        } else if (
+          selectedProduct.productColor &&
+          selectedProduct.productStorage &&
+          selectedProduct.productMemory &&
+          selectedProduct.productChip
+        ) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else if (productArr.indexOf(selectedProduct.productLine) >= 0) {
+        //아이폰
+        if (selectedProduct.productColor && selectedProduct.productStorage) {
+          changeBtnActiveTrue();
+        } else {
+          changeBtnActiveFalse();
+        }
+      } else {
+        changeBtnActiveFalse();
+      }
+    }
+  }, [selectedProduct]);
+
   return (
-    <div className="product-category-wrap">
+    <div className="productCategory-wrap">
       {/*좌측 영역*/}
-      <div className="product-category-wrap-left">
+      <div className="productCategory-wrap-left">
         <div>
           {colorArr.indexOf(productColor) !== -1 ? (
             <img
@@ -250,14 +365,14 @@ const ProductCategory = (props) => {
       {/*//좌측 영역*/}
 
       {/*우측 영역*/}
-      <div className="product-category-wrap-right">
+      <div className="productCategory-wrap-right">
         {
           <ArrMap //ul태그
             arr={genArr}
             name="gen"
             selectValue={productGen}
             setSelectValue={setProductGen}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -266,7 +381,7 @@ const ProductCategory = (props) => {
             name="model"
             selectValue={productModel}
             setSelectValue={setProductModel}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -275,7 +390,7 @@ const ProductCategory = (props) => {
             name="model2"
             selectValue={productModel2}
             setSelectValue={setProductModel2}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -284,7 +399,7 @@ const ProductCategory = (props) => {
             name="color"
             selectValue={productColor}
             setSelectValue={setProductColor}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -293,7 +408,7 @@ const ProductCategory = (props) => {
             name="storage"
             selectValue={productStorage}
             setSelectValue={setProductStorage}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -302,16 +417,16 @@ const ProductCategory = (props) => {
             name="memory"
             selectValue={productMemory}
             setSelectValue={setProductMemory}
-            table={table}
+            navTable={navTable}
           />
         }
         {
           <ArrMap //ul태그
             arr={chipArr}
-            name="cbip"
+            name="chip"
             selectValue={productChip}
             setSelectValue={setProductChip}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -320,7 +435,7 @@ const ProductCategory = (props) => {
             name="cpu"
             selectValue={productCpu}
             setSelectValue={setProductCpu}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -329,7 +444,7 @@ const ProductCategory = (props) => {
             name="gpu"
             selectValue={productGpu}
             setSelectValue={setProductGpu}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -338,7 +453,7 @@ const ProductCategory = (props) => {
             name="size"
             selectValue={productSize}
             setSelectValue={setProductSize}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -347,7 +462,7 @@ const ProductCategory = (props) => {
             name="connectivity"
             selectValue={productConnectivity}
             setSelectValue={setProductConnectivity}
-            table={table}
+            navTable={navTable}
           />
         }
         {
@@ -356,23 +471,23 @@ const ProductCategory = (props) => {
             name="charge"
             selectValue={productCharge}
             setSelectValue={setProductCharge}
-            table={table}
+            navTable={navTable}
           />
         }
-        {selectedCategory ? (
+        {selectedCategory && !pip ? (
           <ArrMap //ul태그
             arr={["A", "B", "C", "D"]}
             name="quality"
             selectValue={productQuality}
             setSelectValue={setProductQuality}
-            table={table}
+            navTable={navTable}
           />
         ) : (
           ""
         )}
+        <ProductSummary selectedProduct={selectedProduct} />
       </div>
-
-      {/*//우측 영역*/}
+      {/*--우측 영역*/}
     </div>
   );
 };
@@ -382,19 +497,15 @@ const ArrMap = (props) => {
   const name = props.name;
   const selectValue = props.selectValue;
   const setSelectValue = props.setSelectValue;
-  const table = props.table;
+  const table = props.navTable;
 
   const optionTitle = () => {
     if (name === "gen") {
       return table === "IPHONE_TBL" ? "시리즈" : "세대";
-    } else if (name === "model2") {
-      return selectValue === "2018년" ||
-        selectValue === "2019년" ||
-        selectValue === "2020년"
-        ? "포트 수"
-        : "모델";
     } else if (name === "model") {
       return table === "MACBOOK_TBL" ? "화면 크기" : "모델";
+    } else if (name === "model2") {
+      return "모델";
     } else if (name === "color") {
       return "색상";
     } else if (name === "storage") {

@@ -4,21 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import kr.or.iei.member.model.service.MemberService;
+import kr.or.iei.admin.model.service.AdminService;
 
 @Component
 public class Scheduler {
 	
 	@Autowired
-	private MemberService memberService;
+	private AdminService adminService;
 	
-	@Scheduled(fixedRate = 180000) //180초, miliseconds
+	@Scheduled(fixedRate = 1000000) // miliseconds
 	public void updateMembmerGrade() {
-		int reqPage = 1;
-		System.out.println("스케쥴링 진행중");
-		
-        memberService.selectMemberList(reqPage);
-        
+		System.out.println("-------------scheduling------------");
+        adminService.blackTimeOut();
 	}
-	
 }

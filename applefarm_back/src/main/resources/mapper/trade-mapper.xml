@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.or.iei.trade.model.dao.TradeDao">
+  	<insert id="insertTrade">
+  		insert into trade_tbl values(trade_seq.nextval,#{tradeSeller},#{tradeBuyer},#{productNo},null,sysdate,#{tradePrice},'결제완료',#{zipcode},#{address},#{addressDetail},#{addressName},#{addressPhone},#{addressRequest},null,#{paymentNumber})
+  	</insert>
+  	<select id="selectExistTrade">
+  		select count(*) from trade_tbl where product_no=#{productNo}
+  	</select>
+</mapper>

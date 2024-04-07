@@ -71,15 +71,16 @@ public interface MemberDao {
 
 	int deleteLike(int likeNo);
 
+
 	int updateEmail(Member member);
 
 	int deleteMember(int memberNo);
 
 	int updatePw(Member member);
 
-	
 
-	
+	List<Member> selectBlackMemberCheckList();
+
 
 
 

@@ -5,13 +5,12 @@ import SideMenu from "../../component/SideMenu";
 import { useState } from "react";
 import "./admin.css";
 import AdminMember from "./AdminMember";
-import AdminDashboard from "./AdminDashboardi";
+import AdminDashboard from "./AdminDashboard";
 import AdminReport from "./AdminReport";
 import AdminProduct from "./AdminProduct";
 
 const AdminMain = () => {
   const [adminMenu, setAdminMenu] = useState([
-    { url: "dashboard", text: "대시보드", active: false },
     { url: "manageMember", text: "회원관리", active: false },
     { url: "manageProduct", text: "상품관리", active: false },
     { url: "manageRefund", text: "환불관리", active: false },

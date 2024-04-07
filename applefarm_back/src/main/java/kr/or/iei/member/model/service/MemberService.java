@@ -1,7 +1,5 @@
 package kr.or.iei.member.model.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.product.model.dao.ProductDao;
+import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.trade.model.dao.TradeDao;
 import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
@@ -27,7 +28,11 @@ public class MemberService {
 	private PagiNation pagination;
 	@Autowired
 	private JwtUtil jwtUtil;
-
+	@Autowired
+	private ProductDao productDao;
+	@Autowired
+	private TradeDao tradeDao;
+	
 	@Transactional
 	public int insertAddress(Address address) {
 		int result = 0;
@@ -143,30 +148,6 @@ public class MemberService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("memberList", memberList);
 		map.put("pi", pi);
-
-		// 30초 시간 계산 : 블랙
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-		
-		//블랙 지정 시간 계산
-		for (Member member : memberList) {
-			//LocalDateTime 클래스를 이용한 특정 시간 셈
-			// 문자열을 LocalDateTime으로 파싱
-			String blackTimeString = member.getMemberBlackTime();
-			if (blackTimeString != null) {
-				LocalDateTime blackTime = LocalDateTime.parse(blackTimeString, formatter);
-				LocalDateTime whiteTime = blackTime.plusSeconds(15);
-				if (now.isAfter(whiteTime)) {
-					 member.setMemberGrade(1);
-	                 memberDao.updateBlackMemberGrade(member);
-					
-				} else {
-					System.out.println(member.getMemberName() + " 이용정지");
-				}
-			}
-		}
-
 		return map;
 	}
 
@@ -257,6 +238,24 @@ public class MemberService {
 		public int deleteLike(int likeNo) {
 			return memberDao.deleteLike(likeNo);
 		}
+		public List allAddress(int memberNo) {
+			return memberDao.selectAddress(memberNo);
+		}
+		public Map selectPaymentInfo(int memberNo, int productNo) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			//회원 정보
+			Member member = memberDao.getMemberInfo(memberNo);
+			//주소 정보
+			Address address= memberDao.selectAddressBasic(memberNo);
+			//상품 정보
+			Product product = productDao.selectOneProduct(productNo);
+			int tradeExist = tradeDao.selectExistTrade(productNo);
+			map.put("member", member);
+			map.put("address", address);
+			map.put("product",product);
+			map.put("tradeExist",tradeExist);
+			return map;
+		}
 		
 		
 		public Member selectNo(int memberNo) {
@@ -273,6 +272,7 @@ public class MemberService {
 			return memberDao.getMemberInfo(memberNo);
 		}
 
+
 		public int updateEmail(Member member) {
 			
 			return memberDao.updateEmail(member);
@@ -281,6 +281,12 @@ public class MemberService {
 		public int deleteMember(int memberNo) {
 			
 			return memberDao.deleteMember(memberNo);
+
+		}
+		
+		public Address basicAddress(int memberNo) {
+			return memberDao.selectAddressBasic(memberNo);
+
 		}
 
 		
@@ -310,5 +316,9 @@ public class MemberService {
 			
 			return memberDao.updatePw(member);
 		}
+
+		
+		
+		
 
 }

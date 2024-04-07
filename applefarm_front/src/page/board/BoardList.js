@@ -38,6 +38,7 @@ const BoardList = (props) => {
 
   const fetchBoardList = (page) => {
     let url = backServer + "/board/list/" + page;
+
     if (selectedKeyword) {
       url =
         backServer +
@@ -57,6 +58,7 @@ const BoardList = (props) => {
         setPageInfo(res.data.data.pi);
         setIsSearchResult(!!selectedKeyword); // 검색어가 있으면 true, 없으면 false
         setSelectedKeyword("");
+        console.log(res.data);
       })
       .catch((error) => {
         console.error("Error fetching board list:", error);

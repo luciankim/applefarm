@@ -1,36 +1,55 @@
 package kr.or.iei.product.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.product.model.dto.IpadQualityHistory;
+import kr.or.iei.product.model.dto.IphoneQualityHistory;
+import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductCategory;
+import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
+import kr.or.iei.util.FileUtils;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value="/product")
 @Tag(name="PRODUCT", description = "PRODUCT API")
 public class ProductController {
-	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private FileUtils fileUtils;
+	
+	
+	@Value("${file.root}")
+	private String root;
 	
 	@Operation(summary="제품군 조회", description = "제품군을 받아서 해당 제품군의 정보들을 제품별 메인으로 줌으로써 이용자가 특정 상품을 선택할 수 있도록 함")
 	@ApiResponses({
@@ -62,5 +81,203 @@ public class ProductController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-
+	
+	@PostMapping(value = "/iphone")
+	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@RequestBody IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+		//회원번호
+		product.setMemberNo(memberNo);
+		
+		String savepath = root + "/product/";
+		
+		//썸네일
+		if(thumbnail != null) {
+			String filepath = fileUtils.upload(savepath, thumbnail);
+			product.setProductThumbnail(filepath);
+		}
+		
+		ArrayList<ProductFile> fileList = new ArrayList<ProductFile>();
+		if(productFile != null) {
+			for(MultipartFile file : productFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				ProductFile pf = new ProductFile();
+				pf.setFilename(filename);
+				pf.setFilepath(filepath);
+				fileList.add(pf);
+			}	
+		}
+		
+		int result = productService.insertIphone(product,fileList,partObject); 
+		
+		if(result == 2+fileList.size()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	
+	
+	@PostMapping(value = "/macbook")
+	public ResponseEntity<ResponseDTO> insertMacbook(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+		System.out.println("여기는 맥북 등록");
+		System.out.println(product);
+		System.out.println(partObject);
+		//회원번호
+		product.setMemberNo(memberNo);
+		
+		String savepath = root + "/product/";
+		
+		//썸네일
+		if(thumbnail != null) {
+			String filepath = fileUtils.upload(savepath, thumbnail);
+			product.setProductThumbnail(filepath);
+		}
+		
+		ArrayList<ProductFile> fileList = new ArrayList<ProductFile>();
+		if(productFile != null) {
+			for(MultipartFile file : productFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				ProductFile pf = new ProductFile();
+				pf.setFilename(filename);
+				pf.setFilepath(filepath);
+				fileList.add(pf);
+			}	
+		}
+		
+		int result = productService.insertMacbook(product,fileList,partObject); 
+		
+		if(result == 2+fileList.size()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping(value = "/ipad")
+	public ResponseEntity<ResponseDTO> insertIpad(@ModelAttribute Product product,@ModelAttribute IpadQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+		System.out.println("여기는 맥북 등록");
+		System.out.println(product);
+		System.out.println(partObject);
+		//회원번호
+		product.setMemberNo(memberNo);
+		
+		String savepath = root + "/product/";
+		
+		//썸네일
+		if(thumbnail != null) {
+			String filepath = fileUtils.upload(savepath, thumbnail);
+			product.setProductThumbnail(filepath);
+		}
+		
+		ArrayList<ProductFile> fileList = new ArrayList<ProductFile>();
+		if(productFile != null) {
+			for(MultipartFile file : productFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				ProductFile pf = new ProductFile();
+				pf.setFilename(filename);
+				pf.setFilepath(filepath);
+				fileList.add(pf);
+			}	
+		}
+		
+		int result = productService.insertIpad(product,fileList,partObject); 
+		
+		if(result == 2+fileList.size()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping(value = "/watch")
+	public ResponseEntity<ResponseDTO> insertWatch(@ModelAttribute Product product,@ModelAttribute WatchQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+		System.out.println("여기는 맥북 등록");
+		System.out.println(product);
+		System.out.println(partObject);
+		//회원번호
+		product.setMemberNo(memberNo);
+		
+		String savepath = root + "/product/";
+		
+		//썸네일
+		if(thumbnail != null) {
+			String filepath = fileUtils.upload(savepath, thumbnail);
+			product.setProductThumbnail(filepath);
+		}
+		
+		ArrayList<ProductFile> fileList = new ArrayList<ProductFile>();
+		if(productFile != null) {
+			for(MultipartFile file : productFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				ProductFile pf = new ProductFile();
+				pf.setFilename(filename);
+				pf.setFilepath(filepath);
+				fileList.add(pf);
+			}	
+		}
+		
+		int result = productService.insertWatch(product,fileList,partObject); 
+		
+		if(result == 2+fileList.size()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping(value = "/airpods")
+	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+		System.out.println("여기는 맥북 등록");
+		System.out.println(product);
+		System.out.println(partObject);
+		//회원번호
+		product.setMemberNo(memberNo);
+		
+		String savepath = root + "/product/";
+		
+		//썸네일
+		if(thumbnail != null) {
+			String filepath = fileUtils.upload(savepath, thumbnail);
+			product.setProductThumbnail(filepath);
+		}
+		
+		ArrayList<ProductFile> fileList = new ArrayList<ProductFile>();
+		if(productFile != null) {
+			for(MultipartFile file : productFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				ProductFile pf = new ProductFile();
+				pf.setFilename(filename);
+				pf.setFilepath(filepath);
+				fileList.add(pf);
+			}	
+		}
+		
+		int result = productService.insertAirpods(product,fileList,partObject); 
+		
+		if(result == 2+fileList.size()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 }
