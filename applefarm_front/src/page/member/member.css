@@ -454,3 +454,48 @@
 .delete-btn:hover {
   text-decoration: underline;
 }
+
+/*회원탈퇴*/
+.content-wrap {
+  border: 1px solid #b7b7b7;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.delete-btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-member-cancel-btn {
+  padding: 20px;
+  border: 1px solid #b7b7b7;
+  border-radius: 10px;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.delete-member-btn {
+  padding: 20px;
+  border: 1px solid #b7b7b7;
+  border-radius: 10px;
+  background-color: white;
+  color: #b7b7b7;
+}
+
+.delete-btn-box {
+  padding: 15px;
+}
+
+.checkbox-title {
+  padding: 10px;
+}
+
+.checkbox-box {
+  padding: 10px 0px;
+}
+
+.content-title {
+  padding: 30px;
+  font-size: 26px;
+}

@@ -73,6 +73,12 @@ public interface MemberDao {
 
 	int updateEmail(Member member);
 
+	int deleteMember(int memberNo);
+
+	int updatePw(Member member);
+
+	
+
 	
 
 

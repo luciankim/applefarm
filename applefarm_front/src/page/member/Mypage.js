@@ -7,12 +7,14 @@ import MemberWish from "./MemberWish";
 import MemberInfo from "./MemberInfo";
 import Swal from "sweetalert2";
 import axios from "axios";
+import DeleteMember from "./DeleteMember";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
   const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
+  const logout = props.logout;
   const navigate = useNavigate();
   if (!isLogin) {
     Swal.fire("로그인 후 이용 가능합니다.")
@@ -69,7 +71,11 @@ const Mypage = (props) => {
           <Route path="/wish" element={<MemberWish member={member} />}></Route>
           <Route
             path="/loginInfo"
-            element={<MemberInfo isLogin={isLogin} member={member} />}
+            element={<MemberInfo member={member} logout={logout} />}
+          />
+          <Route
+            path="/deleteMember"
+            element={<DeleteMember member={member} logout={logout} />}
           />
         </Routes>
       </div>

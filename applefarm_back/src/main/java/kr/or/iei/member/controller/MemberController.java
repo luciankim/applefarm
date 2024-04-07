@@ -381,17 +381,73 @@ public class MemberController {
 		
 	}
 	
+		
+		
 	
-	
-	@Operation(summary ="이메일 수정",description = "이메일 수정")
+	@Operation(summary ="회원탈퇴",description = "회원번호로 식별해서 회원탈퇴")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})
-	@PatchMapping(value="/updateEmail")
-	public ResponseEntity<ResponseDTO> updateEmail(@RequestBody Member member){
+	@DeleteMapping(value="/deleteMember/{memberNo}")
+	public ResponseEntity<ResponseDTO> deleteMember(@RequestAttribute int memberNo){
 		
-		int result = memberService.updateEmail(member);
+		System.out.println(memberNo);
+		
+		int result = memberService.deleteMember(memberNo);
+		
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	@Operation(summary ="이전 비밀번호 확인",description = "회원 번호, 회원 이메일 화면에서 데이터 전송받아서 비밀번호 일치하는지 확인")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value="/pwCheck")
+	public ResponseEntity<ResponseDTO> pwCheck(@RequestBody Member member){
+		
+		
+		int result = memberService.pwCheck(member);
+		
+		
+		
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "valid", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "invalid", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+	}
+	
+	
+	
+	
+	@Operation(summary ="비밀번호 변경",description = "회원 번호, 회원 이메일 화면에서 데이터 전송받아서 비밀번호 변경")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/updatePw")
+	public ResponseEntity<ResponseDTO> updatePw(@RequestBody Member member){
+		
+		int result = memberService.updatePw(member);
 		
 		System.out.println(member);
 		
@@ -405,12 +461,30 @@ public class MemberController {
 		}
 		
 		
-		
 	}
 	
 	
 	
-	
+	@Operation(summary ="이메일 변경",description = "화면에서 회원 번호, 회원 이메일 데이터 전송받아서 이메일 변경")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/updateEmail")
+	public ResponseEntity<ResponseDTO> updateEmail(@RequestBody Member member){
+				
+		int result = memberService.updateEmail(member);
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+		
+	}
 	
 	
 	

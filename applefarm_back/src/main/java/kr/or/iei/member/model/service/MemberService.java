@@ -278,10 +278,37 @@ public class MemberService {
 			return memberDao.updateEmail(member);
 		}
 
+		public int deleteMember(int memberNo) {
+			
+			return memberDao.deleteMember(memberNo);
+		}
+
 		
+		//이전 비밀번호 확인
+		public int pwCheck(Member member) {
+			
+			Member m = memberDao.selectNo(member.getMemberNo());
+			
+			
+																				//db에서 조회한거
+			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				
+				return 1;
+				
+				
+			}else {
+				
+				return 0;
+			}
+			
+			
+		}
 
-
-
-		
+		public int updatePw(Member member) {
+			
+			
+			
+			return memberDao.updatePw(member);
+		}
 
 }

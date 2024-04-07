@@ -233,6 +233,20 @@
 	
 	</update>
 	
+	<delete id="deleteMember">
+		
+		delete from member_tbl where member_no = #{memberNo}
+	
+	</delete>
+	
+	<update id="updatePw">
+	
+		
+		update member_tbl set member_pw=#{memberPw} where member_no = #{memberNo}
+		
+	
+	</update>
+	
 	
 
 </mapper>

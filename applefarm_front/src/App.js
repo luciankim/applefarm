@@ -16,6 +16,7 @@ import Product from "./page/product/Product";
 import axios from "axios";
 import Payment from "./page/member/Payment";
 import Main from "./page/common/Main";
+import DeleteMember from "./page/member/DeleteMember";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -74,7 +75,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/ref" element={<Ref />} />
-            <Route path="/mypage/*" element={<Mypage isLogin={isLogin} />} />
+            <Route
+              path="/mypage/*"
+              element={<Mypage isLogin={isLogin} logout={logout} />}
+            />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
             <Route path="/board/*" element={<BoardMain />} />
             <Route path="/join" element={<Join />} />
