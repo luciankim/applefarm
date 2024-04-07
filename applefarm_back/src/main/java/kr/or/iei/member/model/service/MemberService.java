@@ -317,6 +317,11 @@ public class MemberService {
 			return memberDao.updatePw(member);
 		}
 
+		public int updatePhone(Member member) {
+			
+			return memberDao.updatePhone(member);
+		}
+
 		
 		
 		

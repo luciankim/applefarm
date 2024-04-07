@@ -695,6 +695,10 @@
 
 /*로그인 정보*/
 
+.mypage-content-info {
+  padding-top: 30px;
+}
+
 .info-input {
   border: none;
   border-bottom: 1px solid #bfbfbf;
@@ -723,6 +727,39 @@
 
 .delete-btn:hover {
   text-decoration: underline;
+}
+
+table {
+  border-spacing: 30px;
+}
+
+.btn-wrap {
+  position: relative;
+  left: 35%;
+}
+
+.btn-wrap td {
+}
+
+.reg-text {
+  position: relative;
+  top: 25px;
+  right: 420px;
+  color: red;
+  font-size: 12px;
+}
+
+.reg-text1 {
+  position: relative;
+  top: 30px;
+  width: 200px;
+  font-size: 12px;
+  right: 460px;
+}
+
+.info-title {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 /*회원탈퇴*/

@@ -81,6 +81,8 @@ public interface MemberDao {
 
 	List<Member> selectBlackMemberCheckList();
 
+	int updatePhone(Member member);
+
 
 
 

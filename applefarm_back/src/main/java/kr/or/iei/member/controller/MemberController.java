@@ -523,6 +523,31 @@ public class MemberController {
 	}
 	
 	
+	@Operation(summary ="이메일 변경",description = "화면에서 회원 번호, 회원 이메일 데이터 전송받아서 이메일 변경")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/updatePhone")
+	public ResponseEntity<ResponseDTO> updatePhone(@RequestBody Member member){
+		
+		
+		int result = memberService.updatePhone(member);
+		
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+		
+		
+	}
+	
+	
 	
 }
 	
