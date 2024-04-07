@@ -236,19 +236,7 @@
 
 
 
-	<select id="OneMemberNo" resultType="int">
-
-
-		select member_no from member_tbl where member_id =#{memberId}
-
-	</select>
-
-
-	<select id="getMemberInfo" resultType="member">
-
-		select * from member_tbl where member_no = #{memberNo}
-
-	</select>
+	
 
 
 	<select id="selectMemberList" resultType="member">
