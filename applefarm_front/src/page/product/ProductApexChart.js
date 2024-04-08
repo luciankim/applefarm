@@ -7,6 +7,15 @@ const ProductApexChart = (props) => {
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState([]);
 
+  const termArr = ["3일", "6일", "9일", "12일"];
+  const [term, setTerm] = useState(termArr[0]);
+  //탭
+  const changeTerm = (e) => {
+    setTerm(e.target.value);
+  };
+  //axios
+  useEffect(() => {}, [productQuality, term]);
+
   const state = {
     series: [
       {
@@ -180,6 +189,19 @@ const ProductApexChart = (props) => {
 
   return (
     <div>
+      <div className="productChart-btns">
+        {termArr.map((termItem, index) => {
+          return (
+            <Btn
+              key={termItem + term + index}
+              bg={term === termItem ? "bg1" : "bg2"}
+              text={termItem}
+              value={termItem}
+              clickEvent={changeTerm}
+            />
+          );
+        })}
+      </div>
       <div id="chart">
         <Chart
           series={state.series}
@@ -194,3 +216,17 @@ const ProductApexChart = (props) => {
 };
 
 export default ProductApexChart;
+
+const Btn = (props) => {
+  const { bg, text, value, clickEvent } = props;
+  return (
+    <button
+      className={"button_form " + bg}
+      type="button"
+      onClick={clickEvent}
+      value={value}
+    >
+      {text}
+    </button>
+  );
+};
