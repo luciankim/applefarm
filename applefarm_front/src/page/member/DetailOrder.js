@@ -37,7 +37,7 @@ const DetailOrder = () => {
       ) : (
         <div className="mypage-current-wrap">
           <h3 className="mypage-current-title">구매 상세내역</h3>
-          <div className="purchase-history-content">
+          <div className="purchase-detail-content">
             <OrderItem trade={trade} type="buyer" />
           </div>
         </div>
