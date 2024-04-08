@@ -135,23 +135,28 @@
 /*--ProductSummary.js*/
 
 /*ProductChart.js*/
+.productChart-wrap {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 30px 0px;
+}
 .productChart {
-  width: 90%;
+  width: 90%; /*1080px*/
   margin: 0 auto;
 }
-.productChart-title {
+.productChart-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.productChart-title > div:first-child {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 }
-.productChart-button {
-  width: 90%;
-  margin-left: 100px;
-  position: relative;
-  z-index: 10;
-}
-.productChart-button > .productChart-btns {
-  position: absolute;
+.productChart-title > div:last-child {
+  color: var(--gray_02);
 }
 .productChart-button > .productChart-btns > .button_form {
   padding: 9px 20px;
@@ -180,6 +185,20 @@
 */
 .productChart-content {
   font-size: 18px;
+  background-color: #fff;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+}
+.recharts-wrapper {
+  /*안쪽 차트 가운데정렬*/
+  margin: 0 auto;
 }
 
 /*--ProductChart.js*/
+
+/**/
+.apexcharts-toolbar {
+  display: none;
+}

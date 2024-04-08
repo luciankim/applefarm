@@ -14,7 +14,7 @@ const ProductChart = (props) => {
   const productQuality = props.productQuality;
 
   //탭에서도 활용함
-  const termArr = ["1개월", "3개월", "6개월", "1년"];
+  const termArr = ["3일", "6일", "9일", "12일"];
   const [term, setTerm] = useState(termArr[0]);
   //탭
   const changeTerm = (e) => {
@@ -49,7 +49,7 @@ const ProductChart = (props) => {
 
   const renderLineChart = (
     <LineChart
-      width={1080}
+      width={1000}
       height={600}
       data={data}
       margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
@@ -86,36 +86,46 @@ const ProductChart = (props) => {
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      <Legend verticalAlign="top" height={36} />
+      <Legend verticalAlign="bottom" height={36} />
     </LineChart>
   );
 
   return (
-    <div className="productChart">
-      <div className="productChart-title">시세</div>
-      <div className="productChart-button">
-        <div className="productChart-btns">
-          {termArr.map((termItem, index) => {
-            return (
-              <Btn
-                key={termItem + term + index}
-                bg={term === termItem ? "bg1" : "bg2"}
-                text={termItem}
-                value={termItem}
-                clickEvent={changeTerm}
-              />
-            );
-          })}
-        </div>
-        {/*
+    <div className="productChart-wrap">
+      <div className="productChart">
+        <div className="productChart-top">
+          <div className="productChart-title">
+            <div>평균 가격 / 거래량</div>
+            <div>
+              3일, 6일, 9일, 12일별 선택 조건과 일치하는 상품의 평균 가격 및
+              거래량을 조회할 수 있습니다.
+            </div>
+          </div>
+          <div className="productChart-button">
+            <div className="productChart-btns">
+              {termArr.map((termItem, index) => {
+                return (
+                  <Btn
+                    key={termItem + term + index}
+                    bg={term === termItem ? "bg1" : "bg2"}
+                    text={termItem}
+                    value={termItem}
+                    clickEvent={changeTerm}
+                  />
+                );
+              })}
+            </div>
+            {/*
         <ProductTab
           productTab={term}
           changeTab={changeChartTab}
           tabNameArr={termArr}
         />
         */}
+          </div>
+        </div>
+        <div className="productChart-content">{renderLineChart}</div>
       </div>
-      <div className="productChart-content">{renderLineChart}</div>
     </div>
   );
 };
