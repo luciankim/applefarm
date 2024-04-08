@@ -120,7 +120,7 @@ const ProductInsert = (props) => {
   //"등록 취소"버튼 클릭시 제품별 메인페이지로 이동
   useEffect(() => {
     if (pip === "등록 취소") {
-      navigate("/product/main"); //아직 메인페이지 경로 없음
+      navigate("/product/"); //아직 메인페이지 경로 없음
     }
   }, [pip]);
 
@@ -178,27 +178,6 @@ const ProductInsert = (props) => {
       form.append("productGen", selectedProduct.productGen);
       form.append("productModel", selectedProduct.productModel);
       form.append("productModel2", selectedProduct.productModel2);
-      form.append("productColor", selectedProduct.productColor);
-      form.append("productColor", selectedProduct.productColor);
-      form.append("productImage", selectedProduct.productImage);
-      form.append("productStorage", selectedProduct.productStorage);
-      form.append("productMemory", selectedProduct.productMemory);
-      form.append("productChip", selectedProduct.productChip);
-      form.append("productCpu", selectedProduct.productCpu);
-      form.append("productGpu", selectedProduct.productGpu);
-      form.append("productSize", selectedProduct.productSize);
-      form.append("productConnectivity", selectedProduct.productConnectivity);
-      form.append("productCharge", selectedProduct.productCharge);
-      form.append("tableName", navTable);
-
-      for (let i = 0; i < file.length; i++) {
-        form.append("productFile", file[i]);
-      }
-      form.append("productLine", selectedProduct.productLine);
-      form.append("productGen", selectedProduct.productGen);
-      form.append("productModel", selectedProduct.productModel);
-      form.append("productModel2", selectedProduct.productModel2);
-      form.append("productColor", selectedProduct.productColor);
       form.append("productColor", selectedProduct.productColor);
       form.append("productImage", selectedProduct.productImage);
       form.append("productStorage", selectedProduct.productStorage);
