@@ -26,12 +26,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
 import kr.or.iei.util.FileUtils;
@@ -83,7 +87,7 @@ public class ProductController {
 	}
 	
 	@PostMapping(value = "/iphone")
-	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@RequestBody IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@ModelAttribute IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
 		//회원번호
 		product.setMemberNo(memberNo);
 		
@@ -110,7 +114,7 @@ public class ProductController {
 		int result = productService.insertIphone(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -123,7 +127,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/macbook")
 	public ResponseEntity<ResponseDTO> insertMacbook(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -163,7 +167,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/ipad")
 	public ResponseEntity<ResponseDTO> insertIpad(@ModelAttribute Product product,@ModelAttribute IpadQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -203,7 +207,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/watch")
 	public ResponseEntity<ResponseDTO> insertWatch(@ModelAttribute Product product,@ModelAttribute WatchQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -243,7 +247,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/airpods")
 	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -273,6 +277,29 @@ public class ProductController {
 		
 		if(result == 2+fileList.size()) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	
+	@GetMapping(value = "/{productNo}")
+	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo,@RequestAttribute int memberNo){
+		HashMap<String, Object> map = productService.selectOneProduct(productNo, memberNo);
+		/* map.key
+		 * productAndMember
+		 * sellerReviewList
+		 * sellerProductList
+		 * productFileList
+		 * qualityHistory
+		 * reliableProductList
+		 */
+
+		if(map != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {

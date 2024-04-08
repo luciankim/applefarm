@@ -1,3 +1,109 @@
+.admin-tbl {
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.admin-tbl td {
+  padding: 10px !important;
+}
+
+#member-like-tbl-box table {
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+#member-like-tbl-box table th {
+  background-color: rgb(35, 66, 168) !important;
+}
+
+.admin-section-wrap > div {
+  padding: 0;
+}
+.css-e363es-MuiFormControl-root * {
+  font-size: 12px !important;
+  color: #ffffff !important;
+  font-family: ns-l !important;
+  height: 20px !important;
+  border: none !important;
+  padding-top: 10px;
+}
+.css-e363es-MuiFormControl-root ul {
+  margin: 10px !important;
+}
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.MuiMenu-paper.MuiMenu-paper.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  margin-top: 15px !important;
+}
+.member-td select {
+  padding: 0 12px !important;
+  margin-right: 5px;
+  font-family: ns-l !important;
+}
+.member-td select:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px 0px 0px #a29bfe;
+}
+.member-td select option {
+  background-color: whtie !important;
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+  font-size: 12px !important;
+  font-family: ns-r !important;
+}
+.css-e363es-MuiFormControl-root svg {
+  padding: 0 !important;
+  font-size: 16px !important;
+}
+.css-e363es-MuiFormControl-root {
+  height: 30px !important;
+  border: none;
+  outline: none;
+  background-color: rgb(35, 66, 168) !important;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  transition: all ease 0.1s;
+  box-shadow: 0px 5px 0px 0px #c5cef4;
+}
+
+.member-td select {
+  font-family: ns-l;
+}
+
+.member-td select {
+  height: 30px !important;
+  border: none;
+  outline: none;
+  background-color: rgb(35, 66, 168) !important;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  transition: all ease 0.1s;
+  box-shadow: 0px 5px 0px 0px #c5cef4;
+}
+
+#admin-product-select {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+#admin-product-select * {
+  color: black !important;
+  text-align: center !important;
+}
+
+.css-e363es-MuiFormControl-root:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px 0px 0px #a29bfe;
+}
+
+.admin-tbl td {
+  padding: 15px;
+}
+
 .admin-wrap {
   display: flex;
 }
@@ -68,9 +174,9 @@
 }
 
 .date-select-wrap button {
-  margin: 5px;
   font-size: 12px;
   font-family: ns-r;
+  margin: 0 3px;
 }
 .date-select-wrap > div > div {
   flex-grow: 1;
@@ -192,7 +298,6 @@ a:visited {
   color: white;
 }
 
-/*
 .dashboard-btn button {
   box-shadow: inset 0px 0.1em 0.6em #3c4fe0;
   transform: translateY(0em);
@@ -215,7 +320,6 @@ a:visited {
   box-shadow: inset 0px 0.1em 0.6em #3c4fe0;
   transform: translateY(0em);
 }
-*/
 
 /*chat*/
 .chat-btn {

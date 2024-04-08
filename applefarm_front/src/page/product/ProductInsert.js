@@ -1,4 +1,5 @@
 import {
+  Link,
   useBlocker,
   useLocation,
   useNavigate,
@@ -122,6 +123,9 @@ const ProductInsert = (props) => {
     if (pip === "등록 취소") {
       navigate("/product/"); //아직 메인페이지 경로 없음
     }
+    if (pip === "상품 등록") {
+      navigate("/product/"); //상품 상세페이지로 이동
+    }
   }, [pip]);
 
   //ProductQualityInsert.js로 넘겨줄 속성
@@ -155,7 +159,9 @@ const ProductInsert = (props) => {
         acc[item.part2] = item.value;
         return acc;
       }, {});
-      //console.log(partObject);
+
+      console.log(partOrder);
+      console.log(partObject);
 
       //navigate("/product/main"); //아직 메인페이지 경로 없음
 
@@ -206,6 +212,7 @@ const ProductInsert = (props) => {
           "biometricAuthentication",
           partObject.BIOMETRIC_AUTHENTICATION
         );
+
         form.append("power", partObject.POWER);
         form.append("voiceRecording", partObject.VOICE_RECORDING);
         form.append("trackpad", partObject.TRACKPAD);
@@ -290,6 +297,10 @@ const ProductInsert = (props) => {
         })
         .then((res) => {
           console.log(res.data);
+
+          if (res.data.message === "success") {
+            navigate("/product/"+res.data.data)
+          }
         })
         .catch((res) => {
           console.log(res);
@@ -299,7 +310,7 @@ const ProductInsert = (props) => {
 
   //selectedProduct.productSummary 구하기
   const summaryFind = () => {
-    const summaryQuality = selectedProduct.productQuality + "급";
+    const summaryQuality = grade + "급";
     //데이터에 설명 추가
 
     const summary =
@@ -412,6 +423,7 @@ const ProductInsert = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
+          navTable={navTable}
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
