@@ -13,10 +13,11 @@ import DeleteMember from "./DeleteMember";
 
 import DetailOrder from "./DetailOrder";
 import SellerGrade from "./SellerGrade";
+import MemberAccountNumber from "./MemberAccountNumber";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
-  const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
+  const token = window.localStorage.getItem("token");
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const logout = props.logout;
@@ -83,6 +84,10 @@ const Mypage = (props) => {
           <Route
             path="/sellerGrade"
             element={<SellerGrade member={member} />}
+          />
+          <Route
+            path="/memberAccountNumber"
+            element={<MemberAccountNumber member={member} />}
           />
           <Route path="/address" element={<Address />}></Route>
           <Route path="/wish" element={<MemberWish />}></Route>

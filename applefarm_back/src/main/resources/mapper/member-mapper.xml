@@ -259,6 +259,20 @@
 	</update>
 	
 	
+	<update id="addAccountNumber">
+	
+	
+		update member_tbl set member_accountnumber = #{memberAccountnumber} where member_no = #{memberNo}
+	
+	</update>
+	
+	<update id="deleteAccountNumber">
+	
+		update member_tbl set member_accountnumber = null where member_no = #{memberNo}
+	
+	</update>
+	
+	
 	
 	
 	

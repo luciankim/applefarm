@@ -83,6 +83,10 @@ public interface MemberDao {
 
 	int updatePhone(Member member);
 
+	int addAccountNumber(Member member);
+
+	int deleteAccountNumber(Member member);
+
 
 
 

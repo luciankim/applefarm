@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
@@ -542,6 +543,51 @@ public class MemberController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
+		
+		
+		
+	}
+	
+	
+	@Operation(summary ="주소 추가",description = "화면에서 회원 번호, 회원 주소(은행명, 계좌번호, 예금주명) 데이터 전송받아서 주소 추가(변경)")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value="/addAccountNumber")
+	public ResponseEntity<ResponseDTO> addAccountNumber(@RequestBody Member member){
+		
+		int result = memberService.addAccountNumber(member);
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+		
+	}
+	
+	
+	
+	
+	@PatchMapping(value="/deleteAccountNumber")
+	public ResponseEntity<ResponseDTO> deleteAccountNumber(@RequestBody Member member){
+		
+		
+		int result = memberService.deleteAccountNumber(member);
+		
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
 		
 		
 		

@@ -322,6 +322,16 @@ public class MemberService {
 			return memberDao.updatePhone(member);
 		}
 
+		public int addAccountNumber(Member member) {
+			
+			return memberDao.addAccountNumber(member);
+		}
+
+		public int deleteAccountNumber(Member member) {
+			// TODO Auto-generated method stub
+			return memberDao.deleteAccountNumber(member);
+		}
+
 		
 		
 		
