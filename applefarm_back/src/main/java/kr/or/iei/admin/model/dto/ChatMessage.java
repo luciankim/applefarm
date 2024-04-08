@@ -11,4 +11,5 @@ public class ChatMessage {
 		private String type;
 		private String memberId;
 		private String message;
+		private int roomNo;
 }

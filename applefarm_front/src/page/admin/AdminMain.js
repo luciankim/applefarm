@@ -7,7 +7,7 @@ import AdminMember from "./AdminMember";
 import AdminDashboard from "./AdminDashboard";
 import AdminReport from "./AdminReport";
 import AdminProduct from "./AdminProduct";
-// import AdminChatModal from "./AdminChatModal";
+
 import AdminChatRoomList from "./AdminChatRoomList";
 import { useEffect } from "react";
 import axios from "axios";
@@ -44,7 +44,6 @@ const AdminMain = (props) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
 
   const style = {
     position: "absolute",
@@ -75,7 +74,6 @@ const AdminMain = (props) => {
           <Route path="/manageReport" element={<AdminReport />} />
         </Routes>
       </div>
-
       {/* 챗봇 */}
       <button className="chat-btn" onClick={handleOpen}>
         <svg
@@ -93,11 +91,6 @@ const AdminMain = (props) => {
       {modalOpen && (
         <AdminChatRoomList setModalOpen={setModalOpen} member={member} />
       )}
-
-      {/* 우선 보류: 바로 채팅 기능 구현한 것
-      {modalOpen && (
-        <AdminChatModal setModalOpen={setModalOpen} member={member} />
-      )} */}
     </div>
   );
 };

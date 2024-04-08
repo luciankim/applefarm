@@ -22,7 +22,6 @@ public class AllMemberChatHandler extends TextWebSocketHandler {
 		members = new HashMap<WebSocketSession, String>();
 	}
 
-
 	
 /*------------ 클라이언트가 웹소켓에 접속하면 호출되는 메소드 ------------*/
 	@Override
@@ -36,15 +35,11 @@ public class AllMemberChatHandler extends TextWebSocketHandler {
 	}
 
 	
-	
-	
-	
-	
-	
 /*------------ 클라이언트가 데이터를 전송하면 해당 데이터를 수신하는 메소드 ------------*/
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
+			
+		
 		// 프론트(object->json문자열 변환) -> 현재 백(json문자열 ->Json 객체변환)
 		ObjectMapper om = new ObjectMapper();
 		ChatMessage cm = om.readValue(message.getPayload(), ChatMessage.class); // json 형태 변환 완료
@@ -56,8 +51,11 @@ public class AllMemberChatHandler extends TextWebSocketHandler {
 		}else {
 			System.out.println("스트링 아님!!!");
 		}
+		
 		System.out.println("보낸이: " + cm.getMemberId());
 		System.out.println("메시지  : " + cm.getMessage());
+		System.out.println("방번호 : " + cm.getRoomNo());
+		
 		
 		
 		if (cm.getType().equals("enter")) {
