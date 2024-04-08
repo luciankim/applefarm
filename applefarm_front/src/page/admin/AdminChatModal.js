@@ -1,36 +1,41 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import Swal from "sweetalert2";
+import axios from "axios";
 
 const AdminChatModal = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const socketServer = backServer.replace("http://", "ws://");
   const [ws, sewWs] = useState({});
   const member = props.member;
-  const chatModalBackGround = useRef();
-  const setModalOpen = props.setModalOpen;
+  const room = props.room;
 
   useEffect(() => {
     const socket = new WebSocket(socketServer + "/allChat");
     sewWs(socket);
-    console.log("소켓", socket);
+
+    //1. 채팅 내용 불러오기
+    axios
+      .get(backServer + "/admin/chatMessageInfo/" + room.roomNo)
+      .then((res) => {
+        console.log("채팅방 목록 조회 결과: ", res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     return () => {
       console.log("채팅페이지에서 나감");
       socket.close();
     };
   }, []);
 
-  //모달밖 클릭시
-  const modalBack = (e) => {
-    if (e.target === chatModalBackGround.current) {
-      setModalOpen(false);
-    }
-  };
-
   //웹소켓 연결이 완료되면 실행할 함수
   const startChat = () => {
     //json 형태로 아이디 전송 (세션<->닉네임 연결위함)
-    const data = { type: "enter", memberId: member.memberId };
+    const data = {
+      type: "enter",
+      memberId: member.memberId,
+    };
     ws.send(JSON.stringify(data));
   };
 
@@ -40,7 +45,6 @@ const AdminChatModal = (props) => {
     //문자열을 다시 객체로 변환
     const chat = JSON.parse(receiveStr);
     console.log("받은 데이터", receiveStr);
-    console.log("챗: ", chat);
     setChatList([...chatList, chat]);
   };
 
@@ -62,18 +66,18 @@ const AdminChatModal = (props) => {
       setBtnStatus(true);
       return;
     }
-
     setChatMessage(e.target.value);
     setBtnStatus(false);
   };
 
-  const sendMessage = () => {
+  const sendMessage = (room) => {
     const data = {
       type: "chat",
       memberId: member.memberId,
       message: chatMessage,
+      roomNo: room.roomNo,
     };
-    console.log(JSON.stringify(data));
+    console.log("보낸메시지: ", JSON.stringify(data));
     ws.send(JSON.stringify(data));
     setChatMessage("");
     setBtnStatus(true);
@@ -92,14 +96,10 @@ const AdminChatModal = (props) => {
   }, [chatList]);
 
   return (
-    <div
-      className="chat-modal-current-wrap"
-      ref={chatModalBackGround}
-      onClick={modalBack}
-    >
+    <div className="chat-modal-current-wrap">
       <div className="chat-modal-content">
         <div className="chat-header">
-          <div class="h2">ChatGPT</div>
+          <div className="h2">{room.roomTitle}</div>
         </div>
 
         <div className="chat-body">
@@ -127,7 +127,7 @@ const AdminChatModal = (props) => {
           <button
             className="sendMessage"
             disabled={btnStatus}
-            onClick={sendMessage}
+            onClick={() => sendMessage(room)}
           >
             전송
           </button>
@@ -156,7 +156,7 @@ const ChattingMessage = (props) => {
           className={chat.memberId === memberId ? "chat right" : "chat left"}
         >
           <div className="user">
-            <span class="material-icons">account_circle</span>
+            <span className="material-icons">account_circle</span>
             <span className="name">{chat.memberId}</span>
           </div>
           <div className="chatting-message">{chat.message}</div>
