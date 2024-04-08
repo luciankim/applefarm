@@ -115,15 +115,19 @@
 
 
 	<select id="selectSellerReviews" resultType="sellerReview">
-		select * from review_tbl where review_seller = #{sellerNo}
+		select * from review_tbl where review_seller = #{sellerNo} order by trade_no desc
 	</select>
 	
 	<select id="selectSellerProducts" resultType="product">
-		select * from product_tbl where member_no = #{seller_no}
+		select * from product_tbl where member_no = #{sellerNo} order by product_no desc
+	</select>
+	
+	<select id="selectProductFiles" resultType="productFile">
+		select * from product_file_tbl where product_no = #{productNo}
 	</select>
 	
 	<select id="selectIphoneQualityHistory" resultType="iphoneQualityHistory">
-		select * from IPHONE_QUALITY_HISTORY_TBL where product_no = #{productNo} 
+		select * from IPHONE_QUALITY_HISTORY_TBL where product_no = #{productNo}
 	</select>
 	
 	<select id="selectMacbookQualityHistory" resultType="macbookQualityHistory">
@@ -142,10 +146,6 @@
 		select * from AIRPODS_QUALITY_HISTORY_TBL where product_no = #{productNo} 
 	</select>
 	
-	<select id="selectProductFiles" resultType="productFile">
-		select * from product_file_tbl where product_no = #{productNo}
-	</select>
-	
 	<select id="selectReliableProducts" resultType="reliableProductList">
 		select
 		    p.product_no,
@@ -156,8 +156,8 @@
 		    m.seller_score
 		from product_tbl p
 		join member_tbl m using (member_no)
-		where product_summary = #{summary}
-		order by m.seller_score
+		where product_summary = #{summary} and rownum <= 10
+		order by m.seller_score desc
 	</select>
 	
 

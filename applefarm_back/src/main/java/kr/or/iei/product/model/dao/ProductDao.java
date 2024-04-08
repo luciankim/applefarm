@@ -41,11 +41,14 @@ public interface ProductDao {
 
 	int insertAirpodsQualityHistory(MacbookQualityHistory partObject);
 
+	//ProductDetail.js
 	ProductAndMember selectOneView(int productNo,int memberNo);
 
 	List selectSellerReviews(int productNo);
 
 	List selectSellerProducts(int sellerNo);
+
+	List selectProductFiles(int productNo);
 
 	IphoneQualityHistory selectIphoneQualityHistory(int productNo);
 
@@ -56,8 +59,6 @@ public interface ProductDao {
 	WatchQualityHistory selectWatchQualityHistory(int productNo);
 
 	AirpodsQualityHistory selectAirpodsQualityHistory(int productNo);
-
-	List selectProductFiles(int productNo);
 
 	List selectReliableProducts(String summary);
 

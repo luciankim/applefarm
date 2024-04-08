@@ -288,54 +288,16 @@ public class ProductController {
 	
 	@GetMapping(value = "/{productNo}")
 	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo,@RequestAttribute int memberNo){
-		//memberNo 접속자
-		//sellerNo 판매자
-		//productNo 상품
-		//tableName 테이블 이름
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		//상품 124번의 상품정보 & 회원정보
-		ProductAndMember productAndMember= productService.selectOneView(productNo,memberNo);
-		map.put("productAndMember", productAndMember);
-		
-		int sellerNo = productAndMember.getMemberNo();
-		String tableName = productAndMember.getTableName();
-		String summary = productAndMember.getProductSummary();
-		
-		//판매자(member_no=45)에 대한 후기 리스트
-		List sellerReviewList = productService.selectSellerReviews(sellerNo);
-		map.put("sellerReviewList",sellerReviewList);
-		
-		//판매자(member_no=45)의 상품 리스트
-		List sellerProductList = productService.selectSellerProducts(sellerNo);
-		map.put("sellerProductList",sellerProductList);
-		
-		//상품 124번의 첨부파일 리스트(file_no, file_path가 필요)
-		List productFileList = productService.selectProductFiles(productNo);
-		map.put("productFileList",productFileList);
-		
-		//상품 124번의 품질(테이블 별로 다르게)
-		if(tableName.equals("IPHONE_TBL")) {
-			IphoneQualityHistory qualityHistory = productService.selectIphoneQualityHistory(productNo);
-			map.put("qualityHistory",qualityHistory);
-		}else if(tableName == "MACBOOK_TBL") {
-			MacbookQualityHistory qualityHistory = productService.selectMacbookQualityHistory(productNo);
-			map.put("qualityHistory",qualityHistory);
-		}else if(tableName == "IPAD_TBL") {
-			IpadQualityHistory qualityHistory = productService.selectIpadQualityHistory(productNo);
-			map.put("qualityHistory",qualityHistory);
-		}else if(tableName == "WATCH_TBL") {
-			WatchQualityHistory qualityHistory = productService.selectWatchQualityHistory(productNo);
-			map.put("qualityHistory",qualityHistory);
-		}else if(tableName == "AIRPODS_TBL") {
-			AirpodsQualityHistory qualityHistory = productService.selectAirpodsQualityHistory(productNo);
-			map.put("qualityHistory",qualityHistory);
-		}
-		
-		//신뢰도 높은 상품 리스트
-		List reliableProductList = productService.selectReliableProducts(summary);
-		map.put("reliableProductList",reliableProductList);
-		
+		HashMap<String, Object> map = productService.selectOneProduct(productNo, memberNo);
+		/* map.key
+		 * productAndMember
+		 * sellerReviewList
+		 * sellerProductList
+		 * productFileList
+		 * qualityHistory
+		 * reliableProductList
+		 */
+
 		if(map != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
