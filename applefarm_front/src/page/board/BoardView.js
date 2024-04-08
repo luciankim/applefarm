@@ -19,7 +19,7 @@ const BoardView = (props) => {
   const boardNo = params.boardNo; //댓글
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [board, setBoard] = useState({});
-  const [memberNo, setMemberNo] = useState(21); //댓글
+  const [memberNo, setMemberNo] = useState(61); //댓글
   const [commentContent, setCommentContent] = useState(""); //댓글
   const [selfRef, setSelfRef] = useState(0); //댓글
   const [commentList, setCommentList] = useState([]);

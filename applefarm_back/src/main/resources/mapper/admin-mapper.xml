@@ -5,14 +5,16 @@
 
 	<select id="totalCount" resultType="int">
 		<choose>
-			<when test="reportType == 3"> 
+			<when test="reportType == 3">
 				select count(*) from refund_tbl
 			</when>
 			<otherwise>
-				select count(*) from refund_tbl where refund_status = #{selectedValue}  
+				select count(*) from refund_tbl where refund_status =
+				#{selectedValue}
 			</otherwise>
 		</choose>
 	</select>
+
 
 	<select id="selectRefundList" resultType="refund">
 		SELECT
@@ -223,14 +225,145 @@
 	</update>
 
 	<select id="reportTotalCount" resultType="int">
-	<choose>
+		<choose>
 			<when test="reportType == 3">   <!-- 상품테이블 -->
 				select count(*) from report_tbl
 			</when>
 			<otherwise>
-			select count(*) from report_tbl where report_status = #{selectedValue}
+				select count(*) from report_tbl where report_status =
+				#{selectedValue}
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="totalMemberCount" resultType="int">
+		select count(*) from
+		member_tbl
+	</select>
+
+	<select id="periodMemberCount" resultType="int">
+		SELECT COUNT(*) FROM
+		MEMBER_TBL WHERE TO_CHAR(ENROLL_DATE, 'yyyy-mm-dd') BETWEEN
+		#{filterStartDate} AND #{filterEndDate}
+	</select>
+
+	<select id="periodTradeCount" resultType="int">
+		select count(*) from
+		trade_tbl where to_char(TRADE_DATE, 'YYYY-MM-DD') BETWEEN
+		#{filterStartDate} AND #{filterEndDate}
+	</select>
+
+
+	<select id="periodTradeMoney" resultType="java.lang.Integer">
+		select
+		coalesce(sum(trade_price),0)
+		from trade_tbl where to_char(trade_date,
+		'yyyy-mm-dd') between
+		#{filterStartDate} and #{filterEndDate}
+	</select>
+
+
+	<select id="enrollDateCount" resultType="dashboard">
+		SELECT ROWNUM AS rnum,
+		enroll_date, member_count
+		FROM (
+		SELECT TRUNC(enroll_date) AS
+		enroll_date, COUNT(*) AS member_count
+		FROM member_tbl
+		WHERE
+		TRUNC(enroll_date) BETWEEN #{filterStartDate} AND #{filterEndDate}
+		GROUP BY TRUNC(enroll_date)
+		ORDER BY TRUNC(enroll_date)
+		)
+	</select>
+
+	<select id="tradeMoneySum" resultType="dashboard">
+		SELECT
+		TRADE_DATE,
+		TRADE_PRICE,
+		SUM(TRADE_PRICE) OVER (ORDER BY TRADE_DATE) AS
+		CUMULATIVE_TRADE_PRICE
+		FROM (
+		SELECT
+		TRUNC(TRADE_DATE) AS TRADE_DATE,
+		SUM(TRADE_PRICE) AS TRADE_PRICE
+		FROM
+		TRADE_TBL
+		WHERE
+		TRUNC(TRADE_DATE)
+		BETWEEN #{filterStartDate} AND #{filterEndDate}
+		GROUP BY
+		TRUNC(TRADE_DATE)
+		ORDER BY
+		TRUNC(TRADE_DATE)
+		)
+	</select>
+
+	<select id="topFiveSellerRank" resultType="dashboard">
+		SELECT
+		m.member_nickname as
+		seller_nickname, SUM(t.trade_price) AS
+		seller_trade_price
+		FROM (
+		SELECT trade_seller, trade_price
+		FROM trade_tbl
+		WHERE trade_date BETWEEN #{filterStartDate} AND #{filterEndDate}
+		) t
+		INNER JOIN member_tbl m ON t.trade_seller = m.member_no
+		GROUP BY
+		m.member_nickname
+		ORDER BY seller_trade_price DESC
+	</select>
+
+	<select id="topFiveBuyerRank" resultType="dashboard">
+		SELECT
+		m.member_nickname AS buyer_nickname, SUM(t.trade_price) AS
+		buyer_trade_price
+		FROM (
+		SELECT trade_buyer, trade_price
+		FROM trade_tbl
+		WHERE trade_date BETWEEN #{filterStartDate} AND #{filterEndDate}
+		) t
+		INNER JOIN member_tbl m ON t.trade_buyer = m.member_no
+		GROUP BY
+		m.member_nickname
+		ORDER BY buyer_trade_price DESC
+	</select>
+
+	<select id="tradeLog" resultType="dashboard">
+		SELECT
+		T.TRADE_NO,
+		TS.MEMBER_NICKNAME AS SELLER_NICKNAME,
+		TB.MEMBER_NICKNAME AS
+		BUYER_NICKNAME,
+		T.PRODUCT_NO,
+		TO_CHAR(T.TRADE_DATE,
+		'YYYY-MM-DD') AS
+		TRADE_DATE,
+		T.TRADE_PRICE,
+		T.TRADE_STATE,
+		T.ZIPCODE,
+		T.ADDRESS,
+		T.ADDRESS_DETAIL
+		FROM
+		TRADE_TBL T
+		LEFT JOIN
+		MEMBER_TBL TS ON
+		T.TRADE_SELLER = TS.MEMBER_NO
+		LEFT JOIN
+		MEMBER_TBL TB ON T.TRADE_BUYER =
+		TB.MEMBER_NO
+		WHERE
+		T.TRADE_DATE BETWEEN #{filterStartDate} AND
+		#{filterEndDate}
+		ORDER BY
+		T.TRADE_DATE DESC
+	</select>
+
+	<select id="selectChatRoomList" resultType="chatroom">
+		SELECT * FROM chat_room_tbl WHERE participant1 = #{memberId} OR participant2
+		= #{memberId} ORDER BY room_create_time DESC
+	</select>
+
 
 </mapper>

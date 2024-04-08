@@ -7,7 +7,6 @@ import { Input } from "@mui/material";
 
 const MemberInfo = (props) => {
   const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
-
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const isLogin = props.isLogin;
