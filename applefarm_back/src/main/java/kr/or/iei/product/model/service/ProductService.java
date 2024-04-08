@@ -11,12 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
 import kr.or.iei.product.model.dao.ProductDao;
+import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.util.PageInfo;
 
@@ -131,6 +134,54 @@ public class ProductService {
 		
 		
 		return result1+result2;
+	}
+
+	public ProductAndMember selectOneView(int productNo,int memberNo) {
+		
+		return productDao.selectOneView(productNo,memberNo);
+	}
+
+	public List selectSellerReviews(int sellerNo) {
+		return productDao.selectSellerReviews(sellerNo);
+	}
+
+	public List selectSellerProducts(int sellerNo) {
+
+		return productDao.selectSellerProducts(sellerNo);
+	}
+
+	public IphoneQualityHistory selectIphoneQualityHistory(int productNo) {
+		
+		return productDao.selectIphoneQualityHistory(productNo);
+	}
+
+	public MacbookQualityHistory selectMacbookQualityHistory(int productNo) {
+		// TODO Auto-generated method stub
+		return productDao.selectMacbookQualityHistory(productNo);
+	}
+
+	public IpadQualityHistory selectIpadQualityHistory(int productNo) {
+		// TODO Auto-generated method stub
+		return productDao.selectIpadQualityHistory(productNo);
+	}
+
+	public WatchQualityHistory selectWatchQualityHistory(int productNo) {
+		// TODO Auto-generated method stub
+		return productDao.selectWatchQualityHistory(productNo);
+	}
+
+	public AirpodsQualityHistory selectAirpodsQualityHistory(int productNo) {
+		// TODO Auto-generated method stub
+		return productDao.selectAirpodsQualityHistory(productNo);
+	}
+
+	public List selectProductFiles(int productNo) {
+		
+		return productDao.selectProductFiles(productNo);
+	}
+
+	public List selectReliableProducts(String summary) {
+		return productDao.selectReliableProducts(summary);
 	}
 
 

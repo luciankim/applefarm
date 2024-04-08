@@ -26,12 +26,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
 import kr.or.iei.util.FileUtils;
@@ -83,7 +87,7 @@ public class ProductController {
 	}
 	
 	@PostMapping(value = "/iphone")
-	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@RequestBody IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@ModelAttribute IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
 		//회원번호
 		product.setMemberNo(memberNo);
 		
@@ -110,7 +114,7 @@ public class ProductController {
 		int result = productService.insertIphone(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -123,7 +127,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/macbook")
 	public ResponseEntity<ResponseDTO> insertMacbook(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -163,7 +167,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/ipad")
 	public ResponseEntity<ResponseDTO> insertIpad(@ModelAttribute Product product,@ModelAttribute IpadQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -203,7 +207,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/watch")
 	public ResponseEntity<ResponseDTO> insertWatch(@ModelAttribute Product product,@ModelAttribute WatchQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -243,7 +247,7 @@ public class ProductController {
 	
 	@PostMapping(value = "/airpods")
 	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
-		System.out.println("여기는 맥북 등록");
+
 		System.out.println(product);
 		System.out.println(partObject);
 		//회원번호
@@ -273,6 +277,67 @@ public class ProductController {
 		
 		if(result == 2+fileList.size()) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	
+	@GetMapping(value = "/{productNo}")
+	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo,@RequestAttribute int memberNo){
+		//memberNo 접속자
+		//sellerNo 판매자
+		//productNo 상품
+		//tableName 테이블 이름
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//상품 124번의 상품정보 & 회원정보
+		ProductAndMember productAndMember= productService.selectOneView(productNo,memberNo);
+		map.put("productAndMember", productAndMember);
+		
+		int sellerNo = productAndMember.getMemberNo();
+		String tableName = productAndMember.getTableName();
+		String summary = productAndMember.getProductSummary();
+		
+		//판매자(member_no=45)에 대한 후기 리스트
+		List sellerReviewList = productService.selectSellerReviews(sellerNo);
+		map.put("sellerReviewList",sellerReviewList);
+		
+		//판매자(member_no=45)의 상품 리스트
+		List sellerProductList = productService.selectSellerProducts(sellerNo);
+		map.put("sellerProductList",sellerProductList);
+		
+		//상품 124번의 첨부파일 리스트(file_no, file_path가 필요)
+		List productFileList = productService.selectProductFiles(productNo);
+		map.put("productFileList",productFileList);
+		
+		//상품 124번의 품질(테이블 별로 다르게)
+		if(tableName.equals("IPHONE_TBL")) {
+			IphoneQualityHistory qualityHistory = productService.selectIphoneQualityHistory(productNo);
+			map.put("qualityHistory",qualityHistory);
+		}else if(tableName == "MACBOOK_TBL") {
+			MacbookQualityHistory qualityHistory = productService.selectMacbookQualityHistory(productNo);
+			map.put("qualityHistory",qualityHistory);
+		}else if(tableName == "IPAD_TBL") {
+			IpadQualityHistory qualityHistory = productService.selectIpadQualityHistory(productNo);
+			map.put("qualityHistory",qualityHistory);
+		}else if(tableName == "WATCH_TBL") {
+			WatchQualityHistory qualityHistory = productService.selectWatchQualityHistory(productNo);
+			map.put("qualityHistory",qualityHistory);
+		}else if(tableName == "AIRPODS_TBL") {
+			AirpodsQualityHistory qualityHistory = productService.selectAirpodsQualityHistory(productNo);
+			map.put("qualityHistory",qualityHistory);
+		}
+		
+		//신뢰도 높은 상품 리스트
+		List reliableProductList = productService.selectReliableProducts(summary);
+		map.put("reliableProductList",reliableProductList);
+		
+		if(map != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {

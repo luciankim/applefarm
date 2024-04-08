@@ -208,7 +208,7 @@ const ProductCategory = (props) => {
       )[0] //categoryArr이 배열이니까, 배열 자체가 아닌 배열의 값인 객체(위 로직의 결과는 반드시 1개임)를 값으로 저장.
     );
   }, [productGen, productModel, productModel2]);
-  console.log(selectedCategory); //확인!!!!!!!!!!!!!!!!!1
+  //console.log(selectedCategory); //확인!!!!!!!!!!!!!!!!!1
 
   //1개 특정된 카테고리의 컬럼별 데이터들을 ","로 구분해서 배열로 만듦
   useEffect(() => {
@@ -341,7 +341,7 @@ const ProductCategory = (props) => {
     }
   }, [selectedProduct]);
 
-  console.log(selectedProduct);
+  //console.log(selectedProduct);
 
   return (
     <div className="productCategory-all-wrap">
