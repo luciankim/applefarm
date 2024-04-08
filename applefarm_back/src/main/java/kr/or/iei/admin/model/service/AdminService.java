@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dao.AdminDao;
 import kr.or.iei.admin.model.dto.AdminProduct;
+import kr.or.iei.admin.model.dto.ChatRoom;
+import kr.or.iei.admin.model.dto.Dashboard;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dao.MemberDao;
@@ -39,7 +41,6 @@ public class AdminService {
 		Refund rf = new Refund();
 		rf.setSelectedValue(selectedValue);
 		List list = adminDao.selectRefundList(rf);
-		System.out.println("service : " + list);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("totalPostCount", totalCount);
 		map.put("refundList", list);
@@ -79,7 +80,6 @@ public class AdminService {
 		map.put("adminProductList", list);
 		map.put("pi", pi);
 		map.put("totalCount", totalCount);
-		System.out.println("행복" + pi);
 		return map;
 	}
 
@@ -125,7 +125,6 @@ public class AdminService {
 		
 		//3. 유저 블랙 처리 (5분 정지)
 		
-		
 		}
 		return result;
 	}
@@ -133,7 +132,7 @@ public class AdminService {
 	//회원관리 화면 내 블랙 처리
 	@Transactional
 	public void blackTimeOut() {
-		System.out.println("right now!");
+		
 		List<Member> blackMemberCheckList = memberDao.selectBlackMemberCheckList();
 		System.out.println("----------scheduling-------- memberslit"  + blackMemberCheckList);
 		// 시간 계산 : 블랙
@@ -157,7 +156,73 @@ public class AdminService {
 			}
 		}
 	}
+
+	public Map dashboard(String filterStartDate, String filterEndDate) {
+		Dashboard db = new Dashboard();
+		db.setFilterStartDate(filterStartDate);
+		db.setFilterEndDate(filterEndDate);
+		//1. 전체회원: filterEndDate 기준 전체회원 합계
+		int totalMemberCount = adminDao.totalMemberCount(db); 
+		
+		//2. 신규유입: filterStartDate ~ filterEndDate 기준 전체 회원 합계
+		int periodMemberCount = adminDao.periodMemberCount(db); 
+		
+		//3. 거래건수: filterStartDate ~ filterEndDate 기준 거래건수 합계
+		int periodTradeCount = adminDao.periodTradeCount(db);
+		
+		
+		//4. 거래금액: filterStartDate ~ filterEndDate 기준 거래금액 합계
+		Integer periodTradeMoneyResult = adminDao.periodTradeMoney(db);
+		int periodTradeMoney = (periodTradeMoneyResult != null) ? periodTradeMoneyResult : 0;
+
+		
+		// 회원수추이: filterStartDate ~ filterEndDate 사 일자별 가입일 개수
+		List enrollDateCount = adminDao.enrollDateCount(db);
+		
+			/*
+			 SELECT enroll_date, COUNT(*) AS join_count FROM member_tbl WHERE enroll_date
+			 BETWEEN '2024-01-01' AND '2024-04-01' GROUP BY enroll_date; 
+			 */
+		// 거래대금추이: filterStartDate ~ filterEndDate 사 일자별 거래대금 합계
+		//일별 거래대금 + 누적거래대금
+		List tradeMoneySum = adminDao.tradeMoneySum(db);
+		
+	
+		// 판매순위: 기간내 판매금액 상위 5명
+		List topFiveSellerRank = adminDao.topFiveSellerRank(db);
+		
+		//구매순위: 기간내 구매금액 상위 5명
+		List topFiveBuyerRank = adminDao.topFiveBuyerRank(db);
+		
+		//거래내역: 기간내 거래내역 데이터
+		List tradeLog = adminDao.tradeLog(db);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("totalMemberCount", totalMemberCount);
+		map.put("periodMemberCount", periodMemberCount);
+		map.put("periodTradeCount", periodTradeCount);
+		map.put("periodTradeMoney", periodTradeMoney);
+		map.put("enrollDateCount", enrollDateCount);
+		map.put("tradeMoneySum", tradeMoneySum);
+		map.put("topFiveSellerRank", topFiveSellerRank);
+		map.put("topFiveBuyerRank", topFiveBuyerRank);
+		map.put("tradeLog", tradeLog);
+		System.out.println("맵" + map);
+		
+		return map;
+	}
+
+
+	public List<ChatRoom> selectChatRoomList(String memberId) {
+		List<ChatRoom> list = adminDao.selectChatRoomList(memberId);
+		return list;
+	}
+	
+	
+	
+	
 	
 	
 	
 }
+

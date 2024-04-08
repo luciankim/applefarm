@@ -341,6 +341,8 @@ const ProductCategory = (props) => {
     }
   }, [selectedProduct]);
 
+  console.log(selectedProduct);
+
   return (
     <div className="productCategory-all-wrap">
       {pip ? (

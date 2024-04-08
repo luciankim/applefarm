@@ -46,7 +46,7 @@ const AdminProduct = () => {
     // 전체 기간을 원하는 날짜로 설정
     // 예를 들어, 프로젝트 시작일부터 현재까지의 기간 등을 설정할 수 있습니다.
     // 이 예시에서는 프로젝트 시작일이 2022년 1월 1일이라고 가정합니다.
-    const projectStartDate = dayjs("2023-11-07");
+    const projectStartDate = dayjs("2022-01-01");
     const today = dayjs();
     setStartDate(projectStartDate);
     setEndDate(today);
@@ -83,7 +83,6 @@ const AdminProduct = () => {
       .then((res) => {
         setProductList(res.data.data.adminProductList);
         setPageInfo(res.data.data.pi);
-        console.log("Zz", res.data.data.pi);
       })
       .catch((res) => {
         console.log(res.data);

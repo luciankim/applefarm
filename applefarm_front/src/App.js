@@ -81,9 +81,15 @@ function App() {
             <Route path="/ref" element={<Ref />} />
             <Route path="/mypage/*" element={<Mypage isLogin={isLogin} />} />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
-            <Route path="/board/*" element={<BoardMain />} />
+            <Route
+              path="/board/*"
+              element={<BoardMain isLogin={isLogin} logout={logout} />}
+            />
             <Route path="/join" element={<Join />} />
-            <Route path="/admin/*" element={<AdminMain />} />
+            <Route
+              path="/admin/*"
+              element={<AdminMain isLogin={isLogin} logout={logout} />}
+            />
             <Route path="/login" element={<Login login={login} />} />
             <Route
               path="/purchase/:productNo"

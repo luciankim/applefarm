@@ -16,8 +16,7 @@ const AdminMember = () => {
     axios
       .get(backServer + "/admin/member/" + reqPage)
       .then((res) => {
-        console.log("최초결과", res.data.data.pi);
-
+        console.log("최초결과", res.data.data);
         setMemberList(res.data.data.memberList);
         setPageInfo(res.data.data.pi);
       })
@@ -48,7 +47,7 @@ const AdminMember = () => {
             {memberList.map((member, index) => {
               return (
                 <MemberItem
-                  key={"member" + index}
+                  key={"memberList" + index}
                   member={member}
                   memberList={memberList}
                   setLMemberList={setMemberList}
@@ -72,7 +71,7 @@ const AdminMember = () => {
 const MemberItem = (props) => {
   const member = props.member;
   const [memberGrade, setMemberGrade] = useState(member.memberGrade);
-  const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const changeGrade = (e) => {
     const m = { memberNo: member.memberNo, memberGrade: e.target.value };
     axios
@@ -87,7 +86,10 @@ const MemberItem = (props) => {
         console.log(res);
       });
   };
-
+  useEffect(() => {
+    //reqpage별 등급 노출 관리위한 필수 세팅
+    setMemberGrade(member.memberGrade);
+  }, [member]);
   return (
     <tr>
       <td>{member.memberNo}</td>

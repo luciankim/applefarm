@@ -1,6 +1,7 @@
 package kr.or.iei.admin.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.admin.model.dto.ChatRoom;
+import kr.or.iei.admin.model.dto.Dashboard;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.admin.model.service.AdminService;
@@ -107,7 +110,6 @@ public class AdminController {
 	@GetMapping(value = "/memberProduct/{selectedValue}/{filterStartDate}/{filterEndDate}/{reqPage}")
 	public ResponseEntity<ResponseDTO> productList(@PathVariable String selectedValue,
 			@PathVariable String filterStartDate, @PathVariable String filterEndDate, @PathVariable int reqPage) {
-				System.out.println("controller" + selectedValue);
 		Map map = adminService.selectProductList(selectedValue, filterStartDate, filterEndDate, reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -140,7 +142,6 @@ public class AdminController {
 	
 	@GetMapping(value="/memberReport/{reqPage}/{selectedValue}")
 	public ResponseEntity<ResponseDTO> reportMember(@PathVariable int reqPage, @PathVariable int selectedValue){
-		System.out.println("cont" + selectedValue);
 		Map map = adminService.selectReportList(reqPage, selectedValue);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -159,6 +160,25 @@ public class AdminController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+	
+	@GetMapping(value="dashboard/{filterStartDate}/{filterEndDate}")
+	public ResponseEntity<ResponseDTO> selectDashboard(@PathVariable String filterStartDate, @PathVariable String filterEndDate){
+		Map map = adminService.dashboard(filterStartDate, filterEndDate);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	@GetMapping(value="chatRoomList/{memberId}")
+	public ResponseEntity<ResponseDTO> selectChatRoomList(@PathVariable String memberId){
+		List<ChatRoom> list = adminService.selectChatRoomList(memberId);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		
+	}
+	
+	
+	
 }
 
 
