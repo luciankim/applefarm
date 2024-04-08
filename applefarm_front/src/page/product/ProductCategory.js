@@ -7,8 +7,9 @@ import ProductSummary from "./ProductSummary";
 const ProductCategory = (props) => {
   const {
     navTable,
-    navProductLine,
-    navProductGen,
+    navLine,
+    navGen,
+    navModel,
 
     selectedCategory,
     setSelectedCategory,
@@ -56,9 +57,9 @@ const ProductCategory = (props) => {
   const [categoryArr, setCategoryArr] = useState([]);
 
   //카테고리 특정에 사용될 배열 변수
-  const genArr = [];
-  const modelArr = [];
-  const model2Arr = [];
+  let genArr = [];
+  let modelArr = [];
+  let model2Arr = [];
   //특정된 카테고리의 각 key의 값들(문자열)을 split(',')해서 받을 배열 변수
   const [colorArr, setColorArr] = useState([]);
   const [imageArr, setImageArr] = useState([]);
@@ -98,51 +99,48 @@ const ProductCategory = (props) => {
 
   //초기화
   useEffect(() => {
-    setProductLine("");
     setProductGen("");
     setProductModel("");
     setProductModel2("");
     clear();
-    genArr.length = 0;
-    modelArr.length = 0;
-    model2Arr.length = 0;
-  }, [navTable]);
-  useEffect(() => {
-    setProductGen("");
-    setProductModel("");
-    setProductModel2("");
-    clear();
-    genArr.length = 0;
-    modelArr.length = 0;
-    model2Arr.length = 0;
+    genArr = [];
+    modelArr = [];
+    model2Arr = [];
   }, [productLine]);
   useEffect(() => {
     setProductModel("");
     setProductModel2("");
     clear();
-    modelArr.length = 0;
-    model2Arr.length = 0;
+    modelArr = [];
+    model2Arr = [];
   }, [productGen]);
   useEffect(() => {
     setProductModel2("");
     clear();
-    model2Arr.length = 0;
+    model2Arr = [];
   }, [productModel]);
 
-  const requestCategory = { table: navTable, productLine: navProductLine };
+  const requestCategory = { table: navTable, productLine: navLine };
   useEffect(() => {
     axios
       .post(backServer + "/product/category", requestCategory)
       .then((res) => {
+        genArr = [];
+        modelArr = [];
+        model2Arr = [];
+        const tempCategoryArr = [];
         res.data.data.forEach((item) => {
-          categoryArr.push(item); //배열에 추가하고
+          tempCategoryArr.push(item);
         });
-        setCategoryArr([...categoryArr]); //set
+        setCategoryArr([...tempCategoryArr]);
+        setProductLine(navLine);
+        setProductGen(navGen);
+        setProductModel(navModel);
       })
       .catch((res) => {
         console.log(res.data);
       });
-  }, [navProductLine]);
+  }, [navTable, navLine]);
 
   //카테고리 1개 특정하기 위한 코드
   //gen
@@ -189,24 +187,28 @@ const ProductCategory = (props) => {
     }
   });
 
+  //selectedCategory
   useEffect(() => {
     setSelectedCategory(
       categoryArr.filter((category) =>
         category.productLine === "iPhone" ||
-        "Apple Watch Ultra" ||
-        "Apple Watch Series" ||
-        "Apple Watch SE"
+        category.productLine === "Apple Watch Ultra" ||
+        category.productLine === "Apple Watch Series" ||
+        category.productLine === "Apple Watch SE"
           ? category.productGen === productGen &&
             category.productModel === productModel
-          : category.productModel === "MacBook Pro" ||
-            category.productModel === "MacBook Air"
+          : category.productLine === "MacBook Pro" ||
+            category.productLine === "MacBook Air"
           ? category.productGen === productGen &&
             category.productModel === productModel &&
-            category.productModel2 === productModel2
+            (category.productModel2
+              ? category.productModel2 === productModel2
+              : true)
           : category.productGen === productGen
       )[0] //categoryArr이 배열이니까, 배열 자체가 아닌 배열의 값인 객체(위 로직의 결과는 반드시 1개임)를 값으로 저장.
     );
   }, [productGen, productModel, productModel2]);
+  console.log(selectedCategory); //확인!!!!!!!!!!!!!!!!!1
 
   //1개 특정된 카테고리의 컬럼별 데이터들을 ","로 구분해서 배열로 만듦
   useEffect(() => {
@@ -340,154 +342,173 @@ const ProductCategory = (props) => {
   }, [selectedProduct]);
 
   return (
-    <div className="productCategory-wrap">
-      {/*좌측 영역*/}
-      <div className="productCategory-wrap-left">
-        <div>
-          {colorArr.indexOf(productColor) !== -1 ? (
-            <img
-              className="categoryImage"
-              src={
-                "/image/categoryImage/" +
-                imageArr[colorArr.indexOf(productColor)] +
-                ".png"
-              }
+    <div className="productCategory-all-wrap">
+      {pip ? (
+        <div className="productCategory-title">
+          {navTable === "IPHONE_TBL"
+            ? "iPhone"
+            : navTable === "MACBOOK_TBL"
+            ? "MacBook"
+            : navTable === "IPAD_TBL"
+            ? "iPad"
+            : navTable === "WATCH_TBL"
+            ? "Apple Watch"
+            : navTable === "AIRPODS_TBL"
+            ? "에어팟"
+            : ""}
+        </div>
+      ) : (
+        ""
+      )}
+      <div className="productCategory-wrap">
+        {/*좌측 영역*/}
+        <div className="productCategory-wrap-left">
+          <div>
+            {colorArr.indexOf(productColor) !== -1 ? (
+              <img
+                className="categoryImage"
+                src={
+                  "/image/categoryImage/" +
+                  imageArr[colorArr.indexOf(productColor)] +
+                  ".png"
+                }
+              />
+            ) : (
+              <img
+                className="categoryImage"
+                //아래 이미지는 추후 수정 필요
+                src={"/image/categoryImage/iPhone_representation.png"}
+              />
+            )}
+          </div>
+        </div>
+        {/*//좌측 영역*/}
+
+        {/*우측 영역*/}
+        <div className="productCategory-wrap-right">
+          {
+            <ArrMap //ul태그
+              arr={genArr}
+              name="gen"
+              selectValue={productGen}
+              setSelectValue={setProductGen}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={modelArr}
+              name="model"
+              selectValue={productModel}
+              setSelectValue={setProductModel}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={model2Arr}
+              name="model2"
+              selectValue={productModel2}
+              setSelectValue={setProductModel2}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={colorArr}
+              name="color"
+              selectValue={productColor}
+              setSelectValue={setProductColor}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={storageArr}
+              name="storage"
+              selectValue={productStorage}
+              setSelectValue={setProductStorage}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={memoryArr}
+              name="memory"
+              selectValue={productMemory}
+              setSelectValue={setProductMemory}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={chipArr}
+              name="chip"
+              selectValue={productChip}
+              setSelectValue={setProductChip}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={cpuArr}
+              name="cpu"
+              selectValue={productCpu}
+              setSelectValue={setProductCpu}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={gpuArr}
+              name="gpu"
+              selectValue={productGpu}
+              setSelectValue={setProductGpu}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={sizeArr}
+              name="size"
+              selectValue={productSize}
+              setSelectValue={setProductSize}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={connectivityArr}
+              name="connectivity"
+              selectValue={productConnectivity}
+              setSelectValue={setProductConnectivity}
+              navTable={navTable}
+            />
+          }
+          {
+            <ArrMap //ul태그
+              arr={chargeArr}
+              name="charge"
+              selectValue={productCharge}
+              setSelectValue={setProductCharge}
+              navTable={navTable}
+            />
+          }
+          {selectedCategory && !pip ? (
+            <ArrMap //ul태그
+              arr={["A", "B", "C", "D"]}
+              name="quality"
+              selectValue={productQuality}
+              setSelectValue={setProductQuality}
+              navTable={navTable}
             />
           ) : (
-            <img
-              className="categoryImage"
-              //아래 이미지는 추후 수정 필요
-              src={"/image/categoryImage/iPhone_representation.png"}
-            />
+            ""
           )}
+          <ProductSummary selectedProduct={selectedProduct} />
         </div>
+        {/*--우측 영역*/}
       </div>
-      {/*//좌측 영역*/}
-
-      {/*우측 영역*/}
-      <div className="productCategory-wrap-right">
-        {
-          <ArrMap //ul태그
-            arr={genArr}
-            name="gen"
-            selectValue={productGen}
-            setSelectValue={setProductGen}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={modelArr}
-            name="model"
-            selectValue={productModel}
-            setSelectValue={setProductModel}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={model2Arr}
-            name="model2"
-            selectValue={productModel2}
-            setSelectValue={setProductModel2}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={colorArr}
-            name="color"
-            selectValue={productColor}
-            setSelectValue={setProductColor}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={storageArr}
-            name="storage"
-            selectValue={productStorage}
-            setSelectValue={setProductStorage}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={memoryArr}
-            name="memory"
-            selectValue={productMemory}
-            setSelectValue={setProductMemory}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={chipArr}
-            name="chip"
-            selectValue={productChip}
-            setSelectValue={setProductChip}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={cpuArr}
-            name="cpu"
-            selectValue={productCpu}
-            setSelectValue={setProductCpu}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={gpuArr}
-            name="gpu"
-            selectValue={productGpu}
-            setSelectValue={setProductGpu}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={sizeArr}
-            name="size"
-            selectValue={productSize}
-            setSelectValue={setProductSize}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={connectivityArr}
-            name="connectivity"
-            selectValue={productConnectivity}
-            setSelectValue={setProductConnectivity}
-            navTable={navTable}
-          />
-        }
-        {
-          <ArrMap //ul태그
-            arr={chargeArr}
-            name="charge"
-            selectValue={productCharge}
-            setSelectValue={setProductCharge}
-            navTable={navTable}
-          />
-        }
-        {selectedCategory && !pip ? (
-          <ArrMap //ul태그
-            arr={["A", "B", "C", "D"]}
-            name="quality"
-            selectValue={productQuality}
-            setSelectValue={setProductQuality}
-            navTable={navTable}
-          />
-        ) : (
-          ""
-        )}
-        <ProductSummary selectedProduct={selectedProduct} />
-      </div>
-      {/*--우측 영역*/}
     </div>
   );
 };
@@ -497,13 +518,13 @@ const ArrMap = (props) => {
   const name = props.name;
   const selectValue = props.selectValue;
   const setSelectValue = props.setSelectValue;
-  const table = props.navTable;
+  const navTable = props.navTable;
 
   const optionTitle = () => {
     if (name === "gen") {
-      return table === "IPHONE_TBL" ? "시리즈" : "세대";
+      return navTable === "IPHONE_TBL" ? "시리즈" : "세대";
     } else if (name === "model") {
-      return table === "MACBOOK_TBL" ? "화면 크기" : "모델";
+      return navTable === "MACBOOK_TBL" ? "화면 크기" : "모델";
     } else if (name === "model2") {
       return "모델";
     } else if (name === "color") {

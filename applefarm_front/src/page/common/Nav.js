@@ -11,6 +11,7 @@ const Nav = (props) => {
   const [navWatchArr, setNavWatchArr] = useState([]);
   const [navAirPodsArr, setNavAirPodsArr] = useState([]);
 
+  /*
   useEffect(() => {
     axios
       .get(backServer + "/common/nav")
@@ -18,14 +19,15 @@ const Nav = (props) => {
         console.log(res.data.data);
         setNavIPhoneArr([...res.data.data.iPhone]);
         setNavMacBookArr([...res.data.data.MacBook]);
-        setNavIPadArr([...res.data.data.navIPad]);
-        setNavWatchArr([...res.data.data.navWatch]);
-        setNavAirPodsArr([...res.data.data.navAirPods]);
+        setNavIPadArr([...res.data.data.iPad]);
+        setNavWatchArr([...res.data.data.Watch]);
+        setNavAirPodsArr([...res.data.data.AirPods]);
       })
       .catch((res) => {
         console.log(res.data);
       });
   }, []);
+  */
 
   const link = "/product/main";
 
@@ -603,42 +605,404 @@ const Nav = (props) => {
           </ul>
         </li>
         <li className="navMenu-li">
-          <Link to="#">iPad</Link>
+          <Link
+            to="/product/main"
+            state={{
+              navTable: "IPAD_TBL",
+              navProductLine: "iPad Pro 12.9",
+            }}
+          >
+            iPad
+          </Link>
           <ul className="dropdown-content drop-iPad">
             <li>
-              <Link to="#">iPad Pro 12.9</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "IPAD_TBL",
+                  navProductLine: "iPad Pro 12.9",
+                }}
+              >
+                iPad Pro 12.9
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">iPad Pro 12.9 6세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 12.9",
+                      navProductGen: "6세대",
+                    }}
+                  >
+                    iPad Pro 12.9 6세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">iPad Pro 12.9 5세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 12.9",
+                      navProductGen: "5세대",
+                    }}
+                  >
+                    iPad Pro 12.9 5세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">iPad Pro 12.9 4세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 12.9",
+                      navProductGen: "4세대",
+                    }}
+                  >
+                    iPad Pro 12.9 4세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">iPad Pro 12.9 3세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 12.9",
+                      navProductGen: "3세대",
+                    }}
+                  >
+                    iPad Pro 12.9 3세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">iPad Pro 12.9 2세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 12.9",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    iPad Pro 12.9 2세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">iPad Pro 12.9 1세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 12.9",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    iPad Pro 12.9 1세대
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <Link to="#">iPad Pro 11</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "IPAD_TBL",
+                  navProductLine: "iPad Pro 11",
+                }}
+              >
+                iPad Pro 11
+              </Link>
+              <ul>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 11",
+                      navProductGen: "4세대",
+                    }}
+                  >
+                    iPad Pro 12.9 4세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 11",
+                      navProductGen: "3세대",
+                    }}
+                  >
+                    iPad Pro 12.9 3세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 11",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    iPad Pro 12.9 2세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Pro 11",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    iPad Pro 12.9 1세대
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
-              <Link to="#">iPad Air</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "IPAD_TBL",
+                  navProductLine: "iPad Air",
+                }}
+              >
+                iPad Air
+              </Link>
+              <ul>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Air",
+                      navProductGen: "5세대",
+                    }}
+                  >
+                    iPad Pro 12.9 5세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Air",
+                      navProductGen: "4세대",
+                    }}
+                  >
+                    iPad Pro 12.9 4세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Air",
+                      navProductGen: "3세대",
+                    }}
+                  >
+                    iPad Pro 12.9 3세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Air",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    iPad Pro 12.9 2세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Air",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    iPad Pro 12.9 1세대
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
-              <Link to="#">iPad Mini</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "IPAD_TBL",
+                  navProductLine: "iPad Mini",
+                }}
+              >
+                iPad Mini
+              </Link>
+              <ul>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Mini",
+                      navProductGen: "6세대",
+                    }}
+                  >
+                    iPad Mini 6세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Mini",
+                      navProductGen: "5세대",
+                    }}
+                  >
+                    iPad Mini 5세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Mini",
+                      navProductGen: "4세대",
+                    }}
+                  >
+                    iPad Mini 4세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Mini",
+                      navProductGen: "3세대",
+                    }}
+                  >
+                    iPad Mini 3세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Mini",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    iPad Mini 2세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad Mini",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    iPad Mini 1세대
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
-              <Link to="#">iPad</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "IPAD_TBL",
+                  navProductLine: "iPad",
+                }}
+              >
+                iPad
+              </Link>
+              <ul>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad",
+                      navProductGen: "10세대",
+                    }}
+                  >
+                    iPad 10세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad",
+                      navProductGen: "9세대",
+                    }}
+                  >
+                    iPad 9세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad",
+                      navProductGen: "8세대",
+                    }}
+                  >
+                    iPad 8세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad",
+                      navProductGen: "7세대",
+                    }}
+                  >
+                    iPad 7세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad",
+                      navProductGen: "6세대",
+                    }}
+                  >
+                    iPad 6세대
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "IPAD_TBL",
+                      navProductLine: "iPad",
+                      navProductGen: "5세대",
+                    }}
+                  >
+                    iPad 5세대
+                  </Link>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
@@ -646,47 +1010,161 @@ const Nav = (props) => {
           <Link to="#">Watch</Link>
           <ul className="dropdown-content drop-Watch">
             <li>
-              <Link to="#">Apple Watch Ultra</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "WATCH_TBL",
+                  navProductLine: "Apple Watch Ultra",
+                }}
+              >
+                Apple Watch Ultra
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">Apple Watch Ultra 2세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Ultra",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    Apple Watch Ultra 2세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch Ultra 1세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Ultra",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    Apple Watch Ultra 1세대
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <Link to="#">Apple Watch Series</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "WATCH_TBL",
+                  navProductLine: "Apple Watch Series",
+                }}
+              >
+                Apple Watch Series
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">Apple Watch Series 9세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Series",
+                      navProductGen: "9세대",
+                    }}
+                  >
+                    Apple Watch Series 9세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch Series 8세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Series",
+                      navProductGen: "8세대",
+                    }}
+                  >
+                    Apple Watch Series 8세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch Series 7세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Series",
+                      navProductGen: "7세대",
+                    }}
+                  >
+                    Apple Watch Series 7세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch Series 6세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Series",
+                      navProductGen: "6세대",
+                    }}
+                  >
+                    Apple Watch Series 6세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch Series 5세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Series",
+                      navProductGen: "5세대",
+                    }}
+                  >
+                    Apple Watch Series 5세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch Series 4세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch Series",
+                      navProductGen: "4세대",
+                    }}
+                  >
+                    Apple Watch Series 4세대
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <Link to="#">Apple Watch SE</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "WATCH_TBL",
+                  navProductLine: "Apple Watch SE",
+                }}
+              >
+                Apple Watch SE
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">Apple Watch SE 2세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch SE",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    Apple Watch SE 2세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">Apple Watch SE 1세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "WATCH_TBL",
+                      navProductLine: "Apple Watch SE",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    Apple Watch SE 1세대
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -696,35 +1174,113 @@ const Nav = (props) => {
           <Link to="#">AirPods</Link>
           <ul className="dropdown-content drop-AirPods">
             <li>
-              <Link to="#">AirPods Max</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "AIRPODS_TBL",
+                  navProductLine: "AirPods Max",
+                }}
+              >
+                AirPods Max
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">AirPods Max 1세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "AIRPODS_TBL",
+                      navProductLine: "AirPods Max",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    AirPods Max 1세대
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <Link to="#">AirPods Pro</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "AIRPODS_TBL",
+                  navProductLine: "AirPods Pro",
+                }}
+              >
+                AirPods Pro
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">AirPods Pro 2세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "AIRPODS_TBL",
+                      navProductLine: "AirPods Pro",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    AirPods Pro 2세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">AirPods Pro 1세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "AIRPODS_TBL",
+                      navProductLine: "AirPods Pro",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    AirPods Pro 1세대
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <Link to="#">AirPods</Link>
+              <Link
+                to="/product/main"
+                state={{
+                  navTable: "AIRPODS_TBL",
+                  navProductLine: "AirPods",
+                }}
+              >
+                AirPods
+              </Link>
               <ul>
                 <li>
-                  <Link to="#">AirPods 3세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "AIRPODS_TBL",
+                      navProductLine: "AirPods",
+                      navProductGen: "3세대",
+                    }}
+                  >
+                    AirPods 3세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">AirPods 2세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "AIRPODS_TBL",
+                      navProductLine: "AirPods",
+                      navProductGen: "2세대",
+                    }}
+                  >
+                    AirPods 2세대
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">AirPods 1세대</Link>
+                  <Link
+                    to="/product/main"
+                    state={{
+                      navTable: "AIRPODS_TBL",
+                      navProductLine: "AirPods",
+                      navProductGen: "1세대",
+                    }}
+                  >
+                    AirPods 1세대
+                  </Link>
                 </li>
               </ul>
             </li>

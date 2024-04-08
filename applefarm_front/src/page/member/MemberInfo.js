@@ -8,6 +8,8 @@ import { Button3 } from "../../component/FormFrm";
 import "./member.css";
 
 const MemberInfo = (props) => {
+  const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const checkMsg = props.checkMsg;

@@ -15,7 +15,7 @@ const Footer = () => {
             <Link to="/ref">인재채용</Link>
           </li>
           <li>
-            <Link to="/admin">제휴문의</Link>
+            <Link to="#">제휴문의</Link>
           </li>
         </ul>
         <p>무단 복제를 금지합니다.</p>

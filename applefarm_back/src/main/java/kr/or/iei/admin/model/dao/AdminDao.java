@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
+import kr.or.iei.admin.model.dto.ChatRoom;
+import kr.or.iei.admin.model.dto.Dashboard;
 import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.util.PageInfo;
@@ -27,6 +29,16 @@ public interface AdminDao {
 	int hidePost(Report report);
 	int blackMember(Report report);
 	int reportTotalCount(int selectedValue);
+	int periodMemberCount(Dashboard db);
+	int totalMemberCount(Dashboard db);
+	int periodTradeCount(Dashboard db);
+	int periodTradeMoney(Dashboard db);
+	List enrollDateCount(Dashboard db);
+	List tradeMoneySum(Dashboard db);
+	List topFiveSellerRank(Dashboard db);
+	List topFiveBuyerRank(Dashboard db);
+	List tradeLog(Dashboard db);
+	List<ChatRoom> selectChatRoomList(String memberId);
 
 
 }

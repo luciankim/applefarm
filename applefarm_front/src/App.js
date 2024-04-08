@@ -73,34 +73,13 @@ function App() {
     }
   }, []);
 
-  //박성완 - Nav.js 정보
-  /*
-  const [table, setTable] = useState("IPHONE_TBL");
-  const [navProductLine, setNavProductLine] = useState("iPhone");
-  const [navProductGen, setNavProductGen] = useState("iPhone 15 Series");
-  */
-  /*
-  const table = "IPHONE_TBL"; //반드시 대문자로 받을것!!
-  const navProductLine = "iPhone";
-  const navProductGen = "iPhone 15 Series"; //없을 경우 ""로 받을것!!
-  */
-
   return (
     <div className="wrap">
       <header>
         <Header isLogin={isLogin} logout={logout} /> {/*여기는 isLogin 값*/}
       </header>
       <main className="container">
-        <Nav
-        /*
-          table={table}
-          setTable={setTable}
-          navProductLine={navProductLine}
-          setNavProductLine={setNavProductLine}
-          navProductGen={navProductGen}
-          setNavProductGen={setNavProductGen}
-          */
-        />
+        <Nav />
         <section className="inner-wrap">
           <Routes>
             <Route path="/" element={<Main />} />
@@ -110,9 +89,15 @@ function App() {
               element={<Mypage isLogin={isLogin} logout={logout} />}
             />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
-            <Route path="/board/*" element={<BoardMain />} />
+            <Route
+              path="/board/*"
+              element={<BoardMain isLogin={isLogin} logout={logout} />}
+            />
             <Route path="/join" element={<Join />} />
-            <Route path="/admin/*" element={<AdminMain />} />
+            <Route
+              path="/admin/*"
+              element={<AdminMain isLogin={isLogin} logout={logout} />}
+            />
             <Route path="/login" element={<Login login={login} />} />
             <Route
               path="/purchase/:productNo"
@@ -123,18 +108,7 @@ function App() {
               element={<CompletePayment isLogin={isLogin} />}
             />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
-            <Route
-              path="/product/*"
-              element={
-                <Product
-                /*
-                  table={table}
-                  navProductLine={navProductLine}
-                  navProductGen={navProductGen}
-                  */
-                />
-              }
-            />
+            <Route path="/product/*" element={<Product />} />
           </Routes>
         </section>
       </main>
