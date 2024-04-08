@@ -12,6 +12,11 @@
 		where product_line = #{productLine}
 		order by rownum desc
 	</select>
+	
+	<select id="volume" resultType="trade">
+		
+	</select>
+	
 	 
 	<select id="selectQualityList" resultType="quality">
 		select * from quality_tbl where table_name = #{tableName}

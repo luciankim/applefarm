@@ -23,7 +23,6 @@ npm install apexcharts --save
 npm install --save react-apexcharts apexcharts
 
 2024-04-06
-npm install react-csv --save;
-
+npm install react-csv --save
 
 

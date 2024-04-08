@@ -73,6 +73,17 @@ public class ProductController {
 		}
 	}
 	
+	@Operation(summary="시세 차트", description = "선택한 제품 카테고리의 기간 단위별 거래량 및 거래금액을 보여줌")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value="/chart")
+	public ResponseEntity<ResponseDTO> chart(@RequestBody Product product){
+		HashMap<String, Object> map = productService.chart(product);
+		return null;
+	}
+	
 	@GetMapping(value = "/quality/{tableName}")
 	public ResponseEntity<ResponseDTO> selectQualityList(@PathVariable String tableName){
 		List list = productService.selectQualityList(tableName);

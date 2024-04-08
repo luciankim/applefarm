@@ -189,7 +189,7 @@ const ProductMain = (props) => {
             }
           >
             {/*productQuality가 undefined또는null인거 조심!!!*/}
-            <ProductApexChart productQuality={productQuality} />
+            <ProductApexChart selectedProduct={selectedProduct} />
           </div>
           <div
             className={

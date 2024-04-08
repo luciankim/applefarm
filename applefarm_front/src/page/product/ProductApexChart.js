@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
 const ProductApexChart = (props) => {
-  const productQuality = props.productQuality;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  const selectedProduct = props.selectedProduct;
 
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState([]);
@@ -14,7 +16,18 @@ const ProductApexChart = (props) => {
     setTerm(e.target.value);
   };
   //axios
-  useEffect(() => {}, [productQuality, term]);
+  /*
+  useEffect(() => {
+    axios
+      .get(backServer + "/product/chart" + selectedProduct)
+      .then((res) => {
+        console.log(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [selectedProduct, term]);
+  */
 
   const state = {
     series: [
@@ -74,6 +87,7 @@ const ProductApexChart = (props) => {
         },
       },
       xaxis: {
+        /*
         categories: [
           "9일 전",
           "8일 전",
@@ -85,6 +99,15 @@ const ProductApexChart = (props) => {
           "2일 전",
           "1일 전",
         ],
+        */
+        labels: {
+          datetimeFormatter: {
+            year: "yyyy",
+            month: "MMM 'yy",
+            day: "dd MMM",
+            hour: "HH:mm",
+          },
+        },
       },
       yaxis: [
         //거래량(좌측 Y축)

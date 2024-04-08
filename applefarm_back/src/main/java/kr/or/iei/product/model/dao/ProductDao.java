@@ -1,5 +1,6 @@
 package kr.or.iei.product.model.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,9 +21,11 @@ import kr.or.iei.product.model.dto.WatchQualityHistory;
 public interface ProductDao {
 
 	List selectProductCategory(String table, String productLine);
+	
+	List volume(Product product);
 
 	List selectQualityList(String tableName);
-
+	
 
 	Product selectOneProduct(int productNo);
 

@@ -1,6 +1,7 @@
 package kr.or.iei.product.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,9 +36,23 @@ public class ProductService {
 		List list = productDao.selectProductCategory(table, productLine);
 		return list;
 	}
+	
+	public HashMap<String, Object> chart(Product product) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List volume = productDao.volume(product);
+		map.put("volume", volume);
+		/*
+		 	select * from product_tbl order by 1 desc;
+			UPDATE PRODUCT_TBL SET PRODUCT_DATE = TO_DATE('2024/04/08 11:00:00', 'YYYY/MM/DD HH:MI:SS') WHERE PRODUCT_NO in (128, 129, 130);
+			select * from member_tbl;
+			select trade_reserve_date from trade_tbl;
+			select trade_date from trade_tbl where trade_state != '환불';
+			select trade_date from trade_tbl;
+		 */
+		return map;
+	}
 
-	public List selectQualityList(String tableName) {
-		
+	public List selectQualityList(String tableName) {	
 		return productDao.selectQualityList(tableName);
 	}
 	
