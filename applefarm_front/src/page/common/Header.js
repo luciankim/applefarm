@@ -61,10 +61,15 @@ const LoginForm = (props) => {
     <div className="header-link">
       {isLogin ? (
         <>
+          <Link title="쪽지함">
+            <span className="material-icons">email</span>
+          </Link>
+          <Link to="/mypage/wish" title="위시리스트">
+            <span className="material-icons">favorite_border</span>
+          </Link>
           <Link to="/mypage/loginInfo" title="마이페이지">
             <span className="material-icons">face</span>
           </Link>
-
           <Link to="#" title="로그아웃">
             <span className="material-icons" onClick={logout}>
               logout
@@ -82,7 +87,7 @@ const LoginForm = (props) => {
           <Link to="/mypage/wish" title="위시리스트">
             <span className="material-icons">favorite_border</span>
           </Link>
-          <Link>
+          <Link title="쪽지함">
             <span className="material-icons">email</span>
           </Link>
         </>

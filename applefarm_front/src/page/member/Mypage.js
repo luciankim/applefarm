@@ -11,9 +11,11 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import DeleteMember from "./DeleteMember";
 
-import DetailOrder from "./DetailOrder";
 import SellerGrade from "./SellerGrade";
 import MemberAccountNumber from "./MemberAccountNumber";
+
+import { DetailOrder, DetailSales } from "./DetailOrder";
+import PurchaseHistory from "./PurchaseHistory";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
@@ -92,6 +94,8 @@ const Mypage = (props) => {
           <Route path="/address" element={<Address />}></Route>
           <Route path="/wish" element={<MemberWish />}></Route>
           <Route path="/detailOrder/:productNo" element={<DetailOrder />} />
+          <Route path="/purchaseHistory" element={<PurchaseHistory />} />
+          <Route path="/detailSales/:productNo" element={<DetailSales />} />
         </Routes>
       </div>
     </div>

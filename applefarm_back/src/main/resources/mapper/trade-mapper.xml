@@ -4,7 +4,21 @@
   	<insert id="insertTrade">
   		insert into trade_tbl values(trade_seq.nextval,#{tradeSeller},#{tradeBuyer},#{productNo},null,sysdate,#{tradePrice},'결제완료',#{zipcode},#{address},#{addressDetail},#{addressName},#{addressPhone},#{addressRequest},null,#{paymentNumber})
   	</insert>
-  	<select id="selectExistTrade">
+  	<select id="selectExistTrade" resultType="int">
   		select count(*) from trade_tbl where product_no=#{productNo}
+  	</select>
+  	<select id="selectDetailTrade" resultType="trade">
+  		select a.trade_no, (select member_nickname from member_tbl where member_no=a.trade_seller) as trade_seller_nickname ,a.trade_buyer, a.product_no, a.trade_reserve_date, to_char(a.trade_date, 'yyyy/mm/dd hh24:mi') as trade_date, a.trade_price, a.trade_state, a.zipcode,a.address,a.address_detail,a.address_name,a.address_phone,a.address_request,a.invoice_number,a.payment_number,
+			b.product_summary,b.product_price,b.product_thumbnail
+		from trade_tbl a join product_tbl b on a.product_no=b.product_no where a.product_no=#{productNo} and a.trade_buyer=#{tradeBuyer}
+  	</select>
+  	<select id="selectDetailSales" resultType="trade">
+  		select a.trade_no, a.trade_seller,
+        (select member_nickname from member_tbl where member_no=a.trade_buyer) as trade_buyer_nickname, 
+        a.product_no, a.trade_reserve_date, to_char(a.trade_date, 'yyyy/mm/dd hh24:mi') as trade_date, 
+        a.trade_price, a.trade_state, a.zipcode,a.address,a.address_detail,a.address_name,a.address_phone,a.address_request,
+        a.invoice_number,a.payment_number,(select member_accountnumber from member_tbl where member_no=a.trade_seller) as member_accountnumber,
+			b.product_summary,b.product_price,b.product_thumbnail
+		from trade_tbl a join product_tbl b on a.product_no=b.product_no where a.product_no=#{productNo} and a.trade_seller=#{tradeSeller}
   	</select>
 </mapper>

@@ -11,4 +11,8 @@ public interface TradeDao {
 
 	int selectExistTrade(int productNo);
 
+	Trade selectDetailTrade(Trade t);
+
+	Trade selectDetailSales(Trade t);
+
 }

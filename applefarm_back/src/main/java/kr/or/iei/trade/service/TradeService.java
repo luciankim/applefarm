@@ -18,5 +18,11 @@ public class TradeService {
 	public int selectExistTrade(int productNo) {
 		return tradeDao.selectExistTrade(productNo);
 	}
+	public Trade selectDetailTrade(Trade t) {
+		return tradeDao.selectDetailTrade(t);
+	}
+	public Trade selectDetailSales(Trade t) {
+		return tradeDao.selectDetailSales(t);
+	}
 	
 }
