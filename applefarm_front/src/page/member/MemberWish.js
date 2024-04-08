@@ -23,13 +23,12 @@ const MemberWish = () => {
         console.log(res.data);
       });
   }, [status]);
-  //품절 상태 화면 수정 필요
   return (
     <div className="mypage-current-wrap">
-      <div className="mypage-current-title">
+      <h3 className="mypage-current-title">
         {/**<span className="material-icons like-icon">favorite</span>  */}
         좋아요
-      </div>
+      </h3>
       <div className="member-like-tbl-box">
         {likeList.length === 0 ? (
           <div className="no-like-list">

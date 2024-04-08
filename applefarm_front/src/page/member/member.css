@@ -40,12 +40,12 @@
   color: #1e1e1e;
   width: 900px;
   margin: 0 auto;
+  padding: 10px;
 }
 .mypage-current-title {
-  padding: 20px 0px;
+  padding: 0px 0px 15px 0px;
   color: #222222;
   font-family: ns-b;
-  font-size: 24px;
 }
 .like-icon {
   font-size: 40px;
@@ -159,6 +159,7 @@
 
 /* 주소록 */
 .address-list-wrap {
+  font-size: 15px;
 }
 .basic-address-btn {
   position: absolute;
@@ -206,7 +207,7 @@
   font-weight: ns-b;
 }
 .address-info-wrap:not(:nth-child(1)) {
-  border: 1px solid #e2e1e1;
+  border: 1px solid rgba(204, 204, 204, 0.1);
   background-color: #fafafc;
 }
 .address-info > div {

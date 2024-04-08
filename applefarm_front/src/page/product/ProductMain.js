@@ -6,38 +6,21 @@ import ProductChart from "./ProductChart";
 import ProductList from "./ProductList";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ProductMain = (props) => {
-  //const { table, navProductLine, navProductGen } = props;
   const location = useLocation();
+
   const [navTable, setNavTable] = useState(location.state.navTable);
-  const [navProductLine, setNavProductLine] = useState(
-    location.state.navProductLine
-  );
-  const [navProductGen, setNavProductGen] = useState(
-    location.state.navProductGen
-  );
-  console.log(location.state.navTable); //확인
-  useEffect(() => {
-    setNavTable(location.state.navTable);
-    setNavProductLine(location.state.navProductLine);
-    setNavProductGen(location.state.navProductGen);
-    setProductLine(location.state.navProductLine);
-    setProductGen(navProductGen ? navProductGen : "");
-  }, [
-    location.state.navTable,
-    location.state.navProductLine,
-    location.state.navProductGen,
-  ]);
+  const [navLine, setNavLine] = useState(location.state.navProductLine);
+  const [navGen, setNavGen] = useState(location.state.navProductGen);
+  const [navModel, setNavModel] = useState(location.state.navProductModel);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const [productLine, setProductLine] = useState(navProductLine);
-  const [productGen, setProductGen] = useState(
-    navProductGen ? navProductGen : ""
-  );
-  const [productModel, setProductModel] = useState("");
+  const [productLine, setProductLine] = useState("");
+  const [productGen, setProductGen] = useState("");
+  const [productModel, setProductModel] = useState();
   const [productModel2, setProductModel2] = useState("");
   const [productColor, setProductColor] = useState("");
   const [productImage, setProductImage] = useState("");
@@ -50,6 +33,17 @@ const ProductMain = (props) => {
   const [productConnectivity, setProductConnectivity] = useState("");
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
+
+  useEffect(() => {
+    setProductLine(location.state.navProductLine);
+    setProductGen(location.state.navProductGen);
+    setProductModel(location.state.navProductModel);
+
+    setNavTable(location.state.navTable);
+    setNavLine(location.state.navProductLine);
+    setNavGen(location.state.navProductGen);
+    setNavModel(location.state.navProductModel);
+  }, [location]);
 
   const [selectedProduct, setSelectedProduct] = useState({}); //객체
   useEffect(() => {
@@ -86,6 +80,7 @@ const ProductMain = (props) => {
     productConnectivity,
     productCharge,
     productQuality,
+    location,
   ]);
 
   const [productMainTab, setProductMainTab] = useState("CHART");
@@ -93,13 +88,24 @@ const ProductMain = (props) => {
     setProductMainTab(e.target.id);
   };
 
+  const navigate = useNavigate(); //상품등록버튼
+  const ToProductInsert = () => {
+    navigate("/product/insert", {
+      state: {
+        navTable: navTable,
+        navProductLine: navLine,
+        navProductGen: navGen,
+        navProductModel: navModel,
+      },
+    });
+  };
   //<화면 출력 순서>
   //카테고리js
   //차트js, 거래건js
   //리스트js
   return (
     <div className="productMain">
-      <div className="productMain-title">
+      <div className="productCategory-title">
         {navTable === "IPHONE_TBL"
           ? "iPhone"
           : navTable === "MACBOOK_TBL"
@@ -111,12 +117,19 @@ const ProductMain = (props) => {
           : navTable === "AIRPODS_TBL"
           ? "에어팟"
           : ""}
+        <div className="productInsert-btn-wrap">
+          <button className="productInsert-btn" onClick={ToProductInsert}>
+            <span className="material-icons">add</span>
+            <span>상품 등록</span>
+          </button>
+        </div>
       </div>
       <ProductCategory
         /*axios용*/
         navTable={navTable}
-        navProductLine={navProductLine}
-        navProductGen={navProductGen}
+        navLine={navLine}
+        navGen={navGen}
+        navModel={navModel}
         /*--axios용*/
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
@@ -200,7 +213,3 @@ const ProductMain = (props) => {
 };
 
 export default ProductMain;
-
-/*
-uselocation usenavigation??
-*/

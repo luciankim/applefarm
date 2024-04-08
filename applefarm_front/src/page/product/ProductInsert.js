@@ -14,27 +14,18 @@ import axios from "axios";
 const ProductInsert = (props) => {
   //https://heycoding.tistory.com/72#3.2.%20useNavigate
 
-  /*
-  const table = props.table;
-  const navProductLine = props.navProductLine;
-  const navProductGen = props.navProductGen;
-  */
-  // const table = "MACBOOK_TBL";//임시로 생성
-  // const [navTable, setNavTable] = useState(nav.table);
-
   const location = useLocation();
-  const { nav } = location.state;
-  const [navTable, setNavTable] = useState(nav.table);
-  const [navProductLine, setNavProductLine] = useState(nav.navProductLine);
-  const [navProductGen, setNavProductGen] = useState(nav.navProductGen);
 
-  //ProductCategory.js로 넘겨줄 데이터
+  const [navTable, setNavTable] = useState(location.state.navTable);
+  const [navLine, setNavLine] = useState(location.state.navProductLine);
+  const [navGen, setNavGen] = useState(location.state.navProductGen);
+  const [navModel, setNavModel] = useState(location.state.navProductModel);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [productLine, setProductLine] = useState(navProductLine);
-  const [productGen, setProductGen] = useState(
-    navProductGen ? navProductGen : ""
-  );
-  const [productModel, setProductModel] = useState("");
+
+  const [productLine, setProductLine] = useState("");
+  const [productGen, setProductGen] = useState("");
+  const [productModel, setProductModel] = useState();
   const [productModel2, setProductModel2] = useState("");
   const [productColor, setProductColor] = useState("");
   const [productImage, setProductImage] = useState("");
@@ -47,9 +38,20 @@ const ProductInsert = (props) => {
   const [productConnectivity, setProductConnectivity] = useState("");
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState({}); //객체
+
+  useEffect(() => {
+    setProductLine(location.state.navProductLine);
+    setProductGen(location.state.navProductGen);
+    setProductModel(location.state.navProductModel);
+
+    setNavTable(location.state.navTable);
+    setNavLine(location.state.navProductLine);
+    setNavGen(location.state.navProductGen);
+    setNavModel(location.state.navProductModel);
+  }, [location]);
 
   //ProductInsert.js 버전 setSelectedProduct
+  const [selectedProduct, setSelectedProduct] = useState({}); //객체
   useEffect(() => {
     setSelectedProduct({
       productLine: productLine,
@@ -84,6 +86,7 @@ const ProductInsert = (props) => {
     productConnectivity,
     productCharge,
     productQuality,
+    location,
   ]);
   //--ProductCategory.js로 넘겨줄 데이터
 
@@ -145,20 +148,16 @@ const ProductInsert = (props) => {
       thumbnail &&
       pip === progressArr[progressArr.length - 1]
     ) {
-        //partOrder객체의 각 value값을 key-value쌍으로 변환작업
-        //[{part2 : 'DISPAY',value:'정상'}] -> {DISPLAY : '정상'}
-        //reduce함수(배열요소 순회 함수) - (누적,현제요소,현제요소 인덱스, 호출한배열),(초기값설정 - 여기는 빈 객체로 설정)
-        const partObject = partOrder.reduce((acc, item) =>
-        {
-          acc[item.part2] = item.value;
-          return acc;
-        },{}
-        )
-        //console.log(partObject);
-      
+      //partOrder객체의 각 value값을 key-value쌍으로 변환작업
+      //[{part2 : 'DISPAY',value:'정상'}] -> {DISPLAY : '정상'}
+      //reduce함수(배열요소 순회 함수) - (누적,현제요소,현제요소 인덱스, 호출한배열),(초기값설정 - 여기는 빈 객체로 설정)
+      const partObject = partOrder.reduce((acc, item) => {
+        acc[item.part2] = item.value;
+        return acc;
+      }, {});
+      //console.log(partObject);
 
-        //navigate("/product/main"); //아직 메인페이지 경로 없음
-
+      //navigate("/product/main"); //아직 메인페이지 경로 없음
 
       //여기에 서버로 가서 insert하는 axios코드
       //navigate("/product/main"); //아직 메인페이지 경로 없음
@@ -192,134 +191,130 @@ const ProductInsert = (props) => {
       form.append("productCharge", selectedProduct.productCharge);
       form.append("tableName", navTable);
 
+      for (let i = 0; i < file.length; i++) {
+        form.append("productFile", file[i]);
+      }
+      form.append("productLine", selectedProduct.productLine);
+      form.append("productGen", selectedProduct.productGen);
+      form.append("productModel", selectedProduct.productModel);
+      form.append("productModel2", selectedProduct.productModel2);
+      form.append("productColor", selectedProduct.productColor);
+      form.append("productColor", selectedProduct.productColor);
+      form.append("productImage", selectedProduct.productImage);
+      form.append("productStorage", selectedProduct.productStorage);
+      form.append("productMemory", selectedProduct.productMemory);
+      form.append("productChip", selectedProduct.productChip);
+      form.append("productCpu", selectedProduct.productCpu);
+      form.append("productGpu", selectedProduct.productGpu);
+      form.append("productSize", selectedProduct.productSize);
+      form.append("productConnectivity", selectedProduct.productConnectivity);
+      form.append("productCharge", selectedProduct.productCharge);
+      form.append("tableName", navTable);
 
-        for (let i = 0; i < file.length; i++) {
-          form.append("productFile", file[i]);
-        }
-        form.append("productLine",selectedProduct.productLine);
-        form.append("productGen",selectedProduct.productGen);
-        form.append("productModel",selectedProduct.productModel);
-        form.append("productModel2",selectedProduct.productModel2);
-        form.append("productColor",selectedProduct.productColor);
-        form.append("productColor",selectedProduct.productColor)
-        form.append("productImage",selectedProduct.productImage);
-        form.append("productStorage",selectedProduct.productStorage);
-        form.append("productMemory",selectedProduct.productMemory);
-        form.append("productChip",selectedProduct.productChip);
-        form.append("productCpu",selectedProduct.productCpu);
-        form.append("productGpu",selectedProduct.productGpu);
-        form.append("productSize",selectedProduct.productSize);
-        form.append("productConnectivity",selectedProduct.productConnectivity);
-        form.append("productCharge",selectedProduct.productCharge);
-        form.append("tableName",navTable);
+      if (navTable == "MACBOOK_TBL") {
+        form.append("displayScreen", partObject.DISPLAY_SCREEN);
+        form.append("backPanelSide", partObject.BACK_PANEL_SIDE);
+        form.append("burnIn", partObject.BURN_IN);
+        form.append("display", partObject.DISPLAY);
+        form.append("keyboard", partObject.KEYBOARD);
+        form.append("ports", partObject.PORTS);
+        form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
+        form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+        form.append("camera", partObject.CAMERA);
+        form.append("microphone", partObject.MICROPHONE);
+        form.append("speakersAudioJack", partObject.SPEAKERS_AUDIO_JACK);
+        form.append(
+          "biometricAuthentication",
+          partObject.BIOMETRIC_AUTHENTICATION
+        );
+        form.append("power", partObject.POWER);
+        form.append("voiceRecording", partObject.VOICE_RECORDING);
+        form.append("trackpad", partObject.TRACKPAD);
+        form.append("operation", partObject.OPERATION);
+      } else if (navTable == "IPHONE_TBL") {
+        form.append("displayScreen", partObject.DISPLAY_SCREEN);
+        form.append("backPanelSide", partObject.BACK_PANEL_SIDE);
+        form.append("burnIn", partObject.BURN_IN);
+        form.append("display", partObject.DISPLAY);
+        form.append("power", partObject.POWER);
+        form.append("camera", partObject.CAMERA);
+        form.append("wifi", partObject.WIFI);
+        form.append(
+          "biometricAuthentication",
+          partObject.BIOMETRIC_AUTHENTICATION
+        );
+        form.append("compass", partObject.COMPASS);
+        form.append("voiceRecording", partObject.VOICE_RECORDING);
+      } else if (navTable == "IPAD_TBL") {
+        form.append("displayScreen", partObject.DISPLAY_SCREEN);
+        form.append("backPanelSide", partObject.BACK_PANEL_SIDE);
+        form.append("burnIn", partObject.BURN_IN);
+        form.append("display", partObject.DISPLAY);
+        form.append("keyboard", partObject.KEYBOARD);
+        form.append("ports", partObject.PORTS);
+        form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
+        form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+        form.append("camera", partObject.CAMERA);
+        form.append("microphone", partObject.MICROPHONE);
+        form.append("speakersAudioJack", partObject.SPEAKERS_AUDIO_JACK);
+        form.append(
+          "biometricAuthentication",
+          partObject.BIOMETRIC_AUTHENTICATION
+        );
+        form.append("power", partObject.POWER);
+        form.append("voiceRecording", partObject.VOICE_RECORDING);
+        form.append("operation", partObject.OPERATION);
+      } else if (navTable == "WATCH_TBL") {
+        form.append("displayScreen", partObject.DISPLAY_SCREEN);
+        form.append("backPanelSide", partObject.BACK_PANEL_SIDE);
+        form.append("burnIn", partObject.BURN_IN);
+        form.append("display", partObject.DISPLAY);
+        form.append("digitalCrownButton", partObject.DIGITAL_CROWN_BUTTON);
+        form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
+        form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+        form.append("microphone", partObject.MICROPHONE);
+        form.append("speaker", partObject.SPEAKER);
+        form.append("power", partObject.POWER);
+        form.append("voiceRecording", partObject.VOICE_RECORDING);
+        form.append("operation", partObject.OPERATION);
+      } else if (navTable == "AIRPODS_TBL") {
+        form.append("soundQuality", partObject.SOUND_QUALITY);
+        form.append("connectionStability", partObject.CONNECTION_STABILITY);
+        form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
+        form.append("exterior", partObject.EXTERIOR);
+        form.append("charging", partObject.CHARGING);
+        form.append("touchSensor", partObject.TOUCH_SENSOR);
+      }
 
-        if(navTable=="MACBOOK_TBL"){
-          form.append("displayScreen",partObject.DISPLAY_SCREEN);
-          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
-          form.append("burnIn",partObject.BURN_IN);
-          form.append("display",partObject.DISPLAY);
-          form.append("keyboard",partObject.KEYBOARD);
-          form.append("ports",partObject.PORTS);
-          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
-          form.append("wirelessConffectivity",partObject.WIRELESS_CONNECTIVITY);
-          form.append("camera",partObject.CAMERA);
-          form.append("microphone",partObject.MICROPHONE);
-          form.append("speakersAudioJack",partObject.SPEAKERS_AUDIO_JACK);
-          form.append("biometricAuthentication",partObject.BIOMETRIC_AUTHENTICATION);
-          form.append("power",partObject.POWER);
-          form.append("voiceRecording",partObject.VOICE_RECORDING);
-          form.append("trackpad",partObject.TRACKPAD);
-          form.append("operation",partObject.OPERATION);
-        }
-        else if(navTable=="IPHONE_TBL"){
-          form.append("displayScreen",partObject.DISPLAY_SCREEN);
-          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
-          form.append("burnIn",partObject.BURN_IN);
-          form.append("display",partObject.DISPLAY);
-          form.append("power",partObject.POWER);
-          form.append("camera",partObject.CAMERA);
-          form.append("wifi",partObject.WIFI);
-          form.append("biometricAuthentication",partObject.BIOMETRIC_AUTHENTICATION);
-          form.append("compass",partObject.COMPASS);
-          form.append("voiceRecording",partObject.VOICE_RECORDING);
-        }
-        else if(navTable=="IPAD_TBL"){
-          form.append("displayScreen",partObject.DISPLAY_SCREEN);
-          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
-          form.append("burnIn",partObject.BURN_IN);
-          form.append("display",partObject.DISPLAY);
-          form.append("keyboard",partObject.KEYBOARD);
-          form.append("ports",partObject.PORTS);
-          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
-          form.append("wirelessConffectivity",partObject.WIRELESS_CONNECTIVITY);
-          form.append("camera",partObject.CAMERA);
-          form.append("microphone",partObject.MICROPHONE);
-          form.append("speakersAudioJack",partObject.SPEAKERS_AUDIO_JACK);
-          form.append("biometricAuthentication",partObject.BIOMETRIC_AUTHENTICATION);
-          form.append("power",partObject.POWER);
-          form.append("voiceRecording",partObject.VOICE_RECORDING);
-          form.append("operation",partObject.OPERATION);
-        }
-        else if(navTable=="WATCH_TBL"){
-          form.append("displayScreen",partObject.DISPLAY_SCREEN);
-          form.append("backPanelSide",partObject.BACK_PANEL_SIDE);
-          form.append("burnIn",partObject.BURN_IN);
-          form.append("display",partObject.DISPLAY);
-          form.append("digitalCrownButton",partObject.DIGITAL_CROWN_BUTTON);
-          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
-          form.append("wirelessConffectivity",partObject.WIRELESS_CONNECTIVITY);
-          form.append("microphone",partObject.MICROPHONE);
-          form.append("speaker",partObject.SPEAKER);
-          form.append("power",partObject.POWER);
-          form.append("voiceRecording",partObject.VOICE_RECORDING);
-          form.append("operation",partObject.OPERATION);
-        }
-        else if(navTable=="AIRPODS_TBL"){
-          form.append("soundQuality",partObject.SOUND_QUALITY);
-          form.append("connectionStability",partObject.CONNECTION_STABILITY);
-          form.append("batteryEfficiency",partObject.BATTERY_EFFICIENCY);
-          form.append("exterior",partObject.EXTERIOR);
-          form.append("charging",partObject.CHARGING);
-          form.append("touchSensor",partObject.TOUCH_SENSOR);
-        }
+      //테이블에 따라서 품질내역을 요청하는 url이 달라잠
+      //상품품질내역 등록
+      let url;
+      if (navTable === "IPHONE_TBL") {
+        url = backServer + "/product/iphone";
+      } else if (navTable === "MACBOOK_TBL") {
+        url = backServer + "/product/macbook";
+      } else if (navTable === "IPAD_TBL") {
+        url = backServer + "/product/ipad";
+      } else if (navTable === "WATCH_TBL") {
+        url = backServer + "/product/watch";
+      } else if (navTable === "AIRPODS_TBL") {
+        url = backServer + "/product/airpods";
+      }
 
-        
-
-        
-        
-
-        
-
-      
-
-        //테이블에 따라서 품질내역을 요청하는 url이 달라잠
-        //상품품질내역 등록
-        let url;
-        if (navTable === "IPHONE_TBL"){
-          url = backServer+"/product/iphone";
-        }else if(navTable === "MACBOOK_TBL"){
-          url = backServer+"/product/macbook";
-        }else if(navTable === "IPAD_TBL"){
-          url = backServer+"/product/ipad";
-        }else if(navTable === "WATCH_TBL"){
-          url = backServer+"/product/watch";
-        }else if(navTable === "AIRPODS_TBL"){
-          url = backServer+"/product/airpods";
-        }
-
-        //상품 등록
-        axios.post(url,form,{
-          headers:{
-            contentType:"multipart/form-data",
-            processData : false,
+      //상품 등록
+      axios
+        .post(url, form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
           },
         })
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((res) => {
-            console.log(res);
+        .then((res) => {
+          console.log(res.data);
         })
+        .catch((res) => {
+          console.log(res);
+        });
     }
   }, [pip]);
 
@@ -388,7 +383,10 @@ const ProductInsert = (props) => {
           pip={pip}
           /*axios용*/
           navTable={navTable}
-          navProductLine={navProductLine}
+          navLine={navLine}
+          navGen={navGen}
+          navModel={navModel}
+          /*--axios용*/
           /*selectedCategory, selectProduct용*/
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}

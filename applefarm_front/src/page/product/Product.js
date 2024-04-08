@@ -6,27 +6,20 @@ import ProductInsertLast from "./ProductInsertLast";
 import ProductQualityInsert from "./ProductQualityInsert";
 
 const Product = (props) => {
-  const { table, navProductLine, navProductGen } = props;
   return (
     <Routes>
-      <Route
-        path="/main"
-        element={
-          <ProductMain
-            table={table}
-            navProductLine={navProductLine}
-            navProductGen={navProductGen}
-          />
-        }
-      />
+      <Route path="/main" element={<ProductMain />} />
       <Route path="/detail" element={<ProductDetail />} />
       <Route
         path="/insert"
         element={
           <ProductInsert
-            table={table}
+          /*
+            navTable={navTable}
             navProductLine={navProductLine}
             navProductGen={navProductGen}
+            navProductModel={navProductModel}
+            */
           />
         }
       />
