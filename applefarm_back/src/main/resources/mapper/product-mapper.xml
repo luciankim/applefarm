@@ -156,7 +156,7 @@
 		    m.seller_score
 		from product_tbl p
 		join member_tbl m using (member_no)
-		where product_summary = #{summary} and rownum <= 10
+		where product_summary = #{summary} and rownum <![CDATA[<=]]> 10
 		order by m.seller_score desc
 	</select>
 	
