@@ -122,6 +122,9 @@ const ProductInsert = (props) => {
     if (pip === "등록 취소") {
       navigate("/product/"); //아직 메인페이지 경로 없음
     }
+    if (pip === "상품 등록") {
+      navigate("/product/"); //상품 상세페이지로 이동
+    }
   }, [pip]);
 
   //ProductQualityInsert.js로 넘겨줄 속성
@@ -299,7 +302,7 @@ const ProductInsert = (props) => {
 
   //selectedProduct.productSummary 구하기
   const summaryFind = () => {
-    const summaryQuality = selectedProduct.productQuality + "급";
+    const summaryQuality = grade + "급";
     //데이터에 설명 추가
 
     const summary =

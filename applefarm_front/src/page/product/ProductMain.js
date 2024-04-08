@@ -7,6 +7,7 @@ import ProductList from "./ProductList";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";
 import { useLocation, useNavigate } from "react-router-dom";
+import ProductApexChart from "./ProductApexChart";
 
 const ProductMain = (props) => {
   const location = useLocation();
@@ -188,7 +189,7 @@ const ProductMain = (props) => {
             }
           >
             {/*productQuality가 undefined또는null인거 조심!!!*/}
-            <ProductChart productQuality={productQuality} />
+            <ProductApexChart productQuality={productQuality} />
           </div>
           <div
             className={
