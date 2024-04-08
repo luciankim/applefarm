@@ -5,12 +5,14 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Address from "./Address";
 import MemberWish from "./MemberWish";
 import MemberInfo from "./MemberInfo";
+
 import Swal from "sweetalert2";
 
 import axios from "axios";
 import DeleteMember from "./DeleteMember";
 
 import DetailOrder from "./DetailOrder";
+import SellerGrade from "./SellerGrade";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
@@ -78,10 +80,12 @@ const Mypage = (props) => {
             path="/deleteMember"
             element={<DeleteMember member={member} logout={logout} />}
           />
-
+          <Route
+            path="/sellerGrade"
+            element={<SellerGrade member={member} />}
+          />
           <Route path="/address" element={<Address />}></Route>
           <Route path="/wish" element={<MemberWish />}></Route>
-
           <Route path="/detailOrder/:productNo" element={<DetailOrder />} />
         </Routes>
       </div>

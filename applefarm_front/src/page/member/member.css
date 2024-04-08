@@ -738,9 +738,6 @@ table {
   left: 35%;
 }
 
-.btn-wrap td {
-}
-
 .reg-text {
   position: relative;
   top: 25px;
@@ -805,4 +802,47 @@ table {
 .content-title {
   padding: 30px;
   font-size: 26px;
+}
+
+/*판매자 등급*/
+
+.sellerGrade-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.mypage-content-sellerGrade {
+  padding-top: 30px;
+}
+
+.sellerGrade-wrap {
+  font-size: 20px;
+
+  color: white;
+  background-color: #0071e3;
+  border: 1px solid #0071e3;
+  display: flex;
+
+  align-items: center;
+
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.sellerGrade-box1 {
+  padding-right: 20px;
+}
+
+.grade-data {
+  display: flex;
+  justify-content: center;
+}
+
+.grade-img-box {
+  max-width: 50px;
+}
+.grade-img {
+  max-width: 50px;
+  height: auto;
 }
