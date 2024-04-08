@@ -23,6 +23,7 @@ const AdminMain = (props) => {
   //   });
   // }
   const [adminMenu, setAdminMenu] = useState([
+    { url: "dashboard", text: "대시보드", active: false },
     { url: "manageMember", text: "회원관리", active: false },
     { url: "manageProduct", text: "상품관리", active: false },
     { url: "manageRefund", text: "환불관리", active: false },

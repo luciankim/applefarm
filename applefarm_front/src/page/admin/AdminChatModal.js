@@ -8,6 +8,8 @@ const AdminChatModal = (props) => {
   const [ws, sewWs] = useState({});
   const member = props.member;
   const room = props.room;
+  const api = process.env.REACT_APP_GPT_API_KEY;
+  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
 
   useEffect(() => {
     const socket = new WebSocket(socketServer + "/allChat");

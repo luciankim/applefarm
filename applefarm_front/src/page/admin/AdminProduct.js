@@ -203,9 +203,9 @@ const AdminProduct = () => {
                   changeEvent={selectChange}
                 />
               </th>
-              <th width="30%">제목</th>
+              <th width="25%">제목</th>
               <th width="15%">작성자</th>
-              <th width="15%">작성일</th>
+              <th width="25%">작성일</th>
               <th width="10%">숨김상태</th>
               <th width="10%">체크박스</th>
             </tr>

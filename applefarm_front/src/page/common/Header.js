@@ -57,6 +57,8 @@ const SearchForm = () => {
 const LoginForm = (props) => {
   const isLogin = props.isLogin;
   const logout = props.logout;
+
+  console.log(props, "내용물");
   return (
     <div className="header-link">
       {isLogin ? (

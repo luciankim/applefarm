@@ -67,7 +67,7 @@ public class AdminService {
 		ap.setFilterStartDate(filterStartDate);
 		ap.setFilterEndDate(filterEndDate);
 		ap.setSelectedValue(selectedValue);
-		int numPerPage = 2; // 한페이지당 게시물 수
+		int numPerPage = 10; // 한페이지당 게시물 수
 		int pageNaviSize = 5; // 페이지 네비게이션 길이
 		int totalCount = adminDao.productTotalCount(ap); // 전체 게시물 수(전체 페이지 수 계산을 위함)
 		// 페이징 처리에 필요한 값을 계산해서 객체로 리턴받음

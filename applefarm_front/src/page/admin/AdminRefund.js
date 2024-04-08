@@ -47,7 +47,7 @@ const AdminRefund = () => {
   }, [reqPage, selectedValue]);
 
   return (
-    <div className="mypage-current-wrap">
+    <div className="mypage-current-wrap" id="mypage-current-wrap">
       <div className="mypage-current-title">
         <p className="admin-current-p">환불관리</p>
       </div>
@@ -55,14 +55,14 @@ const AdminRefund = () => {
         <table className="admin-tbl">
           <thead>
             <tr>
-              <th colSpan={2} width="25%">
+              <th colSpan={2} width="15%">
                 상품상세
               </th>
-              <th width="10%">사유</th>
+              <th width="15%">사유</th>
               <th width="10%">판매자</th>
               <th width="10%">구매자</th>
-              <th width="10%">구매일</th>
-              <th width="10%">신청일</th>
+              <th width="15%">구매일</th>
+              <th width="15%">신청일</th>
               <th width="10%">
                 <Select
                   options={options}
@@ -70,7 +70,7 @@ const AdminRefund = () => {
                   changeEvent={selectChange}
                 />
               </th>
-              <th width="15%">환불관리</th>
+              <th width="10%">환불관리</th>
             </tr>
           </thead>
           <tbody>
