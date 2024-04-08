@@ -417,6 +417,7 @@ const RequestModal = (props) => {
       setOpenRequest(false);
     }
   };
+  //초기 모달 상태(해당 옵션 체크되도록)
   useEffect(() => {
     const copyOptions = [...options];
     copyOptions.forEach((item) => {

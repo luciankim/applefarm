@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @Alias(value = "trade")
 @Schema(description = "거래 객체")
 public class Trade {
-	//일단 거래테이블 컬럼만 써놨습니다. select할 때 필요한 컬럼 말씀해주세요
-	//(아마 판매자 이름(/아이디/닉네임)/상품 요약 컬럼도 필요할 것 같아요)
+	//필요한 컬럼 있으면 추가하셔서 쓰시고 바꾸실거 있으면 말씀해주세요
 	@Schema(description = "거래 번호",type="number")
 	private int tradeNo;
 	@Schema(description = "판매자 회원 번호",type="number")
@@ -47,4 +46,19 @@ public class Trade {
 	private String invoiceNumber;
 	@Schema(description = "결제 번호",type="number")
 	private String paymentNumber;
+	
+	@Schema(description = "상품 요약",type="String")
+	private String productSummary;
+	@Schema(description = "상품 사진",type="String")
+	private String productThumbnail;
+	@Schema(description = "상품 구매 가격",type="String")
+	private int productPrice;
+	
+	@Schema(description = "판매자 회원 닉네임",type="String")
+	private String tradeSellerNickname;	
+	@Schema(description = "판매자 정산 계좌",type="String")
+	private String memberAccountnumber;
+	@Schema(description = "구매자 회원 닉네임",type="String")
+	private String tradeBuyerNickname;	
+	
 }
