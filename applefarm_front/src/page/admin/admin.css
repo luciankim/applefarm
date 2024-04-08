@@ -2,18 +2,16 @@
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
 }
 
 .admin-tbl td {
-  padding: 10px !important;
+  padding: 15px;
 }
 
 #member-like-tbl-box table {
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
 }
 
 #member-like-tbl-box table th {
@@ -23,6 +21,7 @@
 .admin-section-wrap > div {
   padding: 0;
 }
+
 .css-e363es-MuiFormControl-root * {
   font-size: 12px !important;
   color: #ffffff !important;
@@ -31,43 +30,50 @@
   border: none !important;
   padding-top: 10px;
 }
+
 .css-e363es-MuiFormControl-root ul {
   margin: 10px !important;
 }
+
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.MuiMenu-paper.MuiMenu-paper.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
   margin-top: 15px !important;
 }
+
 .member-td select {
   padding: 0 12px !important;
   margin-right: 5px;
   font-family: ns-l !important;
 }
+
 .member-td select:active {
   transform: translateY(5px);
   box-shadow: 0px 0px 0px 0px #a29bfe;
 }
+
 .member-td select option {
-  background-color: whtie !important;
+  background-color: whtie !important; /* 오타 수정: whtie -> white */
 }
+
 .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
   font-size: 12px !important;
   font-family: ns-r !important;
 }
+
 .css-e363es-MuiFormControl-root svg {
   padding: 0 !important;
   font-size: 16px !important;
 }
+
 .css-e363es-MuiFormControl-root {
   height: 30px !important;
   border: none;
   outline: none;
-  background-color: rgb(35, 66, 168) !important;
+  background-color: rgb(157, 157, 157) !important;
   padding: 10px 20px;
   font-size: 12px;
   font-weight: 700;
   color: #fff;
   transition: all ease 0.1s;
-  box-shadow: 0px 5px 0px 0px #c5cef4;
 }
 
 .member-td select {
@@ -78,18 +84,20 @@
   height: 30px !important;
   border: none;
   outline: none;
-  background-color: rgb(35, 66, 168) !important;
+  background-color: rgb(157, 157, 157) !important;
+  padding: 10px 20px;
   font-size: 12px;
   font-weight: 700;
   color: #fff;
   transition: all ease 0.1s;
-  box-shadow: 0px 5px 0px 0px #c5cef4;
 }
 
 #admin-product-select {
   background-color: transparent !important;
   border: 0 !important;
+  font-family: ns-l;
 }
+
 #admin-product-select * {
   color: black !important;
   text-align: center !important;
@@ -98,10 +106,6 @@
 .css-e363es-MuiFormControl-root:active {
   transform: translateY(5px);
   box-shadow: 0px 0px 0px 0px #a29bfe;
-}
-
-.admin-tbl td {
-  padding: 15px;
 }
 
 .admin-wrap {
@@ -115,6 +119,7 @@
 .admin-section-wrap {
   width: 1000px;
 }
+
 .admin-title {
   font-size: 36px;
   font-family: ns-eb;
@@ -127,7 +132,8 @@
 
 .admin-current-p {
   font-family: ns-eb;
-  text-align: center;
+  text-align: left;
+  font-size: 30px;
 }
 
 .purchase-btn-box button {
@@ -177,7 +183,9 @@
   font-size: 12px;
   font-family: ns-r;
   margin: 0 3px;
+  line-height: 2em;
 }
+
 .date-select-wrap > div > div {
   flex-grow: 1;
 }
@@ -252,10 +260,7 @@ a:visited {
 }
 
 .charts {
-  border: 1px solid rgb(204, 204, 204);
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
 }
 
@@ -277,6 +282,7 @@ a:visited {
   text-align: left;
   padding: 10px 0;
 }
+
 .rank-wrap div p {
   font-family: ns-b;
 }
@@ -298,8 +304,8 @@ a:visited {
   color: white;
 }
 
+/*  대시보드  */
 .dashboard-btn button {
-  box-shadow: inset 0px 0.1em 0.6em #3c4fe0;
   transform: translateY(0em);
   outline: 0;
   border: 0;
@@ -307,7 +313,8 @@ a:visited {
     0px 0.3em 0.7em -0.01em rgb(45 35 66 / 30%),
     inset 0px -0.01em 0px rgb(58 65 111 / 50%);
   will-change: box-shadow, transform;
-  height: 2.6em;
+
+  line-height: 2em;
 }
 
 .dashboard-btn button:hover {
@@ -329,7 +336,6 @@ a:visited {
   display: grid;
   place-items: center;
   background: #e3edf7;
-
   padding: 1.4em;
   border-radius: 50px;
   box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
@@ -584,8 +590,7 @@ h1 {
 .chat-list-div {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between; /* 가로 방향으로 공간을 균등하게 
-  분배합니다. */
+  justify-content: space-between; /* 가로 방향으로 공간을 균등하게 분배합니다. */
 }
 
 .chat-list-body {
