@@ -1,4 +1,5 @@
 import {
+  Link,
   useBlocker,
   useLocation,
   useNavigate,
@@ -158,7 +159,9 @@ const ProductInsert = (props) => {
         acc[item.part2] = item.value;
         return acc;
       }, {});
-      //console.log(partObject);
+
+      console.log(partOrder);
+      console.log(partObject);
 
       //navigate("/product/main"); //아직 메인페이지 경로 없음
 
@@ -209,6 +212,7 @@ const ProductInsert = (props) => {
           "biometricAuthentication",
           partObject.BIOMETRIC_AUTHENTICATION
         );
+
         form.append("power", partObject.POWER);
         form.append("voiceRecording", partObject.VOICE_RECORDING);
         form.append("trackpad", partObject.TRACKPAD);
@@ -293,6 +297,10 @@ const ProductInsert = (props) => {
         })
         .then((res) => {
           console.log(res.data);
+
+          if (res.data.message === "success") {
+            navigate("/product/"+res.data.data)
+          }
         })
         .catch((res) => {
           console.log(res);
@@ -415,6 +423,7 @@ const ProductInsert = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
+          navTable={navTable}
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>

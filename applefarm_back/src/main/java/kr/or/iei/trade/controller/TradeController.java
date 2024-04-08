@@ -57,4 +57,33 @@ public class TradeController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", result);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
+	@Operation(summary = "구매 거래 내역 상세",description = "구매 거래 관련 정보 상세 보기")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/detailOrder/{productNo}")
+	public ResponseEntity<ResponseDTO> selectDetailOrder(@PathVariable int productNo, @RequestAttribute int memberNo){
+		Trade t = new Trade();
+		t.setProductNo(productNo);
+		t.setTradeBuyer(memberNo);
+		Trade trade = tradeService.selectDetailTrade(t);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", trade);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	@Operation(summary = "판매 거래 내역 상세",description = "판매 거래 관련 정보 상세 보기")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/detailSales/{productNo}")
+	public ResponseEntity<ResponseDTO> selectDetailSales(@PathVariable int productNo, @RequestAttribute int memberNo){
+		Trade t = new Trade();
+		t.setProductNo(productNo);
+		t.setTradeSeller(memberNo);
+		Trade trade = tradeService.selectDetailSales(t);
+		System.out.println(trade);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", trade);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 }
