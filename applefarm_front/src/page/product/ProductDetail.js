@@ -6,7 +6,8 @@ import "./productDetail2.css"; //박근열
 
 const ProductDetail = (props) => {
   const isLogin = props.isLogin;
-  const token = window.localStorage.getItem("token");
+  const token = props.token;
+  console.log(token ? token.member : "");
   const params = useParams();
   const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -51,8 +52,7 @@ const ProductDetail = (props) => {
         </div>
         <div className="productDetail-top-btns">
           {/*예시 : 수정, 삭제, 좋아요*/}
-          {isLogin &&  === productAndMember.memberNo
-          }
+          {/*isLogin && token.memberNo === productAndMember.memberNo*/}
         </div>
       </div>
       {/* //productDetail-top */}
