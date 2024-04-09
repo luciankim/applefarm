@@ -18,5 +18,23 @@
   width: 350px;
 }
 
+.productArticle {
+  display: block;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+}
+
 /************************************/
 /*박근열*/
+
+.productDetail-image {
+  width: 90%;
+}
+
+.swiper-slide img{
+  width: 100%;
+}
+
+
