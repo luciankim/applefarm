@@ -168,5 +168,16 @@
 		order by m.seller_score desc
 	</select>
 	
+	<insert id="insertLike">
+		insert into like_tbl values (like_seq.nextval, #{memberNo}, #{productNo})
+	</insert>
+	
+	<delete id="deleteLike">
+		delete from like_tbl where member_no = #{memberNo} and product_no = #{productNo}
+	</delete>
+	
+	<update id="hideProduct">
+		update product_tbl set product_hide = 1 where product_no = #{productNo}
+	</update>
 
 </mapper>

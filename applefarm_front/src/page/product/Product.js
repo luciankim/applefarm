@@ -6,7 +6,6 @@ import ProductInsertLast from "./ProductInsertLast";
 import ProductQualityInsert from "./ProductQualityInsert";
 
 const Product = (props) => {
-  const token = props.token;
   const isLogin = props.isLogin;
   return (
     <Routes>

@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -309,6 +311,11 @@ public class ProductController {
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 	
+	@Operation(summary="판매상품 상세페이지")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
 	@GetMapping(value = "/detail/{productNo}")
 	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo){
 		HashMap<String, Object> map = productService.selectOneProduct(productNo);
@@ -322,6 +329,59 @@ public class ProductController {
 		 */
 		if(map.size()==6) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="좋아요 추가", description = "상품상세페이지에서 이용자가 그 상품에 대해 좋아요를 추가하지 않은 상태에서 좋아요버튼 클릭시 동작")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value = "/like")
+	public ResponseEntity<ResponseDTO> insertLike(@RequestBody Map<String, Integer> map,@RequestAttribute int memberNo){
+		int productNo = map.get("productNo");
+		int result = productService.insertLike(productNo, memberNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="좋아요 삭제", description = "상품상세페이지에서 이용자가 그 상품에 대해 이미 좋아요를 추가한 상태에서 좋아요버튼 클릭시 동작")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@DeleteMapping(value = "/like/{productNo}")
+	public ResponseEntity<ResponseDTO> deleteLike(@PathVariable int productNo,@RequestAttribute int memberNo){;
+		int result = productService.deleteLike(productNo, memberNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="상품 판매글 삭제", description = "판매글 작성자가 해당 글 삭제시 게시물을 숨김처리")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value = "/hide")
+	public ResponseEntity<ResponseDTO> hideProduct(@RequestBody Map<String, Integer> map){
+		int productNo = map.get("productNo");
+		int result = productService.hideProduct(productNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);

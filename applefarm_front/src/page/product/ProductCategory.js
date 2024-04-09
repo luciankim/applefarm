@@ -125,17 +125,19 @@ const ProductCategory = (props) => {
     axios
       .post(backServer + "/product/category", requestCategory)
       .then((res) => {
-        genArr = [];
-        modelArr = [];
-        model2Arr = [];
-        const tempCategoryArr = [];
-        res.data.data.forEach((item) => {
-          tempCategoryArr.push(item);
-        });
-        setCategoryArr([...tempCategoryArr]);
-        setProductLine(navLine);
-        setProductGen(navGen);
-        setProductModel(navModel);
+        if (res.data.message === "success") {
+          genArr = [];
+          modelArr = [];
+          model2Arr = [];
+          const tempCategoryArr = [];
+          res.data.data.forEach((item) => {
+            tempCategoryArr.push(item);
+          });
+          setCategoryArr([...tempCategoryArr]);
+          setProductLine(navLine);
+          setProductGen(navGen);
+          setProductModel(navModel);
+        }
       })
       .catch((res) => {
         console.log(res.data);

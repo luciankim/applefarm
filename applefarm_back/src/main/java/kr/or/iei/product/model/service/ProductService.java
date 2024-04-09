@@ -207,7 +207,8 @@ public class ProductService {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				//상품 124번의 상품정보 & 회원정보
 				Product product= productDao.selectOneView(productNo);
-				if(product == null) {
+				//상품 조회 결과가 없거나(에러) 숨김처리(이용자가 삭제 등) 되어있을 경우
+				if(product == null || product.getProductHide() == '1') {
 					return map;
 				}
 				map.put("product", product);
@@ -289,6 +290,18 @@ public class ProductService {
 
 	public int likeBoolean(int productNo, int memberNo) {
 		return productDao.likeBoolean(productNo, memberNo);
+	}
+
+	public int insertLike(int productNo, int memberNo) {
+		return productDao.insertLike(productNo, memberNo);
+	}
+
+	public int deleteLike(int productNo, int memberNo) {
+		return productDao.deleteLike(productNo, memberNo);
+	}
+
+	public int hideProduct(int productNo) {
+		return productDao.hideProduct(productNo);
 	}
 
 

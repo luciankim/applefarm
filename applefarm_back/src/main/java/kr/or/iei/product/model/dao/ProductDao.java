@@ -66,4 +66,10 @@ public interface ProductDao {
 
 	int likeBoolean(int productNo, int memberNo);
 
+	int insertLike(int productNo, int memberNo);
+
+	int deleteLike(int productNo, int memberNo);
+
+	int hideProduct(int productNo);
+
 }
