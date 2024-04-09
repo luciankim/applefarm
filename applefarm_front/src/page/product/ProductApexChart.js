@@ -89,7 +89,7 @@ const ProductApexChart = (props) => {
       xaxis: {
         /*
         categories: [
-          "9일 전",
+          "2024/02/02",
           "8일 전",
           "7일 전",
           "6일 전",
