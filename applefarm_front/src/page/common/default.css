@@ -482,3 +482,55 @@ button[disabled] {
 .ref_select .select_item button {
   flex: 1;
 }
+
+/*footer*/
+
+.footer-content2 {
+  display: flex;
+  flex-direction: row;
+}
+.footer-content2 div {
+  padding-right: 10px;
+}
+
+.footer-content-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.insta-img {
+  width: 34px;
+  height: 34px;
+}
+
+.facebook-img {
+  width: 37px;
+  height: 32px;
+}
+
+.youtube-img {
+  width: 33px;
+  height: 33px;
+  position: relative;
+  left: 4px;
+}
+
+.icon-box {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  left: 60px;
+  bottom: 45px;
+}
+
+.footer-wrap {
+  display: flex;
+  flex-direction: row;
+}
+
+.footer-content3 {
+}
+
+.footer-wrap2 {
+  width: 500px;
+}

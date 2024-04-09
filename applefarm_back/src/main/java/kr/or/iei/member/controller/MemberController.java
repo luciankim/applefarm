@@ -572,7 +572,11 @@ public class MemberController {
 	
 	
 	
-	
+	@Operation(summary ="삭제",description = "화면에서 회원 번호, 회원 계좌번호 입력받아서 계좌삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
 	@PatchMapping(value="/deleteAccountNumber")
 	public ResponseEntity<ResponseDTO> deleteAccountNumber(@RequestBody Member member){
 		

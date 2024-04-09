@@ -16,6 +16,7 @@ import MemberAccountNumber from "./MemberAccountNumber";
 
 import { DetailOrder, DetailSales } from "./DetailOrder";
 import PurchaseHistory from "./PurchaseHistory";
+import SalesHistory from "./SalesHistory";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
@@ -95,7 +96,9 @@ const Mypage = (props) => {
           <Route path="/wish" element={<MemberWish />}></Route>
           <Route path="/detailOrder/:productNo" element={<DetailOrder />} />
           <Route path="/purchaseHistory" element={<PurchaseHistory />} />
+
           <Route path="/detailSales/:productNo" element={<DetailSales />} />
+          <Route path="/salesHistory" element={<SalesHistory />} />
         </Routes>
       </div>
     </div>
