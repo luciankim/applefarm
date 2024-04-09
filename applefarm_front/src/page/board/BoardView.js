@@ -131,7 +131,7 @@ const BoardView = (props) => {
         <div className="board-view-info">
           <div className="board-view-title">{board.boardTitle}</div>
           <div className="board-view-sub-info">
-            <div>작성자 {board.memberNo}</div>
+            <div>작성자 {board.memberId}</div>
             <div>작성일 {board.boardDate}</div>
             <div>조회수 {board.readCount}</div>
           </div>
@@ -156,46 +156,34 @@ const BoardView = (props) => {
       <div className="commentBox">
         <ul className="posting-comment">
           {commentList.map((comment, index) => {
+            const commentDate = comment.commentDate.split(" ")[0];
             return (
               <li key={"comment" + index}>
                 <div className="comment-info">
-                  <div className="comment-writer">
-                    작성자 {comment.commentWriter}
-                  </div>
-                  <div className="comment-date">
-                    작성일 {comment.commentDate}
-                  </div>
+                  <div className="comment-writer">{comment.memberId}</div>
                 </div>
                 <div
-                  className="comment-content"
+                  className="comment-contents"
                   dangerouslySetInnerHTML={{ __html: comment.commentContent }}
                 ></div>
-                {/* 댓글 작성자와 로그인한 사용자가 동일한 경우에만 수정, 삭제 버튼 표시 */}
-                {isLogin && comment.commentWriter === memberNo && (
-                  <>
-                    <Button1
-                      text="수정"
-                      clickEvent={() => modifyComment(comment.commentNo)}
-                    />
-                    <Button2
-                      text="삭제"
-                      clickEvent={() => deleteComment(comment.commentNo)}
-                    />
-                    {/* <Button3
-                      text="답글"
-                      clickEvent={() => toggleReplyForm(comment.commentNo)}
-                    />
-                    {replyForms[comment.commentNo] && (
-                      <div>
-                        <Textarea
-                          content={commentContent}
-                          setContent={setCommentContent}
-                        />
-                        <Button1 text="등록" />
-                      </div>
-                    )} */}
-                  </>
-                )}
+                <div className="comment-date-wrap">
+                  <div className="comment-date">{commentDate}</div>
+                  {/* 댓글 작성자와 로그인한 사용자가 동일한 경우에만 수정, 삭제 버튼 표시 */}
+                  {isLogin && comment.commentWriter === memberNo && (
+                    <div className="delWrap">
+                      <Button2
+                        text="수정"
+                        addId="commentUpdateBtn"
+                        clickEvent={() => deleteComment(comment.commentNo)}
+                      />
+                      <Button2
+                        text="삭제"
+                        addId="commentDelBtn"
+                        clickEvent={() => deleteComment(comment.commentNo)}
+                      />
+                    </div>
+                  )}
+                </div>
               </li>
             );
           })}

@@ -26,4 +26,5 @@ public class BoardComment {
 	
 	//닉네임
 	private String memberNickName;  //회원 닉네임(Join 후 사용)
+	private String memberId;
 }
