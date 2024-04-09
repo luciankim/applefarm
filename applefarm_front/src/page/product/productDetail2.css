@@ -30,5 +30,11 @@
 /*박근열*/
 
 .productDetail-image {
+  width: 90%;
+}
+
+.swiper-slide img{
   width: 100%;
 }
+
+

@@ -25,4 +25,5 @@ npm install --save react-apexcharts apexcharts
 2024-04-06
 npm install react-csv --save
 
-
+2024-04-09
+npm install swiper

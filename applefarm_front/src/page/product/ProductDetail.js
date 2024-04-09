@@ -5,11 +5,14 @@ import "./productDetail.css"; //박성완
 import "./productDetail2.css"; //박근열
 
 // 스와이프
-import { React } from 'react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const ProductDetail = (props) => {
   const isLogin = props.isLogin;
@@ -77,6 +80,7 @@ const ProductDetail = (props) => {
         <div className="productDetail-content-left">
           <div className="productDetail-image-area productArticle">
             <Swiper
+              modules={[Navigation, Pagination, Scrollbar, A11y]}
               navigation
               pagination={{ clickable: true }}
               scrollbar={{ draggable: true }}
@@ -98,6 +102,11 @@ const ProductDetail = (props) => {
     
             </Swiper>
           </div>
+          <div className="productDetail-explain">
+            
+          </div>
+
+          
         </div>
         {/* //productDetail-content-left */}
 
