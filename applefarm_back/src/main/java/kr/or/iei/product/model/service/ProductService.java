@@ -210,10 +210,7 @@ public class ProductService {
 				if(product == null) {
 					return map;
 				}
-				
 				map.put("product", product);
-
-				System.out.println(map.size());//1 확인!!!!!!!
 				
 				int sellerNo = product.getMemberNo();
 				String tableName = product.getTableName();
@@ -221,21 +218,24 @@ public class ProductService {
 				
 				//판매자(member_no=45)에 대한 후기 리스트
 				List sellerReviewList = productDao.selectSellerReviews(sellerNo);
+				if(sellerReviewList==null) {
+					return map;
+				}
 				map.put("sellerReviewList",sellerReviewList);
-				
-				System.out.println(map.size());//2 확인!!!!!!!
 				
 				//판매자(member_no=45)의 상품 리스트
 				List sellerProductList = productDao.selectSellerProducts(sellerNo);
+				if(sellerProductList==null) {
+					return map;
+				}
 				map.put("sellerProductList",sellerProductList);
-				
-				System.out.println(map.size());//3 확인!!!!!!!
 				
 				//상품 124번의 첨부파일 리스트(file_no, file_path가 필요)
 				List productFileList = productDao.selectProductFiles(productNo);
+				if(productFileList==null) {
+					return map;
+				}
 				map.put("productFileList",productFileList);
-				
-				System.out.println(map.size());//4 확인!!!!!!!
 				
 				//상품 124번의 품질(테이블 별로 다르게)
 				switch (tableName) {
@@ -258,8 +258,6 @@ public class ProductService {
 					break;
 				}
 				
-				System.out.println(map.size());//5 확인!!!!!!!
-				
 				/*
 				if(tableName.equals("IPHONE_TBL")) {
 					IphoneQualityHistory qualityHistory = productDao.selectIphoneQualityHistory(productNo);
@@ -281,9 +279,10 @@ public class ProductService {
 				
 				//신뢰도 높은 상품 리스트
 				List reliableProductList = productDao.selectReliableProducts(summary);
+				if(reliableProductList==null) {
+					return map;
+				}
 				map.put("reliableProductList",reliableProductList);
-				
-				System.out.println(map.size());//6 확인!!!!!!!
 				
 				return map;
 	}

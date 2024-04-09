@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import ProductTab from "./ProductTab";
 
 const ProductDetail = (props) => {
   const isLogin = props.isLogin;
@@ -30,8 +31,6 @@ const ProductDetail = (props) => {
   const [productFileList, setProductFileList] = useState([]);
   const [qualityHistory, setQualityHistory] = useState([]);
   const [reliableList, setReliableList] = useState([]);
-
-  const swiper = useSwiper();
 
   useEffect(() => {
     axios
@@ -64,7 +63,14 @@ const ProductDetail = (props) => {
       });
   }, []);
 
-  useEffect(() => {}, [productFileList]);
+  //탭
+  const productDetailTabArr = ["1:1 문의", "거래 후기", "판매 상품"];
+  const [productDetailTab, setProductDetailTab] = useState(
+    productDetailTabArr[0]
+  );
+  const changeDetailTab = (e) => {
+    setProductDetailTab(e.target.id);
+  };
 
   return (
     <div className="productDetail-wrap">
@@ -95,48 +101,126 @@ const ProductDetail = (props) => {
       <div className="productDetail-content">
         {/* //productDetail-content-left */}
         <div className="productDetail-content-left">
-          <div className="productDetail-image-area productArticle">
-            <Swiper
-              modules={[Navigation, Pagination, Scrollbar, A11y]}
-              navigation
-              pagination={{ clickable: true }}
-              scrollbar={{ draggable: true }}
-              spaceBetween={0}
-              slidesPerView={1}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
-            >
-              {productFileList.map((file, index) => {
-                return (
-                  <SwiperSlide key={"product" + index}>
-                    <img
-                      src={backServer + "/product/img/" + file.filepath}
-                      className="productDetail-image"
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+          <div className="productDetail-image-area">
+            <ProductImage productFileList={productFileList} />
           </div>
-          <div className="productDetail-explain"></div>
+          <div className="productDetail-explain">
+            <div className="productDetail-explain-summary">
+              <ProductSummary />
+            </div>
+            <div className="productDetail-explain-seller">
+              <ProductSeller />
+            </div>
+          </div>
+          <div className="productDetail-explain-detail">
+            <ProductExplainDetail />
+          </div>
         </div>
         {/* //productDetail-content-left */}
 
         {/* productDetail-content-right */}
-        <div className="productDetail-content-right"></div>
+        <div className="productDetail-content-right">
+          <div className="productDetail-chart">
+            <ProductChart />
+          </div>
+          <div className="productDetail-bid">
+            <ProductBid />
+          </div>
+          <div className="productDetail-quality">
+            <ProductQuality />
+          </div>
+        </div>
         {/* //productDetail-content-right */}
       </div>
       {/* //productDetail-content */}
 
       {/* productDetail-tab-area */}
-      <div className="productDetail-tab-area"></div>
+      <div className="productDetail-tab-area">
+        <div className="productDetail-tab">
+          <ProductTab
+            productTab={productDetailTab}
+            changeTab={changeDetailTab}
+            tabNameArr={productDetailTabArr}
+          />
+        </div>
+        <div className="productDetail-oneToOne">
+          <ProductOneToOne />
+        </div>
+        <div className="productDetail-tradeReview">
+          <ProductTradeReview />
+        </div>
+        <div className="productDetail-productList">
+          <ProductProductList />
+        </div>
+      </div>
       {/* //productDetail-tab-area */}
 
       {/* productDetail-reliableList */}
-      <div className="productDetail-reliableList"></div>
+      <div className="productDetail-reliableList">
+        <ProductReliable />
+      </div>
       {/* //productDetail-reliableList */}
     </div>
   );
 };
 
 export default ProductDetail;
+
+const ProductImage = (props) => {
+  const productFileList = props.productFileList;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  return (
+    <Swiper
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
+      navigation
+      pagination={{ clickable: true }}
+      scrollbar={{ draggable: true }}
+      spaceBetween={0}
+      slidesPerView={1}
+      onSlideChange={() => console.log("slide change")}
+      onSwiper={(swiper) => console.log(swiper)}
+    >
+      {productFileList.map((file, index) => {
+        return (
+          <SwiperSlide key={"productFile" + index}>
+            <img
+              src={backServer + "/product/img/" + file.filepath}
+              className="productDetail-image"
+            />
+          </SwiperSlide>
+        );
+      })}
+    </Swiper>
+  );
+};
+
+//박근열
+const ProductSummary = (props) => {};
+
+//박근열
+const ProductSeller = (props) => {};
+
+//박근열
+const ProductExplainDetail = (props) => {};
+
+//박성완
+const ProductChart = (props) => {};
+
+//박성완
+const ProductBid = (props) => {};
+
+//박성완
+const ProductQuality = (props) => {};
+
+//박근열
+const ProductOneToOne = (props) => {};
+
+//박근열
+const ProductTradeReview = (props) => {};
+
+//박근열
+const ProductProductList = (props) => {};
+
+//박성완
+const ProductReliable = (props) => {};

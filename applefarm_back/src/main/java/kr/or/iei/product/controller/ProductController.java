@@ -319,14 +319,7 @@ public class ProductController {
 		 * productFileList
 		 * qualityHistory
 		 * reliableProductList
-		 * loginMemberNo //@RequestAttribute에서 가져온 로그인한사람의 memberNo
 		 */
-		System.out.println(map.get("product"));
-		System.out.println(map.get("sellerReviewList"));
-		System.out.println(map.get("sellerProductList"));
-		System.out.println(map.get("productFileList"));
-		System.out.println(map.get("qualityHistory"));
-		System.out.println(map.get("reliableProductList"));
 		if(map.size()==6) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
