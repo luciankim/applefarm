@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
 import "./admin.css";
+import AdminChatModal from "./AdminChatModal";
 
 const AdminChatRoomList = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const member = props.member;
   const chatModalBackGround = useRef();
   const setModalOpen = props.setModalOpen;
-  const chatAreaRef = useRef(null);
   const [chatRooms, setChatRooms] = useState([]); //채팅방 목록 저장할 상태 변수
+  const [selectedRoom, setSelectedRoom] = useState(null); // 선택된 채팅방 정보를 저장할 상태 변수
+
   const imgSrc = process.env.PUBLIC_URL + "/image/apple.png";
   console.log("최초 접속 시 아이디 확인: ", member.memberId);
   useEffect(() => {
@@ -36,9 +38,18 @@ const AdminChatRoomList = (props) => {
       setModalOpen(false);
     }
   };
+  // 채팅방 선택 시 실행
+  const handleChatRoomClick = (room) => {
+    setSelectedRoom(room); // 선택된 채팅방 정보 설정
+    setModalOpen(true); // 모달 열기
+  };
 
   return (
-    <div className="chat-modal-current-wrap" onClick={modalBack}>
+    <div
+      className="chat-modal-current-wrap"
+      onClick={modalBack}
+      ref={chatModalBackGround}
+    >
       <div className="chat-modal-content">
         {/* 채팅창 헤더 */}
         <div className="chat-header">
@@ -48,7 +59,11 @@ const AdminChatRoomList = (props) => {
         <div className="chat-room-list">
           <ul className="chat-list-ul">
             {chatRooms.map((room, index) => (
-              <li key={"room" + index} className="chat-list-li">
+              <li
+                key={"room" + index}
+                className="chat-list-li"
+                onClick={() => handleChatRoomClick(room)}
+              >
                 <div className="chat-list-div">
                   <div className="chat-list-body">
                     <img src={imgSrc} />
@@ -57,13 +72,20 @@ const AdminChatRoomList = (props) => {
                       <p className="chat-list-content">내용</p>
                     </div>
                   </div>
-
                   <span className="chat-list-time">{room.roomCreateTime}</span>
                 </div>
               </li>
             ))}
           </ul>
         </div>
+        {/* 선택된 채팅방에 대한 모달 열기 */}
+        {selectedRoom && (
+          <AdminChatModal
+            setChatOpen={setModalOpen}
+            member={member}
+            room={selectedRoom}
+          />
+        )}
       </div>
     </div>
   );

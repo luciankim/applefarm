@@ -12,6 +12,11 @@
 		where product_line = #{productLine}
 		order by rownum desc
 	</select>
+	
+	<select id="volume" resultType="trade">
+		
+	</select>
+	
 	 
 	<select id="selectQualityList" resultType="quality">
 		select * from quality_tbl where table_name = #{tableName}
@@ -44,7 +49,7 @@
 	<insert id="insertIphoneQualityHistory">
 		insert into IPHONE_QUALITY_HISTORY_TBL values
 		(
-			iphone_quality_histroy_seq.nextval,#{productNo},#{productScreen},#{backPanelSide},#{burnIn},#{display},#{power},#{camera},
+			iphone_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{power},#{camera},
 			#{wifi},#{biometricAuthentication},#{compass},#{voiceRecording}
 		)
 	</insert>
@@ -60,7 +65,7 @@
 	<insert id="insertIpadQualityHistory">
 		insert into IPAD_QUALITY_HISTORY_TBL values
 		(
-			ipad_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{keyboard},#{ports},#{batteryEfficiency},#{wirelessConffectivity}
+			ipad_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{ports},#{batteryEfficiency},#{wirelessConffectivity}
 			,#{camera},#{microphone},#{speakersAudioJack},#{biometricAuthentication},#{power},#{voiceRecording},#{operation}
 		)
 	</insert>
@@ -80,5 +85,85 @@
 			airpods_quality_history_seq.nextval,#{productNo},#{soundQuality},#{connectionStability},#{batteryEfficiency},#{exterior},#{charging},#{touchSensor}
 		)
 	</insert>
+	
+	<select id="selectOneView" resultType="productAndMember">
+		select
+		    product_no,
+		    member_no,
+		    product_quality,
+		    product_title,
+		    product_explain,
+		    product_price,
+		    product_date,
+		    product_hide,
+		    product_line,
+		    product_gen,
+		    product_model,
+		    product_model2,
+		    product_color,
+		    product_storage,
+		    product_memory,
+		    product_chip,
+		    product_cpu,
+		    product_size,
+		    product_connectivity,
+		    product_charge,
+		    product_thumbnail,
+		    product_summary,
+		    table_name,
+		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count,
+		    (select count(*) from like_tbl where product_no = #{productNo} and member_no=#{memberNo}) as like_boolean
+		from product_tbl
+		join member_tbl using(member_no)
+		where product_no = #{productNo}
+	</select>
+
+
+	<select id="selectSellerReviews" resultType="sellerReview">
+		select * from review_tbl where review_seller = #{sellerNo} order by trade_no desc
+	</select>
+	
+	<select id="selectSellerProducts" resultType="product">
+		select * from product_tbl where member_no = #{sellerNo} order by product_no desc
+	</select>
+	
+	<select id="selectProductFiles" resultType="productFile">
+		select * from product_file_tbl where product_no = #{productNo}
+	</select>
+	
+	<select id="selectIphoneQualityHistory" resultType="iphoneQualityHistory">
+		select * from IPHONE_QUALITY_HISTORY_TBL where product_no = #{productNo}
+	</select>
+	
+	<select id="selectMacbookQualityHistory" resultType="macbookQualityHistory">
+		select * from MACBOOK_QUALITY_HISTORY_TBL where product_no = #{productNo} 
+	</select>
+	
+	<select id="selectIpadQualityHistory" resultType="ipadQualityHistory">
+		select * from IPAD_QUALITY_HISTORY_TBL where product_no = #{productNo} 
+	</select>
+	
+	<select id="selectWatchQualityHistory" resultType="watchQualityHistory">
+		select * from WATCH_QUALITY_HISTORY_TBL where product_no = #{productNo} 
+	</select>
+	
+	<select id="selectAirpodsQualityHistory" resultType="airpodsQualityHistory">
+		select * from AIRPODS_QUALITY_HISTORY_TBL where product_no = #{productNo} 
+	</select>
+	
+	<select id="selectReliableProducts" resultType="reliableProductList">
+		select
+		    p.product_no,
+		    p.product_summary,
+		    p.product_price,
+		    member_no,
+		    m.member_name,
+		    m.seller_score
+		from product_tbl p
+		join member_tbl m using (member_no)
+		where product_summary = #{summary} and rownum <![CDATA[<=]]> 10
+		order by m.seller_score desc
+	</select>
+	
 
 </mapper>

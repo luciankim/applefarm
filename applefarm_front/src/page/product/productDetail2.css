@@ -1,0 +1,22 @@
+/*디테일*/
+.productDetail-wrap {
+  width: 1150px;
+  margin: 0 auto;
+}
+.productDetail-top {
+  display: flex;
+  justify-content: space-between;
+}
+.productDetail-content {
+  display: flex;
+  justify-content: space-between;
+}
+.productDetail-content-left {
+  width: 700px;
+}
+.productDetail-content-right {
+  width: 350px;
+}
+
+/************************************/
+/*박근열*/

@@ -269,7 +269,7 @@ const AdminDashboard = () => {
         <div className="date-select-wrap">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "DatePicker"]}>
-              <div>
+              <div className="date-wrap">
                 <Button
                   variant="contained"
                   onClick={oneMonth}
@@ -377,11 +377,9 @@ const AdminDashboard = () => {
               height={280}
             />
           </div>
-
           <div className="charts">
             <Chart options={options} series={options.series} height={280} />
           </div>
-
           <div className="rank-wrap">
             <div className="top-seller">
               <ul>
@@ -408,7 +406,7 @@ const AdminDashboard = () => {
               </ul>
             </div>
           </div>
-
+          거래내역
           <div className="member-like-tbl-box charts" id="member-like-tbl-box">
             <table className="admin-tbl" id="trade-log-tbl">
               <thead>

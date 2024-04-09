@@ -479,8 +479,9 @@
 }
 .completePayment-btn-box > button:hover {
 }
+
 /*거래상세내역*/
-.purchase-history-content > div:not(:first-child) {
+.purchase-detail-content > div:not(:first-child) {
   padding-bottom: 100px;
 }
 .trade-number-info {
@@ -545,6 +546,7 @@
 .history-menu-wrap > ul {
   display: flex;
   width: 100%;
+  margin: 0px;
 }
 .history-menu {
   /*li*/
@@ -557,6 +559,36 @@
 }
 .history-menu-focus {
   border-bottom: 2px solid #000000;
+}
+.history-date-select-wrap {
+  border-bottom: 1px solid rgba(167, 167, 167, 0.6);
+  padding: 10px;
+  background-color: #fcfcfc;
+}
+.css-10o2lyd-MuiStack-root {
+  align-items: center;
+  justify-content: center;
+}
+.history-date-select-btn-box > button {
+  padding: 7px 15px;
+  margin: 0px 7px;
+  font-size: 13px;
+  border: 1px solid rgba(167, 167, 167, 0.6);
+}
+.date-select-btn {
+  background-color: white;
+}
+.date-select-active {
+  background-color: #c7deff;
+}
+.css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input {
+  width: 150px;
+}
+.date-select-go-btn {
+  background-color: #c7deff;
+  padding: 6px 6px;
+  font-size: 13px;
+  border: 1px solid rgba(167, 167, 167, 0.6);
 }
 /* 사이드메뉴 */
 .sideMenu > ul > li > a {

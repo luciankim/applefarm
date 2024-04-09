@@ -1,3 +1,113 @@
+.admin-tbl {
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.admin-tbl td {
+  padding: 15px;
+}
+
+#member-like-tbl-box table {
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#member-like-tbl-box table th {
+  background-color: var(--main_01) !important;
+}
+
+.admin-section-wrap > div {
+  padding: 0;
+}
+
+.css-e363es-MuiFormControl-root * {
+  font-size: 12px !important;
+  color: #ffffff !important;
+  font-family: ns-l !important;
+  height: 20px !important;
+  border: none !important;
+  padding-top: 10px;
+}
+
+.css-e363es-MuiFormControl-root ul {
+  margin: 10px !important;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.MuiMenu-paper.MuiMenu-paper.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  margin-top: 15px !important;
+}
+
+.member-td select {
+  padding: 0 12px !important;
+  margin-right: 5px;
+  font-family: ns-l !important;
+}
+
+.member-td select:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px 0px 0px #a29bfe;
+}
+
+.member-td select option {
+  background-color: whtie !important; /* 오타 수정: whtie -> white */
+}
+
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+  font-size: 12px !important;
+  font-family: ns-r !important;
+}
+
+.css-e363es-MuiFormControl-root svg {
+  padding: 0 !important;
+  font-size: 16px !important;
+}
+
+.css-e363es-MuiFormControl-root {
+  height: 30px !important;
+  border: none;
+  outline: none;
+  background-color: rgb(157, 157, 157) !important;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  transition: all ease 0.1s;
+}
+
+.member-td select {
+  font-family: ns-l;
+}
+
+.member-td select {
+  height: 30px !important;
+  border: none;
+  outline: none;
+  background-color: rgb(157, 157, 157) !important;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  transition: all ease 0.1s;
+}
+
+#admin-product-select {
+  background-color: transparent !important;
+  border: 0 !important;
+  font-family: ns-l;
+}
+
+#admin-product-select * {
+  color: black !important;
+  text-align: center !important;
+}
+
+.css-e363es-MuiFormControl-root:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px 0px 0px #a29bfe;
+}
+
 .admin-wrap {
   display: flex;
 }
@@ -9,6 +119,7 @@
 .admin-section-wrap {
   width: 1000px;
 }
+
 .admin-title {
   font-size: 36px;
   font-family: ns-eb;
@@ -21,7 +132,8 @@
 
 .admin-current-p {
   font-family: ns-eb;
-  text-align: center;
+  text-align: left;
+  font-size: 30px;
 }
 
 .purchase-btn-box button {
@@ -52,14 +164,6 @@
   font-weight: 400;
 }
 
-#member-like-tbl-box table {
-  padding-bottom: 0;
-}
-
-#member-like-tbl-box {
-  border-bottom: 1px solid #9d9d9d;
-}
-
 .date-select-wrap {
   padding: 10px;
   border-top: 1px solid #cfcfcf;
@@ -68,10 +172,12 @@
 }
 
 .date-select-wrap button {
-  margin: 5px;
   font-size: 12px;
   font-family: ns-r;
+  margin: 0 3px;
+  line-height: 2em;
 }
+
 .date-select-wrap > div > div {
   flex-grow: 1;
 }
@@ -129,9 +235,7 @@ a:visited {
 
 .summary div {
   width: calc((100% / 4) - 15px);
-  border: 1px solid rgb(221, 221, 221);
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+
   text-align: center;
 }
 
@@ -146,10 +250,7 @@ a:visited {
 }
 
 .charts {
-  border: 1px solid rgb(204, 204, 204);
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
 }
 
@@ -162,15 +263,13 @@ a:visited {
 .rank-wrap div {
   width: 430px;
   padding: 0 70px;
-  border: 1px solid rgb(221, 221, 221);
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .rank-wrap div ul li {
   text-align: left;
   padding: 10px 0;
 }
+
 .rank-wrap div p {
   font-family: ns-b;
 }
@@ -188,13 +287,17 @@ a:visited {
   text-align: center;
 }
 
+.dashboard-wrap {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
 .btnWrap > div > button > a {
   color: white;
 }
 
-/*
+/*  대시보드  */
 .dashboard-btn button {
-  box-shadow: inset 0px 0.1em 0.6em #3c4fe0;
   transform: translateY(0em);
   outline: 0;
   border: 0;
@@ -202,7 +305,7 @@ a:visited {
     0px 0.3em 0.7em -0.01em rgb(45 35 66 / 30%),
     inset 0px -0.01em 0px rgb(58 65 111 / 50%);
   will-change: box-shadow, transform;
-  height: 2.6em;
+  line-height: 2em;
 }
 
 .dashboard-btn button:hover {
@@ -215,7 +318,10 @@ a:visited {
   box-shadow: inset 0px 0.1em 0.6em #3c4fe0;
   transform: translateY(0em);
 }
-*/
+
+.css-10o2lyd-MuiStack-root {
+  overflow: visible;
+}
 
 /*chat*/
 .chat-btn {
@@ -225,11 +331,10 @@ a:visited {
   display: grid;
   place-items: center;
   background: #e3edf7;
-
-  padding: 1.4em;
+  padding: 1em;
   border-radius: 50px;
   box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
-    -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+    0px 0px 5px 5px rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(0, 0, 0, 0);
   cursor: pointer;
   transition: transform 0.5s;
@@ -250,7 +355,7 @@ a:visited {
 
 .chat-btn:hover svg {
   transform: scale(0.9);
-  fill: #333333;
+  fill: var(--main_01);
 }
 
 .app {
@@ -348,12 +453,8 @@ h1 {
 
 .chat-modal-content {
   position: fixed;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  top: 50%;
-  left: 50%;
+  top: 58%;
+  left: 77%;
   transform: translate(-50%, -50%);
   width: 400px;
   background-color: rgb(255, 255, 255);
@@ -365,8 +466,6 @@ h1 {
 
 .chat-header {
   background-color: var(--main_01);
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
 }
 
 .chat-header > div {
@@ -480,8 +579,7 @@ h1 {
 .chat-list-div {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between; /* 가로 방향으로 공간을 균등하게 
-  분배합니다. */
+  justify-content: space-between; /* 가로 방향으로 공간을 균등하게 분배합니다. */
 }
 
 .chat-list-body {
@@ -520,7 +618,7 @@ h1 {
 }
 
 .chat-list {
-  padding: 20px !important;
+  padding: 15px 20px !important;
 }
 
 .chat-list-body {

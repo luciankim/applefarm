@@ -9,22 +9,8 @@ const Product = (props) => {
   return (
     <Routes>
       <Route path="/main" element={<ProductMain />} />
-      <Route path="/detail" element={<ProductDetail />} />
-      <Route
-        path="/insert"
-        element={
-          <ProductInsert
-          /*
-            navTable={navTable}
-            navProductLine={navProductLine}
-            navProductGen={navProductGen}
-            navProductModel={navProductModel}
-            */
-          />
-        }
-      />
-      {/* <Route path="/insert2" element={<ProductQualityInsert/>}></Route> */}
-      {/* <Route path="/insert3" element={<ProductInsertLast/>} /> */}
+      <Route path="/:productNo" element={<ProductDetail />} />
+      <Route path="/insert" element={<ProductInsert />} />
     </Routes>
   );
 };

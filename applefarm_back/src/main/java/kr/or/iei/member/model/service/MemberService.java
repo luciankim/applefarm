@@ -138,7 +138,7 @@ public class MemberService {
 	// -------------------------------관리자: 회원관리 기능 시작
 	// -------------------------------//
 	public Map selectMemberList(int reqPage) {
-		int numPerPage = 5;
+		int numPerPage = 10;
 		int pageNaviSize = 5;
 		int totalCount = memberDao.memberTotalCount();
 

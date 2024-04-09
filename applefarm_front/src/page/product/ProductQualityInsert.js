@@ -15,9 +15,10 @@ const ProductQualityInsert = (props) => {
   const setPartOrder = props.setPartOrder;
   const changeBtnActiveTrue = props.changeBtnActiveTrue;
   const changeBtnActiveFalse = props.changeBtnActiveFalse;
+  const navTable = props.navTable;
 
   const [score, setScore] = useState({});
-  const [tableName, setTableName] = useState("MACBOOK_TBL");
+  const [tableName, setTableName] = useState(navTable);
   const [image, setImage] = useState({});
   const [qualityState, setQualityState] = useState({});
   const [qualityList, setQualityList] = useState([]);

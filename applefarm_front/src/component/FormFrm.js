@@ -320,7 +320,7 @@ const PswRadio = (props) => {
     setSelectValue(event.target.value);
   };
   return (
-    <label htmlFor={val}>
+    <label htmlFor={name === "model2" ? name + val : val}>
       <div
         className={
           selectValue === val
@@ -331,13 +331,17 @@ const PswRadio = (props) => {
         <input
           className="psw_radio"
           type="radio"
-          id={val}
+          id={name === "model2" ? name + val : val}
+          //↑↑ model2의 M1,M2,M3의 경우 gen의 M1,M2,M3와 id가 겹쳐서 클릭 안 되므로, 위와 같이 해결.
           name={name}
           defaultValue={val}
           checked={selectValue === val}
           onChange={handleChange}
         />
-        <label className="psw_radio_label" htmlFor={val}>
+        <label
+          className="psw_radio_label"
+          htmlFor={name === "model2" ? name + val : val}
+        >
           {val}
         </label>
         {name === "color" ? (
