@@ -336,13 +336,13 @@ const AdminDashboard = () => {
                   </Button>
                 </div>
                 <div className="dashboard-btn">
-                  <Button
+                  {/* <Button
                     variant="contained"
                     style={{ backgroundColor: "var(--main_02" }}
                     onClick={subscribe}
                   >
                     구독하기
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </DemoContainer>
@@ -354,19 +354,19 @@ const AdminDashboard = () => {
           <div className="summary">
             <div className="total-member">
               <p>전체회원</p>
-              <h4>{totalMemberCount}명</h4>
+              <span>{totalMemberCount}명</span>
             </div>
             <div className="total-member">
               <p>신규유입</p>
-              <h4>{periodMemberCount}명</h4>
+              <span>{periodMemberCount}명</span>
             </div>
             <div className="total-product">
               <p>거래건수</p>
-              <h4>{periodTradeCount}건</h4>
+              <span>{periodTradeCount}건</span>
             </div>
             <div className="tota-trade">
               <p>거래금액</p>
-              <h4>{periodTradeMoney}원</h4>
+              <span>{periodTradeMoney}원</span>
             </div>
           </div>
           <div className="charts">
@@ -383,7 +383,7 @@ const AdminDashboard = () => {
           <div className="rank-wrap">
             <div className="top-seller">
               <ul>
-                <p>판매왕</p>
+                <p className="king">판매금액 상위 Top5</p>
                 {topSellers.map((seller, index) => (
                   <li key={index} className="trade-king">
                     <span>{index + 1}위</span>
@@ -395,7 +395,7 @@ const AdminDashboard = () => {
             </div>
             <div className="top-buyer">
               <ul>
-                <p>구매왕</p>
+                <p className="king">구매금액 상위 Top5</p>
                 {topBuyers.map((buyer, index) => (
                   <li key={index} className="trade-king">
                     <span>{index + 1}위</span>
@@ -406,7 +406,7 @@ const AdminDashboard = () => {
               </ul>
             </div>
           </div>
-          거래내역
+          <p className="trade-title">거래내역</p>
           <div className="member-like-tbl-box charts" id="member-like-tbl-box">
             <table className="admin-tbl" id="trade-log-tbl">
               <thead>

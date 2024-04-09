@@ -101,7 +101,7 @@ const AdminChatModal = (props) => {
     <div className="chat-modal-current-wrap">
       <div className="chat-modal-content">
         <div className="chat-header">
-          <div className="h2">{room.roomTitle}</div>
+          <div className="roomTitle">{room.roomTitle}</div>
         </div>
 
         <div className="chat-body">
@@ -121,7 +121,7 @@ const AdminChatModal = (props) => {
         <div className="chat-footer">
           <textarea
             className="chat-message"
-            placeholder="Input message"
+            placeholder="메시지를 입력해주세요."
             value={chatMessage}
             onChange={inputChatMessage}
             onKeyUp={inputKeyboard}
