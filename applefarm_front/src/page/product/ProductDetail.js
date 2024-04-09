@@ -6,12 +6,15 @@ import "./productDetail2.css"; //박근열
 
 const ProductDetail = (props) => {
   const isLogin = props.isLogin;
-  const token = props.token;
-  console.log(token ? token.member : "");
+
   const params = useParams();
   const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [productAndMember, setProductAndMember] = useState({});
+
+  const [loginMember, setLoginMember] = useState(null);
+  const [likeBoolean, setLikeBoolean] = useState(null);
+
+  const [product, setProduct] = useState({});
   const [sellerReviewList, setSellerReviewList] = useState([]);
   const [sellerProductList, setSellerProductList] = useState([]);
   const [productFileList, setProductFileList] = useState([]);
@@ -19,9 +22,24 @@ const ProductDetail = (props) => {
   const [reliableList, setReliableList] = useState([]);
   useEffect(() => {
     axios
-      .get(backServer + "/product/" + productNo)
+      .get(backServer + "/member")
       .then((res) => {
-        setProductAndMember(res.data.data.productAndMember);
+        setLoginMember(res.data.data);
+        if (res.data.message === "success") {
+          axios
+            .get(backServer + "/product/likeBoolean/" + productNo)
+            .then((res) => {
+              setLikeBoolean(res.data.data);
+            });
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+    axios
+      .get(backServer + "/product/detail/" + productNo)
+      .then((res) => {
+        setProduct(res.data.data.product);
         setSellerReviewList(res.data.data.sellerReviewList);
         setSellerProductList(res.data.data.sellerProductList);
         setProductFileList(res.data.data.productFileList);
@@ -38,15 +56,15 @@ const ProductDetail = (props) => {
       {/* productDetail-top */}
       <div className="productDetail-top">
         <div className="productDetail-top-title">
-          {productAndMember.tableName === "IPHONE_TBL"
+          {product.tableName === "IPHONE_TBL"
             ? "iPhone"
-            : productAndMember.tableName === "MACBOOK_TBL"
+            : product.tableName === "MACBOOK_TBL"
             ? "MacBook"
-            : productAndMember.tableName === "IPAD_TBL"
+            : product.tableName === "IPAD_TBL"
             ? "iPad"
-            : productAndMember.tableName === "WATCH_TBL"
+            : product.tableName === "WATCH_TBL"
             ? "Apple Watch"
-            : productAndMember.tableName === "AIRPODS_TBL"
+            : product.tableName === "AIRPODS_TBL"
             ? "에어팟"
             : ""}
         </div>
@@ -62,7 +80,7 @@ const ProductDetail = (props) => {
         {/* //productDetail-content-left */}
         <div className="productDetail-content-left">
           <div className="productDetail-image">
-            <div className="productArticle example">sksksk</div>
+            <div className="productArticle"></div>
           </div>
         </div>
         {/* //productDetail-content-left */}

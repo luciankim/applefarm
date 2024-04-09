@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/member/**","/product/**","/trade/**")
 				.excludePathPatterns("/member/login","/member/join" ,"/member/sendEmail/*", "/member/email/*" ,"/member/id/*","/member/nickName/*","/member/sendCode/*")
-				.excludePathPatterns("/product/quality/*","/product/category");
+				.excludePathPatterns("/product/quality/*","/product/category","/product/detail/*");
 	}
 
 	//암호화

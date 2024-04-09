@@ -11,10 +11,7 @@ const Product = (props) => {
   return (
     <Routes>
       <Route path="/main" element={<ProductMain />} />
-      <Route
-        path="/:productNo"
-        element={<ProductDetail isLogin={isLogin} token={token} />}
-      />
+      <Route path="/:productNo" element={<ProductDetail isLogin={isLogin} />} />
       <Route path="/insert" element={<ProductInsert />} />
     </Routes>
   );

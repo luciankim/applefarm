@@ -17,7 +17,6 @@ import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
-import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SellerReview;
@@ -199,7 +198,7 @@ public class ProductService {
 //		return productDao.selectReliableProducts(summary);
 //	}
 
-	public HashMap<String, Object> selectOneProduct(int productNo, int memberNo) {
+	public HashMap<String, Object> selectOneProduct(int productNo) {
 				//memberNo 접속자
 				//sellerNo 판매자
 				//productNo 상품
@@ -207,24 +206,36 @@ public class ProductService {
 		
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				//상품 124번의 상품정보 & 회원정보
-				ProductAndMember productAndMember= productDao.selectOneView(productNo,memberNo);
-				map.put("productAndMember", productAndMember);
+				Product product= productDao.selectOneView(productNo);
+				if(product == null) {
+					return map;
+				}
 				
-				int sellerNo = productAndMember.getMemberNo();
-				String tableName = productAndMember.getTableName();
-				String summary = productAndMember.getProductSummary();
+				map.put("product", product);
+
+				System.out.println(map.size());//1 확인!!!!!!!
+				
+				int sellerNo = product.getMemberNo();
+				String tableName = product.getTableName();
+				String summary = product.getProductSummary();
 				
 				//판매자(member_no=45)에 대한 후기 리스트
 				List sellerReviewList = productDao.selectSellerReviews(sellerNo);
 				map.put("sellerReviewList",sellerReviewList);
 				
+				System.out.println(map.size());//2 확인!!!!!!!
+				
 				//판매자(member_no=45)의 상품 리스트
 				List sellerProductList = productDao.selectSellerProducts(sellerNo);
 				map.put("sellerProductList",sellerProductList);
 				
+				System.out.println(map.size());//3 확인!!!!!!!
+				
 				//상품 124번의 첨부파일 리스트(file_no, file_path가 필요)
 				List productFileList = productDao.selectProductFiles(productNo);
 				map.put("productFileList",productFileList);
+				
+				System.out.println(map.size());//4 확인!!!!!!!
 				
 				//상품 124번의 품질(테이블 별로 다르게)
 				switch (tableName) {
@@ -246,6 +257,9 @@ public class ProductService {
 				default :
 					break;
 				}
+				
+				System.out.println(map.size());//5 확인!!!!!!!
+				
 				/*
 				if(tableName.equals("IPHONE_TBL")) {
 					IphoneQualityHistory qualityHistory = productDao.selectIphoneQualityHistory(productNo);
@@ -268,7 +282,14 @@ public class ProductService {
 				//신뢰도 높은 상품 리스트
 				List reliableProductList = productDao.selectReliableProducts(summary);
 				map.put("reliableProductList",reliableProductList);
+				
+				System.out.println(map.size());//6 확인!!!!!!!
+				
 				return map;
+	}
+
+	public int likeBoolean(int productNo, int memberNo) {
+		return productDao.likeBoolean(productNo, memberNo);
 	}
 
 

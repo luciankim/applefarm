@@ -11,7 +11,6 @@ import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
-import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
@@ -45,7 +44,7 @@ public interface ProductDao {
 	int insertAirpodsQualityHistory(MacbookQualityHistory partObject);
 
 	//ProductDetail.js
-	ProductAndMember selectOneView(int productNo,int memberNo);
+	Product selectOneView(int productNo);
 
 	List selectSellerReviews(int productNo);
 
@@ -64,5 +63,7 @@ public interface ProductDao {
 	AirpodsQualityHistory selectAirpodsQualityHistory(int productNo);
 
 	List selectReliableProducts(String summary);
+
+	int likeBoolean(int productNo, int memberNo);
 
 }

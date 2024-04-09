@@ -32,7 +32,6 @@ import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
-import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SellerReview;
@@ -298,26 +297,43 @@ public class ProductController {
 		}
 	}
 	
+	@Operation(summary="좋아요 눌렀는지 체크", description = "로그인 한 이용자가 해당 상품에 좋아요를 눌렀는지를 0 또는 1로 알려줌")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@GetMapping(value="/likeBoolean/{productNo}")
+	public ResponseEntity<ResponseDTO> likeBoolean(@PathVariable int productNo, @RequestAttribute int memberNo){
+		int likeBoolean = productService.likeBoolean(productNo, memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", likeBoolean);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
 	
-	@GetMapping(value = "/{productNo}")
-	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo,@RequestAttribute int memberNo){
-		HashMap<String, Object> map = productService.selectOneProduct(productNo, memberNo);
+	@GetMapping(value = "/detail/{productNo}")
+	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo){
+		HashMap<String, Object> map = productService.selectOneProduct(productNo);
 		/* map.key
-		 * productAndMember
+		 * product
 		 * sellerReviewList
 		 * sellerProductList
 		 * productFileList
 		 * qualityHistory
 		 * reliableProductList
+		 * loginMemberNo //@RequestAttribute에서 가져온 로그인한사람의 memberNo
 		 */
-
-		if(map != null) {
+		System.out.println(map.get("product"));
+		System.out.println(map.get("sellerReviewList"));
+		System.out.println(map.get("sellerProductList"));
+		System.out.println(map.get("productFileList"));
+		System.out.println(map.get("qualityHistory"));
+		System.out.println(map.get("reliableProductList"));
+		if(map.size()==6) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-			
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
 }
