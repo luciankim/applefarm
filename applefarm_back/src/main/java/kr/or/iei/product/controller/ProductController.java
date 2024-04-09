@@ -39,18 +39,20 @@ import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
 import kr.or.iei.util.FileUtils;
+import kr.or.iei.util.JwtUtil;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value="/product")
 @Tag(name="PRODUCT", description = "PRODUCT API")
 public class ProductController {
+	
 	@Autowired
 	private ProductService productService;
-	
 	@Autowired
 	private FileUtils fileUtils;
-	
+	@Autowired
+	private JwtUtil jwtUtil;
 	
 	@Value("${file.root}")
 	private String root;

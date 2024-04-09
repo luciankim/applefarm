@@ -1290,10 +1290,10 @@ const Nav = (props) => {
           <Link to="#">Community</Link>
           <ul className="dropdown-content drop-Community">
             <li>
-              <Link to="">공지사항</Link>
+              <Link to="/board/list">공지사항</Link>
             </li>
             <li>
-              <Link to="/board/list">자유게시판</Link>
+              <Link to="#">자유게시판</Link>
             </li>
             <li>
               <Link to="#">질문게시판</Link>

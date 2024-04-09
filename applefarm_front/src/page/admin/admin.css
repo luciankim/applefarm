@@ -8,14 +8,19 @@
   padding: 15px;
 }
 
+#member-like-tbl-box {
+  padding-top: 15px;
+}
+
 #member-like-tbl-box table {
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin: 0 15px;
 }
 
 #member-like-tbl-box table th {
-  background-color: var(--main_01) !important;
+  background-color: rgb(39, 55, 65) !important;
 }
 
 .admin-section-wrap > div {
@@ -68,7 +73,8 @@
   height: 30px !important;
   border: none;
   outline: none;
-  background-color: rgb(157, 157, 157) !important;
+  background-color: rgb(115, 129, 134) !important;
+  padding-top: 1px !important;
   padding: 10px 20px;
   font-size: 12px;
   font-weight: 700;
@@ -80,14 +86,16 @@
   font-family: ns-l;
 }
 
-.member-td select {
+.member-td > select {
   height: 30px !important;
   border: none;
   outline: none;
-  background-color: rgb(157, 157, 157) !important;
+  background-color: rgb(139, 167, 177) !important;
   padding: 10px 20px;
   font-size: 12px;
+  font-weight: 500 !important;
   font-weight: 700;
+  text-align: center;
   color: #fff;
   transition: all ease 0.1s;
 }
@@ -134,6 +142,7 @@
   font-family: ns-eb;
   text-align: left;
   font-size: 30px;
+  margin-left: 20px;
 }
 
 .purchase-btn-box button {
@@ -165,12 +174,16 @@
 }
 
 .date-select-wrap {
-  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
   border-top: 1px solid #cfcfcf;
   border-bottom: 1px solid #9d9d9d;
   background-color: #fbfbfb;
 }
 
+.date-select-wrap > div {
+  padding: 10px;
+}
 .date-select-wrap button {
   font-size: 12px;
   font-family: ns-r;
@@ -229,21 +242,27 @@ a:visited {
 }
 */
 
+.tota-trade span {
+  font-size: 16px !important;
+}
+
 .summary {
   display: flex;
   justify-content: space-between;
-  padding: 30px 0;
+  padding-top: 10px;
+  padding-bottom: 25px;
+  text-align: center;
+  border-bottom: 1px solid #9d9d9d;
 }
 
 .summary div {
   width: calc((100% / 4) - 15px);
-
-  text-align: center;
 }
 
 .summary div p {
-  font-size: 18px;
+  font-size: 20px;
   margin-top: 10px;
+  font-weight: 900;
 }
 
 .summary div h4 {
@@ -252,23 +271,52 @@ a:visited {
 }
 
 .charts {
-  padding: 20px;
-  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .rank-wrap {
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .rank-wrap div {
-  width: 430px;
-  padding: 0 70px;
+  width: 380px;
+  padding-left: 30px;
+  padding-right: 50px;
+}
+
+.trade-title {
+  font-size: 20px !important;
+  font-weight: 900;
+  padding-left: 30px;
+  margin-bottom: 0;
+}
+
+.top-buyer ul p {
+  border-bottom: 1px solid rgb(177, 177, 177);
+  padding-bottom: 10px;
+  margin-bottom: 0;
+}
+
+.top-seller ul p {
+  border-bottom: 1px solid rgb(177, 177, 177);
+  padding-bottom: 10px;
+  margin-bottom: 0;
+}
+
+.tp-seller ul p {
+  border-bottom: 1px solid #eee;
+}
+
+.trade-king span {
+  font-size: 16px;
 }
 
 .rank-wrap div ul li {
-  text-align: left;
   padding: 10px 0;
 }
 
@@ -291,7 +339,6 @@ a:visited {
 
 .dashboard-wrap {
   margin-top: 10px;
-  border: 1px solid #ccc;
 }
 
 .btnWrap > div > button > a {
@@ -301,6 +348,7 @@ a:visited {
 /*  대시보드  */
 .dashboard-btn button {
   transform: translateY(0em);
+  background-color: var(--main_02) !important;
   outline: 0;
   border: 0;
   box-shadow: 0px 0.01em 0.01em rgb(45 35 66 / 40%),
@@ -308,9 +356,10 @@ a:visited {
     inset 0px -0.01em 0px rgb(58 65 111 / 50%);
   will-change: box-shadow, transform;
   line-height: 2em;
+  margin-left: 30px;
 }
 
-.dashboard-btn button:hover {
+s.dashboard-btn button:hover {
   box-shadow: 0px 0.1em 0.2em rgb(45 35 66 / 80%),
     0px 0.4em 0.7em -0.1em rgb(45 35 66 / 70%), inset 0px -0.1em 0px black;
   transform: translateY(-0.1em);
@@ -452,6 +501,12 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+.chat-message {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+xssad .roomTitle {
+  height: 50px;
+}
 
 .chat-modal-content {
   position: fixed;
@@ -467,7 +522,8 @@ h1 {
 /* 채팅 css */
 
 .chat-header {
-  background-color: var(--main_01);
+  background-color: rgb(68, 79, 173);
+  height: 50px;
 }
 
 .chat-header > div {

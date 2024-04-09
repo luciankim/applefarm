@@ -82,7 +82,7 @@ const BoardList = (props) => {
   return (
     <div className="board-wrap">
       <div className="board-title">
-        <p>자유게시판</p>
+        <p>공지사항</p>
       </div>
       {isLogin && (
         <div className="board-subtitle">

@@ -100,7 +100,10 @@ function App() {
               element={<CompletePayment isLogin={isLogin} />}
             />
             {/*setIsLogin을 줘야 값이 변경되니까*/}
-            <Route path="/product/*" element={<Product isLogin={isLogin} />} />
+            <Route
+              path="/product/*"
+              element={<Product isLogin={isLogin} token={token} />}
+            />
           </Routes>
         </section>
       </main>
