@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/member/**","/product/**","/trade/**")
 				.excludePathPatterns("/member/login","/member/join" ,"/member/sendEmail/*", "/member/email/*" ,"/member/id/*","/member/nickName/*","/member/sendCode/*")
-				.excludePathPatterns("/product/quality/*","/product/category");
+				.excludePathPatterns("/product/quality/*","/product/category","/product/img/*");
 	}
 
 	//암호화
@@ -46,6 +46,9 @@ public class WebConfig implements WebMvcConfigurer{
 		.addResourceLocations("file:///C:/Temp/applefarm/boardEditor/");
 		registry.addResourceHandler("/board/thumbnail/**")
 		.addResourceLocations("file:///C:/Temp/applefarm/board/");
+		
+		registry.addResourceHandler("/product/img/**")
+		.addResourceLocations("file:///C:/Temp/applefarm/product/");
 	}
 
 	

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./productDetail.css"; //박성완
 import "./productDetail2.css"; //박근열
@@ -9,16 +9,23 @@ const ProductDetail = (props) => {
   const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
+  const [productFileList, setProductFileList] = useState([]);
+
   useEffect(() => {
     axios
       .get(backServer + "/product/" + productNo)
       .then((res) => {
         console.log(res.data);
+        if (res.data.message === "success") {
+          setProductFileList(res.data.data.productFileList);
+        }
       })
       .catch((res) => {
         console.log(res);
       });
   }, []);
+
+  useEffect(() => {}, [productFileList]);
 
   return (
     <div className="productDetail-wrap">
@@ -37,8 +44,18 @@ const ProductDetail = (props) => {
       <div className="productDetail-content">
         {/* //productDetail-content-left */}
         <div className="productDetail-content-left">
-          <div className="productDetail-image">
-            <div className="productArticle example">sksksk</div>
+          <div className="productDetail-image productArticle">
+            <div>
+              {productFileList.map((file, index) => {
+                return (
+                  <img
+                    src={backServer + "/product/img/" + file.filepath}
+                    key={"product" + index}
+                    className="productDetail-image"
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
         {/* //productDetail-content-left */}
