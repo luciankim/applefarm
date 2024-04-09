@@ -6,6 +6,8 @@ import ProductInsertLast from "./ProductInsertLast";
 import ProductQualityInsert from "./ProductQualityInsert";
 
 const Product = (props) => {
+  const isLogin = props.isLogin;
+  const token = window.localStorage.getItem("token");
   return (
     <Routes>
       <Route path="/main" element={<ProductMain />} />

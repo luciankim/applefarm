@@ -223,9 +223,11 @@
   font-weight: 900;
 }
 
+/*
 a:visited {
   color: #b7b7b7;
 }
+*/
 
 .summary {
   display: flex;
