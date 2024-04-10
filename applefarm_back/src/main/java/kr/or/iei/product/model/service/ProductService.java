@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
@@ -135,7 +136,7 @@ public class ProductService {
 	}
 
 	@Transactional
-	public int insertAirpods(Product product, ArrayList<ProductFile> fileList, MacbookQualityHistory partObject) {
+	public int insertAirpods(Product product, ArrayList<ProductFile> fileList, AirpodsQualityHistory partObject) {
 		int result1 = productDao.insertProduct(product);
 		for(ProductFile pf: fileList) {
 			pf.setProductNo(product.getProductNo());
@@ -216,6 +217,13 @@ public class ProductService {
 				int sellerNo = product.getMemberNo();
 				String tableName = product.getTableName();
 				String summary = product.getProductSummary();
+				
+				//판매자 정보
+				Member seller = productDao.selectSellerInfo(sellerNo);
+				if(seller==null) {
+					return map;
+				}
+				map.put("seller",seller);
 				
 				//판매자(member_no=45)에 대한 후기 리스트
 				List sellerReviewList = productDao.selectSellerReviews(sellerNo);
