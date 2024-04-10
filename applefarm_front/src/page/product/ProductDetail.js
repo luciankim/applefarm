@@ -264,6 +264,7 @@ const ProductDetail = (props) => {
               backServer={backServer}
               product={product}
               productNo={productNo}
+              loginMember={loginMember}
             />
           </div>
           <div className="productDetail-quality">
@@ -591,7 +592,11 @@ const ProductBid = (props) => {
   const backServer = props.backServer;
   const product = props.product;
   const productNo = props.productNo;
+  const loginMember = props.loginMember;
+
   const [bidList, setBidList] = useState([]);
+  //"등록"버튼 활성화하는데에 활용
+  const [alreadyBidder, setAlreadyBidder] = useState(-1);
 
   useEffect(() => {
     axios
@@ -606,25 +611,114 @@ const ProductBid = (props) => {
       });
   }, []);
 
+  //setAlreadyBidder 구하기
+  useEffect(() => {
+    const bidMemberNoArr = [];
+    bidList.map((bid) => {
+      bidMemberNoArr.push(bid.memberNo);
+    });
+    if (loginMember) {
+      setAlreadyBidder(bidMemberNoArr.indexOf(loginMember.memberNo));
+    }
+  }, [loginMember, bidList]);
+
   //판매자가 자신의 판매금액을 수정
   const priceUpdate = () => {};
-  //판매자가 구매호가 판매버튼을 클릭
+  //판매자가 판매버튼을 클릭
   const selling = () => {};
   //구매자가 자신의 구매호가를 수정
   const bidUpdate = () => {};
-  //구매자가 구매버튼을 클릭
+  //구매자가 구매버튼을 클릭 -> 로그인한 회원이 아닐 경우 로그인창 띄워줘야함
   const purchasing = () => {};
+  //구매자가 등록버튼 클릭 -> 로그인한 회원이 아닐 경우 로그인창 띄워줘야함
+  const insertBId = () => {};
 
   return (
     <div className="productBid">
-      <div className="productBid-title">판매 희망가</div>
-      <div className="productBid-content"></div>
-      <div className="productBid-title">구매 희망가</div>
+      <div className="productBid-title">
+        <div div className="productBidBox-wrap">
+          <div className="productBidBox-left">판매 희망가</div>
+          <div className="productBidBox-right"></div>
+        </div>
+      </div>
+      <div className="productBid-content">
+        <div className="productBidBox-wrap">
+          <div className="productBidBox-left">
+            <div className="productBidBox pswProductDetailBtn productPrice">
+              {product.productPrice
+                ? product.productPrice.toLocaleString() + "원"
+                : ""}
+            </div>
+          </div>
+          <div className="productBidBox-right">
+            <div
+              className="productBidBox pswProductDetailBtn productPrice"
+              onClick={
+                loginMember && loginMember.memberNo === product.memberNo
+                  ? priceUpdate
+                  : purchasing
+              }
+            >
+              {loginMember && loginMember.memberNo === product.memberNo
+                ? "수정"
+                : "구매"}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="productBid-title">
+        <div className="productBidBox-wrap">
+          <div className="productBidBox-left">구매 희망가</div>
+          <div className="productBidBox-right">
+            {(loginMember && loginMember.memberNo === product.memberNo) ||
+            alreadyBidder !== -1 ? (
+              ""
+            ) : (
+              <div
+                className="productBidBox pswProductDetailBtn insertBidBtn"
+                onClick={insertBId}
+              >
+                등록
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
       <div className="productBid-content">
         {bidList.map((bid, index) => {
           return (
-            <div className="productBid-bidBox-wrap" key={bid.memberNo + index}>
-              <BidPrice />
+            <div
+              className="productBidBox-wrap"
+              key={bid.bidNo + bid.memberNo + index}
+            >
+              <div className="productBidBox-left">
+                <BidPrice
+                  bid={bid}
+                  loginMember={loginMember}
+                  product={product}
+                />
+              </div>
+              <div className="productBidBox-right">
+                <BidBtn
+                  bid={bid}
+                  loginMember={loginMember}
+                  product={product}
+                  clickEvent={
+                    loginMember && loginMember.memberNo === bid.memberNo //로그인한 사람이 입찰자일 때
+                      ? bidUpdate
+                      : loginMember && loginMember.memberNo === product.memberNo //로그인한 사람이 판매자일 때
+                      ? selling
+                      : null //그 밖에
+                  }
+                  text={
+                    loginMember && loginMember.memberNo === bid.memberNo
+                      ? "수정"
+                      : loginMember && loginMember.memberNo === product.memberNo
+                      ? "판매"
+                      : null
+                  }
+                />
+              </div>
             </div>
           );
         })}
@@ -634,7 +728,49 @@ const ProductBid = (props) => {
 };
 //이어서
 const BidPrice = (props) => {
-  return <div className="productBidBox pswProductDetailBtn"></div>;
+  const bid = props.bid;
+  const loginMember = props.loginMember;
+  const product = props.product;
+
+  return (
+    <div
+      className={
+        loginMember && loginMember.memberNo === bid.memberNo
+          ? "productBidBox pswProductDetailBtn myBid"
+          : loginMember && loginMember.memberNo === product.memberNo
+          ? "productBidBox pswProductDetailBtn productOwner"
+          : "productBidBox pswProductDetailBtn"
+      }
+    >
+      {bid.bidPrice ? bid.bidPrice.toLocaleString() + "원" : ""}
+    </div>
+  );
+};
+//이어서
+const BidBtn = (props) => {
+  const bid = props.bid;
+  const loginMember = props.loginMember;
+  const clickEvent = props.clickEvent;
+  const product = props.product;
+  const text = props.text;
+  if (!text) {
+    return;
+  } else {
+    return (
+      <div
+        className={
+          loginMember && loginMember.memberNo === bid.memberNo
+            ? "productBidBox pswProductDetailBtn myBid"
+            : loginMember && loginMember.memberNo === product.memberNo
+            ? "productBidBox pswProductDetailBtn productOwner"
+            : "productBidBox pswProductDetailBtn"
+        }
+        onClick={clickEvent}
+      >
+        {text}
+      </div>
+    );
+  }
 };
 
 //박성완

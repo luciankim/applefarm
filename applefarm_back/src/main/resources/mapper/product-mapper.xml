@@ -208,7 +208,7 @@
 	</update>
 	
 	<select id="productBidList" resultType="bid">
-		select member_no, bid_price
+		select bid_no, product_no, member_no, bid_price
 		from bid_tbl
 		where
 			product_no = #{productNo} and

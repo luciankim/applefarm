@@ -45,6 +45,6 @@ public class Product {
 	//productDetail에 사용
 	private int likeCount;
 	
-	//productApexChart에 사용
+	//productChart에 사용
 	private int term;
 }

@@ -298,14 +298,17 @@ public class ProductService {
 		return productDao.likeBoolean(productNo, memberNo);
 	}
 
+	@Transactional
 	public int insertLike(int productNo, int memberNo) {
 		return productDao.insertLike(productNo, memberNo);
 	}
 
+	@Transactional
 	public int deleteLike(int productNo, int memberNo) {
 		return productDao.deleteLike(productNo, memberNo);
 	}
 
+	@Transactional
 	public int hideProduct(int productNo) {
 		return productDao.hideProduct(productNo);
 	}
