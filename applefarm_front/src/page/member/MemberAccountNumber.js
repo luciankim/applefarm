@@ -170,7 +170,7 @@ const MemberAccountNumber = (props) => {
           <div className="account-info">등록된 계좌 정보</div>
           {accountRegistered ? (
             <>
-              <div>{account}</div>
+              <div className="account-text">{account}</div>
               <div className="delete-btn-box">
                 <button
                   className="delete-account-btn"
@@ -194,7 +194,7 @@ const MemberAccountNumber = (props) => {
                 style={modalStyle}
               >
                 <div className="add-accountNumber">
-                  <div>은행명</div>
+                  <div className="bankName-text">은행명</div>
                   <Select
                     options={bankList}
                     value={bankName}
@@ -212,7 +212,7 @@ const MemberAccountNumber = (props) => {
                       onBlur={accountNumberChk}
                     />
                   </div>
-                  <div className="reg-msg">{checkRegAccountNumber}</div>
+                  <div className="reg-msg-account">{checkRegAccountNumber}</div>
                   <div>
                     <label>예금주명</label>
                     <input
@@ -225,7 +225,7 @@ const MemberAccountNumber = (props) => {
                       onBlur={nameChk}
                     />
                   </div>
-                  <div className="reg-msg">{checkRegDepositorName}</div>
+                  <div className="reg-msg-account">{checkRegDepositorName}</div>
                   <div className="accountBtn-box">
                     <button
                       className="accountNumber-saveBtn"

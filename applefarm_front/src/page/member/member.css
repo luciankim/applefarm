@@ -1066,7 +1066,9 @@ table {
   justify-content: center;
 }
 
-.reg-msg {
+.reg-msg-account {
+  position: relative;
+  bottom: 15px;
   font-size: 13px;
   color: #b7b7b7;
   padding-left: 10px;
@@ -1093,6 +1095,16 @@ table {
   justify-content: center;
 }
 
+.account-info {
+  padding-bottom: 40px;
+  font-size: 18px;
+}
+
+.account-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .account-status-msg {
   padding: 30px;
   color: #b7b7b7;
@@ -1108,7 +1120,29 @@ table {
 }
 
 .delete-btn-box {
+  position: relative;
+  top: 40px;
 }
+
+.account-status-msg {
+  position: relative;
+  bottom: 25px;
+}
+.add-accountNumber > div {
+  margin-top: 10px; /* 각 요소의 위쪽 여백 설정 */
+  margin-bottom: 20px; /* 각 요소의 아래쪽 여백 설정 */
+}
+
+.add-accountNumber > div:first-child {
+  padding-top: 90px;
+}
+
+.bankName-text {
+  position: relative;
+  top: 15px;
+}
+
+/*아이디 찾기, 비밀번호 찾기*/
 
 .findId-content-wrap {
   display: flex;

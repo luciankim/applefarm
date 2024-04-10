@@ -37,14 +37,23 @@ const Footer = () => {
           </div>
           <div className="footer-wrap2">
             <div className="icon-box">
-              <img className="insta-img" src="../image/insta.png" />
-              <img className="facebook-img" src="../image/facebook.png" />
-              <img className="youtube-img" src="../image/youtube.png" />
+              <Link to="#">
+                <img className="insta-img" src="../image/insta.png" />
+              </Link>
+              <Link to="#">
+                <img className="facebook-img" src="../image/facebook.png" />
+              </Link>
+              <Link to="#">
+                <img className="youtube-img" src="../image/youtube.png" />
+              </Link>
             </div>
             <div className="footer-content3">
               <div>고객센터 1588-8282</div>
               <div>운영시간 평일 10:00 ~ 18:00 (토,일 공휴일 휴무)</div>
               <div>점심시간 평일 13:00 ~ 14:00 </div>
+              <div className="contact-btn-wrap">
+                <button className="contact-btn">1대1 문의하기</button>
+              </div>
             </div>
           </div>
         </div>
