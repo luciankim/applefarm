@@ -37,8 +37,6 @@ const ProductDetail = (props) => {
   const [qualityHistory, setQualityHistory] = useState([]);
   const [reliableList, setReliableList] = useState([]);
 
-  
-
   useEffect(() => {
     if (isLogin) {
       axios
@@ -63,8 +61,6 @@ const ProductDetail = (props) => {
       .get(backServer + "/product/detail/" + productNo)
       .then((res) => {
         if (res.data.message === "success") {
-      
-          console.log(res.data.data);
           setProduct(res.data.data.product);
           setSeller(res.data.data.seller);
           setSellerReviewList(res.data.data.sellerReviewList);
@@ -228,15 +224,14 @@ const ProductDetail = (props) => {
           </div>
           <div className="productDetail-explain">
             <div className="productDetail-explain-summary productArticle2">
-              <ProductSummary product = {product}/>
+              <ProductSummary product={product} />
             </div>
             <div className="productDetail-explain-seller productArticle2">
-              
-              <ProductSeller product = {product} seller={seller}/>
+              <ProductSeller product={product} seller={seller} />
             </div>
           </div>
           <div className="productDetail-explain-detail productArticle2">
-            <ProductExplainDetail product = {product}/>
+            <ProductExplainDetail product={product} />
           </div>
         </div>
         {/* //productDetail-content-left */}
@@ -247,7 +242,11 @@ const ProductDetail = (props) => {
             <ProductChart product={product} path="productDetail" />
           </div>
           <div className="productDetail-bid">
-            <ProductBid />
+            <ProductBid
+              backServer={backServer}
+              product={product}
+              productNo={productNo}
+            />
           </div>
           <div className="productDetail-quality">
             <ProductQuality />
@@ -358,181 +357,192 @@ const ProductSummary = (props) => {
       setSummaryGpu("");
     }
   }, [selectedProduct]);
-  return(<>
-  <div className="productSummary-content">
-  {
-    //아이폰
-    product.productLine === "iPhone"
-      ? product.productModel + " " + summaryQuality
-      : //맥북
-      product.productLine === "MacBook Pro" ||
-        product.productLine === "MacBook Air"
-      ? product.productLine +
-        " " +
-        product.productGen +
-        " " +
-        product.productModel +
-        " " +
-        summaryQuality
-      : //아이패드
-      product.productLine === "iPad Pro 12.9" ||
-        product.productLine === "iPad Pro 11" ||
-        product.productLine === "iPad Air" ||
-        product.productLine === "iPand Mini" ||
-        product.productLine === "iPad"
-      ? product.productLine +
-        " " +
-        product.productGen +
-        " " +
-        summaryQuality
-      : //애플워치
-      product.productLine === "Apple Watch Ultra" ||
-        product.productLine === "Apple Watch Series" ||
-        product.productLine === "Apple Watch SE"
-      ? product.productLine +
-        " " +
-        product.productGen +
-        " " +
-        summaryQuality
-      : //에어팟
-      product.productLine === "AirPods" ||
-        product.productLine === "AirPods Pro" ||
-        product.productLine === "AirPods Max"
-      ? product.productLine +
-        " " +
-        product.productGen +
-        " " +
-        summaryQuality
-      : ""
-  }
-</div>
-<div className="productSummary-content-detail">
-  {
-    //아이폰
-    product.productLine === "iPhone"
-      ? product.productStorage +
-        " " +
-        product.productColor
-      : //맥북
-      (product.productLine === "MacBook Pro" ||
-          product.productLine === "MacBook Air") &&
-        (product.productGen === "2018년" ||
-          product.productGen === "2019년" ||
-          product.productGen === "2020년")
-      ? summaryCpu + " " + summaryGpu
-      : product.productLine === "MacBook Pro" ||
-        product.productLine === "MacBook Air"
-      ? product.productChip
-      : //아이패드
-      product.productLine === "iPad Pro 12.9" ||
-        product.productLine === "iPad Pro 11" ||
-        product.productLine === "iPad Air" ||
-        product.productLine === "iPand Mini" ||
-        product.productLine === "iPad"
-      ? product.productStorage +
-        " " +
-        product.productConnectivity +
-        " " +
-        product.productColor
-      : //애플워치
-      product.productLine === "Apple Watch Ultra" ||
-        product.productLine === "Apple Watch Series" ||
-        product.productLine === "Apple Watch SE"
-      ? product.productModel +
-        " " +
-        product.productSize +
-        " " +
-        product.productConnectivity +
-        " " +
-        product.productColor
-      : //에어팟
-      product.productLine === "AirPods" ||
-        product.productLine === "AirPods Pro" ||
-        product.productLine === "AirPods Max"
-      ? product.productCharge +
-        " " +
-        product.productColor
-      : ""
-  }
-</div>
-<div className="productSummary-content-detail">
-  {
-    //맥북
-    (product.productLine === "MacBook Pro" ||
-      product.productLine === "MacBook Air") &&
-    (product.productGen === "2018년" ||
-      product.productLine === "2019년" ||
-      product.productLine === "2020년")
-      ? product.productModel2 +
-        " " +
-        product.productStorage +
-        " " +
-        product.productMemory +
-        " " +
-        product.productColor
-      : product.productLine === "MacBook Pro" ||
-        product.productLine === "MacBook Air"
-      ? product.productStorage +
-        " " +
-        product.productMemory +
-        " " +
-        product.productColor
-      : ""
-  }
-</div></>
-)
+  return (
+    <>
+      <div className="productSummary-content">
+        {
+          //아이폰
+          product.productLine === "iPhone"
+            ? product.productModel + " " + summaryQuality
+            : //맥북
+            product.productLine === "MacBook Pro" ||
+              product.productLine === "MacBook Air"
+            ? product.productLine +
+              " " +
+              product.productGen +
+              " " +
+              product.productModel +
+              " " +
+              summaryQuality
+            : //아이패드
+            product.productLine === "iPad Pro 12.9" ||
+              product.productLine === "iPad Pro 11" ||
+              product.productLine === "iPad Air" ||
+              product.productLine === "iPand Mini" ||
+              product.productLine === "iPad"
+            ? product.productLine +
+              " " +
+              product.productGen +
+              " " +
+              summaryQuality
+            : //애플워치
+            product.productLine === "Apple Watch Ultra" ||
+              product.productLine === "Apple Watch Series" ||
+              product.productLine === "Apple Watch SE"
+            ? product.productLine +
+              " " +
+              product.productGen +
+              " " +
+              summaryQuality
+            : //에어팟
+            product.productLine === "AirPods" ||
+              product.productLine === "AirPods Pro" ||
+              product.productLine === "AirPods Max"
+            ? product.productLine +
+              " " +
+              product.productGen +
+              " " +
+              summaryQuality
+            : ""
+        }
+      </div>
+      <div className="productSummary-content-detail">
+        {
+          //아이폰
+          product.productLine === "iPhone"
+            ? product.productStorage + " " + product.productColor
+            : //맥북
+            (product.productLine === "MacBook Pro" ||
+                product.productLine === "MacBook Air") &&
+              (product.productGen === "2018년" ||
+                product.productGen === "2019년" ||
+                product.productGen === "2020년")
+            ? summaryCpu + " " + summaryGpu
+            : product.productLine === "MacBook Pro" ||
+              product.productLine === "MacBook Air"
+            ? product.productChip
+            : //아이패드
+            product.productLine === "iPad Pro 12.9" ||
+              product.productLine === "iPad Pro 11" ||
+              product.productLine === "iPad Air" ||
+              product.productLine === "iPand Mini" ||
+              product.productLine === "iPad"
+            ? product.productStorage +
+              " " +
+              product.productConnectivity +
+              " " +
+              product.productColor
+            : //애플워치
+            product.productLine === "Apple Watch Ultra" ||
+              product.productLine === "Apple Watch Series" ||
+              product.productLine === "Apple Watch SE"
+            ? product.productModel +
+              " " +
+              product.productSize +
+              " " +
+              product.productConnectivity +
+              " " +
+              product.productColor
+            : //에어팟
+            product.productLine === "AirPods" ||
+              product.productLine === "AirPods Pro" ||
+              product.productLine === "AirPods Max"
+            ? product.productCharge + " " + product.productColor
+            : ""
+        }
+      </div>
+      <div className="productSummary-content-detail">
+        {
+          //맥북
+          (product.productLine === "MacBook Pro" ||
+            product.productLine === "MacBook Air") &&
+          (product.productGen === "2018년" ||
+            product.productLine === "2019년" ||
+            product.productLine === "2020년")
+            ? product.productModel2 +
+              " " +
+              product.productStorage +
+              " " +
+              product.productMemory +
+              " " +
+              product.productColor
+            : product.productLine === "MacBook Pro" ||
+              product.productLine === "MacBook Air"
+            ? product.productStorage +
+              " " +
+              product.productMemory +
+              " " +
+              product.productColor
+            : ""
+        }
+      </div>
+    </>
+  );
 };
 
 //박근열
 const ProductSeller = (props) => {
   const product = props.product;
   const seller = props.seller;
-  
-  return(
+
+  return (
     <>
       {seller ? (
-      <>    <div className="productDetail-explain-seller-name-area">
-          {seller.memberName}
-        </div>
-        <div className="productDetail-explain-seller-score-area">
-          <div className="productDetail-explain-seller-score-icon">
-             {/* 
+        <>
+          {" "}
+          <div className="productDetail-explain-seller-name-area">
+            {seller.memberName}
+          </div>
+          <div className="productDetail-explain-seller-score-area">
+            <div className="productDetail-explain-seller-score-icon">
+              {/* 
             {seller.sellerScore}는 37부터 시작 
               
             */}
-            {(0<=seller.sellerScore<=37) ? <img src="/image/scoreImage/썩은사과.png"/> : 
-            (38<=seller.sellerScore<=70) ? <img src="/image/scoreImage/보통사과.png"/> :
-            (71<=seller.sellerScore<=100) ? <img src="/image/scoreImage/금사과.png"/> : ""}
+              {0 <= seller.sellerScore <= 37 ? (
+                <img src="/image/scoreImage/썩은사과.png" />
+              ) : 38 <= seller.sellerScore <= 70 ? (
+                <img src="/image/scoreImage/보통사과.png" />
+              ) : 71 <= seller.sellerScore <= 100 ? (
+                <img src="/image/scoreImage/금사과.png" />
+              ) : (
+                ""
+              )}
+            </div>
+
+            <div className="productDetail-explain-seller-score-text">
+              사과점수 {seller.sellerScore}점
+            </div>
           </div>
-          
-          <div className="productDetail-explain-seller-score-text">
-            사과점수 {seller.sellerScore}점
-          </div>
-        </div>
-        <div className="productDetail-explain-seller-grade-area">
+          <div className="productDetail-explain-seller-grade-area">
             {/* 
           seller.sellerGrade는 1~6까지 존재
           1
           2
           3
           */}
-          {seller.sellerGrade === 1 ? 1 : 
-          seller.sellerGrade === 2 ? 2 :
-          seller.sellerGrade === 3 ? 3 : ""}
-          등급 회원
-        </div>
-        <div className="productDetail-explain-seller-report-area">
-          
-          <div className="productDetail-explain-seller-report-icon">
-            <img src="/image/report/report.png"/>
+            {seller.sellerGrade === 1
+              ? 1
+              : seller.sellerGrade === 2
+              ? 2
+              : seller.sellerGrade === 3
+              ? 3
+              : ""}
+            등급 회원
           </div>
+          <div className="productDetail-explain-seller-report-area">
+            <div className="productDetail-explain-seller-report-icon">
+              <img src="/image/report/report.png" />
+            </div>
 
-          <div className="productDetail-explain-seller-report-text">
-            신고하기
+            <div className="productDetail-explain-seller-report-text">
+              신고하기
+            </div>
           </div>
-        </div>
-    
-      </>) : ""}
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 };
@@ -540,10 +550,10 @@ const ProductSeller = (props) => {
 //박근열
 const ProductExplainDetail = (props) => {
   const product = props.product;
-  
-  return(
+
+  return (
     <>
-      <div dangerouslySetInnerHTML={{__html : product.productExplain}}></div> 
+      <div dangerouslySetInnerHTML={{ __html: product.productExplain }}></div>
     </>
   );
 };
@@ -555,13 +565,15 @@ const ProductExplainDetail = (props) => {
 const ProductBid = (props) => {
   const backServer = props.backServer;
   const product = props.product;
+  const productNo = props.productNo;
+  const [bidList, setBidList] = useState([]);
 
   useEffect(() => {
     axios
-      .get(backServer + "/product/bid/" + product.productNo)
+      .get(backServer + "/product/bid/" + productNo)
       .then((res) => {
         if (res.data.message === "success") {
-          //
+          setBidList(res.data.data);
         }
       })
       .catch((res) => {
@@ -583,9 +595,21 @@ const ProductBid = (props) => {
       <div className="productBid-title">판매 희망가</div>
       <div className="productBid-content"></div>
       <div className="productBid-title">구매 희망가</div>
-      <div className="productBid-content"></div>
+      <div className="productBid-content">
+        {bidList.map((bid, index) => {
+          return (
+            <div className="productBid-bidBox-wrap" key={bid.memberNo + index}>
+              <BidPrice />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
+};
+//이어서
+const BidPrice = (props) => {
+  return <div className="productBidBox pswProductDetailBtn"></div>;
 };
 
 //박성완

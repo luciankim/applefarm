@@ -208,12 +208,12 @@
 	</update>
 	
 	<select id="productBidList" resultType="bid">
-		select member_no, to_char(bid_price,'fm999,999,999,999')
+		select member_no, bid_price
 		from bid_tbl
 		where
 			product_no = #{productNo} and
 			to_char(bid_date, 'yy/mm/dd') between to_char(bid_date-30, 'yy/mm/dd') and to_char(sysdate, 'yy/mm/dd')
-		order by bid_price desc;
+		order by bid_price desc
 	</select>
 
 	<select id="selectSellerInfo" resultType="member">

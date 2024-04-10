@@ -38,6 +38,7 @@
   box-sizing: border-box;
 }
 
+/* productDetail-top */
 .productDetail-top-title {
   font-size: 60px;
 }
@@ -80,6 +81,7 @@
   border: 3px solid var(--main_01);
   box-sizing: border-box;
 }
+/* --productDetail-top */
 
 /* ProductChart.js */
 .productDetail-chart {
@@ -90,3 +92,11 @@
   height: 250px;
 }
 /* --ProductChart.js */
+
+/* ProductBid.js */
+.productBid-title {
+}
+.productBid-content {
+  display: flex;
+}
+/* --ProductBid.js */
