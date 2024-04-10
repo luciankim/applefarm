@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AdminChatModal = (props) => {
   const member = props.memberInfo;
@@ -84,7 +85,7 @@ const AdminChatModal = (props) => {
 
   return (
     <div className="chat-modal-current-wrap">
-      {member ? (
+      {member.memberId ? (
         <div className="chat-modal-content">
           <div className="chat-header">
             <div className="roomTitle">실시간 문의</div>
@@ -122,7 +123,9 @@ const AdminChatModal = (props) => {
           </div>
         </div>
       ) : (
-        <h1>로그인 후 이용해주세요. (수정필요)</h1>
+        <h4 className="one-div">
+          거센 코드 파도 속 컴포넌트를 넘나들며, 최고의 개발자가 되리
+        </h4>
       )}
     </div>
   );
