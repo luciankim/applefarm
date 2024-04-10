@@ -278,6 +278,12 @@
 	
 	</select>
 	
+	<update id="resetPw">
+	
+		update member_tbl set member_pw=#{memberPw} where member_email = #{memberEmail}
+	
+	</update>
+	
 	
 	
 	

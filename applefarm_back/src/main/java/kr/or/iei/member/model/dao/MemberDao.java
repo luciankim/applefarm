@@ -89,6 +89,8 @@ public interface MemberDao {
 
 	String getMemberId(String memberEmail);
 
+	int resetPw(Member member);
+
 
 
 

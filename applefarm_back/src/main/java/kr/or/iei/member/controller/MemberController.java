@@ -636,11 +636,72 @@ public class MemberController {
 	    
 	    
 	}
+	
+	
+	
+	@Operation(summary ="비밀번호찾기(이메일인증)",description = "화면에서 입력한 이메일 입력받아서 이메일 인증, 인증 코드 전송")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value="/sendEmail")
+	public ResponseEntity<ResponseDTO> sendEmail(@RequestBody Member member){
+		
+		String memberEmail = member.getMemberEmail();
+		
+		//이메일 여부
+		int emailOrNot = memberService.selectOneEmail(memberEmail);
+		
+		
+		if (emailOrNot == 0) {
+
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "no email", null);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+				
+				
+
+			} else {
+
+				
+				String authCode = emailSender.sendCode(memberEmail);
+				
+				
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", authCode);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+
+			}
+			
+		
+		
+		
+	}
+		
+		
+		
+	@Operation(summary ="비밀번호재설정(비밀번호 찾기)",description = "화면에서 입력한 이메일 입력받아서 비밀번호 재설정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})	
+	@PatchMapping(value="/resetPw")
+	public ResponseEntity<ResponseDTO> resetPw(@RequestBody Member member){
+		
+		
+		int result = memberService.resetPw(member);
+		
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
 		
 		
 		
 		
-		
+	}
 		
 	
 	

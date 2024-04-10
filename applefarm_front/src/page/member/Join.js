@@ -166,6 +166,7 @@ const Join = () => {
       Swal.fire("이메일을 입력해주세요.");
     }
   };
+
   /**인증코드 === 입력코드 */
   const chkVerifCode = () => {
     console.log(verifCode);

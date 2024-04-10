@@ -26,7 +26,7 @@ public class PasswordEncAdvice {
 
 	
 	//적용할 메소드
-	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.updatePw(kr.or.iei.member.model.dto.Member)) || execution (int kr.or.iei.member.model.service.MemberService.join(kr.or.iei.member.model.dto.Member))")
+	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.updatePw(kr.or.iei.member.model.dto.Member)) || execution (int kr.or.iei.member.model.service.MemberService.join(kr.or.iei.member.model.dto.Member)) || execution (int kr.or.iei.member.model.service.MemberService.resetPw(kr.or.iei.member.model.dto.Member))")
 	public void pwEncPointcut(){} 
 	
 	//위에 메소드 시작하기 전에(before) 실행

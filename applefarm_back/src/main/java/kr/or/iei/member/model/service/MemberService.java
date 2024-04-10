@@ -273,11 +273,13 @@ public class MemberService {
 		}
 
 
+		@Transactional
 		public int updateEmail(Member member) {
 			
 			return memberDao.updateEmail(member);
 		}
 
+		@Transactional
 		public int deleteMember(int memberNo) {
 			
 			return memberDao.deleteMember(memberNo);
@@ -310,23 +312,25 @@ public class MemberService {
 			
 		}
 
+		@Transactional
 		public int updatePw(Member member) {
-			
-			
 			
 			return memberDao.updatePw(member);
 		}
 
+		@Transactional
 		public int updatePhone(Member member) {
 			
 			return memberDao.updatePhone(member);
 		}
 
+		@Transactional
 		public int addAccountNumber(Member member) {
 			
 			return memberDao.addAccountNumber(member);
 		}
 
+		@Transactional
 		public int deleteAccountNumber(Member member) {
 			// TODO Auto-generated method stub
 			return memberDao.deleteAccountNumber(member);
@@ -335,6 +339,13 @@ public class MemberService {
 		public String getMemberId(String memberEmail) {
 			
 			return memberDao.getMemberId(memberEmail);
+		}
+
+	
+		@Transactional
+		public int resetPw(Member member) {
+			// TODO Auto-generated method stub
+			return memberDao.resetPw(member);
 		}
 
 		
