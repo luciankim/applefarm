@@ -15,14 +15,15 @@ import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
+import kr.or.iei.trade.model.dto.Bid;
 
 
 @Mapper
 public interface ProductDao {
 
 	List selectProductCategory(String table, String productLine);
-	
-	List volume(Product product);
+
+	List productTradeChart(Product product);
 
 	List selectQualityList(String tableName);
 	
@@ -73,6 +74,8 @@ public interface ProductDao {
 
 	int hideProduct(int productNo);
 
+	List<Bid> productBidList(int productNo);
+	
 	Member selectSellerInfo(int sellerNo);
 
 }

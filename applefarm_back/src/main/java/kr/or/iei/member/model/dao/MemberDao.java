@@ -71,11 +71,32 @@ public interface MemberDao {
 
 	int deleteLike(int likeNo);
 
+
+	int updateEmail(Member member);
+
+	int deleteMember(int memberNo);
+
+	int updatePw(Member member);
+
+
 	List<Member> selectBlackMemberCheckList();
+
 
 	int bidTotalCount(int memberNo);
 
 	List<Address> selectBid(HashMap<String, Object> data);
+
+	int updatePhone(Member member);
+
+	int addAccountNumber(Member member);
+
+	int deleteAccountNumber(Member member);
+
+	String getMemberId(String memberEmail);
+
+	int resetPw(Member member);
+
+
 
 
 

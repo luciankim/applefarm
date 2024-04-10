@@ -271,10 +271,24 @@ public class MemberService {
 			
 			return memberDao.getMemberInfo(memberNo);
 		}
-		
+
+
+		@Transactional
+		public int updateEmail(Member member) {
+			
+			return memberDao.updateEmail(member);
+		}
+
+		@Transactional
+		public int deleteMember(int memberNo) {
+			
+			return memberDao.deleteMember(memberNo);
+
+		}
 		
 		public Address basicAddress(int memberNo) {
 			return memberDao.selectAddressBasic(memberNo);
+
 		}
 
 		public Map selectBid(int memberNo, int status, int reqPage, String startDate, String endDate) {
@@ -297,6 +311,61 @@ public class MemberService {
 		}
 
 		
+		//이전 비밀번호 확인
+		public int pwCheck(Member member) {
+			
+			Member m = memberDao.selectNo(member.getMemberNo());
+			
+			
+																				//db에서 조회한거
+			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				
+				return 1;
+				
+				
+			}else {
+				
+				return 0;
+			}
+			
+			
+		}
+
+		@Transactional
+		public int updatePw(Member member) {
+			
+			return memberDao.updatePw(member);
+		}
+
+		@Transactional
+		public int updatePhone(Member member) {
+			
+			return memberDao.updatePhone(member);
+		}
+
+		@Transactional
+		public int addAccountNumber(Member member) {
+			
+			return memberDao.addAccountNumber(member);
+		}
+
+		@Transactional
+		public int deleteAccountNumber(Member member) {
+			// TODO Auto-generated method stub
+			return memberDao.deleteAccountNumber(member);
+		}
+
+		public String getMemberId(String memberEmail) {
+			
+			return memberDao.getMemberId(memberEmail);
+		}
+
+	
+		@Transactional
+		public int resetPw(Member member) {
+			// TODO Auto-generated method stub
+			return memberDao.resetPw(member);
+		}
 
 		
 		

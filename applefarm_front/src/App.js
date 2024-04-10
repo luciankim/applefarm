@@ -15,6 +15,10 @@ import MemberInfo from "./page/member/MemberInfo";
 import Product from "./page/product/Product";
 import axios from "axios";
 import Payment from "./page/member/Payment";
+
+import Main from "./page/common/Main";
+import DeleteMember from "./page/member/DeleteMember";
+
 import Nav from "./page/common/Nav";
 import CompletePayment from "./page/member/CompletePayment";
 import Swal from "sweetalert2";
@@ -96,8 +100,12 @@ function App() {
         <Nav />
         <section className="inner-wrap">
           <Routes>
+            <Route path="/" element={<Main />} />
             <Route path="/ref" element={<Ref />} />
-            <Route path="/mypage/*" element={<Mypage isLogin={isLogin} />} />
+            <Route
+              path="/mypage/*"
+              element={<Mypage isLogin={isLogin} logout={logout} />}
+            />
             {/* isLogin={isLogin} 추가 필요 - 삭제 예정*/}
             <Route
               path="/board/*"

@@ -205,19 +205,45 @@
 		member_black_time=#{memberBlackTime} where member_no =#{memberNo}
 	</update>
 
+	
 	<select id="OneMemberNo" resultType="int">
-
-
-		select member_no from member_tbl where member_id =#{memberId}
-
+	
+	
+	select member_no from member_tbl where member_id =#{memberId}
+	
 	</select>
-
-
+	
+	
 	<select id="getMemberInfo" resultType="member">
 
-		select * from member_tbl where member_no = #{memberNo}
-
+	select * from member_tbl where member_no = #{memberNo}
+	
 	</select>
+	
+	<update id="updateEmail">
+	
+		update member_tbl set member_email = #{memberEmail} where member_no = #{memberNo}
+	
+	</update>
+	
+	<delete id="deleteMember">
+		
+		delete from member_tbl where member_no = #{memberNo}
+	
+	</delete>
+	
+	<update id="updatePw">
+	
+		
+		update member_tbl set member_pw=#{memberPw} where member_no = #{memberNo}
+		
+	
+	</update>
+	
+
+
+
+	
 
 
 	<select id="selectMemberList" resultType="member">
@@ -231,4 +257,42 @@
 		)
 		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
+	
+	
+	<update id="updatePhone">
+	
+		update member_tbl set member_phone=#{memberPhone} where member_no = #{memberNo}
+
+	</update>
+	
+	
+	<update id="addAccountNumber">
+	
+	
+		update member_tbl set member_accountnumber = #{memberAccountnumber} where member_no = #{memberNo}
+	
+	</update>
+	
+	<update id="deleteAccountNumber">
+	
+		update member_tbl set member_accountnumber = null where member_no = #{memberNo}
+	
+	</update>
+	
+	<select id="getMemberId" resultType="string">
+	
+		select member_id from member_tbl where member_email = #{memberEmail}
+	
+	</select>
+	
+	<update id="resetPw">
+	
+		update member_tbl set member_pw=#{memberPw} where member_email = #{memberEmail}
+	
+	</update>
+	
+	
+	
+	
+	
 </mapper>

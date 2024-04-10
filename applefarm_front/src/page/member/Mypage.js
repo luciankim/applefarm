@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./member.css";
 import SideMenu from "../../component/SideMenu";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Address from "./Address";
 import MemberWish from "./MemberWish";
 import MemberInfo from "./MemberInfo";
+
 import Swal from "sweetalert2";
+
+import axios from "axios";
+import DeleteMember from "./DeleteMember";
+
+import SellerGrade from "./SellerGrade";
+import MemberAccountNumber from "./MemberAccountNumber";
+
 import { DetailOrder, DetailSales } from "./DetailOrder";
 import PurchaseHistory from "./PurchaseHistory";
+import SalesHistory from "./SalesHistory";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
-  const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
+  const token = window.localStorage.getItem("token");
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
+  const logout = props.logout;
   const navigate = useNavigate();
   if (!isLogin) {
     Swal.fire("로그인 후 이용 가능합니다.")
@@ -22,6 +32,19 @@ const Mypage = (props) => {
       })
       .catch(() => {});
   }
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
   const [myInfoMenu, setMyInfoMenu] = useState([
     { url: "loginInfo", text: "로그인 정보", active: false },
     { url: "sellerGrade", text: "판매자 등급", active: false },
@@ -53,12 +76,29 @@ const Mypage = (props) => {
       </div>
       <div className="mypage-content">
         <Routes>
+          <Route
+            path="/loginInfo"
+            element={<MemberInfo member={member} logout={logout} />}
+          />
+          <Route
+            path="/deleteMember"
+            element={<DeleteMember member={member} logout={logout} />}
+          />
+          <Route
+            path="/sellerGrade"
+            element={<SellerGrade member={member} />}
+          />
+          <Route
+            path="/memberAccountNumber"
+            element={<MemberAccountNumber member={member} />}
+          />
           <Route path="/address" element={<Address />}></Route>
           <Route path="/wish" element={<MemberWish />}></Route>
-          <Route path="/loginInfo" element={<MemberInfo isLogin={isLogin} />} />
           <Route path="/detailOrder/:productNo" element={<DetailOrder />} />
           <Route path="/purchaseHistory" element={<PurchaseHistory />} />
+
           <Route path="/detailSales/:productNo" element={<DetailSales />} />
+          <Route path="/salesHistory" element={<SalesHistory />} />
         </Routes>
       </div>
     </div>
