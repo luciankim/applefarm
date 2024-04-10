@@ -23,6 +23,8 @@ import AdminChatModal from "./page/admin/AdminChatModal";
 
 function App() {
   const navigate = useNavigate();
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [memberInfo, setMemberInfo] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -35,6 +37,7 @@ function App() {
   if (obj) {
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   }
+
   const login = (accessToken) => {
     //로그인 성공 시 받은 accessToken을 token state에 저장
     setToken(accessToken);
@@ -63,13 +66,24 @@ function App() {
     axios.defaults.headers.common["Authorization"] = null;
     setIsLogin(false);
   };
+
   //페이지가 로드되면,새로고침되면
   useEffect(() => {
     if (isLogin) {
       //로그인이 되어있으면
       //저장해 둔 만료시간을 꺼내서 현재시간과 비교한 후 종료함수 설정
+
       const remainingTime = expiredTime.getTime() - new Date().getTime();
       setTimeout(logout, remainingTime);
+
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          setMemberInfo(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
 
@@ -123,7 +137,7 @@ function App() {
         </svg>
       </button>
       {modalOpen && (
-        <AdminChatModal setModalOpen={setModalOpen} isLogin={isLogin} />
+        <AdminChatModal setModalOpen={setModalOpen} memberInfo={memberInfo} />
       )}
 
       <Footer />

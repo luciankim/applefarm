@@ -3,23 +3,11 @@ import { useRef } from "react";
 import axios from "axios";
 
 const AdminChatModal = (props) => {
-  const isLogin = props.isLogin;
+  const member = props.memberInfo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const socketServer = backServer.replace("http://", "ws://");
   const [ws, sewWs] = useState({});
-  const [member, setMember] = useState();
-  const [memberId, setMemberId] = useState();
   useEffect(() => {
-    axios
-      .get(backServer + "/member")
-      .then((res) => {
-        setMember(res.data.data);
-        setMemberId(res.data.data.memberId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     const socket = new WebSocket(socketServer + "/allChat");
     sewWs(socket);
 
@@ -34,7 +22,7 @@ const AdminChatModal = (props) => {
     //json 형태로 아이디 전송 (세션<->닉네임 연결위함)
     const data = {
       type: "enter",
-      memberId: memberId,
+      memberId: member.memberId,
     };
     ws.send(JSON.stringify(data));
   };
@@ -96,7 +84,7 @@ const AdminChatModal = (props) => {
 
   return (
     <div className="chat-modal-current-wrap">
-      {isLogin ? (
+      {member ? (
         <div className="chat-modal-content">
           <div className="chat-header">
             <div className="roomTitle">실시간 문의</div>
@@ -134,7 +122,7 @@ const AdminChatModal = (props) => {
           </div>
         </div>
       ) : (
-        "로그인"
+        <h1>로그인 후 이용해주세요. (수정필요)</h1>
       )}
     </div>
   );
