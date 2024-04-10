@@ -55,7 +55,8 @@ const Join = () => {
 
   const [currentAuthCode, setCurrentAuthCode] = useState(""); //인증코드 저장
 
-  const [modalIsOpen, setModalIsOpen] = useState(false); //모달 열기/닫기
+  const [modal1IsOpen, setModal1IsOpen] = useState(false); //모달 열기/닫기
+  const [modal2IsOpen, setModal2IsOpen] = useState(false); //모달 열기/닫기
 
   const [chkAgree, setChkAgree] = useState(false); //약관동의 체크박스
 
@@ -64,16 +65,26 @@ const Join = () => {
   };
 
   // 모달 열기
-  const openModal = () => {
-    setModalIsOpen(true);
+  const openModal1 = () => {
+    setModal1IsOpen(true);
   };
 
   //모달 닫기
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const closeModal1 = () => {
+    setModal1IsOpen(false);
   };
 
-  /*모달 스타일 적용*/
+  // 모달 열기
+  const openModal2 = () => {
+    setModal2IsOpen(true);
+  };
+
+  //모달 닫기
+  const closeModal2 = () => {
+    setModal2IsOpen(false);
+  };
+
+  /*모달 스타일 */
   const modalStyle = {
     content: {
       padding: "39px",
@@ -113,7 +124,7 @@ const Join = () => {
 
     if (regEmail.test(memberEmail)) {
       axios
-        .post(backServer + "/member/email/" + memberEmail)
+        .get(backServer + "/member/email/" + memberEmail)
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegEmail("이미 사용중인 이메일입니다.");
@@ -137,7 +148,7 @@ const Join = () => {
   const sendVerifCode = () => {
     if (memberEmail !== "") {
       axios
-        .post(backServer + "/member/sendCode/" + memberEmail)
+        .post(backServer + "/member/email/" + memberEmail)
         .then((res) => {
           if (res.data.message === "success") {
             const authCode = res.data.data;
@@ -155,6 +166,7 @@ const Join = () => {
       Swal.fire("이메일을 입력해주세요.");
     }
   };
+
   /**인증코드 === 입력코드 */
   const chkVerifCode = () => {
     console.log(verifCode);
@@ -190,7 +202,7 @@ const Join = () => {
 
     if (regId.test(memberId)) {
       axios
-        .post(backServer + "/member/id/" + memberId)
+        .get(backServer + "/member/id/" + memberId)
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegId("이미 사용중인 아이디입니다.");
@@ -210,7 +222,7 @@ const Join = () => {
 
     if (regNickName.test(memberNickName)) {
       axios
-        .post(backServer + "/member/nickName/" + memberNickName)
+        .get(backServer + "/member/nickName/" + memberNickName)
         .then((res) => {
           if (res.data.message === "duplication") {
             setCheckRegNickName("이미 사용중인 닉네임입니다.");
@@ -525,14 +537,14 @@ const Join = () => {
           <input type="checkbox" onChange={chkAgreeChange} />
           [필수] 만 14세 이상이며 모두 동의합니다.
         </label>
-        <span className="material-icons agree-icon" onClick={openModal}>
+        <span className="material-icons agree-icon" onClick={openModal1}>
           arrow_right
         </span>
         <label>
           <input type="checkbox" />
           [선택] 광고성 정보 수신에 모두 동의합니다.
         </label>
-        <span className="material-icons agree-icon" onClick={openModal}>
+        <span className="material-icons agree-icon" onClick={openModal2}>
           arrow_right
         </span>
       </div>
@@ -546,8 +558,8 @@ const Join = () => {
       </div>
 
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={modal1IsOpen}
+        onRequestClose={closeModal1}
         style={modalStyle}
       >
         <p>
@@ -595,15 +607,15 @@ const Join = () => {
           통신판매중개를 이용하여
         </p>
         <div className="modal-close">
-          <button className="modal-btn" onClick={closeModal}>
+          <button className="modal-btn" onClick={closeModal1}>
             닫기
           </button>
         </div>
       </Modal>
 
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={modal2IsOpen}
+        onRequestClose={closeModal2}
         style={modalStyle}
       >
         <p>
@@ -642,7 +654,7 @@ const Join = () => {
           따릅니다.
         </p>
         <div className="modal-close">
-          <button className="modal-btn" onClick={closeModal}>
+          <button className="modal-btn" onClick={closeModal2}>
             닫기
           </button>
         </div>

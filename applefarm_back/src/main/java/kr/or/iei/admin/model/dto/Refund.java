@@ -45,6 +45,9 @@ public class Refund {
 	@Schema(description = "상품요약", type="string")
 	private String productSummary;
 	
+	@Schema(description = "상품썸네일", type="string")
+	private String productThumbnail;
+	
 	
 	//Filter
 	@Schema(description = "환불필터", type="int")

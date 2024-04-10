@@ -135,70 +135,15 @@
 /*--ProductSummary.js*/
 
 /*ProductChart.js*/
-.productChart-wrap {
-  background-color: #f0f0f0;
-  border-radius: 20px;
-  padding: 30px 0px;
+.productChart-chart {
+  width: 100%;
+  height: 500px;
 }
-.productChart {
-  width: 90%; /*1080px*/
-  margin: 0 auto;
-}
-.productChart-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.productChart-title > div:first-child {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-.productChart-title > div:last-child {
-  color: var(--gray_02);
-}
-.productChart-button > .productChart-btns > .button_form {
-  padding: 9px 20px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 14px;
-  font-family: ns-b;
-  line-height: 1.5;
-  text-align: center;
-  transition: all 0.2s;
-  margin-right: 5px;
-  cursor: pointer;
-}
-.productChart-button > .productChart-btns > .bg1 {
-  background-color: var(--main_01);
-}
-.productChart-button > .productChart-btns > .bg2 {
-  background-color: var(--gray_04);
-}
-
-/*
-.productChart-tab .productTab-wrap {
-  margin-bottom: 20px;
-}
-*/
-.productChart-content {
-  font-size: 18px;
-  background-color: #fff;
-  margin: 0 auto;
-  padding-top: 30px;
-  padding-bottom: 20px;
-  border-radius: 20px;
-}
-.recharts-wrapper {
-  /*안쪽 차트 가운데정렬*/
-  margin: 0 auto;
-}
-
 /*--ProductChart.js*/
 
 /**/
+/*
 .apexcharts-toolbar {
   display: none;
 }
+*/

@@ -35,6 +35,7 @@ import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.product.model.dto.ProductAndTerm;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SalesInquiries;
@@ -84,9 +85,26 @@ public class ProductController {
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})
 	@PostMapping(value="/chart")
-	public ResponseEntity<ResponseDTO> chart(@RequestBody Product product){
-		HashMap<String, Object> map = productService.chart(product);
-		return null;
+	public ResponseEntity<ResponseDTO> productTradeChart(@RequestBody ProductAndTerm obj){
+		Product product = obj.getProduct();
+		String tempTerm = obj.getTempTerm();
+		int term = 0;
+		switch (tempTerm) {
+		case "3일" : term = 2; break;
+		case "6일" : term = 5; break;
+		case "9일" : term = 8; break;
+		case "12일" :term = 11; break;
+		default : break;
+		}
+		product.setTerm(term);
+		List list = productService.productTradeChart(product);
+		if(list.size() == 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
 	
 	@GetMapping(value = "/quality/{tableName}")
@@ -391,6 +409,7 @@ public class ProductController {
 		}
 	}
 	
+
 //	
 	
 	@GetMapping(value = "/inquiry/{productNo}")
@@ -417,6 +436,19 @@ public class ProductController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}	
+	}
+
+	@Operation(summary="매수호가 리스트", description = "매수호가 리스트 불러오기")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/bid/{productNo}")
+	public ResponseEntity<ResponseDTO> productBidList(@PathVariable int productNo){
+		List list = productService.productBidList(productNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+
 	}
 	
 }

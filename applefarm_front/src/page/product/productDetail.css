@@ -26,6 +26,10 @@
 /************************************/
 /*박성완*/
 
+.productDetail-content-right > div {
+  margin-bottom: 50px;
+}
+
 .productArticle {
   display: block;
   padding: 30px;
@@ -76,3 +80,13 @@
   border: 3px solid var(--main_01);
   box-sizing: border-box;
 }
+
+/* ProductChart.js */
+.productDetail-chart {
+  width: 100%;
+  height: 300px;
+}
+.productDetail-chart .productChart-chart {
+  height: 250px;
+}
+/* --ProductChart.js */
