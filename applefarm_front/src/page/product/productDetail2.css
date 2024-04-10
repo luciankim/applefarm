@@ -28,13 +28,112 @@
 
 /************************************/
 /*박근열*/
-
-.productDetail-image {
-  width: 90%;
+.productArticle2{
+  display: block;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+  border: 1px solid rgb(104, 101, 101);
 }
 
+
+
+/* 이미지 */
+.productDetail-image-area{
+  margin-bottom: 50px;
+}
+.productDetail-image {
+  width: 90%;
+  height: 600px;
+}
 .swiper-slide img{
   width: 100%;
 }
 
 
+/****** 제품 요약 + 판매자 정보 */
+.productDetail-explain{
+  display: flex;
+  justify-content: space-between;
+  height: 200px;
+  margin-bottom: 50px;
+}
+
+/* 제품 요약 */
+.productDetail-explain-summary{
+  width: 300px;
+}
+.productDetail-explain-summary .productSummary-content{
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+/* 판매자 정보 */
+.productDetail-explain-seller{
+  width: 300px;
+}
+
+.productDetail-explain-seller > div{
+  height: 30px;
+  line-height: 30px;
+}
+.productDetail-explain-seller img{
+  vertical-align: middle;
+}
+
+.productDetail-explain-seller-name-area{
+  height: 30px;
+  font-size: 20px;
+  font-weight: 900;
+  border-bottom: 1px solid black;
+}
+.productDetail-explain-seller > .productDetail-explain-seller-score-area{
+  display: flex;
+  justify-content: space-between;
+  height: 45px;
+  line-height: 45px;
+}
+
+.productDetail-explain-seller-score-icon{
+
+}
+.productDetail-explain-seller-score-icon img{
+  width: 45px;
+  height: 45px;
+  margin-left: 10px;
+}
+
+.productDetail-explain-seller-score-text{
+  margin-right: 30px;
+  font-size: 22px;
+}
+.productDetail-explain-seller-grade-area{
+  font-size: 20px;
+  text-align: center;
+  
+}
+
+.productDetail-explain-seller-report-area{
+  display: flex;
+  justify-content: space-between;
+}
+.productDetail-explain-seller-report-icon{
+  padding-left: 10px;
+}
+.productDetail-explain-seller-report-icon >img{
+  width: 45px;
+  height: 45px;
+}
+.productDetail-explain-seller-report-text{
+  padding-right: 100px;
+  line-height: 45px;
+  color: red;
+}
+
+/* 상세설명 */
+.productDetail-explain-detail > div{
+  height: 600px;
+  font-size: 25px;
+  line-height: 50px;
+}

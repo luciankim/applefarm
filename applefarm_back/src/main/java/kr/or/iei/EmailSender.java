@@ -61,4 +61,35 @@ public class EmailSender {
 			return sb.toString();
 		}
 	}
+
+	public String sendId(String memberEmail, String memberId) {
+		MimeMessage message = sender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		StringBuffer sb = new StringBuffer();
+		
+
+		try {
+			helper.setSentDate(new Date());
+			helper.setFrom(new InternetAddress("unofficialhyokyung@gmail.com", "AppleFarm"));
+			helper.setTo(memberEmail);
+			helper.setSubject("AppleFarm 아이디 찾기");
+			helper.setText("<h1>AppleFarm 아이디 찾기 안내</h1>" + "<h3>회원님의 아이디는 [<span style='color:#4389BA;'>" + memberId
+					+ "</span>]입니다</h3>", true);
+			sender.send(message);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			sb = null;
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			sb = null;
+			e.printStackTrace();
+		}
+		if (sb == null) {
+			return null;
+		} else {
+			return sb.toString();
+		}
+		
+	}
 }

@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BoardModify = () => {
+const BoardModify = (props) => {
+  const isLogin = props.isLogin;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const boardNo = params.boardNo;
@@ -24,9 +25,25 @@ const BoardModify = () => {
   //썸네일 수정 체크용
   const [thumbnailCheck, setThumbnailCheck] = useState(0); //썸네일 수정 체크용
   const [oldThumbnail, setOldThumbnail] = useState(null);
+
   const navigate = useNavigate();
+  const [member, setMember] = useState({});
+  const [memberGrade, setMemberGrade] = useState();
 
   useEffect(() => {
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+          setMemberGrade(res.data.data.memberGrade);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+
     axios
       .get(backServer + "/board/selectModifyOneBoard/" + boardNo)
       .then((res) => {

@@ -22,9 +22,10 @@ public class WebConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor)
-				.addPathPatterns("/member/**","/product/**","/trade/**")
-				.excludePathPatterns("/member/login","/member/join" ,"/member/sendEmail/*", "/member/email/*" ,"/member/id/*","/member/nickName/*","/member/sendCode/*")
+				.addPathPatterns("/member/**","/product/**","/trade/**", "/admin/**")
+				.excludePathPatterns("/member/login","/member/join" ,"/member/sendEmail/*", "/member/email/*" ,"/member/id/*","/member/nickName/*","/member/sendCode/*","/member/findId","/member/sendEmail","/member/resetPw")
 				.excludePathPatterns("/product/quality/*","/product/category","/product/chart","/product/detail/*","/product/img/*", "prouct/bid/*");
+
 	}
 
 	//암호화

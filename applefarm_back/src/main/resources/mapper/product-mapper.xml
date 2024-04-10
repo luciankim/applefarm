@@ -216,4 +216,7 @@
 		order by bid_price desc;
 	</select>
 
+	<select id="selectSellerInfo" resultType="member">
+		select * from member_tbl where member_no = #{sellerNo}
+	</select>
 </mapper>

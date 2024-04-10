@@ -23,7 +23,12 @@ npm install apexcharts --save
 npm install --save react-apexcharts apexcharts
 
 2024-04-06
-npm install react-csv --save
+npm install react-csv --save;
+
+2024-04-08
+npm i react-select
+npm i --save @types/chroma-js
+
 
 2024-04-09
 npm install swiper

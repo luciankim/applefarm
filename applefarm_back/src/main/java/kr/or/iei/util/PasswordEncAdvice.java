@@ -23,9 +23,10 @@ public class PasswordEncAdvice {
 	
 	//비밀번호 암호화
 	
+
 	
 	//적용할 메소드
-	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.join(kr.or.iei.member.model.dto.Member))")
+	@Pointcut(value="execution (int kr.or.iei.member.model.service.MemberService.updatePw(kr.or.iei.member.model.dto.Member)) || execution (int kr.or.iei.member.model.service.MemberService.join(kr.or.iei.member.model.dto.Member)) || execution (int kr.or.iei.member.model.service.MemberService.resetPw(kr.or.iei.member.model.dto.Member))")
 	public void pwEncPointcut(){} 
 	
 	//위에 메소드 시작하기 전에(before) 실행
@@ -35,15 +36,13 @@ public class PasswordEncAdvice {
 		
 		Object[] args = jp.getArgs();
 		
-		
-		
 		Member member = (Member)args[0]; 
 		String encPw = bCryptPasswordEncoder.encode(member.getMemberPw());
 		member.setMemberPw(encPw);
 		
 	}
 	
-	
+
 	
 
 }

@@ -6,30 +6,37 @@ import AdminChatModal from "./AdminChatModal";
 
 const AdminChatRoomList = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const member = props.member;
+  const isLogin = props.isLogin;
   const chatModalBackGround = useRef();
   const setModalOpen = props.setModalOpen;
   const [chatRooms, setChatRooms] = useState([]); //채팅방 목록 저장할 상태 변수
   const [selectedRoom, setSelectedRoom] = useState(null); // 선택된 채팅방 정보를 저장할 상태 변수
-
+  const [member, setMember] = useState();
   const imgSrc = process.env.PUBLIC_URL + "/image/apple.png";
-  console.log("최초 접속 시 아이디 확인: ", member.memberId);
-  useEffect(() => {
-    //0. memberId로 채팅방 목록 불러오기
-    //1. memberGrade가 1(사용자)인지 3(관리자)인지 확인
-    //2. 채팅방 목록 불러오기
-    //관리자: 1)목록O: li 리스트 나열(채팅방 연결=소켓준비), 2)목록x: 없습니다.
-    //사용자: 1)목록O: li 리스트 나열(채팅방 연결=소켓준비), 2)목록x: 채팅버튼 추가(채팅방 연결=소켓준비)
 
-    axios
-      .get(backServer + "/admin/chatRoomList/" + member.memberId)
-      .then((res) => {
-        console.log("채팅방 목록 조회 결과: ", res.data.data);
-        setChatRooms(res.data.data);
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
+  useEffect(() => {
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+
+          // 멤버 정보를 가져온 후에 채팅방 목록을 가져옴
+          axios
+            .get(backServer + "/admin/chatRoomList/" + res.data.data.memberId)
+            .then((res) => {
+              console.log("채팅방 목록 조회 결과: ", res.data.data);
+              setChatRooms(res.data.data);
+            })
+            .catch((res) => {
+              console.log(res.data);
+            });
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
   }, []);
 
   //모달밖 클릭시
