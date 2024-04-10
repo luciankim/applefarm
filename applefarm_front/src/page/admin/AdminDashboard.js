@@ -13,7 +13,6 @@ import { daDK } from "@mui/x-date-pickers/locales";
 
 const AdminDashboard = (props) => {
   const isLogin = props.isLogin;
-  console.log(isLogin, "ㅋㅋ");
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [startDate, setStartDate] = useState(dayjs("2023-11-07"));
   const [endDate, setEndDate] = useState(dayjs("2024-04-02"));

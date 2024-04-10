@@ -19,6 +19,7 @@ import Nav from "./page/common/Nav";
 import CompletePayment from "./page/member/CompletePayment";
 import Swal from "sweetalert2";
 import AdminChatRoomList from "./page/admin/AdminChatRoomList";
+import AdminChatModal from "./page/admin/AdminChatModal";
 
 function App() {
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ function App() {
         </svg>
       </button>
       {modalOpen && (
-        <AdminChatRoomList setModalOpen={setModalOpen} isLogin={isLogin} />
+        <AdminChatModal setModalOpen={setModalOpen} isLogin={isLogin} />
       )}
 
       <Footer />

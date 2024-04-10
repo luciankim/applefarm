@@ -11,7 +11,8 @@ import { Select } from "../../component/FormFrm";
 import { Checkbox } from "@mui/material";
 import "./admin.css";
 
-const AdminProduct = () => {
+const AdminProduct = (props) => {
+  const isLogin = props.isLogin;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [productList, setProductList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
