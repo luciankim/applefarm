@@ -284,6 +284,12 @@
 	
 	</update>
 	
+	<select id="getBoardInfo" resultType="board">
+	
+		select * from board_tbl where member_no=#{memberNo}
+	
+	</select>
+	
 	
 	
 	
