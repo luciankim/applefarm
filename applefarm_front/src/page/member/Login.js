@@ -97,7 +97,7 @@ const Login = (props) => {
     content: {
       padding: "39px",
       width: "50%",
-      height: "50%",
+      height: "40%",
       margin: "12% 25%",
       borderRadius: "15px",
     },
