@@ -2,17 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BoardTable from "./BoardTable";
 import { useNavigate } from "react-router-dom";
-import {
-  Select,
-  Input,
-  Button,
-  Button1,
-  Button2,
-  Button3,
-} from "../../component/FormFrm";
+import { Select, Input, Button, Button1 } from "../../component/FormFrm";
 
 const BoardList = (props) => {
-  const isLogin = true; // 임시로 true로 설정
+  const isLogin = props.isLogin; // 임시로 true로 설정
   const [boardList, setBoardList] = useState([]);
   const [totalPostCount, setTotalPostCount] = useState(0);
   const [pageInfo, setPageInfo] = useState({});
@@ -21,8 +14,10 @@ const BoardList = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [selectedKeyword, setSelectedKeyword] = useState("");
   const [selectedValue, setSelectedValue] = useState("1");
-  const navigate = useNavigate();
+  const [member, setMember] = useState({});
+  const [memberGrade, setMemberGrade] = useState();
 
+  const navigate = useNavigate();
   const writeBtn = () => {
     navigate("/board/write");
   };
@@ -32,7 +27,21 @@ const BoardList = (props) => {
     { value: "2", label: "제목" },
     { value: "3", label: "내용" },
   ];
+
   useEffect(() => {
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+          setMemberGrade(res.data.data.memberGrade);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+
     fetchBoardList(reqPage);
   }, [reqPage]);
 
@@ -82,12 +91,16 @@ const BoardList = (props) => {
   return (
     <div className="board-wrap">
       <div className="board-title">
-        <p>자유게시판</p>
+        <p>공지사항</p>
       </div>
       {isLogin && (
         <div className="board-subtitle">
           <span className="totalPostCount">총 {totalPostCount} 개의 글</span>
-          <Button text="글쓰기" addId="writeBtn" clickEvent={writeBtn} />
+          {memberGrade !== 2 ? (
+            " "
+          ) : (
+            <Button text="글쓰기" addId="writeBtn" clickEvent={writeBtn} />
+          )}
         </div>
       )}
       <BoardTable

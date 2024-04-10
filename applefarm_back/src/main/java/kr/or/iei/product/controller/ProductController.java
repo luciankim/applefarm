@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -32,25 +34,26 @@ import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
-import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
 import kr.or.iei.util.FileUtils;
+import kr.or.iei.util.JwtUtil;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value="/product")
 @Tag(name="PRODUCT", description = "PRODUCT API")
 public class ProductController {
+	
 	@Autowired
 	private ProductService productService;
-	
 	@Autowired
 	private FileUtils fileUtils;
-	
+	@Autowired
+	private JwtUtil jwtUtil;
 	
 	@Value("${file.root}")
 	private String root;
@@ -167,7 +170,7 @@ public class ProductController {
 		int result = productService.insertMacbook(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -207,7 +210,7 @@ public class ProductController {
 		int result = productService.insertIpad(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -247,7 +250,7 @@ public class ProductController {
 		int result = productService.insertWatch(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -257,7 +260,7 @@ public class ProductController {
 	}
 	
 	@PostMapping(value = "/airpods")
-	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute AirpodsQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
 
 		System.out.println(product);
 		System.out.println(partObject);
@@ -287,7 +290,7 @@ public class ProductController {
 		int result = productService.insertAirpods(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -296,26 +299,94 @@ public class ProductController {
 		}
 	}
 	
+	@Operation(summary="좋아요 눌렀는지 체크", description = "로그인 한 이용자가 해당 상품에 좋아요를 눌렀는지를 0 또는 1로 알려줌")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@GetMapping(value="/likeBoolean/{productNo}")
+	public ResponseEntity<ResponseDTO> likeBoolean(@PathVariable int productNo, @RequestAttribute int memberNo){
+		int likeBoolean = productService.likeBoolean(productNo, memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", likeBoolean);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
 	
-	@GetMapping(value = "/{productNo}")
-	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo,@RequestAttribute int memberNo){
-		HashMap<String, Object> map = productService.selectOneProduct(productNo, memberNo);
+	@Operation(summary="판매상품 상세페이지")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/detail/{productNo}")
+	public ResponseEntity<ResponseDTO> selectOneView(@PathVariable int productNo){
+		HashMap<String, Object> map = productService.selectOneProduct(productNo);
 		/* map.key
-		 * productAndMember
+		 * product
 		 * sellerReviewList
 		 * sellerProductList
 		 * productFileList
 		 * qualityHistory
 		 * reliableProductList
 		 */
-
-		if(map != null) {
+		if(map.size()==7) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-			
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+	@Operation(summary="좋아요 추가", description = "상품상세페이지에서 이용자가 그 상품에 대해 좋아요를 추가하지 않은 상태에서 좋아요버튼 클릭시 동작")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value = "/like")
+	public ResponseEntity<ResponseDTO> insertLike(@RequestBody Map<String, Integer> map,@RequestAttribute int memberNo){
+		int productNo = map.get("productNo");
+		int result = productService.insertLike(productNo, memberNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="좋아요 삭제", description = "상품상세페이지에서 이용자가 그 상품에 대해 이미 좋아요를 추가한 상태에서 좋아요버튼 클릭시 동작")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@DeleteMapping(value = "/like/{productNo}")
+	public ResponseEntity<ResponseDTO> deleteLike(@PathVariable int productNo,@RequestAttribute int memberNo){;
+		int result = productService.deleteLike(productNo, memberNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="상품 판매글 삭제", description = "판매글 작성자가 해당 글 삭제시 게시물을 숨김처리")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value = "/hide")
+	public ResponseEntity<ResponseDTO> hideProduct(@RequestBody Map<String, Integer> map){
+		int productNo = map.get("productNo");
+		int result = productService.hideProduct(productNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
 }

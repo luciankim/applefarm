@@ -1,12 +1,31 @@
 import { Link } from "react-router-dom";
-import { Input } from "../../component/FormFrm";
-import { Button } from "../../component/FormFrm";
-import { Select } from "../../component/FormFrm";
-import { useState } from "react";
+import axios from "axios";
+import { Route, Routes, useNavigate } from "react-router-dom"; // useNavigate를 import합니다.
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 
 const Header = (props) => {
   const isLogin = props.isLogin; //로그인 값 받아오기 (헤더에서 App.js)
   const logout = props.logout; //(App.js)헤더에서 보낸 로그아웃 받아오기
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [member, setMember] = useState({});
+  const [memberGrade, setMemberGrade] = useState();
+  const navigate = useNavigate(); // navigate 함수를 가져옵니다.
+
+  useEffect(() => {
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+          setMemberGrade(res.data.data.memberGrade);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -15,7 +34,11 @@ const Header = (props) => {
         <LogoForm />
       </div>
       <div className="header2">
-        <LoginForm isLogin={isLogin} logout={logout} />
+        <LoginForm
+          isLogin={isLogin}
+          logout={logout}
+          memberGrade={memberGrade}
+        />
       </div>
     </>
   );
@@ -57,27 +80,44 @@ const SearchForm = () => {
 const LoginForm = (props) => {
   const isLogin = props.isLogin;
   const logout = props.logout;
+  const memberGrade = props.memberGrade;
 
-  console.log(props, "내용물");
   return (
     <div className="header-link">
       {isLogin ? (
-        <>
-          <Link title="쪽지함">
-            <span className="material-icons">email</span>
-          </Link>
-          <Link to="/mypage/wish" title="위시리스트">
-            <span className="material-icons">favorite_border</span>
-          </Link>
-          <Link to="/mypage/loginInfo" title="마이페이지">
-            <span className="material-icons">face</span>
-          </Link>
-          <Link to="#" title="로그아웃">
-            <span className="material-icons" onClick={logout}>
-              logout
-            </span>
-          </Link>
-        </>
+        memberGrade === 2 ? (
+          <>
+            <Link title="쪽지함">
+              <span className="material-icons">email</span>
+            </Link>
+
+            <Link to="/admin" title="관리자페이지">
+              <span className="material-icons">face</span>
+            </Link>
+            <Link to="#" title="로그아웃">
+              <span className="material-icons" onClick={logout}>
+                logout
+              </span>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link title="쪽지함">
+              <span className="material-icons">email</span>
+            </Link>
+            <Link to="/mypage/wish" title="위시리스트">
+              <span className="material-icons">favorite_border</span>
+            </Link>
+            <Link to="/mypage/loginInfo" title="마이페이지">
+              <span className="material-icons">face</span>
+            </Link>
+            <Link to="#" title="로그아웃">
+              <span className="material-icons" onClick={logout}>
+                logout
+              </span>
+            </Link>
+          </>
+        )
       ) : (
         <>
           <Link to="/login" title="로그인">

@@ -95,6 +95,7 @@ const ReportItem = (props) => {
       reportTarget: report.reportTarget,
       reportedMember: report.reportedMember,
       reportStatus: e.target.value,
+      reportType: report.reportType,
     };
     axios
       .patch(backServer + "/admin/reportStatus", r)

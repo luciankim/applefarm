@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -95,6 +96,7 @@ public class AdminController {
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 
+	
 	@PatchMapping(value = "/memberGrade")
 	public ResponseEntity<ResponseDTO> changeMemberGrade(@RequestBody Member member) {
 		int result = memberService.changeMemberGrade(member);
@@ -152,6 +154,7 @@ public class AdminController {
 	public ResponseEntity<ResponseDTO> changeReportStatus(@RequestBody Report report) {
 		System.out.println("allreport" + report);
 		int result = adminService.changeReportStatus(report);
+		System.out.println("리절트 " + result);
 		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

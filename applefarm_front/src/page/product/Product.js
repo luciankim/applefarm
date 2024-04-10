@@ -6,10 +6,11 @@ import ProductInsertLast from "./ProductInsertLast";
 import ProductQualityInsert from "./ProductQualityInsert";
 
 const Product = (props) => {
+  const isLogin = props.isLogin;
   return (
     <Routes>
       <Route path="/main" element={<ProductMain />} />
-      <Route path="/:productNo" element={<ProductDetail />} />
+      <Route path="/:productNo" element={<ProductDetail isLogin={isLogin} />} />
       <Route path="/insert" element={<ProductInsert />} />
     </Routes>
   );

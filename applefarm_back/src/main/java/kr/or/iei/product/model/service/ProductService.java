@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
-import kr.or.iei.product.model.dto.ProductAndMember;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
 import kr.or.iei.product.model.dto.SellerReview;
@@ -136,7 +136,7 @@ public class ProductService {
 	}
 
 	@Transactional
-	public int insertAirpods(Product product, ArrayList<ProductFile> fileList, MacbookQualityHistory partObject) {
+	public int insertAirpods(Product product, ArrayList<ProductFile> fileList, AirpodsQualityHistory partObject) {
 		int result1 = productDao.insertProduct(product);
 		for(ProductFile pf: fileList) {
 			pf.setProductNo(product.getProductNo());
@@ -199,7 +199,7 @@ public class ProductService {
 //		return productDao.selectReliableProducts(summary);
 //	}
 
-	public HashMap<String, Object> selectOneProduct(int productNo, int memberNo) {
+	public HashMap<String, Object> selectOneProduct(int productNo) {
 				//memberNo 접속자
 				//sellerNo 판매자
 				//productNo 상품
@@ -207,23 +207,43 @@ public class ProductService {
 		
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				//상품 124번의 상품정보 & 회원정보
-				ProductAndMember productAndMember= productDao.selectOneView(productNo,memberNo);
-				map.put("productAndMember", productAndMember);
+				Product product= productDao.selectOneView(productNo);
+				//상품 조회 결과가 없거나(에러) 숨김처리(이용자가 삭제 등) 되어있을 경우
+				if(product == null || product.getProductHide() == '1') {
+					return map;
+				}
+				map.put("product", product);
 				
-				int sellerNo = productAndMember.getMemberNo();
-				String tableName = productAndMember.getTableName();
-				String summary = productAndMember.getProductSummary();
+				int sellerNo = product.getMemberNo();
+				String tableName = product.getTableName();
+				String summary = product.getProductSummary();
+				
+				//판매자 정보
+				Member seller = productDao.selectSellerInfo(sellerNo);
+				if(seller==null) {
+					return map;
+				}
+				map.put("seller",seller);
 				
 				//판매자(member_no=45)에 대한 후기 리스트
 				List sellerReviewList = productDao.selectSellerReviews(sellerNo);
+				if(sellerReviewList==null) {
+					return map;
+				}
 				map.put("sellerReviewList",sellerReviewList);
 				
 				//판매자(member_no=45)의 상품 리스트
 				List sellerProductList = productDao.selectSellerProducts(sellerNo);
+				if(sellerProductList==null) {
+					return map;
+				}
 				map.put("sellerProductList",sellerProductList);
 				
 				//상품 124번의 첨부파일 리스트(file_no, file_path가 필요)
 				List productFileList = productDao.selectProductFiles(productNo);
+				if(productFileList==null) {
+					return map;
+				}
 				map.put("productFileList",productFileList);
 				
 				//상품 124번의 품질(테이블 별로 다르게)
@@ -246,6 +266,7 @@ public class ProductService {
 				default :
 					break;
 				}
+				
 				/*
 				if(tableName.equals("IPHONE_TBL")) {
 					IphoneQualityHistory qualityHistory = productDao.selectIphoneQualityHistory(productNo);
@@ -267,8 +288,28 @@ public class ProductService {
 				
 				//신뢰도 높은 상품 리스트
 				List reliableProductList = productDao.selectReliableProducts(summary);
+				if(reliableProductList==null) {
+					return map;
+				}
 				map.put("reliableProductList",reliableProductList);
+				
 				return map;
+	}
+
+	public int likeBoolean(int productNo, int memberNo) {
+		return productDao.likeBoolean(productNo, memberNo);
+	}
+
+	public int insertLike(int productNo, int memberNo) {
+		return productDao.insertLike(productNo, memberNo);
+	}
+
+	public int deleteLike(int productNo, int memberNo) {
+		return productDao.deleteLike(productNo, memberNo);
+	}
+
+	public int hideProduct(int productNo) {
+		return productDao.hideProduct(productNo);
 	}
 
 

@@ -26,7 +26,7 @@ const AdminRefund = () => {
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
   const [totalPostCount, setTotalPostCount] = useState();
-
+  const [productThumbnail, setProductThumbnail] = useState();
   const [filterStatus, setFilterStatus] = useState("all");
 
   //환불 리스트 조회하기
@@ -40,6 +40,7 @@ const AdminRefund = () => {
         setRefundList(res.data.data.refundList);
         setTotalPostCount(res.data.data.totalPostCount);
         setPageInfo(res.data.data.pi);
+        setProductThumbnail(res.data.data.productThumbnail);
       })
       .catch((res) => {
         console.log(res);
@@ -103,6 +104,8 @@ const AdminRefund = () => {
 
 const RefundItem = (props) => {
   const refund = props.refund;
+  const backServer = process.env.REACT_APP_BACK_SERVER; //BackServer의 IP:Port
+
   const [buttonsVisible, setButtonsVisible] = useState(true); // 버튼 가시성 상태
   console.log("환불");
   const refundStatus = refund.refundStatus;
@@ -222,7 +225,12 @@ const RefundItem = (props) => {
     <tr>
       <td>
         <div className="member-like-img-box">
-          <img src={refund.img} />
+          <a href={"http://localhost:3000/product/" + refund.productNo}>
+            <img
+              src={backServer + "/product/img/" + refund.productThumbnail}
+              className="refund-thumbnail"
+            />
+          </a>
         </div>
       </td>
       <td className="likeName-td">{refund.productSummary}</td>
@@ -239,10 +247,12 @@ const RefundItem = (props) => {
           <>
             <Button1
               text="승인"
+              addId="approvalBtn"
               clickEvent={() => confirm(refund.refundNo, refund.tradeNo)}
             />
             <Button2
               text="거절"
+              addId="denyBtn"
               clickEvent={() => reject(refund.refundNo, refund.tradeNo)}
             />
           </>

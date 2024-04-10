@@ -86,7 +86,11 @@
 		)
 	</insert>
 	
-	<select id="selectOneView" resultType="productAndMember">
+	<select id="likeBoolean" resultType="int">
+		select count(*) from like_tbl where product_no = #{productNo} and member_no=#{memberNo}
+	</select>
+	
+	<select id="selectOneView" resultType="product">
 		select
 		    product_no,
 		    member_no,
@@ -94,7 +98,7 @@
 		    product_title,
 		    product_explain,
 		    product_price,
-		    product_date,
+		    to_char(product_date,'yyyy-mm-dd'),
 		    product_hide,
 		    product_line,
 		    product_gen,
@@ -105,16 +109,15 @@
 		    product_memory,
 		    product_chip,
 		    product_cpu,
+		    product_gpu,
 		    product_size,
 		    product_connectivity,
 		    product_charge,
 		    product_thumbnail,
 		    product_summary,
 		    table_name,
-		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count,
-		    (select count(*) from like_tbl where product_no = #{productNo} and member_no=#{memberNo}) as like_boolean
+		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count
 		from product_tbl
-		join member_tbl using(member_no)
 		where product_no = #{productNo}
 	</select>
 
@@ -165,5 +168,19 @@
 		order by m.seller_score desc
 	</select>
 	
+	<insert id="insertLike">
+		insert into like_tbl values (like_seq.nextval, #{memberNo}, #{productNo})
+	</insert>
+	
+	<delete id="deleteLike">
+		delete from like_tbl where member_no = #{memberNo} and product_no = #{productNo}
+	</delete>
+	
+	<update id="hideProduct">
+		update product_tbl set product_hide = 1 where product_no = #{productNo}
+	</update>
 
+	<select id="selectSellerInfo" resultType="member">
+		select * from member_tbl where member_no = #{sellerNo}
+	</select>
 </mapper>

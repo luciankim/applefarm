@@ -41,4 +41,7 @@ public class Product {
 	private String productThumbnail;
 	private String productSummary;
 	private String tableName;
+	
+	//productDetail에 사용
+	private int likeCount;
 }

@@ -6,6 +6,7 @@
 .productDetail-top {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 60px;
 }
 .productDetail-content {
   display: flex;
@@ -32,7 +33,46 @@
   background-color: #f7f7f7;
   box-sizing: border-box;
 }
-.example {
-  width: 300px;
-  height: 300px;
+
+.productDetail-top-title {
+  font-size: 60px;
+}
+
+.productDetail-top-btns {
+  display: flex;
+  align-items: center;
+}
+.productDetail-top-btns > div {
+  margin-left: 5px;
+}
+.productDetail-updateBtn,
+.productDetail-deleteBtn {
+  width: 80px;
+}
+.productDetail-ikeBtn {
+  display: flex;
+  align-items: center;
+}
+.productDetail-ikeBtn > .like-image {
+  font-size: 30px;
+  color: var(--main_02);
+  cursor: pointer;
+  margin-left: 15px;
+}
+.pswProductDetailBtn {
+  width: 100%;
+  border: 1px solid var(--gray_02);
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center; /*input_wrap_psw에서 이거 한 줄 바뀜*/
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 18px;
+}
+.pswProductDetailBtn:hover {
+  border: 3px solid var(--main_01);
+  box-sizing: border-box;
 }

@@ -16,13 +16,14 @@
 		m.member_nickname,
 		b.board_thumbnail,
 		TO_CHAR(b.board_date, 'yyyy-mm-dd
-		hh24:mi:ss') AS board_date,
+		') AS board_date,
 		b.read_count
 		FROM
 		board_tbl b
 		JOIN
 		member_tbl m
-		ON b.member_no = m.member_no
+		ON
+		b.member_no = m.member_no
 		WHERE
 		b.board_type = 2 AND b.board_hide = 0
 		ORDER BY
@@ -61,16 +62,23 @@
 	</insert>
 
 	<select id="selectOneBoard" resultType="board">
-		select
-		board_no,
-		board_title,
-		board_content,
-		member_no,
-		read_count,
-		board_type,
-		TO_CHAR(board_date, 'yyyy-mm-dd hh24:mi:ss') as board_date,
-		board_thumbnail
-		from board_tbl where board_no = #{board_no}
+		SELECT
+		b.board_no,
+		b.board_title,
+		b.board_content,
+		b.member_no,
+		b.read_count,
+		b.board_type,
+		TO_CHAR(b.board_date, 'yyyy-mm-dd hh24:mi:ss') as board_date,
+		b.board_thumbnail,
+		m.member_Id
+		FROM
+		board_tbl b
+		INNER JOIN
+		member_tbl m ON b.member_no = m.member_no
+		WHERE
+		b.board_no = #{board_no}
+
 	</select>
 
 
@@ -127,8 +135,13 @@
 	</insert>
 
 	<select id="selectCommentList" resultType="BoardComment">
-		select * from
-		comment_tbl where board_no = #{boardNo} order by 1
+		SELECT comment_tbl.*,
+		member_tbl.member_id
+		FROM comment_tbl
+		INNER JOIN member_tbl ON comment_tbl.comment_writer = member_tbl.member_no
+		WHERE comment_tbl.board_no = #{boardNo}
+		ORDER BY 1
+
 	</select>
 
 

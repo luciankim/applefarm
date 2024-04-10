@@ -23,6 +23,7 @@ public class Board {
 	private String boardContent;
 	private String memberNickName;
 	private int memberNo;
+	private String memberId;
 	private int readCount;
 	private int boardType;
 	private String productCategory;

@@ -39,6 +39,7 @@ public interface AdminDao {
 	List topFiveBuyerRank(Dashboard db);
 	List tradeLog(Dashboard db);
 	List<ChatRoom> selectChatRoomList(String memberId);
+	int unHidePost(Report report);
 
 
 }

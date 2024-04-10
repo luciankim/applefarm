@@ -1,29 +1,16 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AdminChatModal = (props) => {
+  const member = props.memberInfo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const socketServer = backServer.replace("http://", "ws://");
   const [ws, sewWs] = useState({});
-  const member = props.member;
-  const room = props.room;
-  const api = process.env.REACT_APP_GPT_API_KEY;
-  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
-
   useEffect(() => {
     const socket = new WebSocket(socketServer + "/allChat");
     sewWs(socket);
-
-    //1. 채팅 내용 불러오기
-    axios
-      .get(backServer + "/admin/chatMessageInfo/" + room.roomNo)
-      .then((res) => {
-        console.log("채팅방 목록 조회 결과: ", res.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
     return () => {
       console.log("채팅페이지에서 나감");
@@ -72,12 +59,11 @@ const AdminChatModal = (props) => {
     setBtnStatus(false);
   };
 
-  const sendMessage = (room) => {
+  const sendMessage = () => {
     const data = {
       type: "chat",
       memberId: member.memberId,
       message: chatMessage,
-      roomNo: room.roomNo,
     };
     console.log("보낸메시지: ", JSON.stringify(data));
     ws.send(JSON.stringify(data));
@@ -99,42 +85,49 @@ const AdminChatModal = (props) => {
 
   return (
     <div className="chat-modal-current-wrap">
-      <div className="chat-modal-content">
-        <div className="chat-header">
-          <div className="h2">{room.roomTitle}</div>
-        </div>
+      {member.memberId ? (
+        <div className="chat-modal-content">
+          <div className="chat-header">
+            <div className="roomTitle">실시간 문의</div>
+          </div>
 
-        <div className="chat-body">
-          <div className="chat-message-area" ref={chatAreaRef}>
-            {chatList.map((chat, index) => {
-              return (
-                <ChattingMessage
-                  key={"chat-message" + index}
-                  chat={chat}
-                  memberId={member.memberId}
-                />
-              );
-            })}
+          <div className="chat-body">
+            <div className="chat-message-area" ref={chatAreaRef}>
+              {chatList.map((chat, index) => {
+                return (
+                  <ChattingMessage
+                    key={"chat-message" + index}
+                    chat={chat}
+                    memberId={member.memberId}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="chat-footer">
+            <textarea
+              className="chat-message"
+              placeholder="메시지를 입력해주세요."
+              value={chatMessage}
+              onChange={inputChatMessage}
+              onKeyUp={inputKeyboard}
+            ></textarea>
+            <button
+              className="sendMessage"
+              disabled={btnStatus}
+              onClick={() => sendMessage()}
+            >
+              전송
+            </button>
           </div>
         </div>
-
-        <div className="chat-footer">
-          <textarea
-            className="chat-message"
-            placeholder="Input message"
-            value={chatMessage}
-            onChange={inputChatMessage}
-            onKeyUp={inputKeyboard}
-          ></textarea>
-          <button
-            className="sendMessage"
-            disabled={btnStatus}
-            onClick={() => sendMessage(room)}
-          >
-            전송
-          </button>
-        </div>
-      </div>
+      ) : (
+        <h3 className="one-div">
+          거센 코드 파도 속 컴포넌트를 넘나들며, 최고의 개발자가 되리라 -
+          <span>로그인 후 이용하시게, 취소버튼은 없으니 새로고침하시게</span>
+        </h3>
+      )}
     </div>
   );
 };
