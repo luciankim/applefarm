@@ -707,8 +707,8 @@ xssad .roomTitle {
 
 /* 모달 : 챗 로더 */
 .one-div {
-  width: 300px;
-  height: 200px;
+  width: 100%;
+  height: 500px;
   display: grid;
   position: relative;
   background: radial-gradient(circle 44px at top, #0000 94%, #5dc1e4) 0 40px,
@@ -719,6 +719,7 @@ xssad .roomTitle {
   border-radius: 20px;
   transition: height 1s;
   cursor: pointer;
+  text-align: center;
 }
 
 .one-div:hover {

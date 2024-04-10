@@ -123,9 +123,10 @@ const AdminChatModal = (props) => {
           </div>
         </div>
       ) : (
-        <h4 className="one-div">
-          거센 코드 파도 속 컴포넌트를 넘나들며, 최고의 개발자가 되리
-        </h4>
+        <h3 className="one-div">
+          거센 코드 파도 속 컴포넌트를 넘나들며, 최고의 개발자가 되리라 -
+          <span>로그인 후 이용하시게</span>
+        </h3>
       )}
     </div>
   );
