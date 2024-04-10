@@ -180,4 +180,7 @@
 		update product_tbl set product_hide = 1 where product_no = #{productNo}
 	</update>
 
+	<select id="selectSellerInfo" resultType="member">
+		select * from member_tbl where member_no = #{sellerNo}
+	</select>
 </mapper>

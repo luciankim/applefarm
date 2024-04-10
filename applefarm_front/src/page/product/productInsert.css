@@ -384,3 +384,7 @@
 .selected-image {
   border: 5px solid var(--main_02);
 }
+
+.ql-editor > *{
+  width: 100%;
+}

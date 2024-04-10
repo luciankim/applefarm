@@ -170,7 +170,7 @@ public class ProductController {
 		int result = productService.insertMacbook(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -210,7 +210,7 @@ public class ProductController {
 		int result = productService.insertIpad(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -250,7 +250,7 @@ public class ProductController {
 		int result = productService.insertWatch(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -260,7 +260,7 @@ public class ProductController {
 	}
 	
 	@PostMapping(value = "/airpods")
-	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute MacbookQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+	public ResponseEntity<ResponseDTO> insertAirpods(@ModelAttribute Product product,@ModelAttribute AirpodsQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
 
 		System.out.println(product);
 		System.out.println(partObject);
@@ -290,7 +290,7 @@ public class ProductController {
 		int result = productService.insertAirpods(product,fileList,partObject); 
 		
 		if(result == 2+fileList.size()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success",  product.getProductNo());
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			
 		}else {
@@ -327,7 +327,7 @@ public class ProductController {
 		 * qualityHistory
 		 * reliableProductList
 		 */
-		if(map.size()==6) {
+		if(map.size()==7) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {

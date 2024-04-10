@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
 import kr.or.iei.product.model.dto.IphoneQualityHistory;
@@ -41,7 +42,7 @@ public interface ProductDao {
 
 	int insertWatchQualityHistory(WatchQualityHistory partObject);
 
-	int insertAirpodsQualityHistory(MacbookQualityHistory partObject);
+	int insertAirpodsQualityHistory(AirpodsQualityHistory partObject);
 
 	//ProductDetail.js
 	Product selectOneView(int productNo);
@@ -71,5 +72,7 @@ public interface ProductDao {
 	int deleteLike(int productNo, int memberNo);
 
 	int hideProduct(int productNo);
+
+	Member selectSellerInfo(int sellerNo);
 
 }
