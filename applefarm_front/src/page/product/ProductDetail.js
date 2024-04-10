@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./productDetail.css"; //박성완
 import "./productDetail2.css"; //박근열
 import Swal from "sweetalert2";
+import PaginationComponent from "../../component/Pagination";
 
 // 스와이프
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
@@ -36,6 +37,10 @@ const ProductDetail = (props) => {
   const [productFileList, setProductFileList] = useState([]);
   const [qualityHistory, setQualityHistory] = useState([]);
   const [reliableList, setReliableList] = useState([]);
+
+  const [salesInquiriesList, setSalesInquiriesList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
+  const [reqPage, setReqPage] = useState(1);
 
   useEffect(() => {
     if (isLogin) {
@@ -77,6 +82,19 @@ const ProductDetail = (props) => {
         console.log(res.data);
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/product/inquiry/" + productNo + "?reqPage=" + reqPage)
+      .then((res) => {
+        console.log(res.data.data);
+        setSalesInquiriesList(res.data.data.salesInquiriesList);
+        setPageInfo(res.data.data.pi);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [reqPage]);
 
   //탭
   const productDetailTabArr = ["1:1 문의", "거래 후기", "판매 상품"];
@@ -266,7 +284,14 @@ const ProductDetail = (props) => {
           />
         </div>
         <div className="productDetail-oneToOne">
-          <ProductOneToOne />
+          <ProductOneToOne
+            isLogin={isLogin}
+            productNo={productNo}
+            salesInquiriesList={salesInquiriesList}
+            pageInfo={pageInfo}
+            reqPage={reqPage}
+            setReqPage={setReqPage}
+          />
         </div>
         <div className="productDetail-tradeReview">
           <ProductTradeReview />
@@ -300,8 +325,8 @@ const ProductImage = (props) => {
       scrollbar={{ draggable: true }}
       spaceBetween={0}
       slidesPerView={1}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log("slide change")}
+      // onSwiper={(swiper) => console.log(swiper)}
     >
       {productFileList.map((file, index) => {
         return (
@@ -491,7 +516,7 @@ const ProductSeller = (props) => {
         <>
           {" "}
           <div className="productDetail-explain-seller-name-area">
-            {seller.memberName}
+            {seller.memberNickName}
           </div>
           <div className="productDetail-explain-seller-score-area">
             <div className="productDetail-explain-seller-score-icon">
@@ -616,7 +641,94 @@ const BidPrice = (props) => {
 const ProductQuality = (props) => {};
 
 //박근열
-const ProductOneToOne = (props) => {};
+const ProductOneToOne = (props) => {
+  const salesInquiriesList = props.salesInquiriesList;
+  const pageInfo = props.pageInfo;
+  const reqPage = props.reqPage;
+  const setReqPage = props.setReqPage;
+  const isLogin = props.isLogin;
+  const productNo = props.productNo;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [content, setContent] = useState();
+
+  const changeData = (e) => {
+    setContent(e.target.value);
+  };
+
+  const write = () => {
+    if (content === "") {
+      alert("등록할 내용을 입력해주세요.");
+      return;
+    } else {
+      const obj = { inquiryContent: content, productNo: productNo };
+      axios
+        .post(backServer + "/product/inquiry", obj)
+        .then((res) => {
+          console.log(res.data.data);
+        })
+        .catch((res) => {
+          console.log(res.data);
+        });
+      setContent("");
+    }
+  };
+
+  return (
+    <>
+      {salesInquiriesList.map((list, index) => {
+        return (
+          <SalesInquiriesItem key={"salesInquiries" + index} list={list} />
+        );
+      })}
+
+      {isLogin ? (
+        <>
+          <div className="productDetail-SalesInquiries-write-wrap">
+            <div className="productDetail-SalesInquiries-input">
+              <textarea value={content} onChange={changeData}></textarea>
+            </div>
+            <button
+              className="productDetail-SalesInquiries-writeBtn"
+              onClick={write}
+            >
+              등록하기
+            </button>
+          </div>
+
+          <div className="salesInquiries-page">
+            <PaginationComponent
+              pageInfo={pageInfo}
+              reqPage={reqPage}
+              setReqPage={setReqPage}
+            ></PaginationComponent>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
+
+const SalesInquiriesItem = (props) => {
+  const list = props.list;
+  return (
+    <div className="productDetail-SalesInquiries-item">
+      <div className="productDetail-SalesInquiries-item-left">
+        <div className="productDetail-SalesInquiries-writer">
+          {list.inquiryWriter}
+        </div>
+        <div className="productDetail-SalesInquiries-date">
+          {list.inquiryDate}
+        </div>
+      </div>
+
+      <div className="productDetail-SalesInquiries-item-right">
+        {list.inquiryContent}
+      </div>
+    </div>
+  );
+};
 
 //박근열
 const ProductTradeReview = (props) => {};

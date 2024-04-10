@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
@@ -346,6 +347,11 @@ public class MemberService {
 		public int resetPw(Member member) {
 			// TODO Auto-generated method stub
 			return memberDao.resetPw(member);
+		}
+
+		public Board getBoardInfo(int memberNo) {
+			
+			return memberDao.getBoardInfo(memberNo);
 		}
 
 		

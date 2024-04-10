@@ -20,17 +20,22 @@ import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SalesInquiries;
 import kr.or.iei.product.model.dto.ProductTradeChart;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.util.PageInfo;
+import kr.or.iei.util.PagiNation;
 
 @Service
 public class ProductService {
 
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private PagiNation pagination;
 
 	public List<ProductCategory> selectProductCategory(HashMap<String, String> categoryMap) {
 		String table = categoryMap.get("table");
@@ -305,9 +310,41 @@ public class ProductService {
 		return productDao.hideProduct(productNo);
 	}
 
+
+	public Map selectSalesInquiriesList(int productNo,int reqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		
+		int totalCount = productDao.totalCount(); // 전체 게시물 수
+//		System.out.println(totalCount);
+		
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.selectSalesInquiriesList(productNo,pi);
+		
+
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("salesInquiriesList", list);
+		map.put("pi", pi);
+		
+		return map; 
+	}
+
+	@Transactional
+	public int insertSalesInquiries(SalesInquiries salesInquiries, int memberNo) {
+		String inquiryWriter = productDao.selectNickName(memberNo);
+//		System.out.println(inquiryWriter);
+		salesInquiries.setInquiryWriter(inquiryWriter);
+		
+		int result = productDao.insertSalesInquiries(salesInquiries);
+		
+		return result;
+	}
+
 	public List productBidList(int productNo) {
 		List<Bid> list = productDao.productBidList(productNo);
 		return list;
+
 	}
 
 

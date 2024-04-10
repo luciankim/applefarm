@@ -13,9 +13,12 @@ import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SalesInquiries;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
+import kr.or.iei.util.PageInfo;
 import kr.or.iei.trade.model.dto.Bid;
+
 
 
 @Mapper
@@ -77,5 +80,16 @@ public interface ProductDao {
 	List<Bid> productBidList(int productNo);
 	
 	Member selectSellerInfo(int sellerNo);
+
+	
+
+	int totalCount();
+
+
+	List selectSalesInquiriesList(int productNo, PageInfo pi);
+
+	String selectNickName(int memberNo);
+
+	int insertSalesInquiries(SalesInquiries salesInquiries);
 
 }

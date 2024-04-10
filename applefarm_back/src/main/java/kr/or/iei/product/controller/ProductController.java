@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,7 @@ import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductAndTerm;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SalesInquiries;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
@@ -407,6 +409,35 @@ public class ProductController {
 		}
 	}
 	
+
+//	
+	
+	@GetMapping(value = "/inquiry/{productNo}")
+	public ResponseEntity<ResponseDTO> selectSalesInquiriesList(@PathVariable int productNo, @RequestParam int reqPage){
+		Map map = productService.selectSalesInquiriesList(productNo, reqPage);
+		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@PostMapping(value = "/inquiry")
+	public ResponseEntity<ResponseDTO> insertSalesInquiries(@RequestBody SalesInquiries salesInquiries , @RequestAttribute int memberNo){
+		int result = productService.insertSalesInquiries(salesInquiries,memberNo);
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+
 	@Operation(summary="매수호가 리스트", description = "매수호가 리스트 불러오기")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
@@ -417,6 +448,7 @@ public class ProductController {
 		List list = productService.productBidList(productNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+
 	}
 	
 }

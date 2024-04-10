@@ -849,10 +849,11 @@
 .delete-btn:hover {
   text-decoration: underline;
 }
-
+/*
 table {
-  border-spacing: 30px;
+   border-spacing: 30px;
 }
+*/
 
 .btn-wrap {
   position: relative;
