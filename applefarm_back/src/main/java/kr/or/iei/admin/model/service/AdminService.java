@@ -217,6 +217,7 @@ public class AdminService {
 		List<ChatRoom> list = adminDao.selectChatRoomList(memberId);
 		return list;
 	}
+
 	
 	
 	

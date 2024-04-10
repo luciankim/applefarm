@@ -281,10 +281,6 @@
   justify-content: center;
 }
 
-.ql-editor > p {
-  max-width: 300px;
-}
-
 /* 댓글 폼 */
 .comment-box {
   display: flex;

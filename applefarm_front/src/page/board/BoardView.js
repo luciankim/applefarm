@@ -2,50 +2,45 @@ import axios from "axios";
 import "./board.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Button1,
-  Button2,
-  Button3,
-  Input,
-  Textarea,
-} from "../../component/FormFrm";
+import { Button1, Button2, Button3 } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Comment from "./Comment";
 
 const BoardView = (props) => {
-  // const isLogin = props.isLogin;
-  const isLogin = true;
+  const isLogin = props.isLogin;
   const params = useParams();
   const boardNo = params.boardNo; //댓글
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [board, setBoard] = useState({});
-  const [memberNo, setMemberNo] = useState(61); //댓글
   const [commentContent, setCommentContent] = useState(""); //댓글
   const [selfRef, setSelfRef] = useState(0); //댓글
   const [commentList, setCommentList] = useState([]);
   const navigate = useNavigate();
-  const [replyForms, setReplyForms] = useState({});
-  const [editingCommentNo, setEditingCommentNo] = useState(null);
+  const [member, setMember] = useState({});
 
   useEffect(() => {
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+
     axios
       .get(backServer + "/board/one/" + boardNo)
       .then((res) => {
         console.log("전체조회", res.data.data);
         setBoard(res.data.data.board);
-        console.log("게시물", board);
         setCommentList(res.data.data.commentList);
-        console.log("댓글", commentList);
       })
       .catch((res) => {
         console.log(res);
       });
-    // if (isLogin) {
-    //   axios.get(backServer + "/member").then((res) => {
-    //     setMember(res.data.data);
-    //     console.log(res.data.data);
-    //   });
-    // }
   }, [boardNo]);
   const modify = () => {
     navigate("/board/modify/" + boardNo);
@@ -169,7 +164,7 @@ const BoardView = (props) => {
                 <div className="comment-date-wrap">
                   <div className="comment-date">{commentDate}</div>
                   {/* 댓글 작성자와 로그인한 사용자가 동일한 경우에만 수정, 삭제 버튼 표시 */}
-                  {isLogin && comment.commentWriter === memberNo && (
+                  {isLogin && comment.commentWriter === member.memberNo && (
                     <div className="delWrap">
                       <Button2
                         text="수정"
@@ -194,7 +189,7 @@ const BoardView = (props) => {
       <div className="inputCommentBox">
         <Comment
           boardNo={boardNo}
-          memberNo={memberNo}
+          memberNo={member.memberNo}
           commentContent={commentContent}
           setCommentContent={setCommentContent}
           commentList={commentList}
@@ -207,11 +202,15 @@ const BoardView = (props) => {
         <div className="board-view-btn-zone">
           {/* {member && member.memberId === board.boardWriter ? ( */}
           {isLogin ? (
-            <>
-              <Button1 text="수정" clickEvent={modify} />
-              <Button2 text="삭제" clickEvent={deleteBoard} />
-              <Button3 text="목록" clickEvent={back} />
-            </>
+            board.memberNo === member.memberNo ? (
+              <>
+                <Button1 text="수정" clickEvent={modify} />
+                <Button2 text="삭제" clickEvent={deleteBoard} />
+                <Button3 text="목록" clickEvent={back} />
+              </>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}
