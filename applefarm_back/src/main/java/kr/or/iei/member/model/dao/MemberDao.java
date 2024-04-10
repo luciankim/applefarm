@@ -87,6 +87,8 @@ public interface MemberDao {
 
 	int deleteAccountNumber(Member member);
 
+	String getMemberId(String memberEmail);
+
 
 
 

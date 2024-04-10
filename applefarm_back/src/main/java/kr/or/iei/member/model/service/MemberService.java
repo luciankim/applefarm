@@ -332,6 +332,11 @@ public class MemberService {
 			return memberDao.deleteAccountNumber(member);
 		}
 
+		public String getMemberId(String memberEmail) {
+			
+			return memberDao.getMemberId(memberEmail);
+		}
+
 		
 		
 		

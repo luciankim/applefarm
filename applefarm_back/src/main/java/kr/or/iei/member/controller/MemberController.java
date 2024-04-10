@@ -597,6 +597,54 @@ public class MemberController {
 		
 	}
 	
+	@Operation(summary ="아이디찾기",description = "화면에서 입력한 이메일 입력받아서 이메일로 아이디 전송")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value="/findId")
+	public ResponseEntity<ResponseDTO> findId(@RequestBody Member member){
+		
+	    //System.out.println(member.getMemberEmail());
+		
+		String memberEmail = member.getMemberEmail();
+		
+		//찾아올 아이디 가져오기
+		String memberId = memberService.getMemberId(memberEmail);
+		
+		System.out.println(memberEmail);
+		
+		if(memberId == null) {
+			
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "no email", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+			
+		}else {
+								
+			System.out.println(memberId);
+			
+			//화면에서 가져온 이메일로 아이디 전송해주기
+			String id = emailSender.sendId(memberEmail,memberId);
+			
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+			
+		}
+		
+
+	    
+	    
+	    
+	}
+		
+		
+		
+		
+		
+		
+	
+	
+	
 	
 	
 }

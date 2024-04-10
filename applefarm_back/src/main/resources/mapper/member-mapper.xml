@@ -272,7 +272,11 @@
 	
 	</update>
 	
+	<select id="getMemberId" resultType="string">
 	
+		select member_id from member_tbl where member_email = #{memberEmail}
+	
+	</select>
 	
 	
 	
