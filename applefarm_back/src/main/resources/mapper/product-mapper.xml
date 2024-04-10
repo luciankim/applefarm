@@ -183,4 +183,29 @@
 	<select id="selectSellerInfo" resultType="member">
 		select * from member_tbl where member_no = #{sellerNo}
 	</select>
+	
+	<select id="selectSalesInquiriesList" resultType="salesInquiries">
+		SELECT * FROM
+		    (SELECT ROWNUM AS RNUM, I.* FROM
+		        (select
+		            INQUIRY_NO,
+		            PRODUCT_NO,
+		            INQUIRY_WRITER,
+		            to_char(INQUIRY_DATE,'yyyy-mm-dd HH24:MI') as INQUIRY_DATE,
+		            INQUIRY_CONTENT
+		    from SALES_INQUIRIES_TBL where product_no = 142 ORDER BY INQUIRY_NO DESC)I)
+		WHERE RNUM BETWEEN #{pi.start} AND #{pi.end}
+	</select>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from SALES_INQUIRIES_TBL
+	</select>
+	
+	<select id="selectNickName" resultType="string">
+		select member_nickname from member_tbl where member_no = #{memberNo}
+	</select>
+	
+	<insert id="insertSalesInquiries">
+		insert into SALES_INQUIRIES_TBL values(SALES_INQUIRIES_SEQ.NEXTVAL,#{productNo},#{inquiryWriter},sysdate,#{inquiryContent})
+	</insert>
 </mapper>
