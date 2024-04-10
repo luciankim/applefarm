@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import "./productMain.css";
 import ProductCategory from "./ProductCategory";
 import ProductSummary from "./ProductSummary";
-import ProductChart from "./ProductChart";
 import ProductList from "./ProductList";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";
 import { useLocation, useNavigate } from "react-router-dom";
-import ProductApexChart from "./ProductApexChart";
+import ProductChart from "./ProductChart";
 
 const ProductMain = (props) => {
   const location = useLocation();
@@ -185,11 +184,13 @@ const ProductMain = (props) => {
           </div>
           <div
             className={
-              productMainTab === "CHART" ? "" : "productMain-content-hide"
+              productMainTab === "CHART"
+                ? "productMain-content-chart"
+                : "productMain-content-hide"
             }
           >
             {/*productQuality가 undefined또는null인거 조심!!!*/}
-            <ProductApexChart selectedProduct={selectedProduct} />
+            <ProductChart product={selectedProduct} path="productMain" />
           </div>
           <div
             className={
