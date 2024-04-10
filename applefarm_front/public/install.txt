@@ -30,8 +30,5 @@ npm i react-select
 npm i --save @types/chroma-js
 
 
-
-
-
 2024-04-09
 npm install swiper
