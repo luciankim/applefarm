@@ -17,39 +17,34 @@
 
 
 	<select id="selectRefundList" resultType="refund">
-		SELECT
-		R.REFUND_NO,
-		R.TRADE_NO,
-		R.PRODUCT_NO,
-		TO_CHAR(R.REFUND_DATE,
-		'YYYY-MM-DD') AS
-		REFUND_DATE,
-		R.REFUND_REASON,
-		R.REFUND_STATUS,
-		TO_CHAR(T.TRADE_DATE,
-		'YYYY-MM-DD') AS TRADE_DATE,
-		SELLER.MEMBER_NICKNAME AS SELLER_NICKNAME,
-		BUYER.MEMBER_NICKNAME AS
-		BUYER_NICKNAME
-		FROM
-		REFUND_TBL R
-		JOIN
-		TRADE_TBL T
-		ON R.TRADE_NO = T.TRADE_NO
-		JOIN
-		MEMBER_TBL
-		SELLER ON T.TRADE_SELLER =
-		SELLER.MEMBER_NO
-		JOIN
-		MEMBER_TBL BUYER ON
-		T.TRADE_BUYER = BUYER.MEMBER_NO
-		WHERE
-		(#{selectedValue} IN (0, 1, 2) AND R.REFUND_STATUS =
-		#{selectedValue})
-		OR
-		(#{selectedValue} NOT IN (0, 1, 2))
-		ORDER BY
-		R.REFUND_NO DESC
+SELECT
+    R.REFUND_NO,
+    R.TRADE_NO,
+    R.PRODUCT_NO,
+    P.PRODUCT_THUMBNAIL, -- 제품 썸네일 추가
+    TO_CHAR(R.REFUND_DATE, 'YYYY-MM-DD') AS REFUND_DATE,
+    R.REFUND_REASON,
+    R.REFUND_STATUS,
+    TO_CHAR(T.TRADE_DATE, 'YYYY-MM-DD') AS TRADE_DATE,
+    SELLER.MEMBER_NICKNAME AS SELLER_NICKNAME,
+    BUYER.MEMBER_NICKNAME AS BUYER_NICKNAME
+FROM
+    REFUND_TBL R
+JOIN
+    TRADE_TBL T ON R.TRADE_NO = T.TRADE_NO
+JOIN
+    MEMBER_TBL SELLER ON T.TRADE_SELLER = SELLER.MEMBER_NO
+JOIN
+    MEMBER_TBL BUYER ON T.TRADE_BUYER = BUYER.MEMBER_NO
+JOIN
+    PRODUCT_TBL P ON R.PRODUCT_NO = P.PRODUCT_NO -- 제품 테이블 조인
+WHERE
+    (#{selectedValue} IN (0, 1, 2) AND R.REFUND_STATUS = #{selectedValue})
+    OR
+    (#{selectedValue} NOT IN (0, 1, 2))
+ORDER BY
+    R.REFUND_NO DESC
+
 	</select>
 
 	<update id="updateConfirmRefund">
@@ -196,24 +191,52 @@
 			<when test="reportType == 1">   <!-- 상품테이블 -->
 				UPDATE product_tbl
 				SET PRODUCT_HIDE = 1
-				WHERE PRODUCT_NO =
+				WHERE PRODUCT_NO
+				=
 				#{reportTarget}
 			</when>
 			<when test="reportType == 4">   <!-- 상품테이블 -->
 				UPDATE COMMENT_TBL
-				SET COMMENT_HIDE = 1
-				WHERE COMMENT_NO =
+				SET COMMENT_HIDE =1
+				WHERE COMMENT_NO
+				=
 				#{reportTarget}
 			</when>
 			<otherwise>
 				UPDATE board_tbl
 				SET BOARD_HIDE = 1
-				WHERE BOARD_NO =
+				WHERE
+				BOARD_NO =
 				#{reportTarget}
 			</otherwise>
 		</choose>
 	</update>
 
+	<update id="unHidePost">
+		<choose>
+			<when test="reportType == 1">   <!-- 상품테이블 -->
+				UPDATE product_tbl
+				SET PRODUCT_HIDE = 0
+				WHERE PRODUCT_NO
+				=
+				#{reportTarget}
+			</when>
+			<when test="reportType == 4">  
+				UPDATE COMMENT_TBL
+				SET COMMENT_HIDE = 0
+				WHERE COMMENT_NO
+				=
+				#{reportTarget}
+			</when>
+			<otherwise>  
+				UPDATE board_tbl
+				SET BOARD_HIDE = 0
+				WHERE
+				BOARD_NO =
+				#{reportTarget}
+			</otherwise>
+		</choose>
+	</update>
 
 	<update id="blackMember">
 		update MEMBER_TBL
@@ -361,10 +384,12 @@
 	</select>
 
 	<select id="selectChatRoomList" resultType="chatroom">
-		SELECT * FROM chat_room_tbl WHERE participant1 = #{memberId} OR participant2
-		= #{memberId} ORDER BY room_create_time DESC
+		SELECT * FROM
+		chat_room_tbl WHERE participant1 = #{memberId} OR participant2
+		=
+		#{memberId} ORDER BY room_create_time DESC
 	</select>
-	
+
 
 
 </mapper>

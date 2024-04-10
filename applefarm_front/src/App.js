@@ -18,9 +18,12 @@ import Payment from "./page/member/Payment";
 import Nav from "./page/common/Nav";
 import CompletePayment from "./page/member/CompletePayment";
 import Swal from "sweetalert2";
+import AdminChatRoomList from "./page/admin/AdminChatRoomList";
 
 function App() {
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleOpen = () => setModalOpen(true);
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const obj = JSON.parse(window.localStorage.getItem("member"));
   const [isLogin, setIsLogin] = useState(obj ? true : false); //로그인상태를 체크하는 state
@@ -104,6 +107,24 @@ function App() {
           </Routes>
         </section>
       </main>
+      {/* 챗봇 */}
+      <button className="chat-btn" onClick={handleOpen}>
+        <svg
+          width="40"
+          height="40"
+          fill="#0092E4"
+          xmlns="http://www.w3.org/2000/svg"
+          data-name="Layer 1"
+          viewBox="0 0 24 24"
+          id="github"
+        >
+          <path d="M22 17.607c-.786 2.28-3.139 6.317-5.563 6.361-1.608.031-2.125-.953-3.963-.953-1.837 0-2.412.923-3.932.983-2.572.099-6.542-5.827-6.542-10.995 0-4.747 3.308-7.1 6.198-7.143 1.55-.028 3.014 1.045 3.959 1.045.949 0 2.727-1.29 4.596-1.101.782.033 2.979.315 4.389 2.377-3.741 2.442-3.158 7.549.858 9.426zm-5.222-17.607c-2.826.114-5.132 3.079-4.81 5.531 2.612.203 5.118-2.725 4.81-5.531z" />
+        </svg>
+      </button>
+      {modalOpen && (
+        <AdminChatRoomList setModalOpen={setModalOpen} isLogin={isLogin} />
+      )}
+
       <Footer />
     </div>
   );

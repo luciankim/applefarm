@@ -154,6 +154,7 @@ public class AdminController {
 	public ResponseEntity<ResponseDTO> changeReportStatus(@RequestBody Report report) {
 		System.out.println("allreport" + report);
 		int result = adminService.changeReportStatus(report);
+		System.out.println("리절트 " + result);
 		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

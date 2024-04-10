@@ -695,3 +695,12 @@ xssad .roomTitle {
   display: flex;
   flex-direction: column;
 }
+
+.refund-thumbnail {
+  width: 100px;
+}
+
+.adminalink:hover {
+  color: #ff6600; /* 마우스를 올렸을 때 글자 색상 변경 */
+  font-weight: 900;
+}

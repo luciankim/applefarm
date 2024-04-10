@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import { Select } from "../../component/FormFrm";
 import { Checkbox } from "@mui/material";
+import "./admin.css";
 
 const AdminProduct = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -272,7 +273,14 @@ const ProductItem = (props) => {
           ? "애플워치"
           : "전체"}
       </td>
-      <td>{product.productTitle}</td>
+      <td>
+        <a
+          className="adminalink"
+          href={"http://localhost:3000/product/" + product.productNo}
+        >
+          {product.productTitle}
+        </a>
+      </td>
       <td>{product.memberName}</td>
       <td>{product.productDate}</td>
       <td>{product.productHide === "0" ? "공개" : "비공개"}</td>

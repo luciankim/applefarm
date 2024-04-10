@@ -9,8 +9,11 @@ import Button from "@mui/material/Button";
 import React from "react";
 import Chart from "react-apexcharts";
 import { CSVLink } from "react-csv";
+import { daDK } from "@mui/x-date-pickers/locales";
 
-const AdminDashboard = () => {
+const AdminDashboard = (props) => {
+  const isLogin = props.isLogin;
+  console.log(isLogin, "ㅋㅋ");
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [startDate, setStartDate] = useState(dayjs("2023-11-07"));
   const [endDate, setEndDate] = useState(dayjs("2024-04-02"));
@@ -264,179 +267,184 @@ const AdminDashboard = () => {
   }, [startDate, endDate]);
   return (
     <div className="mypage-current-wrap">
-      <div className="mypage-current-title">
-        <p className="admin-current-p">대시보드</p>
-        <div className="date-select-wrap">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker", "DatePicker"]}>
-              <div className="date-wrap">
-                <Button
-                  variant="contained"
-                  onClick={oneMonth}
-                  style={{
-                    backgroundColor:
-                      activeButton === "oneMonth" ? "#0d6efd" : "#9d9d9d",
-                  }}
-                >
-                  최근 1개월
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={sixMonth}
-                  style={{
-                    backgroundColor:
-                      activeButton === "sixMonth" ? "#0d6efd" : "#9d9d9d",
-                  }}
-                >
-                  6개월
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={all}
-                  style={{
-                    backgroundColor:
-                      activeButton === "all" ? "#0d6efd" : "#9d9d9d",
-                  }}
-                >
-                  전체
-                </Button>
-              </div>
-              <DatePicker
-                label="시작날짜"
-                value={startDate}
-                onChange={(date) => setStartDate(date)}
-                maxDate={endDate} // 종료 날짜 이전까지만 선택 가능
-              />
-              <DatePicker
-                label="종료날짜"
-                value={endDate}
-                onChange={(date) => setEndDate(date)}
-                minDate={startDate} // 시작 날짜 이후부터만 선택 가능
-              />
-              <div className="btnWrap">
-                <div className="dashboard-btn">
+      {isLogin ? (
+        <div className="mypage-current-title">
+          <p className="admin-current-p">대시보드</p>
+          <div className="date-select-wrap">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker", "DatePicker"]}>
+                <div className="date-wrap">
                   <Button
                     variant="contained"
-                    style={{ backgroundColor: "black" }}
+                    onClick={oneMonth}
+                    style={{
+                      backgroundColor:
+                        activeButton === "oneMonth" ? "#0d6efd" : "#9d9d9d",
+                    }}
                   >
-                    <CSVLink
-                      headers={headers}
-                      data={data}
-                      filename={
-                        "applefarm_" +
-                        filterStartDate +
-                        "~" +
-                        filterEndDate +
-                        ".csv"
-                      }
-                      target="_blank"
-                    >
-                      다운로드
-                    </CSVLink>
+                    최근 1개월
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={sixMonth}
+                    style={{
+                      backgroundColor:
+                        activeButton === "sixMonth" ? "#0d6efd" : "#9d9d9d",
+                    }}
+                  >
+                    6개월
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={all}
+                    style={{
+                      backgroundColor:
+                        activeButton === "all" ? "#0d6efd" : "#9d9d9d",
+                    }}
+                  >
+                    전체
                   </Button>
                 </div>
-                <div className="dashboard-btn">
-                  {/* <Button
+                <DatePicker
+                  label="시작날짜"
+                  value={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  maxDate={endDate} // 종료 날짜 이전까지만 선택 가능
+                />
+                <DatePicker
+                  label="종료날짜"
+                  value={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  minDate={startDate} // 시작 날짜 이후부터만 선택 가능
+                />
+                <div className="btnWrap">
+                  <div className="dashboard-btn">
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "black" }}
+                    >
+                      <CSVLink
+                        headers={headers}
+                        data={data}
+                        filename={
+                          "applefarm_" +
+                          filterStartDate +
+                          "~" +
+                          filterEndDate +
+                          ".csv"
+                        }
+                        target="_blank"
+                      >
+                        다운로드
+                      </CSVLink>
+                    </Button>
+                  </div>
+                  <div className="dashboard-btn">
+                    {/* <Button
                     variant="contained"
                     style={{ backgroundColor: "var(--main_02" }}
                     onClick={subscribe}
                   >
                     구독하기
                   </Button> */}
+                  </div>
                 </div>
-              </div>
-            </DemoContainer>
-          </LocalizationProvider>
-        </div>
+              </DemoContainer>
+            </LocalizationProvider>
+          </div>
 
-        {/* 대시보드 콘텐츠 시작*/}
-        <div className="dashboard-wrap">
-          <div className="summary">
-            <div className="total-member">
-              <p>전체회원</p>
-              <span>{totalMemberCount}명</span>
+          {/* 대시보드 콘텐츠 시작*/}
+          <div className="dashboard-wrap">
+            <div className="summary">
+              <div className="total-member">
+                <p>전체회원</p>
+                <span>{totalMemberCount}명</span>
+              </div>
+              <div className="total-member">
+                <p>신규유입</p>
+                <span>{periodMemberCount}명</span>
+              </div>
+              <div className="total-product">
+                <p>거래건수</p>
+                <span>{periodTradeCount}건</span>
+              </div>
+              <div className="tota-trade">
+                <p>거래금액</p>
+                <span>{periodTradeMoney}원</span>
+              </div>
             </div>
-            <div className="total-member">
-              <p>신규유입</p>
-              <span>{periodMemberCount}명</span>
+            <div className="charts">
+              <Chart
+                options={options2}
+                series={options2.series}
+                type="area"
+                height={280}
+              />
             </div>
-            <div className="total-product">
-              <p>거래건수</p>
-              <span>{periodTradeCount}건</span>
+            <div className="charts">
+              <Chart options={options} series={options.series} height={280} />
             </div>
-            <div className="tota-trade">
-              <p>거래금액</p>
-              <span>{periodTradeMoney}원</span>
+            <div className="rank-wrap">
+              <div className="top-seller">
+                <ul>
+                  <p className="king">판매금액 상위 Top5</p>
+                  {topSellers.map((seller, index) => (
+                    <li key={index} className="trade-king">
+                      <span>{index + 1}위</span>
+                      <span>{seller.nickname}</span>
+                      <span>{numberWithComma(seller.tradePrice)}원</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="top-buyer">
+                <ul>
+                  <p className="king">구매금액 상위 Top5</p>
+                  {topBuyers.map((buyer, index) => (
+                    <li key={index} className="trade-king">
+                      <span>{index + 1}위</span>
+                      <span>{buyer.nickname}</span>
+                      <span>{numberWithComma(buyer.tradePrice)}원</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className="charts">
-            <Chart
-              options={options2}
-              series={options2.series}
-              type="area"
-              height={280}
-            />
-          </div>
-          <div className="charts">
-            <Chart options={options} series={options.series} height={280} />
-          </div>
-          <div className="rank-wrap">
-            <div className="top-seller">
-              <ul>
-                <p className="king">판매금액 상위 Top5</p>
-                {topSellers.map((seller, index) => (
-                  <li key={index} className="trade-king">
-                    <span>{index + 1}위</span>
-                    <span>{seller.nickname}</span>
-                    <span>{numberWithComma(seller.tradePrice)}원</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="top-buyer">
-              <ul>
-                <p className="king">구매금액 상위 Top5</p>
-                {topBuyers.map((buyer, index) => (
-                  <li key={index} className="trade-king">
-                    <span>{index + 1}위</span>
-                    <span>{buyer.nickname}</span>
-                    <span>{numberWithComma(buyer.tradePrice)}원</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <p className="trade-title">거래내역</p>
-          <div className="member-like-tbl-box charts" id="member-like-tbl-box">
-            <table className="admin-tbl" id="trade-log-tbl">
-              <thead>
-                <tr>
-                  <th width="10%">거래번호</th>
-                  <th width="10%">상품번호</th>
-                  <th width="15%">판매자</th>
-                  <th width="15%">구매자</th>
-                  <th width="15%">거래금액</th>
-                  <th width="20%">거래일</th>
-                  <th width="15%">결제상태</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tradeLog.map((trade, index) => (
-                  <tr key={index}>
-                    <td>{trade.tradeNo}</td>
-                    <td>{trade.productNo}</td>
-                    <td>{trade.sellerNickName}</td>
-                    <td>{trade.buyerNickName}</td>
-                    <td>{trade.tradePrice}</td>
-                    <td>{trade.tradeDate}</td>
-                    <td>{trade.tradeState}</td>
+            <p className="trade-title">거래내역</p>
+            <div
+              className="member-like-tbl-box charts"
+              id="member-like-tbl-box"
+            >
+              <table className="admin-tbl" id="trade-log-tbl">
+                <thead>
+                  <tr>
+                    <th width="10%">거래번호</th>
+                    <th width="10%">상품번호</th>
+                    <th width="15%">판매자</th>
+                    <th width="15%">구매자</th>
+                    <th width="15%">거래금액</th>
+                    <th width="20%">거래일</th>
+                    <th width="15%">결제상태</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {tradeLog.map((trade, index) => (
+                    <tr key={index}>
+                      <td>{trade.tradeNo}</td>
+                      <td>{trade.productNo}</td>
+                      <td>{trade.sellerNickName}</td>
+                      <td>{trade.buyerNickName}</td>
+                      <td>{trade.tradePrice}</td>
+                      <td>{trade.tradeDate}</td>
+                      <td>{trade.tradeState}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

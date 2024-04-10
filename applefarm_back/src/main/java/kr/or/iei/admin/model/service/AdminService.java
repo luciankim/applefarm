@@ -125,7 +125,13 @@ public class AdminService {
 		
 		//3. 유저 블랙 처리 (5분 정지)
 		
+		}else {
+			result += adminDao.unHidePost(report);
+			result += adminDao.blackMember(report);
+			System.out.println("이게돌아가야해");
 		}
+		
+		
 		return result;
 	}
 	
