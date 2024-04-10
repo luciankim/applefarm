@@ -364,6 +364,7 @@
 		SELECT * FROM chat_room_tbl WHERE participant1 = #{memberId} OR participant2
 		= #{memberId} ORDER BY room_create_time DESC
 	</select>
+	
 
 
 </mapper>

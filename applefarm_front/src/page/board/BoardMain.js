@@ -12,12 +12,15 @@ const BoardMain = (props) => {
     <div className="inner-section-wrap">
       <Routes>
         <Route path="/list" element={<BoardList isLogin={isLogin} />} />
-        <Route path="/write" element={<BoardWrite />} />
+        <Route path="/write" element={<BoardWrite isLogin={isLogin} />} />
         <Route
           path="/view/:boardNo"
           element={<BoardView isLogin={isLogin} />}
         />
-        <Route path="/modify/:boardNo" element={<BoardModify />} />
+        <Route
+          path="/modify/:boardNo"
+          element={<BoardModify isLogin={isLogin} />}
+        />
       </Routes>
     </div>
   );

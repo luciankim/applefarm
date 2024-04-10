@@ -3,9 +3,10 @@ import BoardFrm from "./BoardFrm";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-const BoardWrite = () => {
+import React, { useEffect } from "react";
+const BoardWrite = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-
+  const isLogin = props.isLogin;
   //제목, 썸네일, 내용, 첨부파일 -> 글 작성을 위해서 사용자에게 받아야 하는 정보 -> state 생성(데이터 전송용)
   const [boardTitle, setBoardTitle] = useState("");
   const [boardContent, setBoardContent] = useState("");
@@ -13,11 +14,24 @@ const BoardWrite = () => {
   const [productCategory, setProductCategory] = useState(null);
   const [boardFile, setBoardFile] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
-  const [memberNo, setMemberNo] = useState(46);
   //사용자 화면 출력용 state (화면전송시 사용하지 않음)
   const [fileList, setFileList] = useState([]); //화면출력용 애들이 변수명이랑 같음
   const [boardThumbnail, setBoardThumbnail] = useState(null); //썸네일 미리보기
   const navigate = useNavigate();
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  }, []);
   const write = () => {
     console.log("제목: ", boardTitle); //필수
     console.log("내용: ", boardContent); //필수
@@ -33,7 +47,7 @@ const BoardWrite = () => {
       form.append("boardContent", boardContent);
       form.append("boardType", boardType);
       form.append("productCategory", productCategory);
-      form.append("memberNo", memberNo);
+      form.append("memberNo", member.memberNo);
       //첨부파일도 첨부한 갯수만큼 반복해서 추가
       for (let i = 0; i < boardFile.length; i++) {
         form.append("boardFile", boardFile[i]);

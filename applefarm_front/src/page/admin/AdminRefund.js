@@ -239,10 +239,12 @@ const RefundItem = (props) => {
           <>
             <Button1
               text="승인"
+              addId="approvalBtn"
               clickEvent={() => confirm(refund.refundNo, refund.tradeNo)}
             />
             <Button2
               text="거절"
+              addId="denyBtn"
               clickEvent={() => reject(refund.refundNo, refund.tradeNo)}
             />
           </>

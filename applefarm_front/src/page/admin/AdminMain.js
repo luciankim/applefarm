@@ -1,27 +1,21 @@
-import AdminRefund from "./AdminRefund";
-import { Route, Routes } from "react-router-dom";
-import SideMenu from "../../component/SideMenu";
-import { useState } from "react";
-import "./admin.css";
-import AdminMember from "./AdminMember";
-import AdminDashboard from "./AdminDashboard";
-import AdminReport from "./AdminReport";
-import AdminProduct from "./AdminProduct";
+import { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom"; // useNavigate를 import합니다.
+import Swal from "sweetalert2";
 
+import SideMenu from "../../component/SideMenu";
+import AdminDashboard from "./AdminDashboard";
+import AdminMember from "./AdminMember";
+import AdminProduct from "./AdminProduct";
+import AdminRefund from "./AdminRefund";
+import AdminReport from "./AdminReport";
 import AdminChatRoomList from "./AdminChatRoomList";
-import { useEffect } from "react";
 import axios from "axios";
 
 const AdminMain = (props) => {
+  const navigate = useNavigate(); // navigate 함수를 가져옵니다.
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  // const isLogin = props.isLogin;
-  // const logout = props.logout;
-  // const navigate = useNavigate();
-  // if (!isLogin && ) {
-  //   Swal.fire("로그인 후 이용 가능합니다.").then(() => {
-  //     navigate("/");
-  //   });
-  // }
+  const isLogin = props.isLogin;
+
   const [adminMenu, setAdminMenu] = useState([
     { url: "dashboard", text: "대시보드", active: false },
     { url: "manageMember", text: "회원관리", active: false },
@@ -31,21 +25,35 @@ const AdminMain = (props) => {
   ]);
 
   const [member, setMember] = useState({});
+  const [memberGrade, setMemberGrade] = useState();
+
   useEffect(() => {
-    axios
-      .get(backServer + "/member")
-      .then((res) => {
-        console.log(res.data.data);
-        setMember(res.data.data);
-      })
-      .catch((res) => {
-        console.log(res);
+    if (isLogin) {
+      axios
+        .get(backServer + "/member")
+        .then((res) => {
+          console.log(res.data.data);
+          setMember(res.data.data);
+          setMemberGrade(res.data.data.memberGrade);
+          if (res.data.data.memberGrade !== 2) {
+            Swal.fire("관리자가 아니면 물러가라").then(() => {
+              navigate("/");
+            });
+          }
+        })
+
+        .catch((res) => {
+          console.log(res);
+        });
+    } else {
+      Swal.fire("로그인 후 이용 가능합니다.").then(() => {
+        navigate("/"); // navigate 함수를 사용합니다.
       });
+    }
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
-
   const style = {
     position: "absolute",
     top: "50%",
