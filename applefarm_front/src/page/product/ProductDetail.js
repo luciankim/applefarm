@@ -15,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import ProductTab from "./ProductTab";
+import ProductChart from "./ProductChart";
 
 const ProductDetail = (props) => {
   const navigate = useNavigate();
@@ -236,7 +237,7 @@ const ProductDetail = (props) => {
         {/* productDetail-content-right */}
         <div className="productDetail-content-right">
           <div className="productDetail-chart">
-            <ProductChart />
+            <ProductChart product={product} path="productDetail" />
           </div>
           <div className="productDetail-bid">
             <ProductBid />
@@ -331,10 +332,44 @@ const ProductSeller = (props) => {};
 const ProductExplainDetail = (props) => {};
 
 //박성완
-const ProductChart = (props) => {};
+//const ProductChart = (props) => {};
 
 //박성완
-const ProductBid = (props) => {};
+const ProductBid = (props) => {
+  const backServer = props.backServer;
+  const product = props.product;
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/product/bid/" + product.productNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          //
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, []);
+
+  //판매자가 자신의 판매금액을 수정
+  const priceUpdate = () => {};
+  //판매자가 구매호가 판매버튼을 클릭
+  const selling = () => {};
+  //구매자가 자신의 구매호가를 수정
+  const bidUpdate = () => {};
+  //구매자가 구매버튼을 클릭
+  const purchasing = () => {};
+
+  return (
+    <div className="productBid">
+      <div className="productBid-title">판매 희망가</div>
+      <div className="productBid-content"></div>
+      <div className="productBid-title">구매 희망가</div>
+      <div className="productBid-content"></div>
+    </div>
+  );
+};
 
 //박성완
 const ProductQuality = (props) => {};

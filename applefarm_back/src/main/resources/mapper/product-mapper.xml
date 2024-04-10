@@ -13,10 +13,37 @@
 		order by rownum desc
 	</select>
 	
-	<select id="volume" resultType="trade">
-		
+	<select id="productTradeChart" resultType="productTradeChart">
+		select
+		    to_char(t.trade_reserve_date, 'yy/mm/dd') as trade_reserve_date,
+		    count(*) as trade_volume,
+		    trunc(avg(t.trade_price)) as trade_price_avg
+		from
+		    trade_tbl t
+		    join product_tbl p on t.product_no = p.product_no
+		where
+		    t.trade_state in ('결제완료', '발송대기', '배송중', '배송완료', '구매확정')
+		    <!-- 여기에 term 사용했음 -->
+			and to_char(t.trade_reserve_date, 'yy/mm/dd') between to_char(sysdate-#{term}, 'yy/mm/dd') and to_char(sysdate, 'yy/mm/dd')
+		    and p.product_line = #{productLine}
+		    and p.product_gen = #{productGen}
+		    and p.product_model = #{productModel}
+		    <if test='productModel2 != null and productModel2 != ""'>and p.product_model2 = #{productModel2}</if>
+		    <!-- <if test='productColor != null and productColor != ""'>and p.product_color = #{productColor}</if> -->
+		    <if test='productStorage != null and productStorage != ""'>and p.product_storage = #{productStorage}</if>
+		    <if test='productMemory != null and productMemory != ""'>and p.product_memory = #{productMemory}</if>
+		    <if test='productChip != null and productChip != ""'>and p.product_chip = #{productChip}</if>
+		    <if test='productCpu != null and productCpu != ""'>and p.product_cpu = #{productCpu}</if>
+		    <if test='productGpu != null and productGpu != ""'>and p.product_gpu = #{productGpu}</if>
+		    <if test='productSize != null and productSize != ""'>and p.product_size = #{productSize}</if>
+		    <if test='productConnectivity != null and productConnectivity != ""'>and p.product_connectivity = #{productConnectivity}</if>
+		    <if test='productCharge != null and productCharge != ""'>and p.product_charge = #{productCharge}</if>
+		    <if test='productQuality != null and productQuality != ""'>and p.product_quality = #{productQuality}</if>
+		group by
+		    to_char(t.trade_reserve_date, 'yy/mm/dd')
+		order by
+		    trade_reserve_date asc
 	</select>
-	
 	 
 	<select id="selectQualityList" resultType="quality">
 		select * from quality_tbl where table_name = #{tableName}
@@ -179,5 +206,14 @@
 	<update id="hideProduct">
 		update product_tbl set product_hide = 1 where product_no = #{productNo}
 	</update>
+	
+	<select id="productBidList" resultType="bid">
+		select member_no, to_char(bid_price,'fm999,999,999,999')
+		from bid_tbl
+		where
+			product_no = #{productNo} and
+			to_char(bid_date, 'yy/mm/dd') between to_char(bid_date-30, 'yy/mm/dd') and to_char(sysdate, 'yy/mm/dd')
+		order by bid_price desc;
+	</select>
 
 </mapper>
