@@ -539,7 +539,7 @@ button[disabled] {
 .footer-wrap2 {
   width: 500px;
   position: relative;
-  left: 40px;
+  left: -35px;
   bottom: 20px;
 }
 
