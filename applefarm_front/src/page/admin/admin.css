@@ -510,8 +510,8 @@ xssad .roomTitle {
 
 .chat-modal-content {
   position: fixed;
-  top: 58%;
-  left: 77%;
+  top: 60%;
+  left: 80%;
   transform: translate(-50%, -50%);
   width: 400px;
   background-color: rgb(255, 255, 255);
