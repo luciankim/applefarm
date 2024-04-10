@@ -519,4 +519,55 @@ const RequestModal = (props) => {
   );
 };
 
-export { DelModal, AddressModal, RequestModal };
+const ProductStatus = (props) => {
+  const modalBackground = useRef();
+  const { setModalOpen, statusList, currentStatus, setCurrentSataus } = props;
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  return (
+    <div>
+      <div className="modal" ref={modalBackground} onClick={modalBack}>
+        <div className="modal-content-wrap">
+          <span
+            className="material-icons close-icon status-close"
+            onClick={closeModal}
+          >
+            highlight_off
+          </span>
+          <div className="modal-product-status-title">선택한 상태 보기</div>
+          <div className="modal-content">
+            {statusList.map((item, index) => {
+              return (
+                <button
+                  key={"status" + index}
+                  onClick={() => {
+                    setCurrentSataus(index);
+                    setModalOpen(false);
+                  }}
+                  className={
+                    index == currentStatus
+                      ? "status-btns current-status"
+                      : "status-btns"
+                  }
+                  style={item.color === "red" ? { color: "red" } : {}}
+                >
+                  {item.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export { DelModal, AddressModal, RequestModal, ProductStatus };

@@ -165,6 +165,13 @@
 		address_detail=#{addressDetail}, address_default=#{addressDefault}
 		where address_no=#{addressNo}
 	</update>
+	<select id="bidTotalCount" resultType="int">
+		select count(*) from bid_tbl where member_no=#{memberNo}
+	</select>
+
+
+
+
 
 	<select id="selectNo" resultType="member">
 		select * from member_tbl where

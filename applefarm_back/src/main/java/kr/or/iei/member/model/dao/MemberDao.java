@@ -73,6 +73,10 @@ public interface MemberDao {
 
 	List<Member> selectBlackMemberCheckList();
 
+	int bidTotalCount(int memberNo);
+
+	List<Address> selectBid(HashMap<String, Object> data);
+
 
 
 

@@ -302,7 +302,20 @@ public class MemberController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
-
+	
+	@Operation(summary = "구매입찰내역 조회", description = "상태,페이지,기간을 받아서 구매 입찰내역 조회")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@GetMapping(value = "/bid/{status}/{reqPage}/{startDate}/{endDate}")
+	public ResponseEntity<ResponseDTO> selectBid(@RequestAttribute int memberNo,@PathVariable int status,@PathVariable int reqPage, @PathVariable String startDate, @PathVariable String endDate) {
+		Map map = memberService.selectBid(memberNo,status,reqPage,startDate,endDate);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	
+	
+	
 	@GetMapping
 	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute int memberNo) {
 

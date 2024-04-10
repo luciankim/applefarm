@@ -277,6 +277,25 @@ public class MemberService {
 			return memberDao.selectAddressBasic(memberNo);
 		}
 
+		public Map selectBid(int memberNo, int status, int reqPage, String startDate, String endDate) {
+			int numPerPage = 3; // 페이지당 행 수 -> 성공 후 수정
+			int pageNaviSize = 5;
+			int totalCount = memberDao.bidTotalCount(memberNo);
+			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			data.put("memberNo", memberNo);
+			data.put("start", pi.getStart());
+			data.put("end", pi.getEnd());
+			data.put("status",status);
+			data.put("startDate",startDate);
+			data.put("endDate",endDate);
+			List<Address> bidList = memberDao.selectBid(data);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("bidList", bidList);
+			map.put("pi", pi);
+			return null;
+		}
+
 		
 
 		

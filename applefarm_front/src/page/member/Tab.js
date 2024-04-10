@@ -8,7 +8,7 @@ import dayjs, { Dayjs } from "dayjs";
 import Button from "@mui/material/Button";
 
 const Tab = (props) => {
-  const { currentTab, tabMenu, setTabMenu, setCurrentTab } = props;
+  const { currentTab, tabMenu, setTabMenu, setCurrentTab, setReqPage } = props;
 
   const {
     startDate,
@@ -21,6 +21,7 @@ const Tab = (props) => {
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
+    setReqPage(0);
   };
 
   return (
@@ -84,10 +85,9 @@ const DateSelect = (props) => {
   };
 
   // 전체 버튼 클릭 시
+  const projectStartDate = dayjs("2020-01-01");
   const all = () => {
     // 전체 기간을 원하는 날짜로 설정
-    // 현재 전체 기간 5년으로 잡아놈
-    const projectStartDate = dayjs().subtract(5, "year");
     const today = dayjs();
     setStartDate(projectStartDate);
     setEndDate(today);
@@ -146,6 +146,7 @@ const DateSelect = (props) => {
                 size: "small",
               },
             }}
+            minDate={projectStartDate}
             maxDate={endDate}
           />
           <DatePicker
