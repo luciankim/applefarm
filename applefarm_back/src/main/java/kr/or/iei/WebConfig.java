@@ -38,8 +38,8 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		// TODO Auto-generated method stub
-		WebMvcConfigurer.super.addCorsMappings(registry);
+				//모든 매핑에 대해		//모든 포트에			//모든 메소드에
+		registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
 	}
 
 	
