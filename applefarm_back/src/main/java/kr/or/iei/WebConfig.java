@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer{
 
 				.addPathPatterns("/member/**","/product/**","/trade/**", "/admin/**")
 				.excludePathPatterns("/member/login","/member/join" ,"/member/sendEmail/*", "/member/email/*" ,"/member/id/*","/member/nickName/*","/member/sendCode/*","/member/findId","/member/sendEmail","/member/resetPw")
-				.excludePathPatterns("/product/quality/*","/product/category","/product/chart","/product/detail/*","/product/img/*", "/product/bid/*");
+				.excludePathPatterns("/product/quality/*","/product/category","/product/chart","/product/detail/*","/product/img/*", "/product/bid/*","/product/inquiry/*","/product/review/*","/product/seller/*");
 
 	}
 

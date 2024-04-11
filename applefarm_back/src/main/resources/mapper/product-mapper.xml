@@ -230,12 +230,12 @@
 		            INQUIRY_WRITER,
 		            to_char(INQUIRY_DATE,'yyyy-mm-dd HH24:MI') as INQUIRY_DATE,
 		            INQUIRY_CONTENT
-		    from SALES_INQUIRIES_TBL where product_no = 142 ORDER BY INQUIRY_NO DESC)I)
+		    from SALES_INQUIRIES_TBL where product_no = #{productNo} ORDER BY INQUIRY_NO DESC)I)
 		WHERE RNUM BETWEEN #{pi.start} AND #{pi.end}
 	</select>
 	
 	<select id="totalCount" resultType="int">
-		select count(*) from SALES_INQUIRIES_TBL
+		select count(*) from SALES_INQUIRIES_TBL  where product_no = #{productNo}
 	</select>
 	
 	<select id="selectNickName" resultType="string">
@@ -246,6 +246,38 @@
 		insert into SALES_INQUIRIES_TBL values(SALES_INQUIRIES_SEQ.NEXTVAL,#{productNo},#{inquiryWriter},sysdate,#{inquiryContent})
 	</insert>
 	
+
+	<select id="selectReviewList" resultType="review">
+		select * from 
+			(select ROWNUM as RNUM, r.* from
+				(select 
+				    r.*,p.product_summary,m.member_nickname 
+				from review_tbl r
+				join product_tbl p on r.product_no = p.product_no
+				join member_tbl m on r.review_consumer = m.member_no
+			where review_seller = #{sellerNo})r)
+		where RNUM between #{pi.start} and #{pi.end}
+	</select>
+	
+	<select id="totalReviewCount" resultType="int">
+		select count(*) from review_tbl where review_seller = #{sellerNo}
+	</select>
+	
+	<select id="selectSellerNo" resultType="string">
+		select member_no from product_tbl where product_no = #{productNo}
+	</select>
+	
+	<select id="totalSellerProductCount" resultType="int">
+		select count(*) from product_tbl where member_no = #{sellerNo}
+	</select>
+	
+	<select id="selectSellerProductList" resultType="product">
+		select * from 
+			(select ROWNUM as RNUM, p.* from
+				(select * from product_tbl where member_no = #{sellerNo} order by product_no desc)p)
+		where RNUM between #{pi.start} and #{pi.end}
+	</select>
+
 	<update id="productPriceUpdate">
 		update product_tbl set product_price=#{productPrice} where product_no=#{productNo}
 	</update>
@@ -257,4 +289,5 @@
 	<insert id="productTradeReserve">
 		insert into trade_tbl values (trade_seq.nextval, #{tradeSeller}, #{tradeBuyer}, #{productNo}, , null, null, #{tradePrice}, '예약중', null, null, null, null, null, null, null, null)
 	</insert>
+
 </mapper>

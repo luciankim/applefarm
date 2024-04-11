@@ -225,18 +225,18 @@ public class ProductService {
 				map.put("seller",seller);
 				
 				//판매자(member_no=45)에 대한 후기 리스트
-				List sellerReviewList = productDao.selectSellerReviews(sellerNo);
-				if(sellerReviewList==null) {
-					return map;
-				}
-				map.put("sellerReviewList",sellerReviewList);
+//				List sellerReviewList = productDao.selectSellerReviews(sellerNo);
+//				if(sellerReviewList==null) {
+//					return map;
+//				}
+//				map.put("sellerReviewList",sellerReviewList);
 				
 				//판매자(member_no=45)의 상품 리스트
-				List sellerProductList = productDao.selectSellerProducts(sellerNo);
-				if(sellerProductList==null) {
-					return map;
-				}
-				map.put("sellerProductList",sellerProductList);
+//				List sellerProductList = productDao.selectSellerProducts(sellerNo);
+//				if(sellerProductList==null) {
+//					return map;
+//				}
+//				map.put("sellerProductList",sellerProductList);
 				
 				//상품 124번의 첨부파일 리스트(file_no, file_path가 필요)
 				List productFileList = productDao.selectProductFiles(productNo);
@@ -319,7 +319,7 @@ public class ProductService {
 		int numPerPage = 3;
 		int pageNaviSize = 5;
 		
-		int totalCount = productDao.totalCount(); // 전체 게시물 수
+		int totalCount = productDao.totalCount(productNo); // 현제 상품의 전체 게시물 수
 //		System.out.println(totalCount);
 		
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
@@ -351,6 +351,41 @@ public class ProductService {
 
 	}
 
+
+	public Map selectReviewList(int productNo, int reviewReqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		String sellerNo = productDao.selectSellerNo(productNo);
+		int totalCount = productDao.totalReviewCount(productNo,sellerNo); // 현제 상품의 전체 게시물 수
+//		System.out.println("토탈"+totalCount);
+		PageInfo pi = pagination.getPageInfo(reviewReqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.selectReviewList(productNo,pi,sellerNo);
+
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("reviewList", list);
+		map.put("pi", pi);
+		
+		return map; 
+	}
+
+	public Map selectProductList(int productNo, int sellerProductReqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		String sellerNo = productDao.selectSellerNo(productNo);
+		int totalCount = productDao.totalSellerProductCount(productNo,sellerNo); // 현제 상품의 전체 게시물 수
+//		System.out.println("토탈"+totalCount);
+		PageInfo pi = pagination.getPageInfo(sellerProductReqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.selectSellerProductList(productNo,pi,sellerNo);
+
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("sellerProductList", list);
+		map.put("pi", pi);
+		
+		return map; 
+	}
+
 	@Transactional
 	public int productPriceUpdate(int productPrice, int productNo) {
 		return productDao.productPriceUpdate(productPrice, productNo);
@@ -364,6 +399,7 @@ public class ProductService {
 	@Transactional
 	public int productTradeReserve(Trade trade) {
 		return productDao.productTradeReserve(trade);
+
 	}
 
 

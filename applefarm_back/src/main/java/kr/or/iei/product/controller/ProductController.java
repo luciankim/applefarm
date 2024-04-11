@@ -343,13 +343,12 @@ public class ProductController {
 		HashMap<String, Object> map = productService.selectOneProduct(productNo);
 		/* map.key
 		 * product
-		 * sellerReviewList
-		 * sellerProductList
+		 * seller
 		 * productFileList
 		 * qualityHistory
 		 * reliableProductList
 		 */
-		if(map.size()==7) {
+		if(map.size()==5) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
@@ -507,4 +506,29 @@ public class ProductController {
 		}
 	}
 	
+	@GetMapping(value = "/review/{productNo}")
+	public ResponseEntity<ResponseDTO> selectReviewList(@PathVariable int productNo, @RequestParam int reviewReqPage){
+		Map map = productService.selectReviewList(productNo, reviewReqPage);
+//		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@GetMapping(value = "/seller/{productNo}")
+	public ResponseEntity<ResponseDTO> selectProductList(@PathVariable int productNo, @RequestParam int sellerProductReqPage){
+		Map map = productService.selectProductList(productNo, sellerProductReqPage);
+//		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
 }
