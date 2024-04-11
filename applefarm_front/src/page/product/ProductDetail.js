@@ -267,6 +267,7 @@ const ProductDetail = (props) => {
           </div>
           <div className="productDetail-bid">
             <ProductBid
+              isLogin={isLogin}
               backServer={backServer}
               product={product}
               setProduct={setProduct}
@@ -597,11 +598,14 @@ const ProductExplainDetail = (props) => {
 
 //박성완
 const ProductBid = (props) => {
+  const isLogin = props.isLogin;
   const backServer = props.backServer;
   const product = props.product;
   const setProduct = props.setProduct;
   const productNo = props.productNo;
   const loginMember = props.loginMember;
+
+  const navigate = useNavigate();
 
   const [bidList, setBidList] = useState([]);
   //"등록"버튼 활성화하는데에 활용
@@ -805,11 +809,79 @@ const ProductBid = (props) => {
     });
   };
 
-  //구매자가 구매버튼을 클릭 -> 로그인한 회원이 아닐 경우 로그인창 띄워줘야함
-  const purchasing = () => {};
+  //구매자가 구매버튼을 클릭
+  const purchasing = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "info",
+        title: "로그인 필요",
+        text: "로그인 후 구매 가능",
+      });
+    } else {
+      navigate("/purchase/" + productNo);
+    }
+  };
 
-  //구매자가 등록버튼 클릭 -> 로그인한 회원이 아닐 경우 로그인창 띄워줘야함
-  const insertBId = () => {};
+  //구매자가 매수호가 등록버튼 클릭
+  const insertBId = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "info",
+        title: "로그인 필요",
+        text: "로그인 후 구매 가능",
+      });
+    } else {
+      Swal.fire({
+        title: "원하시는 가격을 입력해주세요.",
+        text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "수정",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        const bidPrice = result.value;
+        if (result.isConfirmed && bidPrice >= product.productPrice) {
+          Swal.fire({
+            icon: "warning",
+            title: "돈이 많으시군요?",
+            text: "구매버튼을 눌러주세요.",
+          });
+        } else if (result.isConfirmed && bidPrice < product.productPrice) {
+          const bid = {
+            productNo: productNo,
+            memberNo: loginMember.memberNo,
+            bidPrice: bidPrice,
+          };
+          axios
+            .post(backServer + "/product/bid", bid)
+            .then((res) => {
+              if (res.data.message === "success") {
+                Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
+                  setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
+                  bidListAxios();
+                });
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title: "등록 실패",
+                  text: "다시 시도해주세요.",
+                });
+              }
+            })
+            .catch(() => {
+              Swal.fire({
+                icon: "error",
+                title: "에러 발생",
+                text: "관리자에게 문의해주세요.",
+              });
+            });
+        }
+      });
+    }
+  };
 
   return (
     <div className="productBid">
