@@ -143,8 +143,9 @@
 		    product_thumbnail,
 		    product_summary,
 		    table_name,
-		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count
-		from product_tbl
+		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count,
+		    trade_state
+		from product_tbl left join trade_tbl using (product_no)
 		where product_no = #{productNo}
 	</select>
 
@@ -243,5 +244,17 @@
 	
 	<insert id="insertSalesInquiries">
 		insert into SALES_INQUIRIES_TBL values(SALES_INQUIRIES_SEQ.NEXTVAL,#{productNo},#{inquiryWriter},sysdate,#{inquiryContent})
+	</insert>
+	
+	<update id="productPriceUpdate">
+		update product_tbl set product_price=#{productPrice} where product_no=#{productNo}
+	</update>
+	
+	<update id="productBidUpdate">
+		update bid_tbl set bid_price=#{bidPrice} where bid_no=#{bidNo}
+	</update>
+	
+	<insert id="productTradeReserve">
+		insert into trade_tbl values (trade_seq.nextval, #{tradeSeller}, #{tradeBuyer}, #{productNo}, , null, null, #{tradePrice}, '예약중', null, null, null, null, null, null, null, null)
 	</insert>
 </mapper>

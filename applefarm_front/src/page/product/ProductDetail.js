@@ -17,6 +17,12 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import ProductTab from "./ProductTab";
 import ProductChart from "./ProductChart";
+import {
+  BadgeBlack,
+  BadgeBlue,
+  BadgeGray,
+  BadgeRed,
+} from "../../component/FormFrm";
 
 const ProductDetail = (props) => {
   const navigate = useNavigate();
@@ -263,8 +269,10 @@ const ProductDetail = (props) => {
             <ProductBid
               backServer={backServer}
               product={product}
+              setProduct={setProduct}
               productNo={productNo}
               loginMember={loginMember}
+              navigate={navigate}
             />
           </div>
           <div className="productDetail-quality">
@@ -591,6 +599,7 @@ const ProductExplainDetail = (props) => {
 const ProductBid = (props) => {
   const backServer = props.backServer;
   const product = props.product;
+  const setProduct = props.setProduct;
   const productNo = props.productNo;
   const loginMember = props.loginMember;
 
@@ -598,7 +607,11 @@ const ProductBid = (props) => {
   //"등록"버튼 활성화하는데에 활용
   const [alreadyBidder, setAlreadyBidder] = useState(-1);
 
+  //bidList 구하기
   useEffect(() => {
+    bidListAxios();
+  }, []);
+  const bidListAxios = () => {
     axios
       .get(backServer + "/product/bid/" + productNo)
       .then((res) => {
@@ -609,8 +622,7 @@ const ProductBid = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, []);
-
+  };
   //setAlreadyBidder 구하기
   useEffect(() => {
     const bidMemberNoArr = [];
@@ -622,14 +634,180 @@ const ProductBid = (props) => {
     }
   }, [loginMember, bidList]);
 
-  //판매자가 자신의 판매금액을 수정
-  const priceUpdate = () => {};
-  //판매자가 판매버튼을 클릭
-  const selling = () => {};
+  //판매자가 자신의 판매금액을 수정/삭제
+  const priceUpdate = () => {
+    Swal.fire({
+      title: "원하시는 가격을 입력해주세요.",
+      text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "수정",
+      cancelButtonText: "삭제",
+    }).then((result) => {
+      const productPrice = result.value;
+      if (result.isConfirmed && productPrice <= bidList[0].bidPrice) {
+        Swal.fire({
+          icon: "warning",
+          title: "수정 실패. 돈이 많으시군요?",
+          text: "판매 버튼을 눌러주세요.",
+        });
+      } else if (result.isConfirmed && productPrice > bidList[0].bidPrice) {
+        axios
+          .patch(backServer + "/product/price", {
+            productPrice: productPrice,
+            productNo: productNo,
+          })
+          .then((res) => {
+            if (res.data.message === "success") {
+              Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
+                setProduct({ ...product, productPrice: productPrice });
+              });
+            } else {
+              Swal.fire({
+                icon: "warning",
+                title: "수정 실패. 다시 입력해주세요.",
+              });
+            }
+          })
+          .catch((res) => {
+            Swal.fire({
+              icon: "error",
+              title: "에러 발생. 관리자에게 문의해주세요.",
+            });
+          });
+      }
+    });
+  };
+
+  //판매자가 판매버튼을 클릭 -> trade_tbl에 insert되고, trade_status는 "예약중"
+  const selling = (e) => {
+    const bidNo = e.target.id;
+    Swal.fire({
+      icon: "question",
+      title: "이 가격으로 판매 예약 하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "판매",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      // #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
+      if (result.isConfirmed) {
+        const tradeSeller = product.memberNo;
+        let index = bidList.findIndex((bid) => bid.bidNo == bidNo);
+        const tradeBuyer = bidList[index].memberNo;
+        const tradePrice = bidList[index].bidPrice;
+        const trade = { tradeSeller, productNo, tradeBuyer, tradePrice };
+        axios.post(backServer + "/product/trade", trade).then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire({
+              icon: "success",
+              title: "현재 상태 : 예약중",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "에러 발생. 관리자에게 문의해주세요.",
+            });
+          }
+        });
+      }
+    });
+  };
+
+  //구매자가 자신의 구매호가를 삭제
+  const deleteBid = (e) => {
+    const bidNo = e.target.id;
+    Swal.fire({
+      icon: "warning",
+      title: "정말로 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(backServer + "/product/bid/" + bidNo)
+          .then((res) => {
+            if (res.data.message === "success") {
+              setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
+              bidListAxios();
+              Swal.fire({
+                icon: "success",
+                title: "삭제 성공",
+              });
+            } else {
+              Swal.fire({
+                icon: "warning",
+                title: "삭제 실패",
+                text: "다시 시도해주세요",
+              });
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "에러 발생",
+              text: "관리자에게 문의해주세요.",
+            });
+          });
+      }
+    });
+  };
+
   //구매자가 자신의 구매호가를 수정
-  const bidUpdate = () => {};
+  const bidUpdate = (e) => {
+    const bidNo = e.target.id;
+    Swal.fire({
+      title: "원하시는 가격을 입력해주세요.",
+      text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "수정",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      const bidPrice = result.value;
+      if (result.isConfirmed && bidPrice >= product.productPrice) {
+        Swal.fire({
+          icon: "warning",
+          title: "돈이 많으시군요?",
+          text: "구매버튼을 눌러주세요.",
+        });
+      } else if (result.isConfirmed && bidPrice < product.productPrice) {
+        axios
+          .patch(backServer + "/product/bid", { bidNo, bidPrice })
+          .then((res) => {
+            if (res.data.message === "success") {
+              Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
+                setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
+                bidListAxios();
+              });
+            } else {
+              Swal.fire({
+                icon: "warning",
+                title: "수정 실패",
+                text: "다시 시도해주세요.",
+              });
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "에러 발생",
+              text: "관리자에게 문의해주세요.",
+            });
+          });
+      }
+    });
+  };
+
   //구매자가 구매버튼을 클릭 -> 로그인한 회원이 아닐 경우 로그인창 띄워줘야함
   const purchasing = () => {};
+
   //구매자가 등록버튼 클릭 -> 로그인한 회원이 아닐 경우 로그인창 띄워줘야함
   const insertBId = () => {};
 
@@ -637,7 +815,24 @@ const ProductBid = (props) => {
     <div className="productBid">
       <div className="productBid-title">
         <div div className="productBidBox-wrap">
-          <div className="productBidBox-left">판매 희망가</div>
+          <div className="productBidBox-left">
+            판매 희망가
+            {product.tradeState && product.tradeState === "예약중" ? (
+              <BadgeBlack text={product.tradeState} />
+            ) : product.tradeState && product.tradeState === "결제완료" ? (
+              <BadgeRed text={product.tradeState} />
+            ) : product.tradeState && product.tradeState === "발송대기" ? (
+              <BadgeGray text={product.tradeState} />
+            ) : product.tradeState && product.tradeState === "배송중" ? (
+              <BadgeGray text={product.tradeState} />
+            ) : product.tradeState && product.tradeState === "배송완료" ? (
+              <BadgeGray text={product.tradeState} />
+            ) : product.tradeState && product.tradeState === "구매확정" ? (
+              <BadgeBlue text={product.tradeState} />
+            ) : (
+              ""
+            )}
+          </div>
           <div className="productBidBox-right"></div>
         </div>
       </div>
@@ -696,6 +891,11 @@ const ProductBid = (props) => {
                   bid={bid}
                   loginMember={loginMember}
                   product={product}
+                  clickEvent={
+                    loginMember && loginMember.memberNo === bid.memberNo
+                      ? deleteBid
+                      : null
+                  }
                 />
               </div>
               <div className="productBidBox-right">
@@ -731,6 +931,7 @@ const BidPrice = (props) => {
   const bid = props.bid;
   const loginMember = props.loginMember;
   const product = props.product;
+  const clickEvent = props.clickEvent;
 
   return (
     <div
@@ -742,7 +943,18 @@ const BidPrice = (props) => {
           : "productBidBox pswProductDetailBtn"
       }
     >
-      {bid.bidPrice ? bid.bidPrice.toLocaleString() + "원" : ""}
+      <span>{bid.bidPrice ? bid.bidPrice.toLocaleString() + "원" : ""}</span>
+      {loginMember && loginMember.memberNo === bid.memberNo ? (
+        <span
+          className="material-icons productBidDeleteBtn"
+          title="삭제"
+          onClick={clickEvent}
+        >
+          cancel
+        </span>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
@@ -766,6 +978,7 @@ const BidBtn = (props) => {
             : "productBidBox pswProductDetailBtn"
         }
         onClick={clickEvent}
+        id={bid.bidNo} //bidUpdate에 사용
       >
         {text}
       </div>

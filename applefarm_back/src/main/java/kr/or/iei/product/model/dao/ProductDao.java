@@ -18,6 +18,7 @@ import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.trade.model.dto.Bid;
+import kr.or.iei.trade.model.dto.Trade;
 
 
 
@@ -91,5 +92,11 @@ public interface ProductDao {
 	String selectNickName(int memberNo);
 
 	int insertSalesInquiries(SalesInquiries salesInquiries);
+
+	int productPriceUpdate(int productPrice, int productNo);
+
+	int productBidUpdate(Bid bid);
+
+	int productTradeReserve(Trade trade);
 
 }

@@ -9,7 +9,7 @@ const Header = (props) => {
   const logout = props.logout; //(App.js)헤더에서 보낸 로그아웃 받아오기
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [member, setMember] = useState({});
-  const [memberGrade, setMemberGrade] = useState();
+  const [memberGrade, setMemberGrade] = useState(null);
   const navigate = useNavigate(); // navigate 함수를 가져옵니다.
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Header = (props) => {
           console.log(res);
         });
     }
-  }, []);
+  }, [isLogin]);
 
   return (
     <>
@@ -84,7 +84,7 @@ const LoginForm = (props) => {
 
   return (
     <div className="header-link">
-      {isLogin ? (
+      {memberGrade ? (
         memberGrade === 2 ? (
           <>
             <Link title="쪽지함">
