@@ -121,7 +121,7 @@ const ProductInsert = (props) => {
   //"등록 취소"버튼 클릭시 제품별 메인페이지로 이동
   useEffect(() => {
     if (pip === "등록 취소") {
-      navigate("/product/"); //아직 메인페이지 경로 없음
+      navigate("/main");
     }
     if (pip === "상품 등록") {
       navigate("/product/"); //상품 상세페이지로 이동
@@ -160,8 +160,8 @@ const ProductInsert = (props) => {
         return acc;
       }, {});
 
-      console.log(partOrder);
-      console.log(partObject);
+      //console.log(partOrder);
+      //console.log(partObject);
 
       //navigate("/product/main"); //아직 메인페이지 경로 없음
 
@@ -299,7 +299,7 @@ const ProductInsert = (props) => {
           console.log(res.data);
 
           if (res.data.message === "success") {
-            navigate("/product/"+res.data.data)
+            navigate("/product/" + res.data.data);
           }
         })
         .catch((res) => {

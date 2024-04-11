@@ -58,6 +58,9 @@
 .bg4 {
   background-color: var(--main_02);
 }
+.bg5 {
+  background-color: #a5a5a5;
+}
 
 .badge {
   display: inline-block;

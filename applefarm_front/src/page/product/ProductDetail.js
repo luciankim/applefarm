@@ -89,7 +89,6 @@ const ProductDetail = (props) => {
           //likeCount는 따로 저장
           setLikeCount(res.data.data.product.likeCount);
 
-          
           console.log(res.data.data);
         } else if (res.data.message === "fail") {
         }
@@ -110,34 +109,45 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [reqPage,writeTrigger]);
+  }, [reqPage, writeTrigger]);
 
-
-    useEffect(() => {
-        axios
-        .get(backServer + "/product/review/" + productNo + "?reviewReqPage=" + reviewReqPage)
-        .then((res) => {
-          console.log(res.data.data);
-          setReviewList(res.data.data.reviewList);
-          setReviewPageInfo(res.data.data.pi);
-        })
-        .catch((res) => {
-          console.log(res.data);
-        });
+  useEffect(() => {
+    axios
+      .get(
+        backServer +
+          "/product/review/" +
+          productNo +
+          "?reviewReqPage=" +
+          reviewReqPage
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setReviewList(res.data.data.reviewList);
+        setReviewPageInfo(res.data.data.pi);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   }, [reviewReqPage]);
 
-  useEffect(()=>{
-    axios.get(backServer + "/product/seller/" + productNo + "?sellerProductReqPage="+sellerProductReqPage)
-    .then((res)=>{
-      console.log(res.data.data);
-      setSellerProductList(res.data.data.sellerProductList);
-      setSellerProductPageInfo(res.data.data.pi);
-    })
-    .catch((res)=>{
-       console.log(res.data);
-     })
-  },[sellerProductReqPage]);
-  
+  useEffect(() => {
+    axios
+      .get(
+        backServer +
+          "/product/seller/" +
+          productNo +
+          "?sellerProductReqPage=" +
+          sellerProductReqPage
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setSellerProductList(res.data.data.sellerProductList);
+        setSellerProductPageInfo(res.data.data.pi);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [sellerProductReqPage]);
 
   //탭
   const productDetailTabArr = ["1:1 문의", "거래 후기", "판매 상품"];
@@ -314,7 +324,7 @@ const ProductDetail = (props) => {
             />
           </div>
           <div className="productDetail-quality">
-            <ProductQuality />
+            <ProductQuality product={product} qualityHistory={qualityHistory} />
           </div>
         </div>
         {/* //productDetail-content-right */}
@@ -338,14 +348,24 @@ const ProductDetail = (props) => {
             pageInfo={pageInfo}
             reqPage={reqPage}
             setReqPage={setReqPage}
-            setWriteTrigger = {setWriteTrigger}
+            setWriteTrigger={setWriteTrigger}
           />
         </div>
         <div className="productDetail-tradeReview">
-          <ProductTradeReview reviewList={reviewList} setReviewReqPage={setReviewReqPage} reviewPageInfo={reviewPageInfo} reviewReqPage={reviewReqPage}/>
+          <ProductTradeReview
+            reviewList={reviewList}
+            setReviewReqPage={setReviewReqPage}
+            reviewPageInfo={reviewPageInfo}
+            reviewReqPage={reviewReqPage}
+          />
         </div>
         <div className="productDetail-productList">
-          <ProductProductList sellerProductList={sellerProductList} sellerProductPageInfo={sellerProductPageInfo} sellerProductReqPage={sellerProductReqPage} setSellerProductReqPage={setSellerProductReqPage}/>
+          <ProductProductList
+            sellerProductList={sellerProductList}
+            sellerProductPageInfo={sellerProductPageInfo}
+            sellerProductReqPage={sellerProductReqPage}
+            setSellerProductReqPage={setSellerProductReqPage}
+          />
         </div>
       </div>
       {/* //productDetail-tab-area */}
@@ -1097,7 +1117,18 @@ const BidBtn = (props) => {
 };
 
 //박성완
-const ProductQuality = (props) => {};
+const ProductQuality = (props) => {
+  const { product, qualityHistory } = props;
+  console.log(product);
+  console.log(qualityHistory);
+
+  if (product.tableName === "IPHONE_TBL") {
+  } else if (product.tableName === "MACBOOK_TBL") {
+  } else if (product.tableName === "IPAD_TBL") {
+  } else if (product.tableName === "WATCH_TBL") {
+  } else if (product.tableName === "AIRPODS_TBL") {
+  }
+};
 
 //박근열
 const ProductOneToOne = (props) => {
@@ -1125,7 +1156,7 @@ const ProductOneToOne = (props) => {
         .post(backServer + "/product/inquiry", obj)
         .then((res) => {
           console.log(res.data.data);
-          setWriteTrigger(count => count+1);
+          setWriteTrigger((count) => count + 1);
         })
         .catch((res) => {
           console.log(res.data);
@@ -1142,29 +1173,33 @@ const ProductOneToOne = (props) => {
         );
       })}
 
-
       <>
         <div className="productDetail-SalesInquiries-write-wrap">
-          {isLogin ? (<><div className="productDetail-SalesInquiries-input">
-            <textarea value={content} onChange={changeData}></textarea>
-          </div>
-            <button
-              className="productDetail-SalesInquiries-writeBtn"
-              onClick={write}
-            >
-              등록하기
-            </button></>) : ""}
-
+          {isLogin ? (
+            <>
+              <div className="productDetail-SalesInquiries-input">
+                <textarea value={content} onChange={changeData}></textarea>
+              </div>
+              <button
+                className="productDetail-SalesInquiries-writeBtn"
+                onClick={write}
+              >
+                등록하기
+              </button>
+            </>
+          ) : (
+            ""
+          )}
         </div>
 
-          <div className="productDetail-salesInquiries-page">
-            <PaginationComponent
-              pageInfo={pageInfo}
-              reqPage={reqPage}
-              setReqPage={setReqPage}
-            ></PaginationComponent>
-          </div>
-        </>
+        <div className="productDetail-salesInquiries-page">
+          <PaginationComponent
+            pageInfo={pageInfo}
+            reqPage={reqPage}
+            setReqPage={setReqPage}
+          ></PaginationComponent>
+        </div>
+      </>
     </>
   );
 };
@@ -1196,37 +1231,47 @@ const ProductTradeReview = (props) => {
   const reviewReqPage = props.reviewReqPage;
   const setReviewReqPage = props.setReviewReqPage;
 
-  return(
+  return (
     <>
-      {reviewList.map((item,index)=>{
+      {reviewList.map((item, index) => {
         return (
-          <div className="productDetail-tradeReview-item" key={"review"+index}>
+          <div
+            className="productDetail-tradeReview-item"
+            key={"review" + index}
+          >
             <div className="productDetail-tradeReview-item-left">
-            <div>구매한 상품</div>
-            <div>만족도</div>
-            <div>구매자</div>
-            <div>리뷰 내용</div>
+              <div>구매한 상품</div>
+              <div>만족도</div>
+              <div>구매자</div>
+              <div>리뷰 내용</div>
             </div>
             <div className="productDetail-tradeReview-item-right">
-            <div>{item.productSummary}</div>
-            <div>{item.reviewSatisfaction===1 ? "만족" : item.reviewSatisfaction===0 ? "보통" : item.reviewSatisfaction===1 ? "불만족" : ""}</div>
-            <div>{item.memberNickname}</div>
-            <div>{item.reviewDetail}</div>
+              <div>{item.productSummary}</div>
+              <div>
+                {item.reviewSatisfaction === 1
+                  ? "만족"
+                  : item.reviewSatisfaction === 0
+                  ? "보통"
+                  : item.reviewSatisfaction === 1
+                  ? "불만족"
+                  : ""}
+              </div>
+              <div>{item.memberNickname}</div>
+              <div>{item.reviewDetail}</div>
             </div>
           </div>
         );
       })}
       <div className="productDetail-tradeReview-page">
-            <PaginationComponent
-              pageInfo={reviewPageInfo}
-              reqPage={reviewReqPage}
-              setReqPage={setReviewReqPage}
-            ></PaginationComponent>
-          </div>
+        <PaginationComponent
+          pageInfo={reviewPageInfo}
+          reqPage={reviewReqPage}
+          setReqPage={setReviewReqPage}
+        ></PaginationComponent>
+      </div>
     </>
-    
   );
-};  
+};
 
 //박근열
 const ProductProductList = (props) => {
@@ -1235,14 +1280,19 @@ const ProductProductList = (props) => {
   const sellerProductReqPage = props.sellerProductReqPage;
   const setSellerProductReqPage = props.setSellerProductReqPage;
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  return(
+  return (
     <>
-      {sellerProductList.map((product,index)=>{
-        return(
-          <div className="productDetail-productList-item" key={"sellerProduct" + index}>
+      {sellerProductList.map((product, index) => {
+        return (
+          <div
+            className="productDetail-productList-item"
+            key={"sellerProduct" + index}
+          >
             <div className="productDetail-productList-item-left">
               <div className="productDetail-productList-item-left-productThumbnail">
-                <img src={backServer+"/product/img/"+product.productThumbnail}></img>
+                <img
+                  src={backServer + "/product/img/" + product.productThumbnail}
+                ></img>
               </div>
               <div className="productDetail-productList-item-left-productSummary">
                 {product.productSummary}
@@ -1256,25 +1306,24 @@ const ProductProductList = (props) => {
               <div className="productDetail-productList-item-right-productPrice">
                 가격 : {product.productPrice}
               </div>
-              <div className="productDetail-productList-item-right-productExplain"
-               dangerouslySetInnerHTML={{ __html: product.productExplain}}>
-           
-              </div>
+              <div
+                className="productDetail-productList-item-right-productExplain"
+                dangerouslySetInnerHTML={{ __html: product.productExplain }}
+              ></div>
             </div>
           </div>
-        )
-      })}    
+        );
+      })}
       <div className="productDetail-tradeReview-page">
-            <PaginationComponent
-              pageInfo={sellerProductPageInfo}
-              reqPage={sellerProductReqPage}
-              setReqPage={setSellerProductReqPage}
-            ></PaginationComponent>
-          </div>
+        <PaginationComponent
+          pageInfo={sellerProductPageInfo}
+          reqPage={sellerProductReqPage}
+          setReqPage={setSellerProductReqPage}
+        ></PaginationComponent>
+      </div>
     </>
-  )
+  );
 };
 
 //박성완
 const ProductReliable = (props) => {};
-

@@ -4,7 +4,7 @@ import "./productInsert.css";
 import ReactQuill from "react-quill";
 import { Button1 } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
-
+import ProductChart from "./ProductChart";
 
 const ProductInsertLastFrm = (props) => {
   //정의
@@ -186,8 +186,8 @@ const ProductInsertLastFrm = (props) => {
             </td>
           </tr>
           <tr style={{ height: "400px" }}>
-            <th>여기는 차트</th>
-            <td>1</td>
+            <th>차트</th>
+            <td>여기에 컴포넌트</td>
           </tr>
           <tr style={{ height: "300px" }}>
             <th>썸내일 등록</th>
@@ -229,8 +229,6 @@ const ProductInsertLastFrm = (props) => {
               </div>
             </td>
           </tr>
-
-
         </tbody>
       </table>
     </div>
