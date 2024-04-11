@@ -92,7 +92,7 @@ public interface MemberDao {
 
 	int resetPw(Member member);
 
-	Board getBoardInfo(int memberNo);
+	List<Board> getBoardInfo(int memberNo);
 
 
 

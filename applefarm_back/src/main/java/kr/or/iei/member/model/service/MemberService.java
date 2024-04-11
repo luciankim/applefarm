@@ -349,7 +349,7 @@ public class MemberService {
 			return memberDao.resetPw(member);
 		}
 
-		public Board getBoardInfo(int memberNo) {
+		public List<Board> getBoardInfo(int memberNo) {
 			
 			return memberDao.getBoardInfo(memberNo);
 		}

@@ -705,9 +705,9 @@ public class MemberController {
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})	
 	@GetMapping(value="/getBoardInfo/{memberNo}")
-	public ResponseEntity<ResponseDTO> getBoardInfo(@RequestParam int memberNo){
+	public ResponseEntity<ResponseDTO> getBoardInfo(@PathVariable int memberNo){
 		
-		Board boardInfo = memberService.getBoardInfo(memberNo);
+		List<Board> boardInfo = memberService.getBoardInfo(memberNo);
 		
 		System.out.println("board 데이터:"+boardInfo);
 		
