@@ -47,4 +47,7 @@ public class Product {
 	
 	//productChart에 사용
 	private int term;
+	
+	//productBid에 사용
+	private String tradeState;
 }

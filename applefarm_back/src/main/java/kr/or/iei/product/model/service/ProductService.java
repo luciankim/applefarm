@@ -25,6 +25,7 @@ import kr.or.iei.product.model.dto.ProductTradeChart;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.trade.model.dto.Bid;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
 
@@ -350,6 +351,7 @@ public class ProductService {
 
 	}
 
+
 	public Map selectReviewList(int productNo, int reviewReqPage) {
 		int numPerPage = 3;
 		int pageNaviSize = 5;
@@ -382,6 +384,22 @@ public class ProductService {
 		map.put("pi", pi);
 		
 		return map; 
+	}
+
+	@Transactional
+	public int productPriceUpdate(int productPrice, int productNo) {
+		return productDao.productPriceUpdate(productPrice, productNo);
+	}
+
+	@Transactional
+	public int productBidUpdate(Bid bid) {
+		return productDao.productBidUpdate(bid);
+	}
+
+	@Transactional
+	public int productTradeReserve(Trade trade) {
+		return productDao.productTradeReserve(trade);
+
 	}
 
 

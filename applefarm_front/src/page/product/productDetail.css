@@ -115,20 +115,34 @@
 }
 .productBidBox-left {
   width: 220px;
+  position: relative;
 }
 .productBidBox-right {
   width: 80px;
   margin-right: 20px;
 }
+.productBidBox-left > .badge {
+  position: absolute;
+  left: 120px;
+  top: 5px;
+}
 .productBidBox-left > .productBidBox {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   padding-left: 20px;
+  padding-right: 20px;
   letter-spacing: 2px;
   color: var(--main_02);
   padding-top: 5px;
   padding-bottom: 5px;
 }
+.productBidBox > .productBidDeleteBtn {
+  color: var(--gray_01);
+}
+.productBidBox > .productBidDeleteBtn:hover {
+  color: var(--main_02);
+}
+
 .productBidBox-right > .productBidBox {
   padding-top: 5px;
   padding-bottom: 5px;
