@@ -20,13 +20,12 @@ public class MacbookQualityHistory {
 	private String keyboard;
 	private String ports;
 	private String batteryEfficiency;
-	private String wirelessConffectivity;
+	private String wirelessConnectivity;
 	private String camera;
 	private String microphone;
 	private String speakersAudioJack;
 	private String biometricAuthentication;
 	private String power;
-	private String compass;
 	private String voiceRecording;
 	private String trackpad;
 	private String operation;

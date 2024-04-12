@@ -538,12 +538,26 @@ public class ProductController {
 	public ResponseEntity<ResponseDTO> insertReport(@RequestBody Report report,@RequestAttribute int memberNo){
 		report.setReportingMember(memberNo);
 		
-		System.out.println(report);
+	
 		
 		int result = productService.insertReport(report);
-		System.out.println(result);
+
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@GetMapping(value = "/productList/{tableName}")
+	public ResponseEntity<ResponseDTO> selectProductList(@PathVariable String tableName,@RequestParam int reqPage){
+		System.out.println("selectProductList");
+		Map map = productService.selectProductList(tableName,reqPage);
+		
+		if(map != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);

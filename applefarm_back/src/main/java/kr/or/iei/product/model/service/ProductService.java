@@ -409,6 +409,22 @@ public class ProductService {
 		return productDao.insertReport(report);
 	}
 
+	public Map selectProductList(String tableName,int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		
+		int totalCount = productDao.productTotalCount(tableName);
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.selectProductList(tableName,pi);
+		System.out.println(list);
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("productList", list);
+		map.put("pi", pi);
+		
+		return map; 
+	}
+
 
 
 
