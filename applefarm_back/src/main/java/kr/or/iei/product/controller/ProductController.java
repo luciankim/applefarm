@@ -29,6 +29,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
@@ -123,7 +124,8 @@ public class ProductController {
 	}
 	
 	@PostMapping(value = "/iphone")
-	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@ModelAttribute IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@ModelAttribute IphoneQualityHistory partObject,
+ MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
 		//회원번호
 		product.setMemberNo(memberNo);
 		
@@ -525,6 +527,23 @@ public class ProductController {
 //		System.out.println(map.size());
 		if(map.size() == 2) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@PostMapping(value = "/report")
+	public ResponseEntity<ResponseDTO> insertReport(@RequestBody Report report,@RequestAttribute int memberNo){
+		report.setReportingMember(memberNo);
+		
+		System.out.println(report);
+		
+		int result = productService.insertReport(report);
+		System.out.println(result);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./productDetail.css"; //박성완
 import "./productDetail2.css"; //박근열
@@ -23,6 +23,7 @@ import {
   BadgeGray,
   BadgeRed,
 } from "../../component/FormFrm";
+
 
 const ProductDetail = (props) => {
   const navigate = useNavigate();
@@ -220,6 +221,45 @@ const ProductDetail = (props) => {
     }
   };
 
+  //리폿 버튼
+  const report = () => {
+    Swal.fire({
+      title: "신고 내용 입력",
+      input: "text",
+      inputPlaceholder: "신고 내용....",
+      confirmButtonText: "신고",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+    })
+    .then((res) => {
+      if (res.isConfirmed) {
+        const reportContent = res.value;
+        const obj = {
+          reportTarget: product.productNo,
+          reportedMember: seller.memberNo,
+          reportContent: reportContent
+        };
+        console.log(obj);
+
+        axios
+          .post(backServer + "/product/report", obj)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((res) => {
+            console.log(res.data);
+          });
+      } else if (res.isDismissed) {
+
+      }
+    });
+
+    
+
+
+    
+  }
+
   return (
     <div className="productDetail-wrap">
       {/* productDetail-top */}
@@ -298,7 +338,7 @@ const ProductDetail = (props) => {
               <ProductSummary product={product} />
             </div>
             <div className="productDetail-explain-seller productArticle2">
-              <ProductSeller product={product} seller={seller} />
+              <ProductSeller product={product} seller={seller} report={report} isLogin={isLogin}/>
             </div>
           </div>
           <div className="productDetail-explain-detail productArticle2">
@@ -577,6 +617,16 @@ const ProductSummary = (props) => {
 const ProductSeller = (props) => {
   const product = props.product;
   const seller = props.seller;
+  const isLogin = props.isLogin;
+  const report = props.report;
+
+  // const [modalOpen, setModalOpen] = useState(false); // 모달 상태 관리
+  // const modalBackground = useRef();
+  // // 모달 열기 함수
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+  
 
   return (
     <>
@@ -592,9 +642,9 @@ const ProductSeller = (props) => {
             {seller.sellerScore}는 37부터 시작 
               
             */}
-              {0 <= seller.sellerScore <= 37 ? (
+              {0 <= seller.sellerScore <= 36 ? (
                 <img src="/image/scoreImage/썩은사과.png" />
-              ) : 38 <= seller.sellerScore <= 70 ? (
+              ) : 37 <= seller.sellerScore <= 70 ? (
                 <img src="/image/scoreImage/보통사과.png" />
               ) : 71 <= seller.sellerScore <= 100 ? (
                 <img src="/image/scoreImage/금사과.png" />
@@ -625,8 +675,10 @@ const ProductSeller = (props) => {
           </div>
           <div className="productDetail-explain-seller-report-area">
             <div className="productDetail-explain-seller-report-icon">
-              <img src="/image/report/report.png" />
+              <img src="/image/report/report.png" onClick={isLogin ? report : null}/>
             </div>
+
+            {/* {modalOpen && <Modal setModalOpen={setModalOpen} modalBackground={modalBackground}/>} */}
 
             <div className="productDetail-explain-seller-report-text">
               신고하기
@@ -636,6 +688,29 @@ const ProductSeller = (props) => {
       ) : (
         ""
       )}
+    </>
+  );
+};
+
+const Modal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const modalBackground = props.modalBackground;
+  return (
+    <>
+    
+      <div className={'modal-container'} ref={modalBackground} onClick={e => {
+        if (e.target === modalBackground.current) {
+          setModalOpen(false);
+        }
+      }}>
+        <div className={'modal-content'}>
+          <p>리액트로 모달 구현하기</p>
+          <button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
+            모달 닫기
+          </button>
+        </div>
+      </div>
+    
     </>
   );
 };

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
@@ -400,6 +401,12 @@ public class ProductService {
 	public int productTradeReserve(Trade trade) {
 		return productDao.productTradeReserve(trade);
 
+	}
+
+	@Transactional
+	public int insertReport(Report report) {
+		
+		return productDao.insertReport(report);
 	}
 
 

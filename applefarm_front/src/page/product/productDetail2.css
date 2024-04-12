@@ -82,6 +82,8 @@
   vertical-align: middle;
 }
 
+
+
 .productDetail-explain-seller-name-area{
   height: 30px;
   font-size: 20px;
@@ -124,12 +126,17 @@
 .productDetail-explain-seller-report-icon >img{
   width: 45px;
   height: 45px;
+  cursor: pointer;
 }
 .productDetail-explain-seller-report-text{
   padding-right: 100px;
   line-height: 45px;
   color: red;
 }
+.productDetail-explain-seller-report-icon:hover{
+  scale: 1.2;
+}
+
 
 /* 상세설명 */
 .productDetail-explain-detail > div{
@@ -277,7 +284,12 @@
   border-bottom: 1px solid black;
 }
 .productDetail-productList-item-right > .productDetail-productList-item-right-productExplain{
-  padding: 30px;
+  /* padding: 30px; */
   font-size: 20px;
   height: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.productDetail-productList-item-right > .productDetail-productList-item-right-productExplain > p{
+  margin: 0;
 }
