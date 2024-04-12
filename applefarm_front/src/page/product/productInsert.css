@@ -388,3 +388,9 @@
 .ql-editor > *{
   width: 100%;
 }
+
+.productInsert-blurText > input{
+  color: red;
+  font-size: 15px;
+  padding-left: 10px;
+}

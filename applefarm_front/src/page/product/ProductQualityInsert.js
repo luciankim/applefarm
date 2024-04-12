@@ -5,10 +5,6 @@ import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
 const ProductQualityInsert = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  // console.log(props);
-  //
-  // const [grade, setGrade] = useState();
-  // const [partOrder, setPartOrder] = useState([]);
   const grade = props.grade;
   const setGrade = props.setGrade;
   const partOrder = props.partOrder;
@@ -23,6 +19,28 @@ const ProductQualityInsert = (props) => {
   const [qualityState, setQualityState] = useState({});
   const [qualityList, setQualityList] = useState([]);
 
+  // 품질 참조 리스트 불러오기
+  useEffect(() => {
+    axios
+      .get(backServer + "/product/quality/" + tableName)
+      .then((res) => {
+        // console.log(res.data);
+        setQualityList(res.data.data);
+
+        for (let i = 0; i < res.data.data.length; i++) {
+          // console.log(res.data.data[i]);
+          const obj = null;
+          arr.push(obj);
+        }
+
+        setPartOrder(arr);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
+  // 다음 입력 컴포넌트로 이동하기 위한 조건
   useEffect(() => {
     if (Object.keys(score).length === qualityList.length) {
       changeBtnActiveTrue();
@@ -44,13 +62,6 @@ const ProductQualityInsert = (props) => {
       ? item.productStatusImage.split("/")[index]
       : "default";
 
-    // console.log(index); // 선택된 품질에 해당하는 인덱스 값을 설정합니다.
-
-    // setQualityHistory((prev) => {
-    //   ...prev,
-    //    [part]: imageName,
-    // })
-
     setScore((prevScores) => ({
       ...prevScores,
       [part]: index,
@@ -60,8 +71,6 @@ const ProductQualityInsert = (props) => {
     const obj = {part2 : part2,value:value};
     partOrder[index_] = obj;
     setPartOrder(partOrder);
-
-    
 
     setQualityState((prev) => ({
       ...prev,
@@ -84,12 +93,6 @@ const ProductQualityInsert = (props) => {
     return s;
   };
 
-  useEffect(() => {
-    // console.log(qualityHistory);
-    // console.log(qualityState);
-    // console.log(partOrder);
-    // console.log(grade);
-  }, [qualityState]);
 
   // 품목 선택할때마다 점수 등급 설정
   useEffect(() => {
@@ -109,26 +112,8 @@ const ProductQualityInsert = (props) => {
   }, [handleQualityChange]);
 
   const arr = new Array();
-  // 품질 참조 리스트 불러오기
-  useEffect(() => {
-    axios
-      .get(backServer + "/product/quality/" + tableName)
-      .then((res) => {
-        // console.log(res.data);
-        setQualityList(res.data.data);
 
-        for (let i = 0; i < res.data.data.length; i++) {
-          // console.log(res.data.data[i]);
-          const obj = null;
-          arr.push(obj);
-        }
-
-        setPartOrder(arr);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  }, []);
+  
 
   return (
     <div className="quality-select-total-wrap">

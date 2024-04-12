@@ -446,6 +446,7 @@ const ProductInsert = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
+          
         />
       </div>
       <div className="productInsert-nextBtn">
