@@ -272,9 +272,14 @@ const Login = (props) => {
       axios
         .post(backServer + "/member/login", obj)
         .then((res) => {
+          console.log(res.data);
           if (res.data.message === "success") {
             loginFunction(res.data.data);
             navigate("/");
+          } else if (res.data.message === "black") {
+            Swal.fire(
+              "You are a black member, but I'm confident that you'll eventually become a good member."
+            );
           } else {
             Swal.fire("아이디 또는 비밀번호를 확인하세요.");
           }

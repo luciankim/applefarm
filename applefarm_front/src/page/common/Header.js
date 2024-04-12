@@ -9,7 +9,7 @@ const Header = (props) => {
   const logout = props.logout; //(App.js)헤더에서 보낸 로그아웃 받아오기
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [member, setMember] = useState({});
-  const [memberGrade, setMemberGrade] = useState();
+  const [memberGrade, setMemberGrade] = useState(null);
   const navigate = useNavigate(); // navigate 함수를 가져옵니다.
 
   useEffect(() => {
@@ -24,8 +24,11 @@ const Header = (props) => {
         .catch((res) => {
           console.log(res);
         });
+    } else {
+      setMember(null);
+      setMemberGrade(null);
     }
-  }, []);
+  }, [isLogin]);
 
   return (
     <>
@@ -84,15 +87,17 @@ const LoginForm = (props) => {
 
   return (
     <div className="header-link">
-      {isLogin ? (
+      {memberGrade ? ( //렌더링 같이 되는 조건으로 세팅하는 게 좀 더 안전하다.
         memberGrade === 2 ? (
           <>
             <Link title="쪽지함">
               <span className="material-icons">email</span>
             </Link>
-
-            <Link to="/admin" title="관리자페이지">
+            <Link to="/mypage/loginInfo" title="마이페이지">
               <span className="material-icons">face</span>
+            </Link>
+            <Link to="/admin" title="관리자페이지">
+              <span class="material-icons">account_circle</span>
             </Link>
             <Link to="#" title="로그아웃">
               <span className="material-icons" onClick={logout}>

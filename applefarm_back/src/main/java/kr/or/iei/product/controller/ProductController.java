@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
@@ -37,9 +39,12 @@ import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductAndTerm;
 import kr.or.iei.product.model.dto.ProductCategory;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SalesInquiries;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
+import kr.or.iei.trade.model.dto.Bid;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.FileUtils;
 import kr.or.iei.util.JwtUtil;
 
@@ -119,7 +124,8 @@ public class ProductController {
 	}
 	
 	@PostMapping(value = "/iphone")
-	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@ModelAttribute IphoneQualityHistory partObject,@ModelAttribute MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
+	public ResponseEntity<ResponseDTO> insertIphone(@ModelAttribute Product product,@ModelAttribute IphoneQualityHistory partObject,
+ MultipartFile thumbnail,@ModelAttribute MultipartFile[] productFile,@RequestAttribute int memberNo){
 		//회원번호
 		product.setMemberNo(memberNo);
 		
@@ -339,13 +345,12 @@ public class ProductController {
 		HashMap<String, Object> map = productService.selectOneProduct(productNo);
 		/* map.key
 		 * product
-		 * sellerReviewList
-		 * sellerProductList
+		 * seller
 		 * productFileList
 		 * qualityHistory
 		 * reliableProductList
 		 */
-		if(map.size()==7) {
+		if(map.size()==5) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
@@ -407,6 +412,35 @@ public class ProductController {
 		}
 	}
 	
+
+//	
+	
+	@GetMapping(value = "/inquiry/{productNo}")
+	public ResponseEntity<ResponseDTO> selectSalesInquiriesList(@PathVariable int productNo, @RequestParam int reqPage){
+		Map map = productService.selectSalesInquiriesList(productNo, reqPage);
+		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@PostMapping(value = "/inquiry")
+	public ResponseEntity<ResponseDTO> insertSalesInquiries(@RequestBody SalesInquiries salesInquiries , @RequestAttribute int memberNo){
+		int result = productService.insertSalesInquiries(salesInquiries,memberNo);
+		
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+
 	@Operation(summary="매수호가 리스트", description = "매수호가 리스트 불러오기")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
@@ -419,4 +453,101 @@ public class ProductController {
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 	
+	@Operation(summary="판매 희망가 수정", description = "상품 상세페이지에서 판매자가 자신의 상품의 판매 희망가를 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value = "/price")
+	public ResponseEntity<ResponseDTO> productPriceUpdate(@RequestBody HashMap<String, Integer> map){
+		int productPrice = map.get("productPrice");
+		int productNo = map.get("productNo");
+		int result = productService.productPriceUpdate(productPrice, productNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="구매 호가 수정", description = "상품 상세페이지에서 구매자가 자신이 등록한 구매 희망가를 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value = "/bid")
+	public ResponseEntity<ResponseDTO> productBidUpdate(@RequestBody Bid bid){
+		//bid에 들어있는 값 : bidNo, bidPrice
+		int result = productService.productBidUpdate(bid);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="거래 예약", description = "상품 상세페이지에서 판매자가 특정 구매 호가를 승낙")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value = "/trade")
+	public ResponseEntity<ResponseDTO> productTradeReserve(@RequestBody Trade trade){
+		//trade에 들어있는 값 : #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
+		int result = productService.productTradeReserve(trade);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@GetMapping(value = "/review/{productNo}")
+	public ResponseEntity<ResponseDTO> selectReviewList(@PathVariable int productNo, @RequestParam int reviewReqPage){
+		Map map = productService.selectReviewList(productNo, reviewReqPage);
+//		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@GetMapping(value = "/seller/{productNo}")
+	public ResponseEntity<ResponseDTO> selectProductList(@PathVariable int productNo, @RequestParam int sellerProductReqPage){
+		Map map = productService.selectProductList(productNo, sellerProductReqPage);
+//		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@PostMapping(value = "/report")
+	public ResponseEntity<ResponseDTO> insertReport(@RequestBody Report report,@RequestAttribute int memberNo){
+		report.setReportingMember(memberNo);
+		
+		System.out.println(report);
+		
+		int result = productService.insertReport(report);
+		System.out.println(result);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
 }

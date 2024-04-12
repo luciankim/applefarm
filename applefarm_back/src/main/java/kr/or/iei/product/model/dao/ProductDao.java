@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
@@ -13,9 +14,13 @@ import kr.or.iei.product.model.dto.IphoneQualityHistory;
 import kr.or.iei.product.model.dto.MacbookQualityHistory;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.product.model.dto.ProductFile;
+import kr.or.iei.product.model.dto.SalesInquiries;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
+import kr.or.iei.util.PageInfo;
 import kr.or.iei.trade.model.dto.Bid;
+import kr.or.iei.trade.model.dto.Trade;
+
 
 
 @Mapper
@@ -77,5 +82,37 @@ public interface ProductDao {
 	List<Bid> productBidList(int productNo);
 	
 	Member selectSellerInfo(int sellerNo);
+
+	
+
+	int totalCount(int productNo);
+
+
+	List selectSalesInquiriesList(int productNo, PageInfo pi);
+
+	String selectNickName(int memberNo);
+
+	int insertSalesInquiries(SalesInquiries salesInquiries);
+
+
+
+	int totalReviewCount(int productNo, String sellerNo);
+
+	List selectReviewList(int productNo, PageInfo pi, String sellerNo);
+
+	String selectSellerNo(int productNo);
+
+	int totalSellerProductCount(int productNo, String sellerNo);
+
+	List selectSellerProductList(int productNo, PageInfo pi, String sellerNo);
+
+	int productPriceUpdate(int productPrice, int productNo);
+
+	int productBidUpdate(Bid bid);
+
+	int productTradeReserve(Trade trade);
+
+	int insertReport(Report report);
+
 
 }

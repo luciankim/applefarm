@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.trade.model.dto.Bid;
@@ -93,6 +94,8 @@ public interface MemberDao {
 	String getMemberId(String memberEmail);
 
 	int resetPw(Member member);
+
+	Board getBoardInfo(int memberNo);
 
 
 

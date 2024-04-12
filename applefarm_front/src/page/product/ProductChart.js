@@ -36,7 +36,7 @@ const ProductChart = (props) => {
     },
     //options.legend
     legend: {
-      position: "top",
+      position: "bottom",
     },
     //options.stroke
     stroke: {
@@ -58,7 +58,7 @@ const ProductChart = (props) => {
       style: {
         fontSize: "24px",
         fontWeight: "bold",
-        fontFamily: undefined,
+        fontFamily: "ns-b",
         color: "#263238",
       },
     },
@@ -239,13 +239,19 @@ const ProductChart = (props) => {
   //console.log(series[1]); //확인!!!
 
   return (
-    <div>
-      <div className="productChart-btns">
+    <div className="productChart-wrap">
+      <div
+        className={
+          path === "productDetail"
+            ? "productChart-btns bottomTermArr"
+            : "productChart-btns"
+        }
+      >
         {termArr.map((termItem, index) => {
           return (
             <Btn
               key={termItem + term + index}
-              bg={term === termItem ? "bg1" : "bg2"}
+              bg={term === termItem ? "bg1" : "bg5"}
               text={termItem}
               value={termItem}
               clickEvent={changeTerm}

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
@@ -166,20 +167,19 @@ public class MemberService {
 		
 		Member m = memberDao.selectNo(memberNo);
 		
-		
-
-		if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
-
-			long expiredDateMs = 60 * 60 * 1000l; // 1시간 지정
-
-			// 아이디 인증 끝났을 때 토큰
-			String accessToken = jwtUtil.createToken(m.getMemberNo(), expiredDateMs);
-
-			System.out.println(accessToken); // accessToken은 클라이언트한테 줘야 함.
-
+		if(m.getMemberGrade() == 3 ) {
+			String accessToken = "블랙";
 			return accessToken;
-		} else {
-			return null;
+		}else {
+			if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+				long expiredDateMs = 60 * 60 * 1000l; // 1시간 지정
+				// 아이디 인증 끝났을 때 토큰
+				String accessToken = jwtUtil.createToken(m.getMemberNo(), expiredDateMs);
+				System.out.println(accessToken); // accessToken은 클라이언트한테 줘야 함.
+				return accessToken;
+			} else {
+				return null;
+			}
 		}
 	}
 
@@ -357,6 +357,11 @@ public class MemberService {
 		public int resetPw(Member member) {
 			// TODO Auto-generated method stub
 			return memberDao.resetPw(member);
+		}
+
+		public Board getBoardInfo(int memberNo) {
+			
+			return memberDao.getBoardInfo(memberNo);
 		}
 
 		

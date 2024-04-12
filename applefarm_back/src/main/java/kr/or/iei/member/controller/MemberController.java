@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
 
@@ -229,14 +231,21 @@ public class MemberController {
 		
 		String accessToken = memberService.login(member);
 
-		if (accessToken != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); // 성공하면 토큰도 전달
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		} else {
+	
 
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-	        return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		if (accessToken != null) {
+			if(accessToken == "블랙") {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "black", accessToken); // 성공하면 토큰도 전달
+			    return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}else {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); // 성공하면 토큰도 전달
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());				
+			}
+		}  else {
+		    ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+		    return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
+
 		
 		
 	}
@@ -632,9 +641,7 @@ public class MemberController {
 			
 		}
 		
-
-	    
-	    
+    
 	    
 	}
 	
@@ -671,8 +678,6 @@ public class MemberController {
 				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 
 			}
-			
-		
 		
 		
 	}
@@ -700,10 +705,24 @@ public class MemberController {
 		}
 		
 		
-		
-		
 	}
 		
+	@Operation(summary ="자유게시판 데이터 가져오기",description = "로그인한 회원번호로 게시판테이블 데이터 가져오기")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})	
+	@GetMapping(value="/getBoardInfo/{memberNo}")
+	public ResponseEntity<ResponseDTO> getBoardInfo(@RequestParam int memberNo){
+		
+		Board boardInfo = memberService.getBoardInfo(memberNo);
+		
+		System.out.println("board 데이터:"+boardInfo);
+		
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", boardInfo);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		
+	}
 	
 	
 	
