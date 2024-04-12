@@ -16,6 +16,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.trade.model.dao.TradeDao;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
@@ -241,7 +242,7 @@ public class MemberService {
 		public List allAddress(int memberNo) {
 			return memberDao.selectAddress(memberNo);
 		}
-		public Map selectPaymentInfo(int memberNo, int productNo) {
+		public Map selectPaymentInfo(int memberNo, int productNo, String bidThough) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			//회원 정보
 			Member member = memberDao.getMemberInfo(memberNo);
@@ -249,7 +250,15 @@ public class MemberService {
 			Address address= memberDao.selectAddressBasic(memberNo);
 			//상품 정보
 			Product product = productDao.selectOneProduct(productNo);
-			int tradeExist = tradeDao.selectExistTrade(productNo);
+			Trade trade = new Trade();
+			trade.setTradeBuyer(memberNo);
+			trade.setProductNo(productNo);
+			//상품 예약 결제로 페이지 접근시 결제 가격 조회
+			if(bidThough.equals("y")) {
+				int bidPrice = tradeDao.selectBidPrice(trade);
+				product.setProductPrice(bidPrice);
+			}
+			int tradeExist = tradeDao.tradeExistCount(trade);
 			map.put("member", member);
 			map.put("address", address);
 			map.put("product",product);
@@ -291,24 +300,7 @@ public class MemberService {
 
 		}
 
-		public Map selectBid(int memberNo, int status, int reqPage, String startDate, String endDate) {
-			int numPerPage = 3; // 페이지당 행 수 -> 성공 후 수정
-			int pageNaviSize = 5;
-			int totalCount = memberDao.bidTotalCount(memberNo);
-			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-			HashMap<String, Object> data = new HashMap<String, Object>();
-			data.put("memberNo", memberNo);
-			data.put("start", pi.getStart());
-			data.put("end", pi.getEnd());
-			data.put("status",status);
-			data.put("startDate",startDate);
-			data.put("endDate",endDate);
-			List<Address> bidList = memberDao.selectBid(data);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("bidList", bidList);
-			map.put("pi", pi);
-			return null;
-		}
+
 
 		
 		//이전 비밀번호 확인

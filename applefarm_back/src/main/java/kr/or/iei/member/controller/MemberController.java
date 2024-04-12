@@ -282,7 +282,6 @@ public class MemberController {
 	})
 	@DeleteMapping(value = "/address/{addressNo}") 
 	public ResponseEntity<ResponseDTO> deleteAddress(@PathVariable int addressNo){
-		System.out.println(addressNo);
 		int result = memberService.deleteAddress(addressNo);
 		if(result>0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -363,9 +362,9 @@ public class MemberController {
 		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 확인"),
 		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
 	})
-	@GetMapping(value = "/paymentInfo/{productNo}")
-	public ResponseEntity<ResponseDTO> paymentInfo(@RequestAttribute int memberNo,@PathVariable int productNo){
-		Map map = memberService.selectPaymentInfo(memberNo,productNo);
+	@GetMapping(value = "/paymentInfo/{productNo}/{bidThough}")
+	public ResponseEntity<ResponseDTO> paymentInfo(@RequestAttribute int memberNo,@PathVariable int productNo, @PathVariable String bidThough){
+		Map map = memberService.selectPaymentInfo(memberNo,productNo,bidThough);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		
@@ -386,15 +385,7 @@ public class MemberController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@Operation(summary = "구매입찰내역 조회", description = "상태,페이지,기간을 받아서 구매 입찰내역 조회")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@GetMapping(value = "/bid/{status}/{reqPage}/{startDate}/{endDate}")
-	public ResponseEntity<ResponseDTO> selectBid(@RequestAttribute int memberNo,@PathVariable int status,@PathVariable int reqPage, @PathVariable String startDate, @PathVariable String endDate) {
-		Map map = memberService.selectBid(memberNo,status,reqPage,startDate,endDate);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-	}
+
 	
 
 	

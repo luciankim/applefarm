@@ -23,27 +23,25 @@ const DelModal = (props) => {
   };
 
   return (
-    <div>
-      <div className="modal" ref={modalBackground} onClick={modalBack}>
-        <div className="modal-content-wrap">
-          <div className="close-icon-wrap">
-            <span className="material-icons close-icon" onClick={closeModal}>
-              highlight_off
-            </span>
-          </div>
-          <div className="modal-content">
-            <span className="material-icons modal-main-icon">{icon}</span>
-            <p className="modal-text">{text}</p>
-            <button
-              className="like-delete-btn like-modal-btn"
-              onClick={clickEvent}
-            >
-              Yes
-            </button>
-            <button className="like-modal-btn" onClick={closeModal}>
-              No
-            </button>
-          </div>
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap">
+        <div className="close-icon-wrap">
+          <span className="material-icons close-icon" onClick={closeModal}>
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <span className="material-icons modal-main-icon">{icon}</span>
+          <p className="modal-text">{text}</p>
+          <button
+            className="like-delete-btn like-modal-btn"
+            onClick={clickEvent}
+          >
+            Yes
+          </button>
+          <button className="like-modal-btn" onClick={closeModal}>
+            No
+          </button>
         </div>
       </div>
     </div>
@@ -518,7 +516,7 @@ const RequestModal = (props) => {
     </div>
   );
 };
-
+//구매내역 상태선택 모달
 const ProductStatus = (props) => {
   const modalBackground = useRef();
   const { setModalOpen, statusList, currentStatus, setCurrentSataus } = props;
@@ -543,7 +541,7 @@ const ProductStatus = (props) => {
             highlight_off
           </span>
           <div className="modal-product-status-title">선택한 상태 보기</div>
-          <div className="modal-content">
+          <div className="modal-content status-modal">
             {statusList.map((item, index) => {
               return (
                 <button
@@ -557,7 +555,7 @@ const ProductStatus = (props) => {
                       ? "status-btns current-status"
                       : "status-btns"
                   }
-                  style={item.color === "red" ? { color: "red" } : {}}
+                  style={{ color: item.color }}
                 >
                   {item.name}
                 </button>

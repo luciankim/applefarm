@@ -90,7 +90,7 @@
   opacity: 0.5;
   cursor: default;
 }
-.purchase-btn-box > button {
+.purchase-go-btn-box > button {
   background-color: #0071e3;
   cursor: pointer;
 }
@@ -99,7 +99,7 @@
   font-family: ns-r;
   font-weight: 550;
 }
-.purchase-btn-box > button:hover {
+.purchase-go-btn-box > button:hover {
   box-shadow: 0px 0px 5px blue;
 }
 .no-like-list {
@@ -133,6 +133,7 @@
   left: 0;
   opacity: 0.9;
 }
+
 /* 마이페이지 */
 
 .mypage-title {
@@ -301,13 +302,18 @@
 .payment-delivery-detail > table > tbody > tr > td {
   padding: 5px 0px;
 }
+.payment-delivery-detail > table {
+  border-spacing: 5px;
+}
+/*
 .payment-delivery-detail
   > table
   > tbody
   > tr:last-child
   > td:not(:first-child) {
+
   padding-right: 5px;
-}
+}*/
 .delivery-address-btn {
   border-radius: 10px;
   padding: 10px 15px;
@@ -554,7 +560,7 @@
   text-align: center;
   cursor: pointer;
   border-bottom: 1px solid rgba(167, 167, 167, 0.6);
-  padding: 0px 0px 20px 0px;
+  padding: 0px 0px 18px 0px;
   font-size: 15px;
 }
 .history-menu-focus {
@@ -611,6 +617,54 @@
   padding: 10px;
   border-radius: 10px;
   background-color: #ffffff;
+}
+.purchase-history-content table {
+  border-spacing: 10px;
+  width: 100%;
+  text-align: center;
+}
+.purchase-history-content table > thead > tr > td {
+  font-size: 12px;
+  font-family: ns-b;
+  width: 100px;
+}
+.purchase-history-content table > tbody > tr {
+  border-top: 1px solid #ccc; /*안들어감*/
+}
+.purchase-history-content table > tbody > tr > td {
+  padding: 25px 0px;
+}
+.purchase-history-content table > tbody > tr > td:nth-child(2) {
+  text-align: left;
+}
+.non-list > td > div {
+  padding: 150px 0px;
+  font-size: 13px;
+}
+.sold-out-color {
+  color: red;
+}
+.trade-book-status {
+  color: var(--main_02);
+}
+.sm-f {
+  font-size: 13px;
+}
+.purchase-date {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 15px;
+  color: var(--gray_05);
+}
+.purcase-date-wrap {
+  position: relative;
+}
+.purchase-history-content table > tbody > tr > td > button {
+  background-color: #c7deff;
+  padding: 2px 3px;
+  border: none;
+  margin: 3px;
 }
 /* 사이드메뉴 */
 .sideMenu > ul > li > a {
@@ -873,7 +927,8 @@
 }
 
 table {
-  border-spacing: 30px;
+  /*
+  border-spacing: 30px;*/
 }
 
 .btn-wrap {

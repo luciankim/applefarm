@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -82,9 +83,6 @@ public interface MemberDao {
 	List<Member> selectBlackMemberCheckList();
 
 
-	int bidTotalCount(int memberNo);
-
-	List<Address> selectBid(HashMap<String, Object> data);
 
 	int updatePhone(Member member);
 

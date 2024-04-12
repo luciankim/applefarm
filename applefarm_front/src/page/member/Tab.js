@@ -21,7 +21,7 @@ const Tab = (props) => {
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
-    setReqPage(0);
+    setReqPage(1);
   };
 
   return (
@@ -38,7 +38,7 @@ const Tab = (props) => {
               }
               onClick={() => selectMenuHandler(index)}
             >
-              {item.name}
+              {item}
             </li>
           ))}
         </ul>
@@ -49,6 +49,7 @@ const Tab = (props) => {
           setEndDate={setEndDate}
           activeButton={activeButton}
           setActiveButton={setActiveButton}
+          setReqPage={setReqPage}
         />
         <div>{tabMenu[currentTab].content}</div>
       </div>
@@ -64,6 +65,7 @@ const DateSelect = (props) => {
     setEndDate,
     activeButton,
     setActiveButton,
+    setReqPage,
   } = props;
 
   // 2개월 버튼 클릭 시
@@ -73,6 +75,7 @@ const DateSelect = (props) => {
     setStartDate(twoMonthAgo);
     setEndDate(today);
     setActiveButton("twoMonth");
+    setReqPage(1);
   };
 
   // 6개월 버튼 클릭 시
@@ -82,6 +85,7 @@ const DateSelect = (props) => {
     setStartDate(sixMonthsAgo);
     setEndDate(today);
     setActiveButton("sixMonth");
+    setReqPage(1);
   };
 
   // 전체 버튼 클릭 시
@@ -91,7 +95,13 @@ const DateSelect = (props) => {
     const today = dayjs();
     setStartDate(projectStartDate);
     setEndDate(today);
-    setActiveButton("all"); // 추가: 버튼 활성 상태 설정
+    setActiveButton("all");
+    setReqPage(1);
+  };
+
+  const nonActive = () => {
+    setActiveButton("none"); // 버튼활성해제
+    setReqPage(1);
   };
 
   return (
@@ -140,7 +150,10 @@ const DateSelect = (props) => {
             format="YYYY/MM/DD"
             mask={"____/__/__"}
             showDaysOutsideCurrentMonth
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => {
+              setStartDate(date);
+              nonActive();
+            }}
             slotProps={{
               textField: {
                 size: "small",
@@ -156,7 +169,10 @@ const DateSelect = (props) => {
             format="YYYY/MM/DD"
             mask={"____/__/__"}
             showDaysOutsideCurrentMonth
-            onChange={(date) => setEndDate(date)}
+            onChange={(date) => {
+              setEndDate(date);
+              nonActive();
+            }}
             slotProps={{
               textField: {
                 size: "small",

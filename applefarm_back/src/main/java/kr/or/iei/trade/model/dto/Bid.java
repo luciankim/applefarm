@@ -19,4 +19,17 @@ public class Bid {
 	private int memberNo;
 	private int bidPrice;
 	private String bidDate; //Date타입 말고 String으로 했습니다!!!
+	
+	@Schema(description = "거래상태",type="Number")// 내가 산게 아니라 다른사람에 의해 품절됐는지
+	private int tradeStatus;
+	@Schema(description = "동일상품 최고입찰희망가",type="Number")
+	private int maxPrice;
+	@Schema(description = "상품 요약",type="String")
+	private String productSummary;
+	@Schema(description = "상품 사진",type="String")
+	private String productThumbnail;
+	
+	@Schema(description = "상품 예약",type="int")//예약상태인지
+	private int tradeBook;
+	
 }
