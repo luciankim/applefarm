@@ -38,6 +38,7 @@
   box-sizing: border-box;
 }
 
+/* productDetail-top */
 .productDetail-top-title {
   font-size: 60px;
 }
@@ -68,7 +69,7 @@
   border: 1px solid var(--gray_02);
   box-sizing: border-box;
   border-radius: 10px;
-  padding: 5px 10px;
+  padding: 10px;
   display: flex;
   justify-content: center; /*input_wrap_psw에서 이거 한 줄 바뀜*/
   align-items: center;
@@ -76,10 +77,11 @@
   font-weight: 500;
   font-size: 18px;
 }
-.pswProductDetailBtn:hover {
+.productDetail-top-btns .pswProductDetailBtn:hover {
   border: 3px solid var(--main_01);
   box-sizing: border-box;
 }
+/* --productDetail-top */
 
 /* ProductChart.js */
 .productDetail-chart {
@@ -90,3 +92,90 @@
   height: 250px;
 }
 /* --ProductChart.js */
+
+/* ProductBid.js */
+.productDetail-bid {
+  width: 100%;
+  height: 500px;
+  overflow-y: auto;
+}
+.productBid-title .productBidBox-left {
+  font-size: 24px;
+  font-family: ns-b;
+}
+.productBid-title > .productBidBox-wrap {
+  margin: 20px 0px;
+}
+.productBidBox-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 45px;
+  margin-bottom: 10px;
+}
+.productBidBox-left {
+  width: 220px;
+  position: relative;
+}
+.productBidBox-right {
+  width: 80px;
+  margin-right: 20px;
+}
+.productBidBox-left > .badge {
+  position: absolute;
+  left: 120px;
+  top: 5px;
+}
+.productBidBox-left > .productBidBox {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  letter-spacing: 2px;
+  color: var(--main_02);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.productBidBox > .productBidDeleteBtn {
+  color: var(--gray_01);
+}
+.productBidBox > .productBidDeleteBtn:hover {
+  color: var(--main_02);
+}
+
+.productBidBox-right > .productBidBox {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.productBidBox-left > .productPrice {
+  color: var(--main_01);
+}
+.productBidBox-right > .productPrice:hover {
+  border: 3px solid var(--main_01);
+  box-sizing: border-box;
+}
+.productBidBox-left > .myBid {
+  border: 1px solid var(--main_02);
+  box-sizing: border-box;
+}
+.productBidBox-right > .myBid:hover {
+  border: 3px solid var(--main_02);
+  box-sizing: border-box;
+}
+.productBidBox-left > .productOwner:hover {
+  border: 1px solid var(--main_02);
+  box-sizing: border-box;
+}
+.productBidBox-right > .productOwner:hover {
+  border: 3px solid var(--main_02);
+  box-sizing: border-box;
+}
+.productBidBox-left > .productPrice {
+  border: 1px solid var(--main_01);
+  box-sizing: border-box;
+}
+.productBidBox-right > .insertBidBtn:hover {
+  border: 3px solid var(--main_01);
+  box-sizing: border-box;
+}
+/* --ProductBid.js */

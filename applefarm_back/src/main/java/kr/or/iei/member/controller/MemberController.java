@@ -201,12 +201,16 @@ public class MemberController {
 		String accessToken = memberService.login(member);
 
 		if (accessToken != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); // 성공하면 토큰도 전달
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		} else {
-
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			if(accessToken == "블랙") {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "black", accessToken); // 성공하면 토큰도 전달
+			    return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}else {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); // 성공하면 토큰도 전달
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());				
+			}
+		}  else {
+		    ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+		    return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 
 	}

@@ -143,8 +143,9 @@
 		    product_thumbnail,
 		    product_summary,
 		    table_name,
-		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count
-		from product_tbl
+		    (select count(*) from like_tbl where product_no = #{productNo}) as like_count,
+		    trade_state
+		from product_tbl left join trade_tbl using (product_no)
 		where product_no = #{productNo}
 	</select>
 
@@ -208,12 +209,12 @@
 	</update>
 	
 	<select id="productBidList" resultType="bid">
-		select member_no, to_char(bid_price,'fm999,999,999,999')
+		select bid_no, product_no, member_no, bid_price
 		from bid_tbl
 		where
 			product_no = #{productNo} and
 			to_char(bid_date, 'yy/mm/dd') between to_char(bid_date-30, 'yy/mm/dd') and to_char(sysdate, 'yy/mm/dd')
-		order by bid_price desc;
+		order by bid_price desc
 	</select>
 
 	<select id="selectSellerInfo" resultType="member">
@@ -229,12 +230,12 @@
 		            INQUIRY_WRITER,
 		            to_char(INQUIRY_DATE,'yyyy-mm-dd HH24:MI') as INQUIRY_DATE,
 		            INQUIRY_CONTENT
-		    from SALES_INQUIRIES_TBL where product_no = 142 ORDER BY INQUIRY_NO DESC)I)
+		    from SALES_INQUIRIES_TBL where product_no = #{productNo} ORDER BY INQUIRY_NO DESC)I)
 		WHERE RNUM BETWEEN #{pi.start} AND #{pi.end}
 	</select>
 	
 	<select id="totalCount" resultType="int">
-		select count(*) from SALES_INQUIRIES_TBL
+		select count(*) from SALES_INQUIRIES_TBL  where product_no = #{productNo}
 	</select>
 	
 	<select id="selectNickName" resultType="string">
@@ -244,4 +245,49 @@
 	<insert id="insertSalesInquiries">
 		insert into SALES_INQUIRIES_TBL values(SALES_INQUIRIES_SEQ.NEXTVAL,#{productNo},#{inquiryWriter},sysdate,#{inquiryContent})
 	</insert>
+	
+
+	<select id="selectReviewList" resultType="review">
+		select * from 
+			(select ROWNUM as RNUM, r.* from
+				(select 
+				    r.*,p.product_summary,m.member_nickname 
+				from review_tbl r
+				join product_tbl p on r.product_no = p.product_no
+				join member_tbl m on r.review_consumer = m.member_no
+			where review_seller = #{sellerNo})r)
+		where RNUM between #{pi.start} and #{pi.end}
+	</select>
+	
+	<select id="totalReviewCount" resultType="int">
+		select count(*) from review_tbl where review_seller = #{sellerNo}
+	</select>
+	
+	<select id="selectSellerNo" resultType="string">
+		select member_no from product_tbl where product_no = #{productNo}
+	</select>
+	
+	<select id="totalSellerProductCount" resultType="int">
+		select count(*) from product_tbl where member_no = #{sellerNo}
+	</select>
+	
+	<select id="selectSellerProductList" resultType="product">
+		select * from 
+			(select ROWNUM as RNUM, p.* from
+				(select * from product_tbl where member_no = #{sellerNo} order by product_no desc)p)
+		where RNUM between #{pi.start} and #{pi.end}
+	</select>
+
+	<update id="productPriceUpdate">
+		update product_tbl set product_price=#{productPrice} where product_no=#{productNo}
+	</update>
+	
+	<update id="productBidUpdate">
+		update bid_tbl set bid_price=#{bidPrice} where bid_no=#{bidNo}
+	</update>
+	
+	<insert id="productTradeReserve">
+		insert into trade_tbl values (trade_seq.nextval, #{tradeSeller}, #{tradeBuyer}, #{productNo}, , null, null, #{tradePrice}, '예약중', null, null, null, null, null, null, null, null)
+	</insert>
+
 </mapper>

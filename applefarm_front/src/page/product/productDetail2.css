@@ -146,26 +146,37 @@
 
 .productDetail-SalesInquiries-item{
   display: flex;
+  justify-content: space-between;
   height: 100px;
   margin-bottom: 20px;
-
 }
 .productDetail-SalesInquiries-item-left{
-  width: 30%;
+  width: 25%;
   padding-left: 30px;
   padding-top: 10px;
-  border: 1px solid black;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background-color: #e4d7d7;
+}
+.productDetail-SalesInquiries-writer{
+  font-weight: 900;
+  font-size: 1.3em;
 }
 .productDetail-SalesInquiries-item-right{
   width: 70%;
   padding-left: 30px;
+  padding-top: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background-color: rgb(241, 241, 195);
 }
 
 .productDetail-SalesInquiries-write-wrap{
   display: flex;
+  
   height: 120px;
 }
 .productDetail-SalesInquiries-input{
@@ -190,4 +201,83 @@
 .productDetail-SalesInquiries-writeBtn{
   font-size: 40px;
   color: #fff;
+}
+
+/* 상품 리뷰 */
+.productDetail-tradeReview-item{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.productDetail-tradeReview-item-left{
+  width: 15%;
+  background-color: #e4d7d7;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+
+.productDetail-tradeReview-item-right{
+  width: 83%;
+  border-radius: 10px;
+  background-color: rgb(241, 241, 195);
+  padding-left: 10px;
+  padding: 10px;
+  
+}
+
+/* 판매자 상품 리스트 */
+.productDetail-productList-item{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.productDetail-productList-item-left{
+  width: 25%;
+  height: 400px;
+  background-color: #e4d7d7;
+  padding: 10px;
+  border-radius: 10px;
+}
+.productDetail-productList-item-left-productThumbnail{
+  height: 70%;
+}
+.productDetail-productList-item-left-productSummary{
+  padding-top: 20px;
+  padding-left: 10px;
+  height: 30%;
+}
+
+.productDetail-productList-item-right{
+  border-radius: 10px;
+  width: 70%;
+  background-color: rgb(241, 241, 195);
+}
+.productDetail-productList-item-left-productThumbnail img{
+  width: 100%;
+  height: 100%;
+}
+
+.productDetail-productList-item-right > div{
+  padding: 10px;
+}
+.productDetail-productList-item-right-productQuality{
+  font-size: 20px;
+  font-weight: 900;
+  height: 20%;
+  border-bottom: 1px solid black;
+}
+.productDetail-productList-item-right-productPrice{
+  font-size: 20px;
+  height: 20%;
+  border-bottom: 1px solid black;
+}
+.productDetail-productList-item-right > .productDetail-productList-item-right-productExplain{
+  padding: 30px;
+  font-size: 20px;
+  height: 60%;
 }

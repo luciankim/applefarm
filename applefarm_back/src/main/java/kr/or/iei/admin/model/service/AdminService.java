@@ -140,7 +140,7 @@ public class AdminService {
 	public void blackTimeOut() {
 		
 		List<Member> blackMemberCheckList = memberDao.selectBlackMemberCheckList();
-		System.out.println("----------scheduling-------- memberslit"  + blackMemberCheckList);
+		System.out.println("blackMember : "  + blackMemberCheckList);
 		// 시간 계산 : 블랙
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -151,7 +151,7 @@ public class AdminService {
 			String blackTimeString = member.getMemberBlackTime();
 			if (blackTimeString != null) {
 				LocalDateTime blackTime = LocalDateTime.parse(blackTimeString, formatter);
-				LocalDateTime whiteTime = blackTime.plusSeconds(15); //30초
+				LocalDateTime whiteTime = blackTime.plusSeconds(180); //15초
 				if (now.isAfter(whiteTime)) {
 					 member.setMemberGrade(1);
 					 member.setMemberBlackTime(null);

@@ -42,6 +42,8 @@ import kr.or.iei.product.model.dto.SalesInquiries;
 import kr.or.iei.product.model.dto.SellerReview;
 import kr.or.iei.product.model.dto.WatchQualityHistory;
 import kr.or.iei.product.model.service.ProductService;
+import kr.or.iei.trade.model.dto.Bid;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.FileUtils;
 import kr.or.iei.util.JwtUtil;
 
@@ -341,13 +343,12 @@ public class ProductController {
 		HashMap<String, Object> map = productService.selectOneProduct(productNo);
 		/* map.key
 		 * product
-		 * sellerReviewList
-		 * sellerProductList
+		 * seller
 		 * productFileList
 		 * qualityHistory
 		 * reliableProductList
 		 */
-		if(map.size()==7) {
+		if(map.size()==5) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
@@ -435,7 +436,7 @@ public class ProductController {
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}	
+		}
 	}
 
 	@Operation(summary="매수호가 리스트", description = "매수호가 리스트 불러오기")
@@ -448,7 +449,86 @@ public class ProductController {
 		List list = productService.productBidList(productNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-
 	}
 	
+	@Operation(summary="판매 희망가 수정", description = "상품 상세페이지에서 판매자가 자신의 상품의 판매 희망가를 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value = "/price")
+	public ResponseEntity<ResponseDTO> productPriceUpdate(@RequestBody HashMap<String, Integer> map){
+		int productPrice = map.get("productPrice");
+		int productNo = map.get("productNo");
+		int result = productService.productPriceUpdate(productPrice, productNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="구매 호가 수정", description = "상품 상세페이지에서 구매자가 자신이 등록한 구매 희망가를 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PatchMapping(value = "/bid")
+	public ResponseEntity<ResponseDTO> productBidUpdate(@RequestBody Bid bid){
+		//bid에 들어있는 값 : bidNo, bidPrice
+		int result = productService.productBidUpdate(bid);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="거래 예약", description = "상품 상세페이지에서 판매자가 특정 구매 호가를 승낙")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value = "/trade")
+	public ResponseEntity<ResponseDTO> productTradeReserve(@RequestBody Trade trade){
+		//trade에 들어있는 값 : #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
+		int result = productService.productTradeReserve(trade);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@GetMapping(value = "/review/{productNo}")
+	public ResponseEntity<ResponseDTO> selectReviewList(@PathVariable int productNo, @RequestParam int reviewReqPage){
+		Map map = productService.selectReviewList(productNo, reviewReqPage);
+//		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
+	
+	@GetMapping(value = "/seller/{productNo}")
+	public ResponseEntity<ResponseDTO> selectProductList(@PathVariable int productNo, @RequestParam int sellerProductReqPage){
+		Map map = productService.selectProductList(productNo, sellerProductReqPage);
+//		System.out.println(map.size());
+		if(map.size() == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}	
+	}
 }

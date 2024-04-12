@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer{
 
 				.addPathPatterns("/member/**","/product/**","/trade/**", "/admin/**")
 				.excludePathPatterns("/member/login","/member/join" ,"/member/sendEmail/*", "/member/email/*" ,"/member/id/*","/member/nickName/*","/member/sendCode/*","/member/findId","/member/sendEmail","/member/resetPw")
-				.excludePathPatterns("/product/quality/*","/product/category","/product/chart","/product/detail/*","/product/img/*", "prouct/bid/*");
+				.excludePathPatterns("/product/quality/*","/product/category","/product/chart","/product/detail/*","/product/img/*", "/product/bid/*","/product/inquiry/*","/product/review/*","/product/seller/*");
 
 	}
 
@@ -38,8 +38,8 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		// TODO Auto-generated method stub
-		WebMvcConfigurer.super.addCorsMappings(registry);
+				//모든 매핑에 대해		//모든 포트에			//모든 메소드에
+		registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
 	}
 
 	
