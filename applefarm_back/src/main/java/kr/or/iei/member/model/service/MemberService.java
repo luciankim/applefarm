@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
@@ -352,6 +353,16 @@ public class MemberService {
 		public List<Board> getBoardInfo(int memberNo) {
 			
 			return memberDao.getBoardInfo(memberNo);
+		}
+
+		public Product getProduct(int memberNo) {
+			
+			return memberDao.getProduct(memberNo);
+		}
+
+		public Refund getRefund(int memberNo) {
+			
+			return memberDao.getRefund(memberNo);
 		}
 
 		

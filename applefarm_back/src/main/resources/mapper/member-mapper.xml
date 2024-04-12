@@ -290,8 +290,25 @@
 	
 	</select>
 	
+	<select id="getProduct" resultType="product">
 	
+		select p.*
+		from member_tbl m 
+		Join product_tbl p on m.member_no = p.member_no 
+		join refund_tbl r on p.product_no = r.trade_no
+		where m.member_no = #{memberNo}
 	
+	</select>
+	
+	<select id="getRefund" resultType="refund">
+	
+		SELECT r.*
+		FROM member_tbl m
+		JOIN product_tbl p ON m.member_no = p.member_no
+		JOIN refund_tbl r ON p.product_no = r.trade_no
+		WHERE m.member_no = #{memberNo}
+	
+	</select>
 	
 	
 </mapper>

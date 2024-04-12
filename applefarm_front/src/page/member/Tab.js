@@ -37,7 +37,7 @@ const Tab = (props) => {
               }
               onClick={() => selectMenuHandler(index)}
             >
-              {item.name}
+              {item}
             </li>
           ))}
         </ul>
@@ -49,7 +49,6 @@ const Tab = (props) => {
           activeButton={activeButton}
           setActiveButton={setActiveButton}
         />
-        <div>{tabMenu[currentTab].content}</div>
       </div>
     </>
   );
