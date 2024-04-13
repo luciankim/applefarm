@@ -319,7 +319,7 @@
     		p.product_summary,
     		p.product_price,
     		MAX(b.bid_price) AS max_bid_price,
-    		t.trade_State
+    		t.trade_state
 		FROM 
     		member_tbl m
 		JOIN 
@@ -336,7 +336,9 @@
     		p.product_thumbnail,
     		p.product_summary,
     		p.product_price,
-    		t.trade_State
+    		t.trade_state
+    	ORDER BY 
+    		p.product_date desc
 	
 	</select>
 	
