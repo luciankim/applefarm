@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -103,12 +105,27 @@ public class TradeController {
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 	@Operation(summary = "입찰 취소", description = "입찰번호 받아 입찰데이터 삭제,예약상태일 시 거래테이블 내 예약도 삭제")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@DeleteMapping(value = "/bid/{bidNo}/{productNo}/{tradeBook}")
 	public ResponseEntity<ResponseDTO> deleteBid(@PathVariable int bidNo,@PathVariable int productNo,@PathVariable int tradeBook){
 		int result = tradeService.deleteBid(bidNo,productNo,tradeBook);
 		if(result==1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());	
+		}
+	}
+	@Operation(summary = "입찰 취소", description = "입찰번호 받아 입찰데이터 삭제,예약상태일 시 거래테이블 내 예약도 삭제")
+	@ApiResponses({ 
+		@ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PatchMapping(value = "/bid")
+	public ResponseEntity<ResponseDTO> updateBid(@RequestBody Bid bid){
+		int result = tradeService.updateBid(bid);
+		if(result>0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
 		}else {

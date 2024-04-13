@@ -36,4 +36,6 @@ public interface TradeDao {
 
 
 	int deleteTradeBook(int productNo);
+
+	int updateBid(Bid bid);
 }

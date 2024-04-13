@@ -42,6 +42,9 @@
   margin: 0 auto;
   padding: 10px;
 }
+.mypage-wrap a {
+  color: #1e1e1e;
+}
 .mypage-current-title {
   padding: 0px 0px 15px 0px;
   color: #222222;
@@ -628,7 +631,7 @@
   font-family: ns-b;
   width: 100px;
 }
-.purchase-history-content table > tbody > tr {
+.purchase-history-content > table > tbody > tr {
   border-top: 1px solid #ccc; /*안들어감*/
 }
 .purchase-history-content table > tbody > tr > td {
@@ -643,6 +646,9 @@
 }
 .sold-out-color {
   color: red;
+  display: block;
+  text-decoration-line: underline;
+  font-size: 14px;
 }
 .trade-book-status {
   color: var(--main_02);
@@ -657,15 +663,22 @@
   font-size: 15px;
   color: var(--gray_05);
 }
+.go-purchase {
+  color: var(--main_02);
+}
 .purcase-date-wrap {
   position: relative;
 }
 .purchase-history-content table > tbody > tr > td > button {
-  background-color: #c7deff;
-  padding: 2px 3px;
-  border: none;
-  margin: 3px;
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  padding: 5px 8px;
+  margin: 5px 10px;
 }
+.purchase-history-content table > tbody > tr > td > button:hover {
+  border-color: var(--bg_03);
+}
+.
 /* 사이드메뉴 */
 .sideMenu > ul > li > a {
   color: #b7b7b7;

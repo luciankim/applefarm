@@ -3,7 +3,7 @@ import "./modal.css";
 import { Input, Input2, InputReadOnly } from "../../component/FormFrm";
 import DaumPostcode, { useDaumPostcodePopup } from "react-daum-postcode";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 //삭제
 const DelModal = (props) => {
   const setModalOpen = props.setModalOpen;
@@ -567,5 +567,106 @@ const ProductStatus = (props) => {
     </div>
   );
 };
-
-export { DelModal, AddressModal, RequestModal, ProductStatus };
+//입찰가격수정
+const BidModal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const clickEvent = props.clickEvent;
+  const oleBidPrice = props.bidPrice;
+  const productPrice = props.productPrice;
+  const { setNewBidPrice, newBidprice, productNo } = props;
+  const [buyChk, setBuyChk] = useState("");
+  //const [newBidprice, setNewBidPrice] = useState();
+  const bidPriceRef = useRef(null);
+  const modalBackground = useRef();
+  const navigate = useNavigate();
+  useEffect(() => {
+    bidPriceRef.current.focus();
+  }, []);
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  const changeData = (e) => {
+    //let price = e.target.value.toLocaleString();
+    let price = e.target.value.replace(/\D/g, "");
+    if (price.startsWith("0")) {
+      price = price.replace(/^0+/, "");
+    }
+    if (!isNaN(price)) {
+      setNewBidPrice(price);
+    }
+    if (price >= productPrice) {
+      setNewBidPrice(productPrice);
+      setBuyChk("판매가보다 높아 판매가로 바로 구매할수 있습니다.");
+    } else {
+      setBuyChk("");
+    }
+  };
+  //구매페이지 동
+  const purchase = () => {
+    navigate("/purchase/" + productNo + "/" + "n");
+  };
+  return (
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap">
+        <div className="close-icon-wrap">
+          <span
+            className="material-icons close-icon  status-close"
+            onClick={closeModal}
+          >
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <div className="modal-title modal-title2">
+            원하시는 입찰가를 입력해주세요.
+          </div>
+          <div className="modal-title-sub-message">
+            - 올바른 입력방법 : 1,000원(X) / 1000원(O) -
+          </div>
+          <div className="modal-title-sub-message sub-sub-s">
+            0원 이상 입력가능
+          </div>
+          <div className="bid-change-input-box">
+            <input
+              id="bidPrice"
+              type="text"
+              value={newBidprice}
+              onChange={changeData}
+              placeholder={
+                "판매 희망가는 " + productPrice.toLocaleString() + "원입니다."
+              }
+              ref={bidPriceRef}
+            />
+            원<div className="bid-buy-msg">{buyChk}</div>
+          </div>
+          {newBidprice >= productPrice ? (
+            <button
+              className="like-modal-btn change-status-sbtn active-bid-purchase"
+              onClick={purchase}
+            >
+              구매
+            </button>
+          ) : (
+            <button
+              className="like-modal-btn change-status-sbtn"
+              onClick={clickEvent}
+            >
+              변경
+            </button>
+          )}
+          <button className="like-modal-btn" onClick={closeModal}>
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+export { DelModal, AddressModal, RequestModal, ProductStatus, BidModal };

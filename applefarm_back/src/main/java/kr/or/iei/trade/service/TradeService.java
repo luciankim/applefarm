@@ -62,4 +62,7 @@ public class TradeService {
 		}
 		return result;
 	}
+	public int updateBid(Bid bid) {
+		return tradeDao.updateBid(bid);
+	}
 }
