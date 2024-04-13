@@ -369,6 +369,16 @@ public class MemberService {
 			return memberDao.getSalesHistory(memberNo);
 		}
 
+		public int changeSalesPrice(Product product) {
+			
+			return memberDao.changeSalesPrice(product);
+		}
+
+		public int deleteSalesProduct(int productNo) {
+			
+			return memberDao.deleteSalesProduct(productNo);
+		}
+
 	
 		
 		

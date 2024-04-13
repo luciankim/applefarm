@@ -631,7 +631,9 @@ public class MemberController {
 	}
 	
 
-	
+	@Operation(summary = "판매내역 데이터 가져오기", description = "로그인한 회원번호로 판매내역 데이터 가져오기")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@PostMapping(value = "/getSalesHistory/{memberNo}")
 	public ResponseEntity<ResponseDTO> getSalesHistory(@PathVariable int memberNo){
 		
@@ -648,6 +650,52 @@ public class MemberController {
 			return new ResponseEntity<>(response, response.getHttpStatus());
 
 		}
+		
+	}
+	
+	
+	@Operation(summary = "판매상품 가격 변경", description = "화면에서 상품 번호,변경할 상품 가격 데이터 가져와서 변경")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PatchMapping(value = "/changeSalesPrice")
+	public ResponseEntity<ResponseDTO> chageSalesPrice(@RequestBody Product product){
+		
+		
+		
+		int result = memberService.changeSalesPrice(product);
+		System.out.println(product);
+		
+		
+		if (result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+		
+		
+		
+	}
+	
+	@Operation(summary = "판매상품 삭제", description = "화면에서 상품 번호 가져와서 삭제")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })	
+	@DeleteMapping(value = "/deleteSalesProduct/{productNo}")
+	public ResponseEntity<ResponseDTO> deleteSalesProduct(@PathVariable int productNo){
+		
+		int result = memberService.deleteSalesProduct(productNo);
+		System.out.println(productNo);
+		
+		
+		if (result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+		
 		
 	}
 	

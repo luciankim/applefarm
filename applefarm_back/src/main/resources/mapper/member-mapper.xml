@@ -319,7 +319,8 @@
     		p.product_summary,
     		p.product_price,
     		MAX(b.bid_price) AS max_bid_price,
-    		t.trade_state
+    		t.trade_state,
+    		t.trade_date
 		FROM 
     		member_tbl m
 		JOIN 
@@ -336,13 +337,25 @@
     		p.product_thumbnail,
     		p.product_summary,
     		p.product_price,
-    		t.trade_state
+    		t.trade_state,
+    		t.trade_date
     	ORDER BY 
-    		p.product_date desc
+    		t.trade_date desc
 	
 	</select>
 	
-
+	<update id="changeSalesPrice">
+	
+		update product_tbl 
+    	set product_price = #{changePrice} where product_no = #{productNo}
+	
+	</update>
+	
+	<delete id="deleteSalesProduct">
+	
+		delete from product_tbl where product_no = #{productNo}
+	
+	</delete>
 	
 	
 </mapper>

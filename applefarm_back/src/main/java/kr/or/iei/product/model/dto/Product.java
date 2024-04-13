@@ -53,4 +53,11 @@ public class Product {
 	
 	//구매최고희망가
 	private int maxBidPrice;
+	
+	//거래등록일
+	private Date tradeDate;
+	
+	//변경할 판매가
+	private int changePrice;
+	
 }

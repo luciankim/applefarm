@@ -3,6 +3,7 @@ import Tab from "./Tab";
 import { useEffect, useState } from "react";
 import React from "react";
 import Modal from "react-modal";
+import Swal from "sweetalert2";
 
 const SalesHistory = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -11,6 +12,7 @@ const SalesHistory = (props) => {
   const memberNo = member.memberNo;
 
   const [product, setProduct] = useState([]); // 판매한 상품리스트
+  const [productNo, setProductNo] = useState(null); // 변경할 상품번호
 
   const [currentTab, setCurrentTab] = useState(0);
   const [tabMenu, setTabMenu] = useState(["판매입찰", "진행중", "완료"]);
@@ -26,6 +28,55 @@ const SalesHistory = (props) => {
 
   const changeSalesPrice = (e) => {
     setChangePrice(e.target.value);
+  };
+
+  const selectProductNo = (productNo) => {
+    setProductNo(productNo);
+    openModalChangeSales();
+  };
+
+  const selectProductNo2 = (productNo) => {
+    setProductNo(productNo);
+    openModalDeleteSales();
+  };
+
+  const submitChangePrice = () => {
+    const obj = { changePrice: changePrice, productNo: productNo };
+    console.log(changePrice, productNo);
+
+    axios
+      .patch(backServer + "/member/changeSalesPrice", obj)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setProduct((prevProducts) =>
+            prevProducts.map((p) =>
+              p.productNo === productNo
+                ? { ...p, productPrice: changePrice } //해당하는 상품만 랜더링 다시 돌게
+                : p
+            )
+          );
+          Swal.fire("변경이 완료되었습니다.");
+          closeModalChangeSales();
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
+
+  const deleteSalesProduct = () => {
+    console.log(productNo);
+    axios
+      .delete(backServer + "/member/deleteSalesProduct/" + productNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          Swal.fire("판매 취소가 완료되었습니다.");
+          closeModalDeleteSales();
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   };
 
   const showMoreItems = () => {
@@ -140,7 +191,7 @@ const SalesHistory = (props) => {
                   <React.Fragment key={index}>
                     <tr>
                       <td className="salesDate">
-                        {new Date(product.productDate).toLocaleDateString(
+                        {new Date(product.tradeDate).toLocaleDateString(
                           "ko-KR",
                           {
                             year: "numeric",
@@ -163,8 +214,16 @@ const SalesHistory = (props) => {
                       <td className="sales-info">{product.productPrice}원</td>
                       <td className="sales-info">{product.tradeState}</td>
                       <td className="sales-info sales-btn">
-                        <button onClick={openModalChangeSales}>변경</button>
-                        <button onClick={openModalDeleteSales}>취소</button>
+                        <button
+                          onClick={() => selectProductNo(product.productNo)}
+                        >
+                          변경
+                        </button>
+                        <button
+                          onClick={() => selectProductNo2(product.productNo)}
+                        >
+                          취소
+                        </button>
                       </td>
                     </tr>
                   </React.Fragment>
@@ -208,7 +267,7 @@ const SalesHistory = (props) => {
             <span>원</span>
           </div>
           <div className="sales-change-btn-box">
-            <button>변경</button>
+            <button onClick={submitChangePrice}>변경</button>
             <button onClick={closeModalChangeSales}>닫기</button>
           </div>
         </Modal>
@@ -220,7 +279,7 @@ const SalesHistory = (props) => {
           <div className="sales-delete-wrap">
             <div className="sales-delete-title">판매를 취소하시겠습니까?</div>
             <div className="sales-delete-btn-box">
-              <button>취소</button>
+              <button onClick={deleteSalesProduct}>취소</button>
               <button onClick={closeModalDeleteSales}>닫기</button>
             </div>
           </div>

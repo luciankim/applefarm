@@ -1468,7 +1468,7 @@ table {
 }
 .sales-change-box {
   display: flex;
-  padding-top: 30px;
+  padding-top: 35px;
   justify-content: center;
 }
 .sales-change-box > span {
@@ -1482,7 +1482,7 @@ table {
 .sales-change-btn-box {
   display: flex;
   justify-content: center;
-  padding-top: 25px;
+  padding-top: 35px;
   gap: 15px; /*간격*/
 }
 .sales-change-btn-box button {
@@ -1510,8 +1510,7 @@ table {
 .sales-delete-btn-box {
   display: flex;
   justify-content: center;
-
-  padding-top: 25px;
+  padding-top: 35px;
   gap: 15px; /*간격*/
 }
 

@@ -102,6 +102,10 @@ public interface MemberDao {
 
 	List<Product> getSalesHistory(int memberNo);
 
+	int changeSalesPrice(Product product);
+
+	int deleteSalesProduct(int productNo);
+
 
 
 
