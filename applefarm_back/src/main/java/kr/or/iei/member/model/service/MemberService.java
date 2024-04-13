@@ -369,11 +369,7 @@ public class MemberService {
 			return memberDao.getSalesHistory(memberNo);
 		}
 
-		public List<Product> allSalesHistory(int memberNo) {
-
-			return memberDao.allSalesHistory(memberNo);
-		}
-
+	
 		
 		
 		

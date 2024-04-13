@@ -102,7 +102,7 @@ public interface MemberDao {
 
 	List<Product> getSalesHistory(int memberNo);
 
-	List<Product> allSalesHistory(int memberNo);
+
 
 
 

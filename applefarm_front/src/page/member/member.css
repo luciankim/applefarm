@@ -1353,6 +1353,22 @@ table {
 
 /*환불 내역*/
 
+.salesHistory-content {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 10px 15px;
+  margin-bottom: 20px;
+}
+
+.salesHistory-content td {
+  background-color: #bfbfbf;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
 .salesImg {
   width: 100px;
+  height: auto;
+  border-radius: 5px;
 }

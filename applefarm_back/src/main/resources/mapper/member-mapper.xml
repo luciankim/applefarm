@@ -312,19 +312,35 @@
 	
 	<select id="getSalesHistory" resultType="product">
 	
-		select p.* 
-		from member_tbl m 
-		join trade_tbl t on m.member_no =  t.trade_seller
-		join product_tbl p on t.product_no = p.product_no 
-		where m.member_no = #{memberNo} 
+		SELECT 
+    		p.product_no,
+    		p.product_date,
+    		p.product_thumbnail,
+    		p.product_summary,
+    		p.product_price,
+    		MAX(b.bid_price) AS max_bid_price,
+    		t.trade_State
+		FROM 
+    		member_tbl m
+		JOIN 
+    		product_tbl p ON m.member_no = p.member_no
+		LEFT JOIN 
+    		bid_tbl b ON p.product_no = b.product_no
+		LEFT JOIN 
+    		trade_tbl t ON p.product_no = t.product_no
+		WHERE 
+    		m.member_no = #{memberNo}
+		GROUP BY 
+    		p.product_no,
+    		p.product_date,
+    		p.product_thumbnail,
+    		p.product_summary,
+    		p.product_price,
+    		t.trade_State
 	
 	</select>
 	
-	<select id="allSalesHistory" resultType="product">
-	
-		select * from product_tbl where member_no = #{memberNo}
-	
-	</select>
+
 	
 	
 </mapper>

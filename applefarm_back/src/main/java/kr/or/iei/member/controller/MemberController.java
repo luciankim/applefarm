@@ -630,12 +630,11 @@ public class MemberController {
 
 	}
 	
+
 	
-	@Operation(summary = "판매내역 데이터 가져오기", description = "로그인한 회원번호로 판매내역 가져오기")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@PostMapping(value = "/getSalesHistory/{memberNo}")
 	public ResponseEntity<ResponseDTO> getSalesHistory(@PathVariable int memberNo){
+		
 		
 		List<Product> product = memberService.getSalesHistory(memberNo);
 		
@@ -649,49 +648,6 @@ public class MemberController {
 			return new ResponseEntity<>(response, response.getHttpStatus());
 
 		}
-		
-		
-		
-	}
-	
-	@Operation(summary = "전체 판매 상품 데이터 가져오기", description = "로그인한 회원번호로 판매 상품 데이터 가져오기")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping(value = "/allSalesList/{memberNo}")
-	public ResponseEntity<ResponseDTO> allSalesList(@PathVariable int memberNo){
-		
-		List<Product> allSalesProduct = memberService.allSalesHistory(memberNo);
-		
-		if (allSalesProduct != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", allSalesProduct);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-		} else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-
-		}
-		
-		
-		
-	}
-	
-	@Operation(summary = "판매하는 상품의 최고 구매 희망가 가져오기", description = "로그인한 회원번호로 판매하는 상품의 최고 구매 희망가 가져오기")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping(value = "/getHopeBidPrice/{memberNo}")
-	public ResponseEntity<ResponseDTO> getHopePrice(@PathVariable int memberNo){
-		
-		List<Bid> hopeBidPrice = memberService.getHopeBidPrice(memberNo);
-		
-		if (hopeBidPrice != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", hopeBidPrice);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-		} else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-
-		}
-		
 		
 	}
 	

@@ -50,4 +50,7 @@ public class Product {
 	
 	//productBid에 사용
 	private String tradeState;
+	
+	//구매최고희망가
+	private int maxBidPrice;
 }
