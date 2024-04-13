@@ -100,6 +100,10 @@ public interface MemberDao {
 
 	Refund getRefund(int memberNo);
 
+	List<Product> getSalesHistory(int memberNo);
+
+	List<Product> allSalesHistory(int memberNo);
+
 
 
 

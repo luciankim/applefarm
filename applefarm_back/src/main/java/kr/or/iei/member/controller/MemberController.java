@@ -40,6 +40,7 @@ import kr.or.iei.member.model.dto.Member;
 
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.trade.model.dto.Bid;
 
 @CrossOrigin("*")
 @RestController
@@ -475,7 +476,7 @@ public class MemberController {
 
 	}
 
-	@Operation(summary = "삭제", description = "화면에서 회원 번호, 회원 계좌번호 입력받아서 계좌삭제")
+	@Operation(summary = "계좌 삭제", description = "화면에서 회원 번호, 회원 계좌번호 입력받아서 계좌삭제")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@PatchMapping(value = "/deleteAccountNumber")
@@ -594,6 +595,8 @@ public class MemberController {
 	public ResponseEntity<ResponseDTO> getProduct(@PathVariable int memberNo) {
 
 		Product product = memberService.getProduct(memberNo);
+		
+		System.out.println(product);
 
 		if (product != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", product);
@@ -613,6 +616,8 @@ public class MemberController {
 	public ResponseEntity<ResponseDTO> getRefund(@PathVariable int memberNo) {
 
 		Refund refund = memberService.getRefund(memberNo);
+		
+		System.out.println(refund);
 
 		if (refund != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", refund);
@@ -624,6 +629,72 @@ public class MemberController {
 		}
 
 	}
+	
+	
+	@Operation(summary = "판매내역 데이터 가져오기", description = "로그인한 회원번호로 판매내역 가져오기")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/getSalesHistory/{memberNo}")
+	public ResponseEntity<ResponseDTO> getSalesHistory(@PathVariable int memberNo){
+		
+		List<Product> product = memberService.getSalesHistory(memberNo);
+		
+		System.out.println(product);
+		
+		if (product != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", product);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+
+		}
+		
+		
+		
+	}
+	
+	@Operation(summary = "전체 판매 상품 데이터 가져오기", description = "로그인한 회원번호로 판매 상품 데이터 가져오기")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/allSalesList/{memberNo}")
+	public ResponseEntity<ResponseDTO> allSalesList(@PathVariable int memberNo){
+		
+		List<Product> allSalesProduct = memberService.allSalesHistory(memberNo);
+		
+		if (allSalesProduct != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", allSalesProduct);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+
+		}
+		
+		
+		
+	}
+	
+	@Operation(summary = "판매하는 상품의 최고 구매 희망가 가져오기", description = "로그인한 회원번호로 판매하는 상품의 최고 구매 희망가 가져오기")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/getHopeBidPrice/{memberNo}")
+	public ResponseEntity<ResponseDTO> getHopePrice(@PathVariable int memberNo){
+		
+		List<Bid> hopeBidPrice = memberService.getHopeBidPrice(memberNo);
+		
+		if (hopeBidPrice != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", hopeBidPrice);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+
+		}
+		
+		
+	}
+	
 
 }
 

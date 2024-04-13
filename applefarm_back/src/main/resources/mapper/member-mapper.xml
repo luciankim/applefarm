@@ -310,5 +310,21 @@
 	
 	</select>
 	
+	<select id="getSalesHistory" resultType="product">
+	
+		select p.* 
+		from member_tbl m 
+		join trade_tbl t on m.member_no =  t.trade_seller
+		join product_tbl p on t.product_no = p.product_no 
+		where m.member_no = #{memberNo} 
+	
+	</select>
+	
+	<select id="allSalesHistory" resultType="product">
+	
+		select * from product_tbl where member_no = #{memberNo}
+	
+	</select>
+	
 	
 </mapper>

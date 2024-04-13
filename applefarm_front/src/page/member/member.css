@@ -1352,3 +1352,7 @@ table {
 }
 
 /*환불 내역*/
+
+.salesImg {
+  width: 100px;
+}

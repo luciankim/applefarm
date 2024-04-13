@@ -364,6 +364,16 @@ public class MemberService {
 			return memberDao.getRefund(memberNo);
 		}
 
+		public List<Product> getSalesHistory(int memberNo) {
+
+			return memberDao.getSalesHistory(memberNo);
+		}
+
+		public List<Product> allSalesHistory(int memberNo) {
+
+			return memberDao.allSalesHistory(memberNo);
+		}
+
 		
 		
 		
