@@ -24,14 +24,13 @@ import {
   BadgeRed,
 } from "../../component/FormFrm";
 
-
 const ProductDetail = (props) => {
   const navigate = useNavigate();
 
   const isLogin = props.isLogin;
   const params = useParams();
 
-  const [productNo,setProductNo] = useState(params.productNo);
+  const [productNo, setProductNo] = useState(params.productNo);
 
   // const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -113,7 +112,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [reqPage, writeTrigger,productNo]);
+  }, [reqPage, writeTrigger, productNo]);
 
   useEffect(() => {
     axios
@@ -132,7 +131,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [reviewReqPage,productNo]);
+  }, [reviewReqPage, productNo]);
 
   useEffect(() => {
     axios
@@ -151,7 +150,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [sellerProductReqPage,productNo]);
+  }, [sellerProductReqPage, productNo]);
 
   //탭
   const productDetailTabArr = ["1:1 문의", "거래 후기", "판매 상품"];
@@ -233,14 +232,13 @@ const ProductDetail = (props) => {
       confirmButtonText: "신고",
       showCancelButton: true,
       cancelButtonText: "취소",
-    })
-    .then((res) => {
+    }).then((res) => {
       if (res.isConfirmed) {
         const reportContent = res.value;
         const obj = {
           reportTarget: product.productNo,
           reportedMember: seller.memberNo,
-          reportContent: reportContent
+          reportContent: reportContent,
         };
         console.log(obj);
 
@@ -253,15 +251,9 @@ const ProductDetail = (props) => {
             console.log(res.data);
           });
       } else if (res.isDismissed) {
-
       }
     });
-
-    
-
-
-    
-  }
+  };
 
   return (
     <div className="productDetail-wrap">
@@ -341,7 +333,12 @@ const ProductDetail = (props) => {
               <ProductSummary product={product} />
             </div>
             <div className="productDetail-explain-seller productArticle2">
-              <ProductSeller product={product} seller={seller} report={report} isLogin={isLogin}/>
+              <ProductSeller
+                product={product}
+                seller={seller}
+                report={report}
+                isLogin={isLogin}
+              />
             </div>
           </div>
           <div className="productDetail-explain-detail productArticle2">
@@ -416,7 +413,7 @@ const ProductDetail = (props) => {
 
       {/* productDetail-reliableList */}
       <div className="productDetail-reliableList">
-        <ProductReliable/>
+        <ProductReliable />
       </div>
       {/* //productDetail-reliableList */}
     </div>
@@ -630,7 +627,6 @@ const ProductSeller = (props) => {
   // const openModal = () => {
   //   setModalOpen(true);
   // };
-  
 
   return (
     <>
@@ -679,7 +675,10 @@ const ProductSeller = (props) => {
           </div>
           <div className="productDetail-explain-seller-report-area">
             <div className="productDetail-explain-seller-report-icon">
-              <img src="/image/report/report.png" onClick={isLogin ? report : null}/>
+              <img
+                src="/image/report/report.png"
+                onClick={isLogin ? report : null}
+              />
             </div>
 
             {/* {modalOpen && <Modal setModalOpen={setModalOpen} modalBackground={modalBackground}/>} */}
@@ -701,20 +700,25 @@ const Modal = (props) => {
   const modalBackground = props.modalBackground;
   return (
     <>
-    
-      <div className={'modal-container'} ref={modalBackground} onClick={e => {
-        if (e.target === modalBackground.current) {
-          setModalOpen(false);
-        }
-      }}>
-        <div className={'modal-content'}>
+      <div
+        className={"modal-container"}
+        ref={modalBackground}
+        onClick={(e) => {
+          if (e.target === modalBackground.current) {
+            setModalOpen(false);
+          }
+        }}
+      >
+        <div className={"modal-content"}>
           <p>리액트로 모달 구현하기</p>
-          <button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
+          <button
+            className={"modal-close-btn"}
+            onClick={() => setModalOpen(false)}
+          >
             모달 닫기
           </button>
         </div>
       </div>
-    
     </>
   );
 };
@@ -777,197 +781,154 @@ const ProductBid = (props) => {
 
   //판매자가 자신의 판매금액을 수정/삭제
   const priceUpdate = () => {
-    Swal.fire({
-      title: "원하시는 가격을 입력해주세요.",
-      text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off",
-      },
-      showCancelButton: true,
-      confirmButtonText: "수정",
-      cancelButtonText: "삭제",
-    }).then((result) => {
-      const productPrice = result.value;
-      if (result.isConfirmed && productPrice <= bidList[0].bidPrice) {
-        Swal.fire({
-          icon: "warning",
-          title: "수정 실패. 돈이 많으시군요?",
-          text: "판매 버튼을 눌러주세요.",
-        });
-      } else if (result.isConfirmed && productPrice > bidList[0].bidPrice) {
-        axios
-          .patch(backServer + "/product/price", {
-            productPrice: productPrice,
-            productNo: productNo,
-          })
-          .then((res) => {
-            if (res.data.message === "success") {
-              Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
-                setProduct({ ...product, productPrice: productPrice });
-              });
-            } else {
-              Swal.fire({
-                icon: "warning",
-                title: "수정 실패. 다시 입력해주세요.",
-              });
-            }
-          })
-          .catch((res) => {
-            Swal.fire({
-              icon: "error",
-              title: "에러 발생. 관리자에게 문의해주세요.",
-            });
+    if (!product.tradeState) {
+      Swal.fire({
+        title: "원하시는 가격을 입력해주세요.",
+        text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "수정",
+        cancelButtonText: "삭제",
+      }).then((result) => {
+        const productPrice = result.value;
+        if (result.isConfirmed && productPrice <= bidList[0].bidPrice) {
+          Swal.fire({
+            icon: "warning",
+            title: "수정 실패. 돈이 많으시군요?",
+            text: "판매 버튼을 눌러주세요.",
           });
-      }
-    });
+        } else if (result.isConfirmed && productPrice > bidList[0].bidPrice) {
+          axios
+            .patch(backServer + "/product/price", {
+              productPrice: productPrice,
+              productNo: productNo,
+            })
+            .then((res) => {
+              if (res.data.message === "success") {
+                Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
+                  setProduct({ ...product, productPrice: productPrice });
+                });
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title: "수정 실패. 다시 입력해주세요.",
+                });
+              }
+            })
+            .catch((res) => {
+              Swal.fire({
+                icon: "error",
+                title: "에러 발생. 관리자에게 문의해주세요.",
+              });
+            });
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "수정 불가",
+        text: "이미 거래중인 상품입니다.",
+      });
+    }
   };
 
   //판매자가 판매버튼을 클릭 -> trade_tbl에 insert되고, trade_status는 "예약중"
   const selling = (e) => {
-    const bidNo = e.target.id;
-    Swal.fire({
-      icon: "question",
-      title: "이 가격으로 판매 예약 하시겠습니까?",
-      showCancelButton: true,
-      confirmButtonText: "판매",
-      cancelButtonText: "취소",
-    }).then((result) => {
-      // #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
-      if (result.isConfirmed) {
-        const tradeSeller = product.memberNo;
-        let index = bidList.findIndex((bid) => bid.bidNo == bidNo);
-        const tradeBuyer = bidList[index].memberNo;
-        const tradePrice = bidList[index].bidPrice;
-        const trade = { tradeSeller, productNo, tradeBuyer, tradePrice };
-        axios.post(backServer + "/product/trade", trade).then((res) => {
-          if (res.data.message === "success") {
-            Swal.fire({
-              icon: "success",
-              title: "현재 상태 : 예약중",
-            });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "에러 발생. 관리자에게 문의해주세요.",
-            });
-          }
-        });
-      }
-    });
+    if (!product.tradeState) {
+      const bidNo = e.target.id;
+      Swal.fire({
+        icon: "question",
+        title: "이 가격으로 판매 예약 하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: "판매",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        // #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
+        if (result.isConfirmed) {
+          const tradeSeller = product.memberNo;
+          let index = bidList.findIndex((bid) => bid.bidNo == bidNo);
+          const tradeBuyer = bidList[index].memberNo;
+          const tradePrice = bidList[index].bidPrice;
+          const trade = { tradeSeller, productNo, tradeBuyer, tradePrice };
+          axios.post(backServer + "/product/trade", trade).then((res) => {
+            if (res.data.message === "success") {
+              Swal.fire({
+                icon: "success",
+                title: "현재 상태 : 예약중",
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "에러 발생. 관리자에게 문의해주세요.",
+              });
+            }
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "판매 불가",
+        text: "이미 거래중인 상품입니다.",
+      });
+    }
   };
 
   //구매자가 자신의 구매호가를 삭제
   const deleteBid = (e) => {
-    const bidNo = e.target.id;
-    Swal.fire({
-      icon: "warning",
-      title: "정말로 삭제하시겠습니까?",
-      showCancelButton: true,
-      confirmButtonText: "삭제",
-      cancelButtonText: "취소",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(backServer + "/product/bid/" + bidNo)
-          .then((res) => {
-            if (res.data.message === "success") {
-              setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
-              bidListAxios();
+    if (!product.tradeState) {
+      const bidNo = e.target.id;
+      Swal.fire({
+        icon: "warning",
+        title: "정말로 삭제하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: "삭제",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(backServer + "/product/bid/" + bidNo)
+            .then((res) => {
+              if (res.data.message === "success") {
+                setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
+                bidListAxios();
+                Swal.fire({
+                  icon: "success",
+                  title: "삭제 성공",
+                });
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title: "삭제 실패",
+                  text: "다시 시도해주세요",
+                });
+              }
+            })
+            .catch(() => {
               Swal.fire({
-                icon: "success",
-                title: "삭제 성공",
+                icon: "error",
+                title: "에러 발생",
+                text: "관리자에게 문의해주세요.",
               });
-            } else {
-              Swal.fire({
-                icon: "warning",
-                title: "삭제 실패",
-                text: "다시 시도해주세요",
-              });
-            }
-          })
-          .catch(() => {
-            Swal.fire({
-              icon: "error",
-              title: "에러 발생",
-              text: "관리자에게 문의해주세요.",
             });
-          });
-      }
-    });
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "삭제 불가",
+        text: "이미 거래중인 상품입니다.",
+      });
+    }
   };
 
   //구매자가 자신의 구매호가를 수정
   const bidUpdate = (e) => {
-    const bidNo = e.target.id;
-    Swal.fire({
-      title: "원하시는 가격을 입력해주세요.",
-      text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off",
-      },
-      showCancelButton: true,
-      confirmButtonText: "수정",
-      cancelButtonText: "취소",
-    }).then((result) => {
-      const bidPrice = result.value;
-      if (result.isConfirmed && bidPrice >= product.productPrice) {
-        Swal.fire({
-          icon: "warning",
-          title: "돈이 많으시군요?",
-          text: "구매버튼을 눌러주세요.",
-        });
-      } else if (result.isConfirmed && bidPrice < product.productPrice) {
-        axios
-          .patch(backServer + "/product/bid", { bidNo, bidPrice })
-          .then((res) => {
-            if (res.data.message === "success") {
-              Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
-                setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
-                bidListAxios();
-              });
-            } else {
-              Swal.fire({
-                icon: "warning",
-                title: "수정 실패",
-                text: "다시 시도해주세요.",
-              });
-            }
-          })
-          .catch(() => {
-            Swal.fire({
-              icon: "error",
-              title: "에러 발생",
-              text: "관리자에게 문의해주세요.",
-            });
-          });
-      }
-    });
-  };
-
-  //구매자가 구매버튼을 클릭
-  const purchasing = () => {
-    if (!isLogin) {
-      Swal.fire({
-        icon: "info",
-        title: "로그인 필요",
-        text: "로그인 후 구매 가능",
-      });
-    } else {
-      navigate("/purchase/" + productNo);
-    }
-  };
-
-  //구매자가 매수호가 등록버튼 클릭
-  const insertBId = () => {
-    if (!isLogin) {
-      Swal.fire({
-        icon: "info",
-        title: "로그인 필요",
-        text: "로그인 후 구매 가능",
-      });
-    } else {
+    if (!product.tradeState) {
+      const bidNo = e.target.id;
       Swal.fire({
         title: "원하시는 가격을 입력해주세요.",
         text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
@@ -987,13 +948,8 @@ const ProductBid = (props) => {
             text: "구매버튼을 눌러주세요.",
           });
         } else if (result.isConfirmed && bidPrice < product.productPrice) {
-          const bid = {
-            productNo: productNo,
-            memberNo: loginMember.memberNo,
-            bidPrice: bidPrice,
-          };
           axios
-            .post(backServer + "/product/bid", bid)
+            .patch(backServer + "/product/bid", { bidNo, bidPrice })
             .then((res) => {
               if (res.data.message === "success") {
                 Swal.fire({ icon: "success", title: "수정 완료" }).then(() => {
@@ -1003,7 +959,7 @@ const ProductBid = (props) => {
               } else {
                 Swal.fire({
                   icon: "warning",
-                  title: "등록 실패",
+                  title: "수정 실패",
                   text: "다시 시도해주세요.",
                 });
               }
@@ -1016,6 +972,104 @@ const ProductBid = (props) => {
               });
             });
         }
+      });
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "수정 불가",
+        text: "이미 거래중인 상품입니다.",
+      });
+    }
+  };
+
+  //구매자가 구매버튼을 클릭
+  const purchasing = () => {
+    if (!product.tradeState) {
+      if (!isLogin) {
+        Swal.fire({
+          icon: "info",
+          title: "로그인 필요",
+          text: "로그인 후 구매 가능",
+        });
+      } else {
+        navigate("/purchase/" + productNo);
+      }
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "수정 불가",
+        text: "이미 거래중인 상품입니다.",
+      });
+    }
+  };
+
+  //구매자가 매수호가 등록버튼 클릭
+  const insertBId = () => {
+    if (!product.tradeState) {
+      if (!isLogin) {
+        Swal.fire({
+          icon: "info",
+          title: "로그인 필요",
+          text: "로그인 후 구매 가능",
+        });
+      } else {
+        Swal.fire({
+          title: "원하시는 가격을 입력해주세요.",
+          text: "- 올바른 입력방법 : 1,000원(X) / 1000원(O) -",
+          input: "text",
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          showCancelButton: true,
+          confirmButtonText: "수정",
+          cancelButtonText: "취소",
+        }).then((result) => {
+          const bidPrice = result.value;
+          if (result.isConfirmed && bidPrice >= product.productPrice) {
+            Swal.fire({
+              icon: "warning",
+              title: "돈이 많으시군요?",
+              text: "구매버튼을 눌러주세요.",
+            });
+          } else if (result.isConfirmed && bidPrice < product.productPrice) {
+            const bid = {
+              productNo: productNo,
+              memberNo: loginMember.memberNo,
+              bidPrice: bidPrice,
+            };
+            axios
+              .post(backServer + "/product/bid", bid)
+              .then((res) => {
+                if (res.data.message === "success") {
+                  Swal.fire({ icon: "success", title: "수정 완료" }).then(
+                    () => {
+                      setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
+                      bidListAxios();
+                    }
+                  );
+                } else {
+                  Swal.fire({
+                    icon: "warning",
+                    title: "등록 실패",
+                    text: "다시 시도해주세요.",
+                  });
+                }
+              })
+              .catch(() => {
+                Swal.fire({
+                  icon: "error",
+                  title: "에러 발생",
+                  text: "관리자에게 문의해주세요.",
+                });
+              });
+          }
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "수정 불가",
+        text: "이미 거래중인 상품입니다.",
       });
     }
   };
@@ -1202,42 +1256,43 @@ const ProductQuality = (props) => {
   console.log(qualityHistory);
   const key = Object.keys(qualityHistory).slice(2);
   const value = Object.values(qualityHistory).slice(2);
-  
+
   console.log(key);
   console.log(value);
 
   if (product.tableName === "IPHONE_TBL") {
-    
   } else if (product.tableName === "MACBOOK_TBL") {
-
   } else if (product.tableName === "IPAD_TBL") {
-
   } else if (product.tableName === "WATCH_TBL") {
- 
   } else if (product.tableName === "AIRPODS_TBL") {
-
   }
 
   return (
-    
     <>
       <div className="productDetail-quality-title">
-        {product.tableName=="IPHONE_TBL"?"아이폰":
-        product.tableName=="MACBOOK_TBL"?"맥북":
-        product.tableName=="IPAD_TBL"?"아이패드":
-        product.tableName=="WATCH_TBL"?"애플워치":
-        product.tableName=="AIRPODS_TBL"?"에어팟":""
-        }</div>
+        {product.tableName == "IPHONE_TBL"
+          ? "아이폰"
+          : product.tableName == "MACBOOK_TBL"
+          ? "맥북"
+          : product.tableName == "IPAD_TBL"
+          ? "아이패드"
+          : product.tableName == "WATCH_TBL"
+          ? "애플워치"
+          : product.tableName == "AIRPODS_TBL"
+          ? "에어팟"
+          : ""}
+      </div>
       <div className="productDetail-quality-item-wrap">
-          {key.map((item,index)=>{
-            return(
-              <div className="productDetail-quality-item" key={"quality"+index}>
-                <div className="productDetail-quality-item-left">{item}</div>
-                <div className="productDetail-quality-item-right">{value[index]}</div>
+        {key.map((item, index) => {
+          return (
+            <div className="productDetail-quality-item" key={"quality" + index}>
+              <div className="productDetail-quality-item-left">{item}</div>
+              <div className="productDetail-quality-item-right">
+                {value[index]}
               </div>
-            )
-              
-          })}
+            </div>
+          );
+        })}
       </div>
     </>
   );
@@ -1397,12 +1452,17 @@ const ProductProductList = (props) => {
 
   const moveProductDetail = (product) => {
     console.log(product);
-  }
+  };
   return (
     <>
       {sellerProductList.map((product, index) => {
         return (
-          <SellerProductItem backServer={backServer} product={product} key={"sellerProduct"+index} setProductNo={setProductNo}/>
+          <SellerProductItem
+            backServer={backServer}
+            product={product}
+            key={"sellerProduct" + index}
+            setProductNo={setProductNo}
+          />
         );
       })}
       <div className="productDetail-tradeReview-page">
@@ -1417,32 +1477,26 @@ const ProductProductList = (props) => {
 };
 
 //박성완
-const ProductReliable = (props) => {
-
-};
+const ProductReliable = (props) => {};
 
 const SellerProductItem = (props) => {
   const product = props.product;
   const backServer = props.backServer;
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const setProductNo = props.setProductNo;
 
-  
-
   const moveProductDetail = () => {
-    navigate("/product/"+product.productNo);
+    navigate("/product/" + product.productNo);
     setProductNo(product.productNo);
     window.scrollTo({
       top: 0,
-      behavior: "smooth" // 이 부분이 스크롤을 부드럽게 해줍니다.
+      behavior: "smooth", // 이 부분이 스크롤을 부드럽게 해줍니다.
     });
     // window.location.href = "/product/"+product.productNo;
   };
 
   return (
-    <div
-      className="productDetail-productList-item"
-    >
+    <div className="productDetail-productList-item">
       <div className="productDetail-productList-item-left">
         <div className="productDetail-productList-item-left-productThumbnail">
           <img
@@ -1471,4 +1525,4 @@ const SellerProductItem = (props) => {
       </div>
     </div>
   );
-}
+};
