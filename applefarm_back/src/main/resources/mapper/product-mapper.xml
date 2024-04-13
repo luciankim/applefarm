@@ -289,5 +289,21 @@
 	<insert id="productTradeReserve">
 		insert into trade_tbl values (trade_seq.nextval, #{tradeSeller}, #{tradeBuyer}, #{productNo}, , null, null, #{tradePrice}, '예약중', null, null, null, null, null, null, null, null)
 	</insert>
+	
+	<insert id="insertReport">
+		insert into report_tbl values(report_seq.nextval,1,#{reportTarget},#{reportContent},sysdate,
+		#{reportingMember},#{reportedMember},0,null)
+	</insert>
+	
+	<select id="productTotalCount" resultType="int">
+		select count(*) from product_tbl where table_name = #{tableName}
+	</select>
+	
+	<select id="selectProductList" resultType="product">
+	select * from 
+		(select ROWNUM as RNUM, p.* from
+			(select * from product_tbl where table_name = #{tableName} order by product_no desc)p)
+	where RNUM between #{pi.start} and #{pi.end}
+	</select>
 
 </mapper>

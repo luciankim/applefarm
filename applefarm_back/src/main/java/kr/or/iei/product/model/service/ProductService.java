@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dto.AdminProduct;
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
@@ -400,6 +401,28 @@ public class ProductService {
 	public int productTradeReserve(Trade trade) {
 		return productDao.productTradeReserve(trade);
 
+	}
+
+	@Transactional
+	public int insertReport(Report report) {
+		
+		return productDao.insertReport(report);
+	}
+
+	public Map selectProductList(String tableName,int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		
+		int totalCount = productDao.productTotalCount(tableName);
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.selectProductList(tableName,pi);
+		System.out.println(list);
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("productList", list);
+		map.put("pi", pi);
+		
+		return map; 
 	}
 
 

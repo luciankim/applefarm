@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.admin.model.dto.Report;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dto.AirpodsQualityHistory;
 import kr.or.iei.product.model.dto.IpadQualityHistory;
@@ -111,5 +112,9 @@ public interface ProductDao {
 
 	int productTradeReserve(Trade trade);
 
+	int insertReport(Report report);
 
+	int productTotalCount(String tableName);
+
+	List selectProductList(String tableName, PageInfo pi);
 }

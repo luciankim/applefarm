@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./productDetail.css"; //박성완
 import "./productDetail2.css"; //박근열
@@ -24,12 +24,16 @@ import {
   BadgeRed,
 } from "../../component/FormFrm";
 
+
 const ProductDetail = (props) => {
   const navigate = useNavigate();
 
   const isLogin = props.isLogin;
   const params = useParams();
-  const productNo = params.productNo;
+
+  const [productNo,setProductNo] = useState(params.productNo);
+
+  // const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [loginMember, setLoginMember] = useState(null);
@@ -96,7 +100,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, []);
+  }, [productNo]);
 
   useEffect(() => {
     axios
@@ -109,7 +113,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [reqPage, writeTrigger]);
+  }, [reqPage, writeTrigger,productNo]);
 
   useEffect(() => {
     axios
@@ -128,7 +132,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [reviewReqPage]);
+  }, [reviewReqPage,productNo]);
 
   useEffect(() => {
     axios
@@ -147,7 +151,7 @@ const ProductDetail = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [sellerProductReqPage]);
+  }, [sellerProductReqPage,productNo]);
 
   //탭
   const productDetailTabArr = ["1:1 문의", "거래 후기", "판매 상품"];
@@ -219,6 +223,45 @@ const ProductDetail = (props) => {
         });
     }
   };
+
+  //리폿 버튼
+  const report = () => {
+    Swal.fire({
+      title: "신고 내용 입력",
+      input: "text",
+      inputPlaceholder: "신고 내용....",
+      confirmButtonText: "신고",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+    })
+    .then((res) => {
+      if (res.isConfirmed) {
+        const reportContent = res.value;
+        const obj = {
+          reportTarget: product.productNo,
+          reportedMember: seller.memberNo,
+          reportContent: reportContent
+        };
+        console.log(obj);
+
+        axios
+          .post(backServer + "/product/report", obj)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((res) => {
+            console.log(res.data);
+          });
+      } else if (res.isDismissed) {
+
+      }
+    });
+
+    
+
+
+    
+  }
 
   return (
     <div className="productDetail-wrap">
@@ -298,7 +341,7 @@ const ProductDetail = (props) => {
               <ProductSummary product={product} />
             </div>
             <div className="productDetail-explain-seller productArticle2">
-              <ProductSeller product={product} seller={seller} />
+              <ProductSeller product={product} seller={seller} report={report} isLogin={isLogin}/>
             </div>
           </div>
           <div className="productDetail-explain-detail productArticle2">
@@ -323,7 +366,7 @@ const ProductDetail = (props) => {
               navigate={navigate}
             />
           </div>
-          <div className="productDetail-quality">
+          <div className="productDetail-quality productArticle3">
             <ProductQuality product={product} qualityHistory={qualityHistory} />
           </div>
         </div>
@@ -365,6 +408,7 @@ const ProductDetail = (props) => {
             sellerProductPageInfo={sellerProductPageInfo}
             sellerProductReqPage={sellerProductReqPage}
             setSellerProductReqPage={setSellerProductReqPage}
+            setProductNo={setProductNo}
           />
         </div>
       </div>
@@ -372,7 +416,7 @@ const ProductDetail = (props) => {
 
       {/* productDetail-reliableList */}
       <div className="productDetail-reliableList">
-        <ProductReliable />
+        <ProductReliable/>
       </div>
       {/* //productDetail-reliableList */}
     </div>
@@ -577,6 +621,16 @@ const ProductSummary = (props) => {
 const ProductSeller = (props) => {
   const product = props.product;
   const seller = props.seller;
+  const isLogin = props.isLogin;
+  const report = props.report;
+
+  // const [modalOpen, setModalOpen] = useState(false); // 모달 상태 관리
+  // const modalBackground = useRef();
+  // // 모달 열기 함수
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+  
 
   return (
     <>
@@ -592,9 +646,9 @@ const ProductSeller = (props) => {
             {seller.sellerScore}는 37부터 시작 
               
             */}
-              {0 <= seller.sellerScore <= 37 ? (
+              {0 <= seller.sellerScore <= 36 ? (
                 <img src="/image/scoreImage/썩은사과.png" />
-              ) : 38 <= seller.sellerScore <= 70 ? (
+              ) : 37 <= seller.sellerScore <= 70 ? (
                 <img src="/image/scoreImage/보통사과.png" />
               ) : 71 <= seller.sellerScore <= 100 ? (
                 <img src="/image/scoreImage/금사과.png" />
@@ -625,8 +679,10 @@ const ProductSeller = (props) => {
           </div>
           <div className="productDetail-explain-seller-report-area">
             <div className="productDetail-explain-seller-report-icon">
-              <img src="/image/report/report.png" />
+              <img src="/image/report/report.png" onClick={isLogin ? report : null}/>
             </div>
+
+            {/* {modalOpen && <Modal setModalOpen={setModalOpen} modalBackground={modalBackground}/>} */}
 
             <div className="productDetail-explain-seller-report-text">
               신고하기
@@ -636,6 +692,29 @@ const ProductSeller = (props) => {
       ) : (
         ""
       )}
+    </>
+  );
+};
+
+const Modal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const modalBackground = props.modalBackground;
+  return (
+    <>
+    
+      <div className={'modal-container'} ref={modalBackground} onClick={e => {
+        if (e.target === modalBackground.current) {
+          setModalOpen(false);
+        }
+      }}>
+        <div className={'modal-content'}>
+          <p>리액트로 모달 구현하기</p>
+          <button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
+            모달 닫기
+          </button>
+        </div>
+      </div>
+    
     </>
   );
 };
@@ -1121,13 +1200,47 @@ const ProductQuality = (props) => {
   const { product, qualityHistory } = props;
   console.log(product);
   console.log(qualityHistory);
+  const key = Object.keys(qualityHistory).slice(2);
+  const value = Object.values(qualityHistory).slice(2);
+  
+  console.log(key);
+  console.log(value);
 
   if (product.tableName === "IPHONE_TBL") {
+    
   } else if (product.tableName === "MACBOOK_TBL") {
+
   } else if (product.tableName === "IPAD_TBL") {
+
   } else if (product.tableName === "WATCH_TBL") {
+ 
   } else if (product.tableName === "AIRPODS_TBL") {
+
   }
+
+  return (
+    
+    <>
+      <div className="productDetail-quality-title">
+        {product.tableName=="IPHONE_TBL"?"아이폰":
+        product.tableName=="MACBOOK_TBL"?"맥북":
+        product.tableName=="IPAD_TBL"?"아이패드":
+        product.tableName=="WATCH_TBL"?"애플워치":
+        product.tableName=="AIRPODS_TBL"?"에어팟":""
+        }</div>
+      <div className="productDetail-quality-item-wrap">
+          {key.map((item,index)=>{
+            return(
+              <div className="productDetail-quality-item" key={"quality"+index}>
+                <div className="productDetail-quality-item-left">{item}</div>
+                <div className="productDetail-quality-item-right">{value[index]}</div>
+              </div>
+            )
+              
+          })}
+      </div>
+    </>
+  );
 };
 
 //박근열
@@ -1280,38 +1393,16 @@ const ProductProductList = (props) => {
   const sellerProductReqPage = props.sellerProductReqPage;
   const setSellerProductReqPage = props.setSellerProductReqPage;
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const setProductNo = props.setProductNo;
+
+  const moveProductDetail = (product) => {
+    console.log(product);
+  }
   return (
     <>
       {sellerProductList.map((product, index) => {
         return (
-          <div
-            className="productDetail-productList-item"
-            key={"sellerProduct" + index}
-          >
-            <div className="productDetail-productList-item-left">
-              <div className="productDetail-productList-item-left-productThumbnail">
-                <img
-                  src={backServer + "/product/img/" + product.productThumbnail}
-                ></img>
-              </div>
-              <div className="productDetail-productList-item-left-productSummary">
-                {product.productSummary}
-              </div>
-            </div>
-
-            <div className="productDetail-productList-item-right">
-              <div className="productDetail-productList-item-right-productQuality">
-                품질 : {product.productQuality}
-              </div>
-              <div className="productDetail-productList-item-right-productPrice">
-                가격 : {product.productPrice}
-              </div>
-              <div
-                className="productDetail-productList-item-right-productExplain"
-                dangerouslySetInnerHTML={{ __html: product.productExplain }}
-              ></div>
-            </div>
-          </div>
+          <SellerProductItem backServer={backServer} product={product} key={"sellerProduct"+index} setProductNo={setProductNo}/>
         );
       })}
       <div className="productDetail-tradeReview-page">
@@ -1326,4 +1417,58 @@ const ProductProductList = (props) => {
 };
 
 //박성완
-const ProductReliable = (props) => {};
+const ProductReliable = (props) => {
+
+};
+
+const SellerProductItem = (props) => {
+  const product = props.product;
+  const backServer = props.backServer;
+  const navigate  = useNavigate();
+  const setProductNo = props.setProductNo;
+
+  
+
+  const moveProductDetail = () => {
+    navigate("/product/"+product.productNo);
+    setProductNo(product.productNo);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // 이 부분이 스크롤을 부드럽게 해줍니다.
+    });
+    // window.location.href = "/product/"+product.productNo;
+  };
+
+  return (
+    <div
+      className="productDetail-productList-item"
+    >
+      <div className="productDetail-productList-item-left">
+        <div className="productDetail-productList-item-left-productThumbnail">
+          <img
+            src={backServer + "/product/img/" + product.productThumbnail}
+          ></img>
+        </div>
+        <div className="productDetail-productList-item-left-productSummary">
+          {product.productSummary}
+        </div>
+      </div>
+
+      <div
+        className="productDetail-productList-item-right"
+        onClick={moveProductDetail}
+      >
+        <div className="productDetail-productList-item-right-productQuality">
+          품질 : {product.productQuality}
+        </div>
+        <div className="productDetail-productList-item-right-productPrice">
+          가격 : {product.productPrice}
+        </div>
+        <div
+          className="productDetail-productList-item-right-productExplain"
+          dangerouslySetInnerHTML={{ __html: product.productExplain }}
+        ></div>
+      </div>
+    </div>
+  );
+}
