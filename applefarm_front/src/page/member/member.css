@@ -1525,3 +1525,58 @@ table {
   background-color: #0267f3;
   color: white;
 }
+
+.filter-btn-wrap {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* 버튼 사이의 간격 설정 */
+}
+
+.filter-box1,
+.filter-box2 {
+  display: flex;
+  gap: 10px; /* 내부 버튼 사이의 간격 */
+}
+
+.filter-btn-wrap button {
+  width: 90px;
+  padding: 13px 20px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #1e1e1e;
+}
+
+.filter-btn-wrap button:hover {
+  background-color: #0267f3;
+  color: white;
+}
+
+.sales-close-btn {
+  width: 70px !important;
+  padding: 6px 3px !important;
+}
+
+.sales-close-btn:hover {
+  background-color: #e1e1e1 !important;
+}
+
+.sales-close-btn2:hover {
+  background-color: #e1e1e1 !important;
+}
+
+.invoice-wrap {
+  display: flex;
+  padding-top: 35px;
+  justify-content: center;
+}
+
+.invoice-title {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+}

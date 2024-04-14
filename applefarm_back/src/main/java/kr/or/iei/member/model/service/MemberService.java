@@ -18,6 +18,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.trade.model.dao.TradeDao;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
@@ -377,6 +378,11 @@ public class MemberService {
 		public int deleteSalesProduct(int productNo) {
 			
 			return memberDao.deleteSalesProduct(productNo);
+		}
+
+		public int updateInvoiceNum(Trade trade) {
+
+			return memberDao.updateInvoiceNum(trade);
 		}
 
 	

@@ -340,7 +340,7 @@
     		t.trade_state,
     		t.trade_date
     	ORDER BY 
-    		t.trade_date desc
+    		p.product_date desc
 	
 	</select>
 	
@@ -356,6 +356,17 @@
 		delete from product_tbl where product_no = #{productNo}
 	
 	</delete>
+	
+	<update id="updateInvoiceNum">
+	
+		update 
+		trade_tbl
+		set 
+		trade_state = '배송중', 
+		invoice_number = #{invoiceNumber} 
+		where product_no = #{productNo}
+	
+	</update>
 	
 	
 </mapper>

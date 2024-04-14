@@ -10,6 +10,7 @@ import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -105,6 +106,8 @@ public interface MemberDao {
 	int changeSalesPrice(Product product);
 
 	int deleteSalesProduct(int productNo);
+
+	int updateInvoiceNum(Trade trade);
 
 
 
