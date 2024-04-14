@@ -1,7 +1,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const SalesProductDetails = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -25,11 +25,12 @@ const SalesProductDetails = () => {
 
   return (
     <>
-      <div>
-        <table>
+      <div className="mypage-current-wrap">
+        <h3 className="mypage-current-title">판매상세</h3>
+        <table className="sales-detail-table">
           <thead>
             <tr>
-              <td>{trade.tradeState}</td>
+              <td className="sales-status">{trade.tradeState}</td>
             </tr>
             <tr>
               <td>
@@ -39,23 +40,23 @@ const SalesProductDetails = () => {
                   alt="iPhone"
                 />
               </td>
-              <td>{trade.productSummary}</td>
-              <td>
+              <td className="sales-text">{trade.productSummary}</td>
+              <td className="sales-text">
                 <button>상품상세</button>
               </td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>판매정산내역</td>
+              <td className="sales-detail-info-title">판매정산내역</td>
             </tr>
             <tr>
-              <td>판매금액</td>
-              <td>{trade.tradePrice}원</td>
+              <td className="sales-mini-title">판매금액</td>
+              <td className="sales-detail-info">{trade.tradePrice}원</td>
             </tr>
             <tr>
-              <td>수수료</td>
-              <td>
+              <td className="sales-mini-title">수수료</td>
+              <td className="sales-detail-info">
                 -
                 {trade.sellerGrade === 1
                   ? 0.3 * trade.tradePrice
@@ -66,8 +67,8 @@ const SalesProductDetails = () => {
               </td>
             </tr>
             <tr>
-              <td>정산금액</td>
-              <td>
+              <td className="sales-mini-title">정산금액</td>
+              <td className="sales-detail-info">
                 {trade.tradePrice -
                   (trade.sellerGrade === 1
                     ? 0.3 * trade.tradePrice
@@ -78,30 +79,40 @@ const SalesProductDetails = () => {
               </td>
             </tr>
             <tr>
-              <td>거래일시</td>
-              {dayjs(product.productDate).format("YYYY-MM-DD")}
-            </tr>
-            <tr>
-              <td>판매정산계좌</td>
-              <td>{trade.memberAccountnumber}</td>
-            </tr>
-            <tr>
-              <td>반송주소</td>
-            </tr>
-            <tr>
-              <td>받는사람</td>
-              <td>{trade.memberName}</td>
-            </tr>
-            <tr>
-              <td>전화번호</td>
-              <td>{trade.memberPhone}</td>
-            </tr>
-            <tr>
-              <td>주소</td>
-              <td>
-                <span>{trade.ad}</span>({trade.zipcode}) {trade.address}{" "}
-                {trade.addressDetail} {/*{trade.addressName}*/}
+              <td className="sales-mini-title">거래일시</td>
+              <td className="sales-detail-info">
+                {dayjs(product.productDate).format("YYYY-MM-DD")}
               </td>
+            </tr>
+            <tr>
+              <td className="sales-detail-info-title ">판매정산계좌</td>
+            </tr>
+            <tr>
+              <td className=" sales-mini-title">{trade.memberAccountnumber}</td>
+              <td className="sales-detail-info"></td>
+            </tr>
+            <tr>
+              <td className="sales-detail-info-title">반송주소</td>
+            </tr>
+            <tr>
+              <td className="sales-mini-title">받는사람</td>
+              <td className="sales-detail-info">{trade.memberName}</td>
+            </tr>
+            <tr>
+              <td className="sales-mini-title">전화번호</td>
+              <td className="sales-detail-info">{trade.memberPhone}</td>
+            </tr>
+            <tr>
+              <td className="sales-mini-title">주소</td>
+              <td className="sales-detail-info">
+                <span>{trade.ad}</span>({trade.zipcode}) {trade.address}{" "}
+                {trade.addressDetail}
+              </td>
+            </tr>
+            <tr className="salesListBtn">
+              <Link to="/mypage/salesHistory">
+                <button>목록보기</button>
+              </Link>
             </tr>
           </tbody>
         </table>

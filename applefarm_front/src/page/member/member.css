@@ -1597,6 +1597,85 @@ table {
   width: 250px;
 }
 
+.sales-text {
+  font-size: 14px;
+  position: relative;
+  left: 60px;
+}
+.sales-text button {
+  position: relative;
+  right: 50px;
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: white;
+  font-size: 11px;
+}
+
+.sales-text button:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(-2px);
+}
+
+.sales-status {
+  color: #0267f3;
+  font-weight: bold;
+  padding-bottom: 10px;
+  position: relative;
+  bottom: 40px;
+  left: -9px;
+  font-size: 13px;
+}
+
+.sales-detail-table tbody {
+  position: relative;
+  top: 10px;
+  left: 85px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.sales-detail-table td {
+  padding: 11px;
+}
+
+.sales-detail-info-title {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.salesListBtn {
+  position: relative;
+  top: 50px;
+  left: 200px;
+}
+.salesListBtn button {
+  padding: 10px;
+  border: none;
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 5px;
+}
+.salesListBtn button:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(-2px);
+}
+
+.sales-mini-title {
+  position: relative;
+  left: 10px;
+  font-size: 15px;
+  border-bottom: 1px solid #ccc;
+}
+.sales-detail-info {
+  font-size: 15px;
+  text-align: end;
+  position: relative;
+  right: 80px;
+  border-bottom: 1px solid #ccc;
+}
+
 /*환불내역*/
 .refundHistory-content {
   width: 100%;
