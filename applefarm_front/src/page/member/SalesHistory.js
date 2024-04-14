@@ -6,6 +6,7 @@ import Modal from "react-modal";
 import Swal from "sweetalert2";
 
 import dayjs, { Dayjs } from "dayjs";
+import { Link } from "react-router-dom";
 
 const SalesHistory = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -370,14 +371,21 @@ const SalesHistory = (props) => {
                   </tr>
                   <tr>
                     <td>
-                      <img
-                        className="salesImg"
-                        src={product.productThumbnail}
-                        alt="Product"
-                      />
+                      <Link className="sales-link" to="#">
+                        <img
+                          className="salesImg"
+                          src={product.productThumbnail}
+                          alt="Product"
+                        />
+                      </Link>
                     </td>
 
-                    <td className="sales-info">{product.productSummary}</td>
+                    <td className="sales-info">
+                      <Link className="sales-link" to="#">
+                        {product.productSummary}
+                      </Link>
+                    </td>
+
                     <td className="sales-info">{product.maxBidPrice}원</td>
                     <td className="sales-info">{product.productPrice}원</td>
 
@@ -424,14 +432,20 @@ const SalesHistory = (props) => {
                     </tr>
                     <tr>
                       <td>
-                        <img
-                          className="salesImg"
-                          src={product.productThumbnail}
-                          alt="Product"
-                        />
+                        <Link className="sales-link" to="#">
+                          <img
+                            className="salesImg"
+                            src={product.productThumbnail}
+                            alt="Product"
+                          />
+                        </Link>
                       </td>
 
-                      <td className="sales-info">{product.productSummary}</td>
+                      <td className="sales-info">
+                        <Link className="sales-link" to="#">
+                          {product.productSummary}
+                        </Link>
+                      </td>
                       <td className="sales-info"></td>
                       <td className="sales-info">{product.productPrice}원</td>
 
@@ -479,14 +493,20 @@ const SalesHistory = (props) => {
                     </tr>
                     <tr>
                       <td>
-                        <img
-                          className="salesImg"
-                          src={product.productThumbnail}
-                          alt="Product"
-                        />
+                        <Link className="sales-link" to="#">
+                          <img
+                            className="salesImg"
+                            src={product.productThumbnail}
+                            alt="Product"
+                          />
+                        </Link>
                       </td>
 
-                      <td className="sales-info">{product.productSummary}</td>
+                      <td className="sales-info">
+                        <Link className="sales-link" to="#">
+                          {product.productSummary}
+                        </Link>
+                      </td>
                       <td className="sales-info"></td>
                       <td className="sales-info">{product.productPrice}원</td>
 

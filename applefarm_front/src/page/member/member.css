@@ -142,6 +142,8 @@
 .sideMenu-title {
   font-size: 20px;
   padding-top: 40px;
+  font-weight: bold;
+  color: #1e1e1e;
 }
 
 .sideMenu-wrap {
@@ -1579,4 +1581,13 @@ table {
   display: flex;
   justify-content: center;
   font-size: 18px;
+}
+
+.sales-link {
+  color: #1e1e1e;
+}
+
+.sales-link:hover {
+  color: #1c0303;
+  text-decoration: underline;
 }
