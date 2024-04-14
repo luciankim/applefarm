@@ -15,6 +15,7 @@
   border-radius: 15px;
 }
 .modal-content-wrap {
+  overflow: hidden;
   background-color: white;
   padding: 20px;
   border: 1px solid #ccc;
@@ -226,10 +227,10 @@
   font-size: 13px;
   color: var(--gray_04);
 }
-.change-status-sbtn:hover {
-  background-color: #b4dbed;
+.change-status-sbtn:not(:disabled) {
+  background-color: #0267f3;
   font-family: ns-b;
-  color: #545454;
+  color: #fff;
   border: none;
 }
 .sub-sub-s {
@@ -248,8 +249,8 @@
   left: 60px;
 }
 .active-bid-purchase {
-  background-color: #b4dbed;
-  color: #545454;
+  background-color: var(--main_02);
+  color: #fff;
   font-family: ns-b;
   border: none;
 }
@@ -259,4 +260,74 @@
 }*/
 .modal-title2 {
   color: #545454;
+}
+/*후기모달*/
+.modal-content .product-info-wrap {
+  display: flex;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 10px;
+  align-items: center;
+  font-size: 14px;
+}
+.modal-content .product-info-wrap > div > a > img {
+  width: 100px;
+  height: 100px;
+}
+.modal-content .product-info-text {
+  flex: 1;
+  text-align: left;
+  padding-left: 10px;
+}
+.modal-content .product-seller-nick {
+  font-size: 12px;
+}
+.modal-size-more {
+  width: 520px;
+}
+.modal-content .level-select {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px 30px 0px;
+}
+.modal-content .select-img {
+  width: 60px;
+  height: 60px;
+  margin: 20px 30px 0px 30px;
+  cursor: pointer;
+}
+.modal-content .level-select > div > div {
+  font-size: 13px;
+  cursor: pointer;
+}
+.modal-content .current-level {
+  color: var(--main_02);
+  font-family: ns-b;
+}
+.modal-content .current-img {
+  width: 65px;
+  height: 65px;
+}
+.modal-content .textarea-box-wrap {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.modal-content .textarea-box {
+  width: 100%;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 200px;
+  outline: none;
+  padding: 10px;
+}
+.modal-sub-message {
+  font-size: 12px;
+  text-align: left;
+  padding: 10px;
+  color: #545454;
+}
+.modal-sub-message > span {
+  text-decoration: underline;
 }

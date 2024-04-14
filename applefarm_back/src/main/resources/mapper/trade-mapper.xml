@@ -26,14 +26,12 @@
   	</select>
   		<select id="bidTotalCount" resultType="int">
 		select count(*)
-                from (select b.bid_no,b.product_no,b.member_no,b.bid_price,to_char(b.bid_date,'yyyy-mm-dd') as bid_date,
+                from (select
                         (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer=#{memberNo} and trade_state!='예약중') as my_trade,
                         (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer!=#{memberNo}) as trade_status,
-                        (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer=#{memberNo} and trade_state='예약중') as trade_book,
-                        (select max(bid_price) from bid_tbl m where m.product_no=b.product_no) as max_price,
-                         p.product_thumbnail, p.product_summary
+                        (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer=#{memberNo} and trade_state='예약중') as trade_book
                      from bid_tbl b join product_tbl p on b.product_no=p.product_no
-                     where b.member_no=45 and to_char(bid_date,'yyyy-mm-dd') between #{startDate} and #{endDate} order by 1 desc)c 
+                     where b.member_no=#{memberNo} and to_char(bid_date,'yyyy-mm-dd') between #{startDate} and #{endDate})
              	where my_trade=0 
              	<choose>
 						<when test="status==1">
@@ -59,7 +57,7 @@
                         (select max(bid_price) from bid_tbl m where m.product_no=b.product_no) as max_price,
                          p.product_thumbnail, p.product_summary, p.product_price
                      from bid_tbl b join product_tbl p on b.product_no=p.product_no
-                     where b.member_no=45 and to_char(bid_date,'yyyy-mm-dd') between #{startDate} and #{endDate} order by 1 desc)c 
+                     where b.member_no=#{memberNo} and to_char(bid_date,'yyyy-mm-dd') between #{startDate} and #{endDate} order by 1 desc)c 
              	where my_trade=0 
              	<choose>
 						<when test="status==1">
@@ -87,5 +85,104 @@
   	</delete>
   	<update id="updateBid">
   		update bid_tbl set bid_price=#{bidPrice} where bid_no=#{bidNo}
+  	</update>
+  	 <select id="selectPurchaseTotalCount" resultType="int">
+		select count(*)
+		from trade_tbl t join product_tbl p on p.product_no=t.product_no 
+		where trade_buyer=#{memberNo} 
+		and to_char(t.trade_date,'yyyy-mm-dd') between #{startDate} and #{endDate}
+		and 
+		<choose>
+			<when test="tab==1">
+				trade_state not in('예약중','배송완료','구매확정','환불')
+				<choose>
+					<when test="status==1">
+						 and invoice_number is null
+					</when>
+					<when test="status==2">
+						 and invoice_number is not null
+					</when>
+					<otherwise>
+					</otherwise>
+				</choose>
+			</when>
+			<when test="tab==2">
+				<choose>
+					<when test="status==1">
+						trade_state ='배송완료'
+					</when>
+					<when test="status==2">
+						trade_state ='구매확정'
+					</when>
+					<when test="status==3">
+						trade_state ='환불'
+					</when>
+					<otherwise>
+						trade_state in('배송완료','구매확정','환불')
+					</otherwise>
+				</choose>
+			</when>
+		</choose>		
+  	</select>
+  	<select id="selectPurchaseTrade" resultType="trade">
+  		select * from 
+		(select rownum as rnum, a.* from (select t.trade_no, t.trade_seller, p.product_thumbnail, p.product_summary, t.trade_state, t.product_no,t.trade_price,to_char(t.trade_date,'yyyy-mm-dd') as trade_date, t.payment_number, t.invoice_number
+		,(select count(*) from review_tbl r where r.trade_no=t.trade_no) as review
+		,(select member_nickname from member_tbl where member_no=t.trade_seller) as trade_seller_nickname
+		from trade_tbl t join product_tbl p on p.product_no=t.product_no where trade_buyer=#{memberNo}
+		and to_char(t.trade_date,'yyyy-mm-dd') between #{startDate} and #{endDate}
+		and 
+		<choose>
+			<when test="tab==1">
+				trade_state not in('예약중','배송완료','구매확정','환불')
+				<choose>
+					<when test="status==1">
+						 and invoice_number is null
+					</when>
+					<when test="status==2">
+						 and invoice_number is not null
+					</when>
+					<otherwise>
+					</otherwise>
+				</choose>
+			</when>
+			<when test="tab==2">
+				<choose>
+					<when test="status==1">
+						trade_state ='배송완료'
+					</when>
+					<when test="status==2">
+						trade_state ='구매확정'
+					</when>
+					<when test="status==3">
+						trade_state ='환불'
+					</when>
+					<otherwise>
+						trade_state in('배송완료','구매확정','환불')
+					</otherwise>
+				</choose>
+			</when>
+		</choose>		
+		 order by 1 desc)a)
+		where rnum between #{start} and #{end}
+  	</select>
+  	<update id="updatePurchaseConfirm">
+  		update trade_tbl set trade_state='구매확정' where trade_no=#{tradeNo}
+  	</update>
+  	<insert id="insertReview">
+  		insert into review_tbl values(#{tradeNo},#{reviewSeller},#{reviewConsumer},#{productNo},#{reviewSatisfaction},#{reviewDetail})
+  	</insert>
+  	<update id="updateSellerGrade">
+  		<selectKey resultType="int" order="BEFORE" keyProperty="sellerScore">
+  			select seller_score+#{reviewSatisfaction} from member_tbl where member_no=#{reviewSeller}
+  		</selectKey>
+  		update member_tbl set seller_score=#{sellerScore} where member_no=#{reviewSeller}
+  	</update>
+  	<insert id="insertRefund">
+  		insert into refund_tbl 
+  		values(refund_seq.nextval,#{tradeNo},#{productNo},sysdate,#{refundReason},0)
+  	</insert>
+  	<update id="updateRefundTradeState">
+  		update trade_tbl set trade_state='환불' where trade_no=#{tradeNo}
   	</update>
 </mapper>

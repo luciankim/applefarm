@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.admin.model.dto.Refund;
+import kr.or.iei.product.model.dto.Review;
 import kr.or.iei.trade.model.dao.TradeDao;
 import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.trade.model.dto.Trade;
@@ -51,7 +53,7 @@ public class TradeService {
 		map.put("pi", pi);
 		return map;
 	}
-
+	@Transactional
 	public int deleteBid(int bidNo, int productNo, int tradeBook) {
 		int result=0;
 		result+=tradeDao.deleteBid(bidNo);
@@ -62,7 +64,50 @@ public class TradeService {
 		}
 		return result;
 	}
+	@Transactional
 	public int updateBid(Bid bid) {
 		return tradeDao.updateBid(bid);
+	}
+	public Map selectPurchase(int memberNo, int tab, int status, int reqPage, String startDate, String endDate) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("memberNo", memberNo);
+		data.put("tab",tab);
+		data.put("status",status);
+		data.put("startDate",startDate);
+		data.put("endDate",endDate);
+		int totalCount = tradeDao.selectPurchaseTotalCount(data);
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		data.put("start", pi.getStart());
+		data.put("end", pi.getEnd());
+		List<Trade> tradeList = tradeDao.selectPurchaseTrade(data);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tradeList", tradeList);
+		map.put("pi", pi);
+		System.out.println(tradeList);
+		return map;
+	}
+	@Transactional
+	public int updatePurchaseConfirm(Trade trade) {
+		return tradeDao.updatePurchaseConfirm(trade);
+	}
+	@Transactional
+	public int insertReview(Review review) {
+		//review_tbl 후기 insert 후,member_tbl 판매자점수 update
+		int result = tradeDao.insertReview(review);
+		if(result>0) {
+			result+= tradeDao.updateSellerGrade(review);
+		}
+		return result;
+	}
+	@Transactional
+	public int insertRefund(Refund refund) {
+		// refund_Tbl insert => trade_tbl(trade_state)환불로 update
+		int result = tradeDao.insertRefund(refund);
+		if(result>0) {
+			result+=tradeDao.updateRefundTradeState(refund);
+		}
+		return result;
 	}
 }

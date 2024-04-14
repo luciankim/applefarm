@@ -17,11 +17,19 @@ const Tab = (props) => {
     setEndDate,
     activeButton,
     setActiveButton,
+    setCurrentStatus,
   } = props;
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
+    //값초기화
     setReqPage(1);
+    setCurrentStatus(0);
+    const today = dayjs();
+    const twoMonthAgo = today.subtract(2, "month");
+    setStartDate(twoMonthAgo);
+    setEndDate(today);
+    setActiveButton("twoMonth");
   };
 
   return (

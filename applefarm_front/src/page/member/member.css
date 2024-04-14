@@ -625,6 +625,7 @@
   border-spacing: 10px;
   width: 100%;
   text-align: center;
+  font-size: 15px;
 }
 .purchase-history-content table > thead > tr > td {
   font-size: 12px;
@@ -666,8 +667,12 @@
 .go-purchase {
   color: var(--main_02);
 }
+.purchase-history-content a:hover {
+  text-decoration-line: underline;
+}
 .purcase-date-wrap {
   position: relative;
+  width: 140px;
 }
 .purchase-history-content table > tbody > tr > td > button {
   border: 1px solid #e5e5e5;
@@ -675,10 +680,27 @@
   padding: 5px 8px;
   margin: 5px 10px;
 }
-.purchase-history-content table > tbody > tr > td > button:hover {
+.purchase-history-content
+  table
+  > tbody
+  > tr
+  > td
+  > button:hover:not(:disabled) {
   border-color: var(--bg_03);
 }
-.
+.purchase-history-content table > thead > tr > td:last-child {
+  width: 120px;
+}
+.lsr-cb {
+  color: #0071e3;
+}
+.lsr-cr {
+  color: var(--main_02);
+}
+.openInvice:hover {
+  text-decoration-line: underline;
+  cursor: pointer;
+}
 /* 사이드메뉴 */
 .sideMenu > ul > li > a {
   color: #b7b7b7;

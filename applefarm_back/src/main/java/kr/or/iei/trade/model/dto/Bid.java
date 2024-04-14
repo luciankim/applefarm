@@ -33,5 +33,4 @@ public class Bid {
 	
 	@Schema(description = "상품 예약",type="int")//예약상태인지
 	private int tradeBook;
-	
 }
