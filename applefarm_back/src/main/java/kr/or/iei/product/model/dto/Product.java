@@ -51,6 +51,7 @@ public class Product {
 	//productBid, productList에 사용
 	private String tradeState;
 	
+
 	//구매최고희망가
 	private int maxBidPrice;
 	
@@ -67,4 +68,8 @@ public class Product {
 	private int refundStatus;
 	
 	
+
+	//productMainList에 사용
+	private int reqPage;
+
 }

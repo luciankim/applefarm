@@ -117,4 +117,8 @@ public interface ProductDao {
 	int productTotalCount(String tableName);
 
 	List selectProductList(String tableName, PageInfo pi);
+
+	int productMainListTotalCount(Product product);
+
+	List<Product> productMainList(Product product, PageInfo pi);
 }
