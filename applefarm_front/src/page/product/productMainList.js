@@ -18,6 +18,8 @@ const ProductMainList = (props) => {
       .then((res) => {
         console.log(res.data.data);
         setProductList(res.data.data.productList);
+        setPageInfo(res.data.data.pageInfo);
+        setReqPage(res.data.data.reqPage);
       })
       .catch((res) => {
         console.log(res.data);

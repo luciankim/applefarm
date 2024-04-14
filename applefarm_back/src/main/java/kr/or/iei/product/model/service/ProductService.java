@@ -425,6 +425,14 @@ public class ProductService {
 		return map; 
 	}
 
+	public HashMap<String, Object> productMainList(Product product, int reqPage) {
+		int numPerPage = 12;	//한 페이지 당 게시물 
+		int pageNaviSize = 5;	//페이지 네비게이션의 길
+		int totalCount = productDao.productMainListTotalCount(product);	//전체 게시물 수(전체 페이지 수 계산을 위해)
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		return null;
+	}
+
 
 
 
