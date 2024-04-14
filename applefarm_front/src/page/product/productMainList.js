@@ -12,17 +12,26 @@ const ProductMainList = (props) => {
   const [reqPage, setReqPage] = useState(1);
 
   useEffect(() => {
-    const obj = { product: selectedProduct, reqPage: reqPage };
+    const obj = { ...selectedProduct, reqPage: reqPage };
     axios
-      .post(backServer + "/product/productMainList", obj)
+      .post(backServer + "/product/mainList", obj)
       .then((res) => {
-        console.log(res.data.data);
-        setProductList(res.data.data.productList);
+        if (res.data.message === "success") {
+          setProductList([]);
+          setPageInfo([]);
+          setReqPage(1);
+          console.log(res.data.data);
+          setProductList(res.data.data.productList);
+          setPageInfo(res.data.data.pageInfo);
+          setReqPage(res.data.data.reqPage);
+        } else {
+          console.log(res.data);
+        }
       })
       .catch((res) => {
         console.log(res.data);
       });
-  }, []);
+  }, [selectedProduct, reqPage]);
 
   return (
     <div className="productMainList">

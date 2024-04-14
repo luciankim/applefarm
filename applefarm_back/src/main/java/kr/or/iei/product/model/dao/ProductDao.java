@@ -118,6 +118,7 @@ public interface ProductDao {
 
 	List selectProductList(String tableName, PageInfo pi);
 
+
 	int updateProduct(Product product);
 
 	int updateProductFile(ProductFile pf);
@@ -133,4 +134,9 @@ public interface ProductDao {
 	int updateIpadQualityHistory(WatchQualityHistory watchQualityHistory);
 
 	int updateAirpodsQualityHistory(AirpodsQualityHistory airpodsQualityHistory);
+
+	int productMainListTotalCount(Product product);
+
+	List<Product> productMainList(Product product, PageInfo pi);
+
 }

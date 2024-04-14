@@ -425,6 +425,7 @@ public class ProductService {
 		return map; 
 	}
 
+
 	@Transactional
 	public int updateIphone(Product product, ArrayList<ProductFile> fileList, IphoneQualityHistory iphoneQualityHistory) {
 		int result1 = productDao.updateProduct(product);
@@ -525,6 +526,24 @@ int result1 = productDao.updateProduct(product);
 
 
 	
+
+
+	public HashMap<String, Object> productMainList(Product product, int reqPage) {
+		int numPerPage = 12;	//한 페이지 당 게시물 
+		int pageNaviSize = 5;	//페이지 네비게이션의 길
+		int totalCount = productDao.productMainListTotalCount(product);	//전체 게시물 수(전체 페이지 수 계산을 위해)
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List<Product> list = productDao.productMainList(product, pi);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("productList", list);
+		map.put("pi", pi);
+		//System.out.println(product);
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		return map;
+	}
 
 
 	

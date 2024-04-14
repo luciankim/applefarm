@@ -92,14 +92,25 @@ const Login = (props) => {
     setChkResetPw(true);
   };
 
-  /*모달 스타일 적용*/
+  //모달 스타일
   const modalStyle = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      zIndex: "1000", //오버레이 z-index
+    },
     content: {
       padding: "39px",
       width: "50%",
-      height: "40%",
-      margin: "12% 25%",
+      height: "50%",
+      margin: "12% auto",
       borderRadius: "15px",
+      zIndex: "1001", //모달 컨텐츠 z-index
+      position: "relative", //모달 컨텐츠 포지션,이게 있어야 zIndex 사용
     },
   };
 

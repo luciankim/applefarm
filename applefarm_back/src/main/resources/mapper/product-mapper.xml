@@ -58,7 +58,7 @@
 		insert into product_tbl 
 		values
 		(product_seq.nextval,#{memberNo},#{productQuality},#{productTitle},
-		#{productExplain},#{productPrice},sysdate,0,#{productLine},#{productGen},#{productModel},
+		#{productExplain},#{productPrice},sysdate,'0',#{productLine},#{productGen},#{productModel},
 		#{productModel2},#{productColor},#{productStorage},#{productMemory},#{productChip},#{productCpu},#{productGpu},#{productSize},#{productConnectivity},
 		#{productCharge},#{productThumbnail},#{productSummary},#{tableName}
 		)
@@ -306,6 +306,7 @@
 	where RNUM between #{pi.start} and #{pi.end}
 	</select>
 	
+
 	<update id="updateProduct">
 		UPDATE product_tbl
 		SET
@@ -432,5 +433,63 @@
 		delete from product_file_tbl where product_no = #{productNo}
 	</delete>
 	
+
+	<select id="productMainListTotalCount" resultType="int">
+		select count(*)
+		from product_tbl p
+		left join trade_tbl t using (product_no)
+		where
+			product_hide = '0'
+	   <!-- <if test='tradeState != null and tradeState != ""'>and t.trade_state in ('예약중', '결제완료', '발송대기', '배송중', '배송완료', '구매확정')</if> -->
+			<if test='tradeState == null and tradeState == ""'>and t.trade_state is null</if>
+		    <if test='productLine != null and productLine != ""'>and p.product_line = #{productLine}</if>
+		    <if test='productGen != null and productGen != ""'>and p.product_gen = #{productGen}</if>
+		    <if test='productModel != null and productModel != ""'>and p.product_model = #{productModel}</if>
+		    <if test='productModel2 != null and productModel2 != ""'>and p.product_model2 = #{productModel2}</if>
+	   <!-- <if test='productColor != null and productColor != ""'>and p.product_color = #{productColor}</if> -->
+		    <if test='productStorage != null and productStorage != ""'>and p.product_storage = #{productStorage}</if>
+		    <if test='productMemory != null and productMemory != ""'>and p.product_memory = #{productMemory}</if>
+		    <if test='productChip != null and productChip != ""'>and p.product_chip = #{productChip}</if>
+		    <if test='productCpu != null and productCpu != ""'>and p.product_cpu = #{productCpu}</if>
+		    <if test='productGpu != null and productGpu != ""'>and p.product_gpu = #{productGpu}</if>
+		    <if test='productSize != null and productSize != ""'>and p.product_size = #{productSize}</if>
+		    <if test='productConnectivity != null and productConnectivity != ""'>and p.product_connectivity = #{productConnectivity}</if>
+		    <if test='productCharge != null and productCharge != ""'>and p.product_charge = #{productCharge}</if>
+		    <if test='productQuality != null and productQuality != ""'>and p.product_quality = #{productQuality}</if>
+		order by product_no
+	</select>
+	
+	<select id="productMainList" resultType="product">
+		select
+			*
+		from 
+			(select ROWNUM as RNUM, s.* from
+				(select product_no, product_title, product_thumbnail, product_price, product_date, trade_state, like_count
+				from product_tbl p
+				left join trade_tbl t using (product_no)
+				left join (select product_no, count(product_no) as like_count from like_tbl group by product_no) using (product_no)
+				where
+					product_hide = '0'
+			   <!-- <if test='product.tradeState != null and product.tradeState != ""'>and t.trade_state in ('예약중', '결제완료', '발송대기', '배송중', '배송완료', '구매확정')</if> -->
+				    <if test='product.tradeState == null and product.tradeState == ""'>and t.trade_state is null</if>
+				    <if test='product.productLine != null and product.productLine != ""'>and p.product_line = #{product.productLine}</if>
+				    <if test='product.productGen != null and product.productGen != ""'>and p.product_gen = #{product.productGen}</if>
+				    <if test='product.productModel != null and product.productModel != ""'>and p.product_model = #{product.productModel}</if>
+				    <if test='product.productModel2 != null and product.productModel2 != ""'>and p.product_model2 = #{product.productModel2}</if>
+			   <!-- <if test='product.productColor != null and product.productColor != ""'>and p.product_color = #{product.productColor}</if> -->
+				    <if test='product.productStorage != null and product.productStorage != ""'>and p.product_storage = #{product.productStorage}</if>
+				    <if test='product.productMemory != null and product.productMemory != ""'>and p.product_memory = #{product.productMemory}</if>
+				    <if test='product.productChip != null and product.productChip != ""'>and p.product_chip = #{product.productChip}</if>
+				    <if test='product.productCpu != null and product.productCpu != ""'>and p.product_cpu = #{product.productCpu}</if>
+				    <if test='product.productGpu != null and product.productGpu != ""'>and p.product_gpu = #{product.productGpu}</if>
+				    <if test='product.productSize != null and product.productSize != ""'>and p.product_size = #{product.productSize}</if>
+				    <if test='product.productConnectivity != null and product.productConnectivity != ""'>and p.product_connectivity = #{product.productConnectivity}</if>
+				    <if test='product.productCharge != null and product.productCharge != ""'>and p.product_charge = #{product.productCharge}</if>
+				    <if test='product.productQuality != null and product.productQuality != ""'>and p.product_quality = #{product.productQuality}</if>
+				order by product_no desc)s)
+		where
+			RNUM between #{pi.start} and #{pi.end}
+	</select>
+
 
 </mapper>

@@ -1,60 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import "./sideMenu.css";
 
 const SideMenu = (props) => {
   const myInfoMenus = props.myInfoMenu || [];
   const setMyInfoMenus = props.setMyInfoMenu;
   const myShoppingMenus = props.myShoppingMenu || [];
   const setMyShoppingMenus = props.setMyShoppingMenu;
+  const menuItems = props.menuItems;
+  const setMenuItems = props.setMenuItems;
+  const type = props.type;
 
-  const changeMyInfoMenu = (index) => {
-    const copyMyInfoMenus = [...myInfoMenus];
-    copyMyInfoMenus.forEach((item) => {
-      item.active = false;
-    });
-    copyMyInfoMenus[index].active = true;
-    setMyInfoMenus(copyMyInfoMenus);
-  };
-
-  const changeShoppingMenu = (index) => {
-    const copyMyShoppingMenus = [...myShoppingMenus];
-    copyMyShoppingMenus.forEach((item) => {
-      item.active = false;
-    });
-    copyMyShoppingMenus[index].active = true;
-    setMyShoppingMenus(copyMyShoppingMenus);
-  };
+  const location = useLocation();
 
   return (
     <div className="sideMenu">
       <ul>
-        {myInfoMenus.map((myInfoMenu, index) => {
+        {menuItems.map((item, index) => {
+          //현재 주소와 메뉴 아이템의 URL을 비교 (location.pathname === 현재 로케이션)
+          const isActive = location.pathname === `/${type}/${item.url}`; //ex) type이 mypage -> /mypage/memberInfo
           return (
-            <li key={"myInfoMenu" + index}>
+            <li key={index}>
               <Link
-                to={myInfoMenu.url}
-                className={myInfoMenu.active ? "active-side" : ""}
-                onClick={() => {
-                  changeMyInfoMenu(index);
-                }}
+                to={`/${type}/${item.url}`}
+                className={isActive ? "active-side" : ""}
               >
-                {myInfoMenu.text}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      <ul>
-        {myShoppingMenus.map((myShoppingMenu, index) => {
-          return (
-            <li key={"myShoppingMenu" + index}>
-              <Link
-                to={myShoppingMenu.url}
-                className={myShoppingMenu.active ? "active-side" : ""}
-                onClick={() => {
-                  changeShoppingMenu(index);
-                }}
-              >
-                {myShoppingMenu.text}
+                {item.text}
               </Link>
             </li>
           );

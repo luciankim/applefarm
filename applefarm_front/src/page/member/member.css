@@ -142,6 +142,8 @@
 .sideMenu-title {
   font-size: 20px;
   padding-top: 40px;
+  font-weight: bold;
+  color: #1e1e1e;
 }
 
 .sideMenu-wrap {
@@ -816,6 +818,16 @@
 
 /*로그인 정보*/
 
+.memberInfo-table {
+  max-height: 250px;
+  min-height: 350px;
+}
+.memberInfo-mini-title {
+  min-width: 200px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .mypage-content-info {
   padding-top: 30px;
 }
@@ -849,11 +861,6 @@
 .delete-btn:hover {
   text-decoration: underline;
 }
-/*
-table {
-   border-spacing: 30px;
-}
-*/
 
 .btn-wrap {
   position: relative;
@@ -879,6 +886,7 @@ table {
 .info-title {
   font-weight: bold;
   font-size: 18px;
+  padding-bottom: 30px;
 }
 
 /*회원탈퇴*/
@@ -997,7 +1005,7 @@ table {
 .grade-info-box {
   position: relative;
   bottom: 80px;
-  left: 15px;
+  left: 65px;
 }
 
 .guide-title {
@@ -1349,4 +1357,413 @@ table {
   border-radius: 10px;
   font-weight: bold;
   color: white;
+}
+
+/*판매 내역*/
+
+.salesHistory-content {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+.salesHistory-content th,
+.salesHistory-content td {
+  padding: 10px;
+  text-align: center;
+}
+
+.salesDate {
+  border-bottom: none;
+  position: relative;
+  top: 6px;
+  color: #1e1e1e;
+  font-size: 13px;
+}
+
+.salesHistory-content td:not(.salesDate) {
+  border-bottom: 0.3px solid #bfbfbf;
+}
+
+.salesBtn-box td {
+  border-bottom: 1px solid #bfbfbf;
+}
+
+.salesImg {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.sales-info {
+  position: relative;
+  bottom: 13px;
+  font-size: 14px;
+  color: #1e1e1e;
+}
+
+.sales-title {
+  font-size: 15px;
+}
+
+.sales-more-btn {
+  position: relative;
+  left: 48%;
+  top: 20px;
+}
+.sales-more-btn button {
+  border: none;
+  background-color: transparent;
+  color: #8f8f8f;
+}
+.sales-more-btn button:hover {
+  text-decoration: underline;
+}
+
+.allSales-btn button {
+  padding: 3px;
+  background-color: transparent;
+  border: 1px solid #bfbfbf;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 13px;
+  position: relative;
+  left: 45px;
+}
+.allSales-btn button span:first-child {
+  position: relative;
+  left: 6px;
+}
+.allSales-btn button span:last-child {
+  position: relative;
+  top: 1px;
+  right: -1px;
+}
+.sales-btn button {
+  border: none;
+  padding-left: 10px;
+  background-color: transparent;
+  color: #8f8f8f;
+}
+
+.sales-btn button:hover {
+  text-decoration: underline;
+}
+
+.sales-price-input::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.sales-price-input {
+  border: none;
+  border-bottom: 1px solid #bfbfbf;
+  width: 180px;
+  text-align: right;
+}
+.sales-price-input::placeholder {
+  text-align: left;
+  font-size: 12px;
+  color: #b7b7b7;
+}
+
+.sales-change-title {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+}
+.sales-change-box {
+  display: flex;
+  padding-top: 35px;
+  justify-content: center;
+}
+.sales-change-box > span {
+  padding-left: 5px;
+}
+
+.sales-change-text {
+  padding-right: 10px;
+}
+
+.sales-change-btn-box {
+  display: flex;
+  justify-content: center;
+  padding-top: 35px;
+  gap: 15px; /*간격*/
+}
+.sales-change-btn-box button {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: #1e1e1e;
+}
+
+.sales-change-btn-box button:hover {
+  background-color: #0267f3;
+  color: white;
+}
+
+.sales-delete-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+.sales-delete-wrap {
+  position: relative;
+  top: 25px;
+}
+.sales-delete-btn-box {
+  display: flex;
+  justify-content: center;
+  padding-top: 35px;
+  gap: 15px; /*간격*/
+}
+
+.sales-delete-btn-box button {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: #1e1e1e;
+}
+
+.sales-delete-btn-box button:hover {
+  background-color: #0267f3;
+  color: white;
+}
+
+.filter-btn-wrap {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* 버튼 사이의 간격 설정 */
+}
+
+.filter-box1,
+.filter-box2 {
+  display: flex;
+  gap: 10px; /* 내부 버튼 사이의 간격 */
+}
+
+.filter-btn-wrap button {
+  width: 90px;
+  padding: 13px 20px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #1e1e1e;
+}
+
+.filter-btn-wrap button:hover {
+  background-color: #0267f3;
+  color: white;
+}
+
+.sales-close-btn {
+  width: 70px !important;
+  padding: 6px 3px !important;
+}
+
+.sales-close-btn:hover {
+  background-color: #e1e1e1 !important;
+}
+
+.sales-close-btn2:hover {
+  background-color: #e1e1e1 !important;
+}
+
+.invoice-wrap {
+  display: flex;
+  padding-top: 35px;
+  justify-content: center;
+}
+
+.invoice-title {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.sales-link {
+  color: #1e1e1e;
+}
+
+.sales-link:hover {
+  color: #1c0303;
+  text-decoration: underline;
+}
+
+/*판매상세*/
+.sales-detail-img {
+  width: 250px;
+}
+
+.sales-text {
+  font-size: 14px;
+  position: relative;
+  left: 60px;
+}
+.sales-text button {
+  position: relative;
+  right: 50px;
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: white;
+  font-size: 11px;
+}
+
+.sales-text button:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(-2px);
+}
+
+.sales-status {
+  color: #0267f3;
+  font-weight: bold;
+  padding-bottom: 10px;
+  position: relative;
+  bottom: 40px;
+  left: -9px;
+  font-size: 13px;
+}
+
+.sales-detail-table tbody {
+  position: relative;
+  top: 10px;
+  left: 85px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.sales-detail-table td {
+  padding: 11px;
+}
+
+.sales-detail-info-title {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.salesListBtn {
+  position: relative;
+  top: 50px;
+  left: 200px;
+}
+.salesListBtn button {
+  padding: 10px;
+  border: none;
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 5px;
+}
+.salesListBtn button:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(-2px);
+}
+
+.sales-mini-title {
+  position: relative;
+  left: 10px;
+  font-size: 15px;
+  border-bottom: 1px solid #ccc;
+}
+.sales-detail-info {
+  font-size: 15px;
+  text-align: end;
+  position: relative;
+  right: 80px;
+  border-bottom: 1px solid #ccc;
+}
+
+/*환불내역*/
+.refundHistory-content {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+.refundHistory-content th,
+.refundHistory-content td {
+  padding: 10px;
+  text-align: center;
+}
+.refund-history-img {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.refund-history-Date {
+  border-bottom: none;
+  position: relative;
+  top: 6px;
+  color: #1e1e1e;
+  font-size: 13px;
+}
+
+.refundHistory-content td:not(.refund-history-Date) {
+  border-bottom: 0.3px solid #bfbfbf;
+}
+
+.refundBtn-box td {
+  border-bottom: 1px solid #bfbfbf;
+}
+
+.refund-info {
+  position: relative;
+  bottom: 13px;
+  font-size: 14px;
+  color: #1e1e1e;
+}
+
+.refund-history-title {
+  font-size: 15px;
+}
+
+.refund-menu {
+  /*li*/
+  width: calc(100% / 2) !important;
+}
+
+.allRefund-btn button {
+  padding: 3px;
+  background-color: transparent;
+  border: 1px solid #bfbfbf;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 13px;
+  position: relative;
+  left: 45px;
+}
+.allRefund-btn button span:first-child {
+  position: relative;
+  left: 6px;
+}
+.allRefund-btn button span:last-child {
+  position: relative;
+  top: 1px;
+  right: -1px;
+}
+
+.refund-more-btn {
+  position: relative;
+  left: 48%;
+  top: 20px;
+}
+.refund-more-btn button {
+  border: none;
+  background-color: transparent;
+  color: #8f8f8f;
+}
+.refund-more-btn button:hover {
+  text-decoration: underline;
 }

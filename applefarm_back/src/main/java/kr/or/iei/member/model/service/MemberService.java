@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Address;
@@ -17,6 +18,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.product.model.dao.ProductDao;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.trade.model.dao.TradeDao;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.JwtUtil;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
@@ -348,11 +350,37 @@ public class MemberService {
 			return memberDao.resetPw(member);
 		}
 
-		public Board getBoardInfo(int memberNo) {
-			
-			return memberDao.getBoardInfo(memberNo);
+		public List<Product> getSalesHistory(int memberNo) {
+
+			return memberDao.getSalesHistory(memberNo);
 		}
 
+		public int changeSalesPrice(Product product) {
+			
+			return memberDao.changeSalesPrice(product);
+		}
+
+		public int deleteSalesProduct(int productNo) {
+			
+			return memberDao.deleteSalesProduct(productNo);
+		}
+
+		public int updateInvoiceNum(Trade trade) {
+
+			return memberDao.updateInvoiceNum(trade);
+		}
+
+		public Trade getSalesProductDetails(int productNo) {
+			
+			return memberDao.getSalesProductDetails(productNo);
+		}
+
+		public List<Product> getRefund(int memberNo) {
+			
+			return memberDao.getRefund(memberNo);
+		}
+
+	
 		
 		
 		

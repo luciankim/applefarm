@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.product.model.dto.Product;
+import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -92,7 +95,19 @@ public interface MemberDao {
 
 	int resetPw(Member member);
 
-	Board getBoardInfo(int memberNo);
+	List<Product> getSalesHistory(int memberNo);
+
+	int changeSalesPrice(Product product);
+
+	int deleteSalesProduct(int productNo);
+
+	int updateInvoiceNum(Trade trade);
+
+	Trade getSalesProductDetails(int productNo);
+
+	List<Product> getRefund(int memberNo);
+
+
 
 
 
