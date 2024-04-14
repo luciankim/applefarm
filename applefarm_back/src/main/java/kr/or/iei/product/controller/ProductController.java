@@ -570,12 +570,10 @@ public class ProductController {
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
 	})
-	@PostMapping(value = "/productMainList")
-	public ResponseEntity<ResponseDTO> selectProductMainList(@RequestBody HashMap<String, Object> obj){
-		Product product = (Product)obj.get("product");
-		int reqPage = (Integer)obj.get("reqPage");
-		System.out.println(product);
-		System.out.println(reqPage);
+	@PostMapping(value = "/mainList")
+	public ResponseEntity<ResponseDTO> selectProductMainList(@RequestBody Product obj){
+		Product product = obj;
+		int reqPage = obj.getReqPage();
 		HashMap<String, Object> map = productService.productMainList(product,reqPage);
 		
 		if(map != null) {

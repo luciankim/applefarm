@@ -430,19 +430,17 @@ public class ProductService {
 		int pageNaviSize = 5;	//페이지 네비게이션의 길
 		int totalCount = productDao.productMainListTotalCount(product);	//전체 게시물 수(전체 페이지 수 계산을 위해)
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		return null;
+		List<Product> list = productDao.productMainList(product, pi);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("productList", list);
+		map.put("pi", pi);
+		//System.out.println(product);
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		return map;
 	}
-
-
-
-
-	
-
-
-
-
-	
-
 
 	
 }

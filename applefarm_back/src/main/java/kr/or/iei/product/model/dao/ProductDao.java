@@ -120,5 +120,5 @@ public interface ProductDao {
 
 	int productMainListTotalCount(Product product);
 
-	List<Product> productMainListTotalCount(Product product, PageInfo pi);
+	List<Product> productMainList(Product product, PageInfo pi);
 }

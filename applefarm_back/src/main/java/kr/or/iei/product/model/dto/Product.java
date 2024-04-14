@@ -50,4 +50,7 @@ public class Product {
 	
 	//productBid, productList에 사용
 	private String tradeState;
+	
+	//productMainList에 사용
+	private int reqPage;
 }
