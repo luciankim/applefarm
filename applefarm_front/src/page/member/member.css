@@ -572,7 +572,7 @@
 .history-date-select-wrap {
   border-bottom: 1px solid rgba(167, 167, 167, 0.6);
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   /*background-color: #fcfcfc;*/
 }
 .css-10o2lyd-MuiStack-root {
@@ -622,15 +622,16 @@
   background-color: #ffffff;
 }
 .purchase-history-content table {
-  border-spacing: 10px;
   width: 100%;
   text-align: center;
   font-size: 15px;
+  border-collapse: collapse;
 }
 .purchase-history-content table > thead > tr > td {
   font-size: 12px;
   font-family: ns-b;
-  width: 100px;
+  width: 130px;
+  padding-bottom: 5px;
 }
 .purchase-history-content > table > tbody > tr {
   border-top: 1px solid #ccc; /*안들어감*/
