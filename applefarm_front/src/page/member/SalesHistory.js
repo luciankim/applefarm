@@ -73,8 +73,6 @@ const SalesHistory = (props) => {
     closeModalAllSales3();
   };
 
-  // 필터링 적용
-
   // 상품 변경 가격 설정
   const changeSalesPrice = (e) => {
     setChangePrice(e.target.value);
@@ -271,6 +269,7 @@ const SalesHistory = (props) => {
   //환불 내역 조회
   const viewRefundDetails = (productNo) => {
     setProductNo(productNo);
+    console.log(productNo);
   };
 
   //필터링에 따라 화면 변경
@@ -371,7 +370,10 @@ const SalesHistory = (props) => {
                   </tr>
                   <tr>
                     <td>
-                      <Link className="sales-link" to="#">
+                      <Link
+                        className="sales-link"
+                        to={`/mypage/salesProductDetails/${product.productNo}`}
+                      >
                         <img
                           className="salesImg"
                           src={product.productThumbnail}
@@ -381,7 +383,10 @@ const SalesHistory = (props) => {
                     </td>
 
                     <td className="sales-info">
-                      <Link className="sales-link" to="#">
+                      <Link
+                        className="sales-link"
+                        to={`/mypage/salesProductDetails/${product.productNo}`}
+                      >
                         {product.productSummary}
                       </Link>
                     </td>
@@ -432,7 +437,10 @@ const SalesHistory = (props) => {
                     </tr>
                     <tr>
                       <td>
-                        <Link className="sales-link" to="#">
+                        <Link
+                          className="sales-link"
+                          to={`/mypage/salesProductDetails/${product.productNo}`}
+                        >
                           <img
                             className="salesImg"
                             src={product.productThumbnail}
@@ -442,7 +450,10 @@ const SalesHistory = (props) => {
                       </td>
 
                       <td className="sales-info">
-                        <Link className="sales-link" to="#">
+                        <Link
+                          className="sales-link"
+                          to={`/mypage/salesProductDetails/${product.productNo}`}
+                        >
                           {product.productSummary}
                         </Link>
                       </td>
@@ -493,7 +504,10 @@ const SalesHistory = (props) => {
                     </tr>
                     <tr>
                       <td>
-                        <Link className="sales-link" to="#">
+                        <Link
+                          className="sales-link"
+                          to={`/mypage/salesProductDetails/${product.productNo}`}
+                        >
                           <img
                             className="salesImg"
                             src={product.productThumbnail}
@@ -503,7 +517,10 @@ const SalesHistory = (props) => {
                       </td>
 
                       <td className="sales-info">
-                        <Link className="sales-link" to="#">
+                        <Link
+                          className="sales-link"
+                          to={`/mypage/salesProductDetails/${product.productNo}`}
+                        >
                           {product.productSummary}
                         </Link>
                       </td>

@@ -1591,3 +1591,94 @@ table {
   color: #1c0303;
   text-decoration: underline;
 }
+
+/*판매상세*/
+.sales-detail-img {
+  width: 250px;
+}
+
+/*환불내역*/
+.refundHistory-content {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+.refundHistory-content th,
+.refundHistory-content td {
+  padding: 10px;
+  text-align: center;
+}
+.refund-history-img {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.refund-history-Date {
+  border-bottom: none;
+  position: relative;
+  top: 6px;
+  color: #1e1e1e;
+  font-size: 13px;
+}
+
+.refundHistory-content td:not(.refund-history-Date) {
+  border-bottom: 0.3px solid #bfbfbf;
+}
+
+.refundBtn-box td {
+  border-bottom: 1px solid #bfbfbf;
+}
+
+.refund-info {
+  position: relative;
+  bottom: 13px;
+  font-size: 14px;
+  color: #1e1e1e;
+}
+
+.refund-history-title {
+  font-size: 15px;
+}
+
+.refund-menu {
+  /*li*/
+  width: calc(100% / 2) !important;
+}
+
+.allRefund-btn button {
+  padding: 3px;
+  background-color: transparent;
+  border: 1px solid #bfbfbf;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 13px;
+  position: relative;
+  left: 45px;
+}
+.allRefund-btn button span:first-child {
+  position: relative;
+  left: 6px;
+}
+.allRefund-btn button span:last-child {
+  position: relative;
+  top: 1px;
+  right: -1px;
+}
+
+.refund-more-btn {
+  position: relative;
+  left: 48%;
+  top: 20px;
+}
+.refund-more-btn button {
+  border: none;
+  background-color: transparent;
+  color: #8f8f8f;
+}
+.refund-more-btn button:hover {
+  text-decoration: underline;
+}

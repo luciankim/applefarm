@@ -574,63 +574,6 @@ public class MemberController {
 
 	}
 
-	@Operation(summary = "자유게시판 데이터 가져오기", description = "로그인한 회원번호로 게시판테이블 데이터 가져오기")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@GetMapping(value = "/getBoardInfo/{memberNo}")
-	public ResponseEntity<ResponseDTO> getBoardInfo(@PathVariable int memberNo) {
-
-		List<Board> boardInfo = memberService.getBoardInfo(memberNo);
-
-		System.out.println("board 데이터:" + boardInfo);
-
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", boardInfo);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-
-	}
-
-	@Operation(summary = "상품테이블 데이터 가져오기", description = "로그인한 회원번호로 상품테이블 데이터 가져오기")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping(value = "/getProduct/{memberNo}")
-	public ResponseEntity<ResponseDTO> getProduct(@PathVariable int memberNo) {
-
-		Product product = memberService.getProduct(memberNo);
-
-		System.out.println(product);
-
-		if (product != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", product);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-		} else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-
-		}
-
-	}
-
-	@Operation(summary = "환불테이블 데이터 가져오기", description = "로그인한 회원번호로 환불테이블 데이터 가져오기")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@PostMapping(value = "/getRefund/{memberNo}")
-	public ResponseEntity<ResponseDTO> getRefund(@PathVariable int memberNo) {
-
-		Refund refund = memberService.getRefund(memberNo);
-
-		System.out.println(refund);
-
-		if (refund != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", refund);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-		} else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<>(response, response.getHttpStatus());
-
-		}
-
-	}
-
 	@Operation(summary = "판매내역 데이터 가져오기", description = "로그인한 회원번호로 판매내역 데이터 가져오기")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
@@ -692,7 +635,7 @@ public class MemberController {
 
 	@Operation(summary = "송장등록", description = "화면에서 상품 번호,인보이스 번호 가져와서 송장 업데이트 및 거래 상태 배송중으로 변경")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })	
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@PatchMapping(value = "/updateInvoiceNum")
 	public ResponseEntity<ResponseDTO> updateInvoiceNum(@RequestBody Trade trade) {
 
@@ -704,6 +647,44 @@ public class MemberController {
 		} else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+
+	}
+
+	@Operation(summary = "판매상세내역", description = "화면에서 상품 번호로 참조")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/getSalesProductDetails/{productNo}")
+	public ResponseEntity<ResponseDTO> getSalesProductDetails(@PathVariable int productNo) {
+
+		Trade getTrade = memberService.getSalesProductDetails(productNo);
+
+		if (getTrade != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", getTrade);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+
+		}
+
+	}
+
+	@Operation(summary = "환불데이터 가져오기", description = "화면에서 회원번호로 참조")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/getRefund/{memberNo}")
+	public ResponseEntity<ResponseDTO> getRefund(@PathVariable int memberNo) {
+
+		List<Product> refund = memberService.getRefund(memberNo);
+
+		if (refund != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", refund);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+
 		}
 
 	}

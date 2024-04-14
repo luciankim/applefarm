@@ -19,6 +19,7 @@ import PurchaseHistory from "./PurchaseHistory";
 import SalesHistory from "./SalesHistory";
 import WritingHistory from "./WritingHistory";
 import RefundHistory from "./RefundHistory";
+import SalesProductDetails from "./SalesProductDetails";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
@@ -113,6 +114,10 @@ const Mypage = (props) => {
           <Route
             path="/refundHistory"
             element={<RefundHistory member={member} />}
+          />
+          <Route
+            path="/salesProductDetails/:productNo"
+            element={<SalesProductDetails member={member} />}
           />
         </Routes>
       </div>

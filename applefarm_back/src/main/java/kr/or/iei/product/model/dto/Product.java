@@ -60,4 +60,11 @@ public class Product {
 	//변경할 판매가
 	private int changePrice;
 	
+	//환불 날짜
+	private Date refundDate;
+	
+	//환불 상태
+	private int refundStatus;
+	
+	
 }

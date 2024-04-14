@@ -95,12 +95,6 @@ public interface MemberDao {
 
 	int resetPw(Member member);
 
-	List<Board> getBoardInfo(int memberNo);
-
-	Product getProduct(int memberNo);
-
-	Refund getRefund(int memberNo);
-
 	List<Product> getSalesHistory(int memberNo);
 
 	int changeSalesPrice(Product product);
@@ -108,6 +102,10 @@ public interface MemberDao {
 	int deleteSalesProduct(int productNo);
 
 	int updateInvoiceNum(Trade trade);
+
+	Trade getSalesProductDetails(int productNo);
+
+	List<Product> getRefund(int memberNo);
 
 
 

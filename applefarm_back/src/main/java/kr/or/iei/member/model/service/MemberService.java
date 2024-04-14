@@ -350,21 +350,6 @@ public class MemberService {
 			return memberDao.resetPw(member);
 		}
 
-		public List<Board> getBoardInfo(int memberNo) {
-			
-			return memberDao.getBoardInfo(memberNo);
-		}
-
-		public Product getProduct(int memberNo) {
-			
-			return memberDao.getProduct(memberNo);
-		}
-
-		public Refund getRefund(int memberNo) {
-			
-			return memberDao.getRefund(memberNo);
-		}
-
 		public List<Product> getSalesHistory(int memberNo) {
 
 			return memberDao.getSalesHistory(memberNo);
@@ -383,6 +368,16 @@ public class MemberService {
 		public int updateInvoiceNum(Trade trade) {
 
 			return memberDao.updateInvoiceNum(trade);
+		}
+
+		public Trade getSalesProductDetails(int productNo) {
+			
+			return memberDao.getSalesProductDetails(productNo);
+		}
+
+		public List<Product> getRefund(int memberNo) {
+			
+			return memberDao.getRefund(memberNo);
 		}
 
 	
