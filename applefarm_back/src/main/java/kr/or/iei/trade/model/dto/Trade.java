@@ -60,7 +60,19 @@ public class Trade {
 	@Schema(description = "구매자 회원 닉네임",type="String")
 	private String tradeBuyerNickname;	
 	
+
 	@Schema(description = "리뷰작성여부",type="number")
 	private int review;
+
+	
+	@Schema(description = "회원 이름 (판매 상세 내역)",type="String")
+	private String memberName;
+	@Schema(description = "회원 전화번호 (판매 상세 내역)",type="String")
+	private String memberPhone;
+	@Schema(description = "회원 판매자 등급 (판매 상세 내역)",type="number")
+	private int sellerGrade;
+	
+	
+
 	
 }

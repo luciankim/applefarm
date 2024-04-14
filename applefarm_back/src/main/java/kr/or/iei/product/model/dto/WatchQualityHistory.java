@@ -19,7 +19,7 @@ public class WatchQualityHistory {
 	private String display;
 	private String digitalCrownButton;
 	private String batteryEfficiency;
-	private String wirelessConffectivity;
+	private String wirelessConnectivity;
 	private String microphone;
 	private String speaker;
 	private String power;

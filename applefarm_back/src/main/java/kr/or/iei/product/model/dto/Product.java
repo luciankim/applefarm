@@ -42,12 +42,34 @@ public class Product {
 	private String productSummary;
 	private String tableName;
 	
-	//productDetail에 사용
+	//productDetail, productList에 사용
 	private int likeCount;
 	
 	//productChart에 사용
 	private int term;
 	
-	//productBid에 사용
+	//productBid, productList에 사용
 	private String tradeState;
+	
+
+	//구매최고희망가
+	private int maxBidPrice;
+	
+	//거래등록일
+	private Date tradeDate;
+	
+	//변경할 판매가
+	private int changePrice;
+	
+	//환불 날짜
+	private Date refundDate;
+	
+	//환불 상태
+	private int refundStatus;
+	
+	
+
+	//productMainList에 사용
+	private int reqPage;
+
 }

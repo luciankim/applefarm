@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
-import ProductCategory from "./ProductCategory";
+import ProductCategory from "./ProductCategoryFrm";
 import ProductSummary from "./ProductSummary";
-import ProductList from "./ProductList";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductChart from "./ProductChart";
+import ProductMainList from "./productMainList";
 
 const ProductMain = (props) => {
   const location = useLocation();
@@ -180,7 +180,7 @@ const ProductMain = (props) => {
               productMainTab === "LIST" ? "" : "productMain-content-hide"
             }
           >
-            <ProductList />
+            <ProductMainList selectedProduct={selectedProduct} />
           </div>
           <div
             className={

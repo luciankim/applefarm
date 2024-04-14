@@ -49,23 +49,26 @@
 		a.like_no,
 		a.member_no,
 		a.product_no,
-        b.member_no as seller_no,
+		b.member_no as seller_no,
 		b.product_summary,
 		b.product_price,
 		b.product_quality,
 		b.product_thumbnail,
 		c.member_nickname,
-		(SELECT COUNT(*) FROM trade_tbl WHERE product_no = a.product_no) AS trade
+		(SELECT COUNT(*) FROM trade_tbl
+		WHERE product_no = a.product_no) AS trade
 		FROM
 		like_tbl a
 		JOIN
 		product_tbl b ON a.product_no = b.product_no
 		JOIN
-		member_tbl c ON b.member_no = c.member_no
+		member_tbl c ON
+		b.member_no = c.member_no
 		WHERE
 		a.member_no = #{memberNo}
 		) q
-		order by 1 desc
+		order by 1
+		desc
 	</select>
 	<delete id="deleteLike">
 		delete from like_tbl where like_no=#{likeNo}
@@ -201,100 +204,225 @@
 		member_black_time=#{memberBlackTime} where member_no =#{memberNo}
 	</update>
 
-	
+
 	<select id="OneMemberNo" resultType="int">
-	
-	
-	select member_no from member_tbl where member_id =#{memberId}
-	
+
+
+		select member_no from
+		member_tbl where member_id =#{memberId}
+
 	</select>
-	
-	
+
+
 	<select id="getMemberInfo" resultType="member">
 
-	select * from member_tbl where member_no = #{memberNo}
-	
+		select * from member_tbl
+		where member_no = #{memberNo}
+
 	</select>
-	
+
 	<update id="updateEmail">
-	
-		update member_tbl set member_email = #{memberEmail} where member_no = #{memberNo}
-	
+
+		update member_tbl set member_email = #{memberEmail}
+		where member_no =
+		#{memberNo}
+
 	</update>
-	
+
 	<delete id="deleteMember">
-		
+
 		delete from member_tbl where member_no = #{memberNo}
-	
+
 	</delete>
-	
+
 	<update id="updatePw">
-	
-		
-		update member_tbl set member_pw=#{memberPw} where member_no = #{memberNo}
-		
-	
+
+
+		update member_tbl set member_pw=#{memberPw} where
+		member_no = #{memberNo}
+
+
 	</update>
-	
 
 
 
-	
+
+
 
 
 	<select id="selectMemberList" resultType="member">
 		SELECT *
 		FROM (
-		SELECT rownum AS rnum, M.*
+		SELECT
+		rownum AS rnum, M.*
 		FROM (
 		SELECT *
 		FROM member_tbl
 		) M
 		)
-		WHERE rnum BETWEEN #{start} AND #{end}
+		WHERE rnum BETWEEN
+		#{start} AND #{end}
 	</select>
-	
-	
+
+
 	<update id="updatePhone">
-	
-		update member_tbl set member_phone=#{memberPhone} where member_no = #{memberNo}
+
+		update member_tbl set member_phone=#{memberPhone}
+		where member_no =
+		#{memberNo}
 
 	</update>
-	
-	
+
+
 	<update id="addAccountNumber">
-	
-	
-		update member_tbl set member_accountnumber = #{memberAccountnumber} where member_no = #{memberNo}
-	
+
+
+		update member_tbl set member_accountnumber =
+		#{memberAccountnumber} where
+		member_no = #{memberNo}
+
 	</update>
-	
+
 	<update id="deleteAccountNumber">
-	
-		update member_tbl set member_accountnumber = null where member_no = #{memberNo}
-	
+
+		update member_tbl set member_accountnumber = null
+		where member_no =
+		#{memberNo}
+
 	</update>
-	
+
 	<select id="getMemberId" resultType="string">
-	
-		select member_id from member_tbl where member_email = #{memberEmail}
-	
+
+		select member_id from
+		member_tbl where member_email = #{memberEmail}
+
 	</select>
-	
+
 	<update id="resetPw">
-	
-		update member_tbl set member_pw=#{memberPw} where member_email = #{memberEmail}
-	
+
+		update member_tbl set member_pw=#{memberPw} where
+		member_email =
+		#{memberEmail}
+
 	</update>
-	
-	<select id="getBoardInfo" resultType="board">
-	
-		select * from board_tbl where member_no=#{memberNo}
-	
+
+	<select id="getSalesHistory" resultType="product">
+
+		SELECT
+		p.product_no,
+		p.product_date,
+		p.product_thumbnail,
+		p.product_summary,
+		p.product_price,
+		MAX(b.bid_price) AS max_bid_price,
+		t.trade_state,
+		t.trade_date
+		FROM
+		member_tbl m
+		JOIN
+		product_tbl p ON m.member_no = p.member_no
+		LEFT JOIN
+		bid_tbl b ON p.product_no = b.product_no
+		LEFT JOIN
+		trade_tbl t ON
+		p.product_no = t.product_no
+		WHERE
+		m.member_no = #{memberNo}
+		GROUP BY
+		p.product_no,
+		p.product_date,
+		p.product_thumbnail,
+		p.product_summary,
+		p.product_price,
+		t.trade_state,
+		t.trade_date
+		ORDER BY
+		p.product_date desc
+
 	</select>
-	
-	
-	
-	
-	
+
+	<update id="changeSalesPrice">
+
+		update product_tbl
+		set product_price = #{changePrice}
+		where product_no = #{productNo}
+
+	</update>
+
+	<delete id="deleteSalesProduct">
+
+		delete from product_tbl where product_no =
+		#{productNo}
+
+	</delete>
+
+	<update id="updateInvoiceNum">
+
+		update
+		trade_tbl
+		set
+		trade_state = '배송중',
+		invoice_number
+		= #{invoiceNumber}
+		where product_no = #{productNo}
+
+	</update>
+
+	<select id="getSalesProductDetails" resultType="trade">
+
+		select
+		p.product_thumbnail,
+		p.product_summary,
+		t.trade_price,
+		t.trade_date,
+		m.member_accountnumber,
+		t.address,
+		t.address_detail,
+		t.address_name,
+		m.member_phone,
+		t.trade_state,
+		m.seller_grade,
+		t.zipcode,
+		m.member_name
+		from product_tbl p
+		join trade_tbl t on p.product_no = t.product_no
+		left
+		join member_tbl m on t.trade_seller = m.member_no
+		where p.product_no =
+		#{productNo}
+		group by
+		p.product_thumbnail,
+		p.product_summary,
+		t.trade_price,
+		t.trade_date,
+		m.member_accountnumber,
+		t.address,
+		t.address_detail,
+		t.address_name,
+		m.member_phone,
+		t.trade_state,
+		m.seller_grade,
+		t.zipcode,
+		m.member_name
+
+
+	</select>
+
+	<select id="getRefund" resultType="product">
+
+		SELECT r.refund_status,r.refund_date ,
+		p.product_thumbnail,
+		p.product_summary,
+		p.product_price
+		FROM
+		(SELECT t.*
+		FROM trade_tbl t
+		WHERE t.trade_seller = #{memberNo} or t.trade_buyer = #{memberNo}
+		) t_member
+		JOIN refund_tbl r ON t_member.trade_no = r.trade_no
+		JOIN product_tbl p ON r.product_no = p.product_no
+
+	</select>
+
+
 </mapper>

@@ -114,5 +114,29 @@ public interface ProductDao {
 
 	int insertReport(Report report);
 
+	int productTotalCount(String tableName);
+
+	List selectProductList(String tableName, PageInfo pi);
+
+
+	int updateProduct(Product product);
+
+	int updateProductFile(ProductFile pf);
+
+	int updateIphoneQualityHistory(IphoneQualityHistory iphoneQualityHistory);
+
+	int deleteProductFile(int productNo);
+
+	int updateMacbookQualityHistory(MacbookQualityHistory macbookQualityHistory);
+
+	int updateIpadQualityHistory(IpadQualityHistory ipadQualityHistory);
+
+	int updateIpadQualityHistory(WatchQualityHistory watchQualityHistory);
+
+	int updateAirpodsQualityHistory(AirpodsQualityHistory airpodsQualityHistory);
+
+	int productMainListTotalCount(Product product);
+
+	List<Product> productMainList(Product product, PageInfo pi);
 
 }

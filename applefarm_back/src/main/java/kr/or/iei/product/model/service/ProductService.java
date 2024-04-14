@@ -409,6 +409,114 @@ public class ProductService {
 		return productDao.insertReport(report);
 	}
 
+	public Map selectProductList(String tableName,int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		
+		int totalCount = productDao.productTotalCount(tableName);
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.selectProductList(tableName,pi);
+		System.out.println(list);
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("productList", list);
+		map.put("pi", pi);
+		
+		return map; 
+	}
+
+
+	@Transactional
+	public int updateIphone(Product product, ArrayList<ProductFile> fileList, IphoneQualityHistory iphoneQualityHistory) {
+		int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		iphoneQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateIphoneQualityHistory(iphoneQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateMacbook(Product product, ArrayList<ProductFile> fileList, MacbookQualityHistory macbookQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		macbookQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateMacbookQualityHistory(macbookQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateIpad(Product product, ArrayList<ProductFile> fileList, IpadQualityHistory ipadQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		ipadQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateIpadQualityHistory(ipadQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateWatch(Product product, ArrayList<ProductFile> fileList, WatchQualityHistory watchQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		watchQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateIpadQualityHistory(watchQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateAirpods(Product product, ArrayList<ProductFile> fileList, AirpodsQualityHistory airpodsQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		airpodsQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateAirpodsQualityHistory(airpodsQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
 
 
 
@@ -418,6 +526,24 @@ public class ProductService {
 
 
 	
+
+
+	public HashMap<String, Object> productMainList(Product product, int reqPage) {
+		int numPerPage = 12;	//한 페이지 당 게시물 
+		int pageNaviSize = 5;	//페이지 네비게이션의 길
+		int totalCount = productDao.productMainListTotalCount(product);	//전체 게시물 수(전체 페이지 수 계산을 위해)
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List<Product> list = productDao.productMainList(product, pi);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("productList", list);
+		map.put("pi", pi);
+		//System.out.println(product);
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		return map;
+	}
 
 
 	

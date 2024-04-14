@@ -17,10 +17,9 @@ public class IpadQualityHistory {
 	private String backPanelSide;
 	private String burnIn;
 	private String display;
-	private String keyboard;
 	private String ports;
 	private String batteryEfficiency;
-	private String wirelessConffectivity;
+	private String wirelessConnectivity;
 	private String camera;
 	private String microphone;
 	private String speakersAudioJack;

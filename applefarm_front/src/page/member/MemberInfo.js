@@ -293,12 +293,12 @@ const MemberInfo = (props) => {
       <div className="mypage-content-info">
         <div className="info-wrap">
           <div className="info-title">로그인 정보</div>
-          <table>
+          <table className="memberInfo-table">
             <tbody>
               {changeInputStatus ? (
                 <>
                   <tr className="info-wrap-content">
-                    <td>이메일 주소 변경</td>
+                    <td className="memberInfo-mini-title">이메일 주소 변경</td>
                     <td>
                       <input
                         className="info-input"
@@ -323,7 +323,7 @@ const MemberInfo = (props) => {
                   <div className="reg-text1">{emailMsg}</div>
 
                   <tr className="info-wrap-content">
-                    <td>인증 코드</td>
+                    <td className="memberInfo-mini-title">인증 코드</td>
                     <td>
                       <input
                         className="info-input"
@@ -358,7 +358,7 @@ const MemberInfo = (props) => {
               ) : returnInputStatus ? (
                 <>
                   <tr className="info-wrap-content">
-                    <td>이메일</td>
+                    <td className="memberInfo-mini-title">이메일</td>
                     <td>
                       <input
                         className="info-input"
@@ -379,7 +379,7 @@ const MemberInfo = (props) => {
               ) : (
                 <>
                   <tr className="info-wrap-content">
-                    <td>이메일 주소 변경</td>
+                    <td className="memberInfo-mini-title">이메일 주소 변경</td>
                     <td>
                       <input
                         className="info-input"
@@ -404,7 +404,7 @@ const MemberInfo = (props) => {
                   </tr>
 
                   <tr className="info-wrap-content">
-                    <td>인증 코드</td>
+                    <td className="memberInfo-mini-title">인증 코드</td>
                     <td>
                       <input
                         className="info-input"
@@ -439,7 +439,7 @@ const MemberInfo = (props) => {
               )}
 
               <tr className="info-wrap-content">
-                <td>아이디</td>
+                <td className="memberInfo-mini-title">아이디</td>
                 <td>
                   <input
                     className="info-input"
@@ -451,7 +451,7 @@ const MemberInfo = (props) => {
               {changePwInputStatus ? (
                 <>
                   <tr className="info-wrap-content">
-                    <td>이전 비밀번호</td>
+                    <td className="memberInfo-mini-title">이전 비밀번호</td>
                     <td>
                       <input
                         className="info-input"
@@ -473,7 +473,7 @@ const MemberInfo = (props) => {
                     </td>
                   </tr>
                   <tr className="info-wrap-content">
-                    <td>새 비밀번호</td>
+                    <td className="memberInfo-mini-title">새 비밀번호</td>
                     <td>
                       <input
                         className="info-input"
@@ -505,7 +505,7 @@ const MemberInfo = (props) => {
               ) : returnPwInputStatus ? (
                 // 비밀번호 복귀 입력 상태
                 <tr className="info-wrap-content">
-                  <td>비밀번호</td>
+                  <td className="memberInfo-mini-title">비밀번호</td>
                   <td>
                     <input
                       className="info-input"
@@ -525,7 +525,7 @@ const MemberInfo = (props) => {
               ) : (
                 <>
                   <tr className="info-wrap-content">
-                    <td>이전 비밀번호</td>
+                    <td className="memberInfo-mini-title">이전 비밀번호</td>
                     <td>
                       <input
                         className="info-input"
@@ -547,7 +547,7 @@ const MemberInfo = (props) => {
                     </td>
                   </tr>
                   <tr className="info-wrap-content">
-                    <td>새 비밀번호</td>
+                    <td className="memberInfo-mini-title">새 비밀번호</td>
                     <td>
                       <input
                         className="info-input"
@@ -581,7 +581,7 @@ const MemberInfo = (props) => {
               {changePhoneInputStatus ? (
                 <>
                   <tr className="info-wrap-content">
-                    <td>전화번호 변경</td>
+                    <td className="memberInfo-mini-title">전화번호 변경</td>
                     <td>
                       <input
                         className="info-input"
@@ -614,7 +614,7 @@ const MemberInfo = (props) => {
                 </>
               ) : returnPhoneInputStatus ? (
                 <tr className="info-wrap-content">
-                  <td>전화번호</td>
+                  <td className="memberInfo-mini-title">전화번호</td>
                   <td>
                     <input
                       className="info-input"
@@ -635,7 +635,7 @@ const MemberInfo = (props) => {
               ) : (
                 <>
                   <tr className="info-wrap-content">
-                    <td>전화번호 변경</td>
+                    <td className="memberInfo-mini-title">전화번호 변경</td>
                     <td>
                       <input
                         className="info-input"

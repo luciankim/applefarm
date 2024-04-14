@@ -41,8 +41,8 @@ const Tab = (props) => {
               key={"tab" + index}
               className={
                 index === currentTab
-                  ? "history-menu history-menu-focus"
-                  : "history-menu"
+                  ? "history-menu history-menu-focus refund-menu refund-menu-focus"
+                  : "history-menu refund-menu "
               }
               onClick={() => selectMenuHandler(index)}
             >
@@ -59,7 +59,6 @@ const Tab = (props) => {
           setActiveButton={setActiveButton}
           setReqPage={setReqPage}
         />
-        <div>{tabMenu[currentTab].content}</div>
       </div>
     </>
   );
