@@ -17,7 +17,7 @@ const Header = (props) => {
       axios
         .get(backServer + "/member")
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setMember(res.data.data);
           setMemberGrade(res.data.data.memberGrade);
         })

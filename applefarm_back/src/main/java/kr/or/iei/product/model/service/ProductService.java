@@ -425,6 +425,97 @@ public class ProductService {
 		return map; 
 	}
 
+	@Transactional
+	public int updateIphone(Product product, ArrayList<ProductFile> fileList, IphoneQualityHistory iphoneQualityHistory) {
+		int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		iphoneQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateIphoneQualityHistory(iphoneQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateMacbook(Product product, ArrayList<ProductFile> fileList, MacbookQualityHistory macbookQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		macbookQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateMacbookQualityHistory(macbookQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateIpad(Product product, ArrayList<ProductFile> fileList, IpadQualityHistory ipadQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		ipadQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateIpadQualityHistory(ipadQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateWatch(Product product, ArrayList<ProductFile> fileList, WatchQualityHistory watchQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		watchQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateIpadQualityHistory(watchQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
+	public int updateAirpods(Product product, ArrayList<ProductFile> fileList, AirpodsQualityHistory airpodsQualityHistory) {
+int result1 = productDao.updateProduct(product);
+		
+//		기존 사진을 제거하고 새롭게 추가.
+		int result3 = productDao.deleteProductFile(product.getProductNo());
+		
+		for(ProductFile pf: fileList) {
+			pf.setProductNo(product.getProductNo());
+			result1 += productDao.insertProductFile(pf);
+		}
+		
+		airpodsQualityHistory.setProductNo(product.getProductNo());
+		int result2 = productDao.updateAirpodsQualityHistory(airpodsQualityHistory);
+		
+		
+		return result1+result2;
+	}
+
 
 
 

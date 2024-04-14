@@ -305,5 +305,132 @@
 			(select * from product_tbl where table_name = #{tableName} order by product_no desc)p)
 	where RNUM between #{pi.start} and #{pi.end}
 	</select>
+	
+	<update id="updateProduct">
+		UPDATE product_tbl
+		SET
+		  member_no = #{memberNo},
+		  product_quality = #{productQuality},
+		  product_title = #{productTitle},
+		  product_explain = #{productExplain},
+		  product_price = #{productPrice},
+		  product_date = sysdate,
+		  product_hide = 0,
+		  product_line = #{productLine},
+		  product_gen = #{productGen},
+		  product_model = #{productModel},
+		  product_model2 = #{productModel2},
+		  product_color = #{productColor},
+		  product_storage = #{productStorage},
+		  product_memory = #{productMemory},
+		  product_chip = #{productChip},
+		  product_cpu = #{productCpu},
+		  product_gpu = #{productGpu},
+		  product_size = #{productSize},
+		  product_connectivity = #{productConnectivity},
+		  product_charge = #{productCharge},
+		  product_thumbnail = #{productThumbnail},
+		  product_summary = #{productSummary},
+		  table_name = #{tableName}
+		WHERE product_no = #{productNo}
+	</update>
+	
+
+
+	
+	<update id="updateIphoneQualityHistory">
+		UPDATE IPHONE_QUALITY_HISTORY_TBL
+		SET
+		  display_screen = #{displayScreen},
+		  back_panel_side = #{backPanelSide},
+		  burn_in = #{burnIn},
+		  display = #{display},
+		  power = #{power},
+		  camera = #{camera},
+		  wifi = #{wifi},
+		  biometric_authentication = #{biometricAuthentication},
+		  compass = #{compass},
+		  voice_recording = #{voiceRecording}
+		WHERE product_no = #{productNo}
+	</update>
+	
+	<update id="updateMacbookQualityHistory">
+    UPDATE MACBOOK_QUALITY_HISTORY_TBL
+    SET
+        display_screen = #{displayScreen},
+        back_panel_side = #{backPanelSide},
+        burn_in = #{burnIn},
+        display = #{display},
+        keyboard = #{keyboard},
+        ports = #{ports},
+        battery_efficiency = #{batteryEfficiency},
+        wireless_connectivity = #{wirelessConnectivity},
+        camera = #{camera},
+        microphone = #{microphone},
+        speakers_audio_jack = #{speakersAudioJack},
+        biometric_authentication = #{biometricAuthentication},
+        power = #{power},
+        voice_recording = #{voiceRecording},
+        trackpad = #{trackpad},
+        operation = #{operation}
+    WHERE product_no = #{productNo}
+</update>
+
+<update id="updateIpadQualityHistory">
+    UPDATE IPAD_QUALITY_HISTORY_TBL
+    SET
+        display_screen = #{displayScreen},
+        back_panel_side = #{backPanelSide},
+        burn_in = #{burnIn},
+        display = #{display},
+        ports = #{ports},
+        battery_efficiency = #{batteryEfficiency},
+        wireless_connectivity = #{wirelessConnectivity},
+        camera = #{camera},
+        microphone = #{microphone},
+        speakers_audio_jack = #{speakersAudioJack},
+        biometric_authentication = #{biometricAuthentication},
+        power = #{power},
+        voice_recording = #{voiceRecording},
+        operation = #{operation}
+    WHERE product_no = #{productNo}
+</update>
+
+<update id="updateWatchQualityHistory">
+    UPDATE WATCH_QUALITY_HISTORY_TBL
+    SET
+        display_screen = #{displayScreen},
+        back_panel_side = #{backPanelSide},
+        burn_in = #{burnIn},
+        display = #{display},
+        digital_crown_button = #{digitalCrownButton},
+        battery_efficiency = #{batteryEfficiency},
+        wireless_connectivity = #{wirelessConnectivity},
+        microphone = #{microphone},
+        speaker = #{speaker},
+        power = #{power},
+        voice_recording = #{voiceRecording},
+        operation = #{operation}
+    WHERE product_no = #{productNo}
+</update>
+
+<update id="updateAirpodsQualityHistory">
+    UPDATE AIRPODS_QUALITY_HISTORY_TBL
+    SET
+        sound_quality = #{soundQuality},
+        connection_stability = #{connectionStability},
+        battery_efficiency = #{batteryEfficiency},
+        exterior = #{exterior},
+        charging = #{charging},
+        touch_sensor = #{touchSensor}
+    WHERE product_no = #{productNo}
+</update>
+
+
+	
+	<delete id="deleteProductFile">
+		delete from product_file_tbl where product_no = #{productNo}
+	</delete>
+	
 
 </mapper>

@@ -1,30 +1,15 @@
-import {
-  Link,
-  useBlocker,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
 import ProductQualityFrm from "./ProductQualityFrm";
 import ProductLastFrm from "./ProductLastFrm";
 import ProductCategoryFrm from "./ProductCategoryFrm";
+import { useParams,useNavigate,useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ProductTab from "./ProductTab";
-
 import axios from "axios";
 
-const ProductInsert = (props) => {
-  //https://heycoding.tistory.com/72#3.2.%20useNavigate
 
-  const location = useLocation();
 
-  const [navTable, setNavTable] = useState(location.state.navTable);
-  const [navLine, setNavLine] = useState(location.state.navProductLine);
-  const [navGen, setNavGen] = useState(location.state.navProductGen);
-  const [navModel, setNavModel] = useState(location.state.navProductModel);
 
-  
 
+const ProductUpdate = (props) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [productLine, setProductLine] = useState("");
@@ -43,19 +28,42 @@ const ProductInsert = (props) => {
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
 
+// 디테일에서 넘겨받은 데이터
+  const params = useParams();
+  const location = useLocation();
+  const [productNo, setProductNo] = useState(params.productNo);
 
- 
+  const [navTable, setNavTable] = useState(location.state.navTable);
+  const [navLine, setNavLine] = useState(location.state.navLine);
+  const [navGen, setNavGen] = useState(location.state.navGen);
+  const [navModel, setNavModel] = useState(location.state.navModel);
+  // const [productQuality, setProductQuality] =useState(location.state.qualityHistory);
 
-  useEffect(() => {
-    setProductLine(location.state.navProductLine);
-    setProductGen(location.state.navProductGen);
-    setProductModel(location.state.navProductModel);
+  const [product,setProduct] = useState({});
+  const [type, setType] = useState('update');
 
-    setNavTable(location.state.navTable);
-    setNavLine(location.state.navProductLine);
-    setNavGen(location.state.navProductGen);
-    setNavModel(location.state.navProductModel);
-  }, [location]);
+   // 초기 데이터 로딩 로직
+  //  useEffect(()=>{
+  //   if(type === 'update'){
+  //     axios.get(backServer + "/product/detail/"+productNo)
+  //     .then((res)=>{
+  //       // console.log(res.data.data);
+  //       setProduct(res.data.data.product);
+  //       setProductQuality(res.data.data.qualityHistory);
+  //     })
+  //     .catch((res)=>{
+        
+  //     })
+  //   }
+  // },[])
+
+  // useEffect(() => {
+  //   console.log(product); // 상태 업데이트 후의 값 확인
+  // }, [product]);
+  // useEffect(() => {
+  //   console.log(productQuality); // 상태 업데이트 후의 값 확인
+  // }, [productQuality]);
+
 
   //ProductInsert.js 버전 setSelectedProduct
   const [selectedProduct, setSelectedProduct] = useState({}); //객체
@@ -97,44 +105,46 @@ const ProductInsert = (props) => {
   ]);
   //--ProductCategoryFrm.js로 넘겨줄 데이터
 
-  const navigate = useNavigate();
+   //--ProductCategoryFrm.js로 넘겨줄 데이터
 
-  //progress
-  const progressArr = ["제품 선택", "품질 선택", "세부 내용", "상품 등록"];
-  const [pip, setPip] = useState(progressArr[0]); //pip = progressInsertProgress
-  const changePip = (e) => {
-    if (
-      nextBtnActive[progressArr.indexOf(pip)] === true || //다음으로 넘어가는 버튼 클릭시 그 nextBtnActive가 true여야 작동함을 표시
-      progressArr.indexOf(e.target.value) < progressArr.indexOf(pip) //뒤로 돌아가는 버튼임을 표시
-    ) {
-      setPip(e.target.value);
-    }
-  };
-  const [nextBtnActive, setNextBtnActive] = useState([false, false, false]);
-  //changeBtnActive을 컴포넌트에 줄거임
-  const changeBtnActiveTrue = () => {
-    if (progressArr.indexOf(pip) > -1) {
-      nextBtnActive[progressArr.indexOf(pip)] = true;
-      setNextBtnActive(...[nextBtnActive]);
-    }
-  };
-  const changeBtnActiveFalse = () => {
-    if (progressArr.indexOf(pip) > -1) {
-      nextBtnActive[progressArr.indexOf(pip)] = false;
-      setNextBtnActive(...[nextBtnActive]);
-    }
-  };
-  //"등록 취소"버튼 클릭시 제품별 메인페이지로 이동
-  useEffect(() => {
-    if (pip === "등록 취소") {
-      navigate("/main");
-    }
-    if (pip === "상품 등록") {
-      navigate("/product/"); //상품 상세페이지로 이동
-    }
-  }, [pip]);
+   const navigate = useNavigate();
 
-  //ProductQualityFrm.js로 넘겨줄 속성
+   //progress
+   const progressArr = ["제품 선택", "품질 선택", "세부 내용", "상품 수정"];
+   const [pip, setPip] = useState(progressArr[0]); //pip = progressInsertProgress
+   const changePip = (e) => {
+     if (
+       nextBtnActive[progressArr.indexOf(pip)] === true || //다음으로 넘어가는 버튼 클릭시 그 nextBtnActive가 true여야 작동함을 표시
+       progressArr.indexOf(e.target.value) < progressArr.indexOf(pip) //뒤로 돌아가는 버튼임을 표시
+     ) {
+       setPip(e.target.value);
+     }
+   };
+   const [nextBtnActive, setNextBtnActive] = useState([false, false, false]);
+   //changeBtnActive을 컴포넌트에 줄거임
+   const changeBtnActiveTrue = () => {
+     if (progressArr.indexOf(pip) > -1) {
+       nextBtnActive[progressArr.indexOf(pip)] = true;
+       setNextBtnActive(...[nextBtnActive]);
+     }
+   };
+   const changeBtnActiveFalse = () => {
+     if (progressArr.indexOf(pip) > -1) {
+       nextBtnActive[progressArr.indexOf(pip)] = false;
+       setNextBtnActive(...[nextBtnActive]);
+     }
+   };
+   //"등록 취소"버튼 클릭시 제품별 메인페이지로 이동
+   useEffect(() => {
+     if (pip === "수정 취소") {
+       navigate("/main");
+     }
+     if (pip === "상품 수정") {
+       navigate("/product/"); //상품 상세페이지로 이동
+     }
+   }, [pip]);
+
+   //ProductQualityFrm.js로 넘겨줄 속성
   const [grade, setGrade] = useState(null);
   const [partOrder, setPartOrder] = useState([]);
 
@@ -148,7 +158,9 @@ const ProductInsert = (props) => {
   //서버 변수
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
-  //insert 하기 위해 서버 오픈
+  
+
+    //insert 하기 위해 서버 오픈
   useEffect(() => {
     if (
       title &&
@@ -277,6 +289,7 @@ const ProductInsert = (props) => {
         form.append("charging", partObject.CHARGING);
         form.append("touchSensor", partObject.TOUCH_SENSOR);
       }
+      form.append("productNo",productNo);
 
       //테이블에 따라서 품질내역을 요청하는 url이 달라잠
       //상품품질내역 등록
@@ -295,7 +308,7 @@ const ProductInsert = (props) => {
 
       //상품 등록
       axios
-        .post(url, form, {
+        .patch(url, form, {
           headers: {
             contentType: "multipart/form-data",
             processData: false,
@@ -314,8 +327,8 @@ const ProductInsert = (props) => {
     }
   }, [pip]);
 
-  //selectedProduct.productSummary 구하기
-  const summaryFind = () => {
+   //selectedProduct.productSummary 구하기
+   const summaryFind = () => {
     const summaryQuality = grade + "급";
     //데이터에 설명 추가
 
@@ -419,7 +432,7 @@ const ProductInsert = (props) => {
           selectedProduct={selectedProduct}
 
           // Frm 타입 설정
-          type="insert"
+          type="update"
         />
       </div>
       <div className={pip === progressArr[1] ? "" : "displayNone"}>
@@ -435,7 +448,8 @@ const ProductInsert = (props) => {
           navTable={navTable}
 
           // Frm 타입 설정
-          type="insert"
+          type="update"
+
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
@@ -460,7 +474,8 @@ const ProductInsert = (props) => {
           setPartOrder={setPartOrder}
 
           // Frm 타입 설정
-          type="insert"
+          type="update"
+
           
         />
       </div>
@@ -473,9 +488,8 @@ const ProductInsert = (props) => {
       </div>
     </div>
   );
-};
-
-export default ProductInsert;
+}
+export default ProductUpdate;
 
 //컴포넌트
 const ProductInsertProgress = (props) => {

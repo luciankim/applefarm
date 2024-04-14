@@ -3,7 +3,7 @@ import "./productInsert.css";
 import React, { useEffect, useState } from "react";
 import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
-const ProductQualityInsert = (props) => {
+const ProductQualityFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const grade = props.grade;
   const setGrade = props.setGrade;
@@ -474,4 +474,4 @@ const ImageInput = (props) => {
   );
 };
 
-export default ProductQualityInsert;
+export default ProductQualityFrm;

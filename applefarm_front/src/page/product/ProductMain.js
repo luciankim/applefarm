@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
-import ProductCategory from "./ProductCategory";
+import ProductCategory from "./ProductCategoryFrm";
 import ProductSummary from "./ProductSummary";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";

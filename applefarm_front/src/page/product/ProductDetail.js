@@ -59,6 +59,15 @@ const ProductDetail = (props) => {
   const [reqPage, setReqPage] = useState(1);
   const [writeTrigger, setWriteTrigger] = useState(0);
 
+  const [navTable, setNavTable] = useState();
+  const [navLine, setNavLine] = useState();
+  const [navGen, setNavGen] = useState();
+  const [navModel, setNavModel] = useState();
+
+  
+
+
+
   useEffect(() => {
     if (isLogin) {
       axios
@@ -93,6 +102,12 @@ const ProductDetail = (props) => {
           setLikeCount(res.data.data.product.likeCount);
 
           console.log(res.data.data);
+
+          // 업데이트용
+          setNavTable(res.data.data.product.tableName);
+          setNavLine(res.data.data.product.productLine);
+          setNavGen(res.data.data.product.productGen);
+          setNavModel(res.data.data.product.productModel);
         } else if (res.data.message === "fail") {
         }
       })
@@ -100,6 +115,8 @@ const ProductDetail = (props) => {
         console.log(res.data);
       });
   }, [productNo]);
+
+
 
   useEffect(() => {
     axios
@@ -163,8 +180,17 @@ const ProductDetail = (props) => {
 
   //PswProductDetailBtn 클릭이벤트들
   const clickUpdate = () => {
-    navigate("/main"); //추후에 "/product/update"로 수정
+    navigate("/product/update/"+productNo, {
+      state: {
+        navTable,
+        navLine,
+        navGen,
+        navModel
+      }
+    }
+    );
   };
+
   const clickDelete = () => {
     Swal.fire({ title: "정말 삭제하시겠습니까?", showDenyButton: true })
       .then((result) => {
