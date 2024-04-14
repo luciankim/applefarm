@@ -818,6 +818,16 @@
 
 /*로그인 정보*/
 
+.memberInfo-table {
+  max-height: 250px;
+  min-height: 350px;
+}
+.memberInfo-mini-title {
+  min-width: 200px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .mypage-content-info {
   padding-top: 30px;
 }
@@ -851,11 +861,6 @@
 .delete-btn:hover {
   text-decoration: underline;
 }
-/*
-table {
-   border-spacing: 30px;
-}
-*/
 
 .btn-wrap {
   position: relative;
@@ -881,6 +886,7 @@ table {
 .info-title {
   font-weight: bold;
   font-size: 18px;
+  padding-bottom: 30px;
 }
 
 /*회원탈퇴*/
