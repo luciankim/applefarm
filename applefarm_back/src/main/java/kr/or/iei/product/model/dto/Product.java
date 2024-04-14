@@ -42,13 +42,13 @@ public class Product {
 	private String productSummary;
 	private String tableName;
 	
-	//productDetail에 사용
+	//productDetail, productList에 사용
 	private int likeCount;
 	
 	//productChart에 사용
 	private int term;
 	
-	//productBid에 사용
+	//productBid, productList에 사용
 	private String tradeState;
 	
 	//구매최고희망가
