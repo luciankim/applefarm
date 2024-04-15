@@ -35,6 +35,7 @@ const AdminMain = (props) => {
           console.log(res.data.data);
           setMember(res.data.data);
           setMemberGrade(res.data.data.memberGrade);
+
           if (res.data.data.memberGrade !== 2) {
             Swal.fire("관리자가 아니면 물러가라").then(() => {
               navigate("/");
@@ -71,7 +72,11 @@ const AdminMain = (props) => {
       <div className="admin-sideMenu">
         <div className="admin-title">관리자 메뉴</div>
         <div className="sideMenu-wrap">
-          <SideMenu myInfoMenu={adminMenu} setMyInfoMenu={setAdminMenu} />
+          <SideMenu
+            menuItems={adminMenu}
+            setMenuItems={setAdminMenu}
+            type="admin"
+          />
         </div>
       </div>
       <div className="admin-section-wrap">

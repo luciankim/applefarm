@@ -23,7 +23,6 @@ import SalesProductDetails from "./SalesProductDetails";
 
 //로그인 정보 가져오기
 const Mypage = (props) => {
-  const token = window.localStorage.getItem("token");
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const logout = props.logout;

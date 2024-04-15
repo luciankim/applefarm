@@ -2,16 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import "./sideMenu.css";
 
 const SideMenu = (props) => {
-  const myInfoMenus = props.myInfoMenu || [];
-  const setMyInfoMenus = props.setMyInfoMenu;
-  const myShoppingMenus = props.myShoppingMenu || [];
-  const setMyShoppingMenus = props.setMyShoppingMenu;
   const menuItems = props.menuItems;
   const setMenuItems = props.setMenuItems;
   const type = props.type;
-
   const location = useLocation();
-
+  console.log("과연 정답");
   return (
     <div className="sideMenu">
       <ul>
