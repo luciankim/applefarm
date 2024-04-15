@@ -10,10 +10,20 @@ import ProductLastFrm from "./ProductLastFrm";
 import ProductCategoryFrm from "./ProductCategoryFrm";
 import { useEffect, useState } from "react";
 import ProductTab from "./ProductTab";
+import Swal from "sweetalert2";
 
 import axios from "axios";
 
-const ProductInsert = () => {
+const ProductInsert = (props) => {
+  const isLogin = props.isLogin;
+  if (!isLogin) {
+    Swal.fire("로그인 후 이용 가능합니다.")
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {});
+  }
+
   //https://heycoding.tistory.com/72#3.2.%20useNavigate
 
   //const location = useLocation();

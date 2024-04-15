@@ -23,11 +23,11 @@ const Product = (props) => {
       <Route path="/:productNo" element={<ProductDetail isLogin={isLogin} />} />
       <Route
         path="/insert/:productTable/:productLine/:productGen"
-        element={<ProductInsert />}
+        element={<ProductInsert isLogin={isLogin} />}
       />
       <Route
         path="/update/:productNo/:productTable/:productLine/:productGen"
-        element={<ProductUpdate />}
+        element={<ProductUpdate isLogin={isLogin} />}
       />
     </Routes>
   );

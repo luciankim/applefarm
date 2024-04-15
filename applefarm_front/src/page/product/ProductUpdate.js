@@ -4,8 +4,18 @@ import ProductCategoryFrm from "./ProductCategoryFrm";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ProductUpdate = (props) => {
+  const isLogin = props.isLogin;
+  if (!isLogin) {
+    Swal.fire("로그인 후 이용 가능합니다.")
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {});
+  }
+
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [productLine, setProductLine] = useState("");
