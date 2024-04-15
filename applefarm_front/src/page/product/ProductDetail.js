@@ -813,6 +813,8 @@ const ProductBid = (props) => {
     }
   }, [loginMember, bidList]);
 
+  console.log(bidList);
+
   //판매자가 자신의 판매금액을 수정/삭제
   const priceUpdate = () => {
     if (!product.tradeState) {
@@ -828,13 +830,10 @@ const ProductBid = (props) => {
         cancelButtonText: "삭제",
       }).then((result) => {
         const productPrice = result.value;
-        if (result.isConfirmed && productPrice <= bidList[0].bidPrice) {
-          Swal.fire({
-            icon: "warning",
-            title: "수정 실패. 돈이 많으시군요?",
-            text: "판매 버튼을 눌러주세요.",
-          });
-        } else if (result.isConfirmed && productPrice > bidList[0].bidPrice) {
+        if (
+          result.isConfirmed &&
+          (bidList.length === 0 || productPrice > bidList[0].bidPrice)
+        ) {
           axios
             .patch(backServer + "/product/price", {
               productPrice: productPrice,
@@ -858,6 +857,12 @@ const ProductBid = (props) => {
                 title: "에러 발생. 관리자에게 문의해주세요.",
               });
             });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "수정 실패. 돈이 많으시군요?",
+            text: "판매 버튼을 눌러주세요.",
+          });
         }
       });
     } else {
@@ -1055,7 +1060,7 @@ const ProductBid = (props) => {
             autocapitalize: "off",
           },
           showCancelButton: true,
-          confirmButtonText: "수정",
+          confirmButtonText: "등록",
           cancelButtonText: "취소",
         }).then((result) => {
           const bidPrice = result.value;
@@ -1075,7 +1080,7 @@ const ProductBid = (props) => {
               .post(backServer + "/product/bid", bid)
               .then((res) => {
                 if (res.data.message === "success") {
-                  Swal.fire({ icon: "success", title: "수정 완료" }).then(
+                  Swal.fire({ icon: "success", title: "등록 완료" }).then(
                     () => {
                       setBidList([]); //초기화 먼저 안 하면, 렌더링 이상해짐
                       bidListAxios();
