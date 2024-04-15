@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -472,6 +473,23 @@ public class ProductController {
 		}
 	}
 	
+	@Operation(summary="구매 호가 등록", description = "상품 상세페이지에서 구매자가 구매호가를 등록")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value = "/bid")
+	public ResponseEntity<ResponseDTO> productBidInsert(@RequestBody Bid bid){
+		int result = productService.productBidInsert(bid);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
 	@Operation(summary="구매 호가 수정", description = "상품 상세페이지에서 구매자가 자신이 등록한 구매 희망가를 수정")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
@@ -481,6 +499,23 @@ public class ProductController {
 	public ResponseEntity<ResponseDTO> productBidUpdate(@RequestBody Bid bid){
 		//bid에 들어있는 값 : bidNo, bidPrice
 		int result = productService.productBidUpdate(bid);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@Operation(summary="구매 호가 삭제", description = "상품 상세페이지에서 구매자가 자신이 등록한 구매호가를 삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@DeleteMapping(value = "/bid/{bidNo}")
+	public ResponseEntity<ResponseDTO> productBidInsert(@PathVariable int bidNo){
+		int result = productService.productBidDelete(bidNo);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

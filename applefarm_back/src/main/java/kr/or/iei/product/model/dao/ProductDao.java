@@ -108,7 +108,11 @@ public interface ProductDao {
 
 	int productPriceUpdate(int productPrice, int productNo);
 
+	int productBidInsert(Bid bid);
+
 	int productBidUpdate(Bid bid);
+
+	int productBidDelete(int bidNo);
 
 	int productTradeReserve(Trade trade);
 

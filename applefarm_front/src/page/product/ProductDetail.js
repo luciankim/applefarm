@@ -813,8 +813,7 @@ const ProductBid = (props) => {
     }
   }, [loginMember, bidList]);
 
-  console.log(bidList);
-
+  //clear
   //판매자가 자신의 판매금액을 수정/삭제
   const priceUpdate = () => {
     if (!product.tradeState) {
@@ -874,6 +873,7 @@ const ProductBid = (props) => {
     }
   };
 
+  //clear
   //판매자가 판매버튼을 클릭 -> trade_tbl에 insert되고, trade_status는 "예약중"
   const selling = (e) => {
     if (!product.tradeState) {
@@ -916,10 +916,12 @@ const ProductBid = (props) => {
     }
   };
 
+  //clear
   //구매자가 자신의 구매호가를 삭제
   const deleteBid = (e) => {
     if (!product.tradeState) {
       const bidNo = e.target.id;
+      console.log(bidNo);
       Swal.fire({
         icon: "warning",
         title: "정말로 삭제하시겠습니까?",
@@ -964,6 +966,7 @@ const ProductBid = (props) => {
     }
   };
 
+  //clear
   //구매자가 자신의 구매호가를 수정
   const bidUpdate = (e) => {
     if (!product.tradeState) {
@@ -1021,6 +1024,7 @@ const ProductBid = (props) => {
     }
   };
 
+  //clear
   //구매자가 구매버튼을 클릭
   const purchasing = () => {
     if (!product.tradeState) {
@@ -1042,6 +1046,7 @@ const ProductBid = (props) => {
     }
   };
 
+  //clear
   //구매자가 매수호가 등록버튼 클릭
   const insertBId = () => {
     if (!product.tradeState) {
@@ -1251,6 +1256,7 @@ const BidPrice = (props) => {
         <span
           className="material-icons productBidDeleteBtn"
           title="삭제"
+          id={bid.bidNo} //여기!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           onClick={clickEvent}
         >
           cancel

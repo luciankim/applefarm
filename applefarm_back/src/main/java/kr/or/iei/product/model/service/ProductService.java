@@ -391,10 +391,20 @@ public class ProductService {
 	public int productPriceUpdate(int productPrice, int productNo) {
 		return productDao.productPriceUpdate(productPrice, productNo);
 	}
+	
+	@Transactional
+	public int productBidInsert(Bid bid) {
+		return productDao.productBidInsert(bid);
+	}
 
 	@Transactional
 	public int productBidUpdate(Bid bid) {
 		return productDao.productBidUpdate(bid);
+	}
+
+	@Transactional
+	public int productBidDelete(int bidNo) {
+		return productDao.productBidDelete(bidNo);
 	}
 
 	@Transactional
