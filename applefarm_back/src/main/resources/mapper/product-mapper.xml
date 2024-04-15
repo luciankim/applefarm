@@ -268,13 +268,13 @@
 	</select>
 	
 	<select id="totalSellerProductCount" resultType="int">
-		select count(*) from product_tbl where member_no = #{sellerNo}
+		select count(*) from product_tbl where member_no = #{sellerNo} and product_hide = '0'
 	</select>
 	
 	<select id="selectSellerProductList" resultType="product">
 		select * from 
 			(select ROWNUM as RNUM, p.* from
-				(select * from product_tbl where member_no = #{sellerNo} order by product_no desc)p)
+				(select * from product_tbl where member_no = #{sellerNo} and product_hide = '0' order by product_no desc)p)
 		where RNUM between #{pi.start} and #{pi.end}
 	</select>
 
