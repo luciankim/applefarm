@@ -1,5 +1,8 @@
 package kr.or.iei.trade.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,7 @@ import kr.or.iei.product.model.dto.Review;
 import kr.or.iei.trade.model.dao.TradeDao;
 import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.trade.model.dto.Trade;
+import kr.or.iei.trade.model.dto.TradeDate;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.PagiNation;
 
@@ -90,7 +94,7 @@ public class TradeService {
 	}
 	@Transactional
 	public int updatePurchaseConfirm(Trade trade) {
-		return tradeDao.updatePurchaseConfirm(trade);
+		return tradeDao.updatePurchaseConfirm(trade.getTradeNo());
 	}
 	@Transactional
 	public int insertReview(Review review) {
@@ -110,4 +114,27 @@ public class TradeService {
 		}
 		return result;
 	}
+	public void scheduledPurchase() {
+		List<TradeDate> list = tradeDao.selectDeliveryCompleted();
+		System.out.println("작동중");
+		System.out.println(list);
+		LocalDate now = LocalDate.now(); // 현재 날짜
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		System.out.println(now);
+		// 배송 완료 시간을 가져와서 현재 날짜와 비교하여 7일이면 구매 확정으로 update
+		for (TradeDate td : list) {
+		    LocalDate deliveryDate = LocalDate.parse(td.getDeliveryDate(), formatter);
+		    long daysBetween = ChronoUnit.DAYS.between(deliveryDate,now);
+		    System.out.println(daysBetween);
+		    if (daysBetween > 7) {
+		        // 7일 이상 지났으면 구매 확정으로 업데이트
+		        tradeDao.updatePurchaseConfirm(td.getTradeNo());
+		    }
+		}
+	}
+	
+	
+	
+	
+	
 }
