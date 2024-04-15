@@ -42,6 +42,7 @@ import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.trade.model.dto.Trade;
+import lombok.Getter;
 
 @CrossOrigin("*")
 @RestController
@@ -692,14 +693,10 @@ public class MemberController {
 
 	}
 	
-	@GetMapping(value = "/tracking")
-	public ResponseEntity<ResponseDTO> trackingHistory(@PathVariable int invoiceNumber){
-		
-		
-		
-		
-		
-	} 
+	
+
+	
+	
 	
 	
 

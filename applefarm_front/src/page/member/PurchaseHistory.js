@@ -498,13 +498,20 @@ const TradeItem = (props) => {
   const refModalFunc = () => {
     setRefModalOpen(true);
   };
+  const [trackingList, setTrackingList] = useState([]);
   const trackingFunc = () => {
+    const invoiceNumber = trade.invoiceNumber;
+
     axios
-      .get(backServer + "/trade/tracking/" + trade.invoiceNumber)
+      .get(backServer + "/trade/tracking/" + invoiceNumber)
       .then((res) => {
-        console.log(res.date);
+        if (res.data.message === "success") {
+          setTrackingList(res.data.data);
+          console.log(res.data);
+        }
       })
       .catch((res) => {
+        console.log("catch");
         console.log(res.data);
       });
     /*
