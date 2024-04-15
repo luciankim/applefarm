@@ -6,8 +6,9 @@ import Swal from "sweetalert2";
 import { AddressModal, DelModal, RequestModal } from "./Modal";
 
 const Payment = (props) => {
-  const pramas = useParams();
-  const productNo = pramas.productNo;
+  const params = useParams();
+  const productNo = params.productNo;
+  const bidThough = params.bid;
   const navigate = useNavigate();
   const isLogin = props.isLogin;
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -37,11 +38,11 @@ const Payment = (props) => {
   }
 
   //console.log(product);
-  console.log(tradeExist);
+  //console.log(tradeExist);
   useEffect(() => {
     //구매자 정보+기본배송지+상품정보+판매유무 가져오기
     axios
-      .get(backServer + "/member/paymentInfo/" + productNo)
+      .get(backServer + "/member/paymentInfo/" + productNo + "/" + bidThough)
       .then((res) => {
         if (res.data.message === "success") {
           setTradeExist(res.data.data.tradeExist);

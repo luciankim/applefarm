@@ -3,7 +3,7 @@ import "./modal.css";
 import { Input, Input2, InputReadOnly } from "../../component/FormFrm";
 import DaumPostcode, { useDaumPostcodePopup } from "react-daum-postcode";
 import axios from "axios";
-
+import { Link, useNavigate } from "react-router-dom";
 //삭제
 const DelModal = (props) => {
   const setModalOpen = props.setModalOpen;
@@ -23,27 +23,25 @@ const DelModal = (props) => {
   };
 
   return (
-    <div>
-      <div className="modal" ref={modalBackground} onClick={modalBack}>
-        <div className="modal-content-wrap">
-          <div className="close-icon-wrap">
-            <span className="material-icons close-icon" onClick={closeModal}>
-              highlight_off
-            </span>
-          </div>
-          <div className="modal-content">
-            <span className="material-icons modal-main-icon">{icon}</span>
-            <p className="modal-text">{text}</p>
-            <button
-              className="like-delete-btn like-modal-btn"
-              onClick={clickEvent}
-            >
-              Yes
-            </button>
-            <button className="like-modal-btn" onClick={closeModal}>
-              No
-            </button>
-          </div>
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap">
+        <div className="close-icon-wrap">
+          <span className="material-icons close-icon" onClick={closeModal}>
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <span className="material-icons modal-main-icon">{icon}</span>
+          <p className="modal-text">{text}</p>
+          <button
+            className="like-delete-btn like-modal-btn"
+            onClick={clickEvent}
+          >
+            Yes
+          </button>
+          <button className="like-modal-btn" onClick={closeModal}>
+            No
+          </button>
         </div>
       </div>
     </div>
@@ -518,5 +516,464 @@ const RequestModal = (props) => {
     </div>
   );
 };
+//구매내역 상태선택 모달
+const ProductStatus = (props) => {
+  const modalBackground = useRef();
+  const { setModalOpen, statusList, currentStatus, setCurrentStatus } = props;
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  return (
+    <div>
+      <div className="modal" ref={modalBackground} onClick={modalBack}>
+        <div className="modal-content-wrap">
+          <span
+            className="material-icons close-icon status-close"
+            onClick={closeModal}
+          >
+            highlight_off
+          </span>
+          <div className="modal-product-status-title">선택한 상태 보기</div>
+          <div className="modal-content status-modal">
+            {statusList.map((item, index) => {
+              return (
+                <button
+                  key={"status" + index}
+                  onClick={() => {
+                    setCurrentStatus(index);
+                    setModalOpen(false);
+                  }}
+                  className={
+                    index == currentStatus
+                      ? "status-btns current-status"
+                      : "status-btns"
+                  }
+                  style={{ color: item.color }}
+                >
+                  {item.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+//입찰가격수정
+const BidModal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const clickEvent = props.clickEvent;
+  const oleBidPrice = props.bidPrice;
+  const productPrice = props.productPrice;
+  const { setNewBidPrice, newBidprice, productNo } = props;
+  const [buyChk, setBuyChk] = useState("");
+  //const [newBidprice, setNewBidPrice] = useState();
+  const bidPriceRef = useRef(null);
+  const modalBackground = useRef();
+  const navigate = useNavigate();
+  useEffect(() => {
+    bidPriceRef.current.focus();
+  }, []);
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+    setNewBidPrice("");
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+      setNewBidPrice("");
+    }
+  };
+  const changeData = (e) => {
+    //let price = e.target.value.toLocaleString();
+    let price = e.target.value.replace(/\D/g, "");
+    price = price.replace(/^0+(?=\d)/, "");
+    if (!isNaN(price)) {
+      setNewBidPrice(price);
+    }
+    if (price >= productPrice) {
+      setNewBidPrice(productPrice);
+      setBuyChk("판매가보다 높아 판매가로 바로 구매할수 있습니다.");
+    } else {
+      setBuyChk("");
+    }
+  };
+  //구매페이지 동
+  const purchase = () => {
+    navigate("/purchase/" + productNo + "/" + "n");
+  };
+  return (
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap">
+        <div className="close-icon-wrap">
+          <span
+            className="material-icons close-icon  status-close"
+            onClick={closeModal}
+          >
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <div className="modal-title modal-title2">
+            원하시는 입찰가를 입력해주세요.
+          </div>
+          <div className="modal-title-sub-message">
+            - 올바른 입력방법 : 1,000원(X) / 1000원(O) -
+          </div>
+          <div className="modal-title-sub-message sub-sub-s">
+            0원 이상 입력가능
+          </div>
+          <div className="bid-change-input-box">
+            <input
+              id="bidPrice"
+              type="text"
+              value={newBidprice}
+              onChange={changeData}
+              placeholder={
+                "판매 희망가는 " + productPrice.toLocaleString() + "원입니다."
+              }
+              ref={bidPriceRef}
+            />
+            원<div className="bid-buy-msg">{buyChk}</div>
+          </div>
+          {newBidprice >= productPrice ? (
+            <button
+              className="like-modal-btn active-bid-purchase"
+              onClick={purchase}
+            >
+              구매
+            </button>
+          ) : (
+            <button
+              className="like-modal-btn change-status-sbtn"
+              disabled={newBidprice <= 0 || newBidprice === ""}
+              onClick={clickEvent}
+            >
+              변경
+            </button>
+          )}
+          <button className="like-modal-btn" onClick={closeModal}>
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+//후기작성모달
+const ReviewModal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  //const clickEvent = props.clickEvent;
+  const trade = props.trade;
+  const { status, setStatus, setSuccessModal, setSuccessText } = props;
+  const modalBackground = useRef();
+  const [selectLevel, setSelectLevel] = useState(null);
+  const [reviewDetail, setReviewDetail] = useState("");
+  const [noSelect, setNoSelect] = useState(true);
 
-export { DelModal, AddressModal, RequestModal };
+  const level = [
+    { text: "별로예요", img: "/image/scoreImage/-1.svg" },
+    { text: "좋아요!", img: "/image/scoreImage/0.svg" },
+    { text: "최고예요!", img: "/image/scoreImage/1.svg" },
+  ];
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  const reviewWrite = () => {
+    let reviewSatisfaction;
+    if (selectLevel === 0) {
+      reviewSatisfaction = -1;
+    } else if (selectLevel === 1) {
+      reviewSatisfaction = 0;
+    } else if (selectLevel === 2) {
+      reviewSatisfaction = 1;
+    }
+
+    const obj = {
+      tradeNo: trade.tradeNo,
+      reviewSeller: trade.tradeSeller,
+      productNo: trade.productNo,
+      reviewSatisfaction,
+      reviewDetail,
+    };
+    console.log(obj);
+    axios
+      .post(backServer + "/trade/review", obj)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message === "success") {
+          setSuccessText("후기 작성이 완료되었습니다.");
+          setSuccessModal(true);
+          setModalOpen(false);
+          setStatus(!status);
+        } else {
+          alert("서버 에러 발생! 관리자에게 문의하세요.");
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
+  const changeData = (e) => {
+    setReviewDetail(e.target.value);
+  };
+  return (
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap modal-size-more">
+        <div className="close-icon-wrap">
+          <span
+            className="material-icons close-icon  status-close"
+            onClick={closeModal}
+          >
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <div className="modal-title modal-title2">
+            판매자에 대한 후기를 남겨주세요.
+          </div>
+          <div className="product-info-wrap">
+            <div>
+              <Link to={"/product/" + trade.productNo}>
+                <img src="../image/iphone.jpg"></img>
+              </Link>
+            </div>
+            <div className="product-info-text">
+              <div className="product-seller-nick">
+                {trade.tradeSellerNickname}님의
+              </div>
+              <div>
+                <Link to={"/product/" + trade.productNo}>
+                  {trade.productSummary}
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="level-select">
+            {level.map((item, index) => {
+              return (
+                <div key={"level" + index}>
+                  <img
+                    className={
+                      index === selectLevel
+                        ? "select-img current-img"
+                        : "select-img"
+                    }
+                    src={item.img}
+                    onClick={() => {
+                      setSelectLevel(index);
+                      setNoSelect(false);
+                    }}
+                  ></img>
+                  <div
+                    className={index === selectLevel ? "current-level" : ""}
+                    onClick={() => {
+                      setSelectLevel(index);
+                      setNoSelect(false);
+                    }}
+                  >
+                    {item.text}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="textarea-box-wrap">
+            <textarea
+              className="textarea-box"
+              value={reviewDetail}
+              onChange={changeData}
+              placeholder="만족도를 필수로 선택 후 후기내용은 자유롭게 작성해주세요."
+            ></textarea>
+          </div>
+          <button
+            className="like-modal-btn change-status-sbtn"
+            onClick={reviewWrite}
+            disabled={noSelect}
+          >
+            작성
+          </button>
+          <button className="like-modal-btn" onClick={closeModal}>
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+//완료모달
+const SuccessModal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const text = props.text;
+  const modalBackground = useRef();
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  return (
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap">
+        <div className="close-icon-wrap">
+          <span className="material-icons close-icon" onClick={closeModal}>
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <span className="material-icons modal-main-icon">verified</span>
+          <p className="modal-text">{text}</p>
+          <button
+            className="like-delete-btn like-modal-btn"
+            onClick={closeModal}
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+//환불모달
+const RefundModal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const trade = props.trade;
+  const { status, setStatus, setSuccessModal, setSuccessText } = props;
+  const modalBackground = useRef();
+  const [refundReason, setRefundReason] = useState("");
+  const inputRef = useRef(null);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  //환불하기
+  const refundGo = () => {
+    console.log("환불하기");
+    const obj = {
+      tradeNo: trade.tradeNo,
+      productNo: trade.productNo,
+      refundReason,
+    };
+    console.log(obj);
+    axios
+      .post(backServer + "/trade/refund", obj)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message === "success") {
+          setSuccessText("환불신청이 완료되었습니다.");
+          setSuccessModal(true);
+          setModalOpen(false);
+          setStatus(!status);
+        } else {
+          alert("서버 에러 발생! 관리자에게 문의하세요.");
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
+  const changeData = (e) => {
+    setRefundReason(e.target.value);
+  };
+  return (
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap modal-size-more">
+        <div className="close-icon-wrap">
+          <span
+            className="material-icons close-icon  status-close"
+            onClick={closeModal}
+          >
+            highlight_off
+          </span>
+        </div>
+        <div className="modal-content">
+          <div className="modal-title modal-title2">환불 신청</div>
+          <div className="modal-sub-message">
+            * 환불 신청 후 해당 상품을{" "}
+            <span>서울특별시 영등포구 선유동2로 가나빌딩</span> 으로 보내주세요.
+          </div>
+          <div className="product-info-wrap">
+            <div>
+              <Link to={"/product/" + trade.productNo}>
+                <img src="../image/iphone.jpg"></img>
+              </Link>
+            </div>
+            <div className="product-info-text">
+              <div className="product-seller-nick">
+                {trade.tradeSellerNickname}님의
+              </div>
+              <div>
+                <Link to={"/product/" + trade.productNo}>
+                  {trade.productSummary}
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="textarea-box-wrap">
+            <textarea
+              className="textarea-box"
+              value={refundReason}
+              onChange={changeData}
+              placeholder="환불사유를 작성해주세요."
+              ref={inputRef}
+            ></textarea>
+          </div>
+
+          <button
+            className="like-modal-btn change-status-sbtn"
+            onClick={refundGo}
+            disabled={refundReason === ""}
+          >
+            신청
+          </button>
+          <button className="like-modal-btn" onClick={closeModal}>
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+export {
+  DelModal,
+  AddressModal,
+  RequestModal,
+  ProductStatus,
+  BidModal,
+  ReviewModal,
+  SuccessModal,
+  RefundModal,
+};

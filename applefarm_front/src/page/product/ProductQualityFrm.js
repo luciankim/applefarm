@@ -24,7 +24,7 @@ const ProductQualityFrm = (props) => {
     axios
       .get(backServer + "/product/quality/" + tableName)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setQualityList(res.data.data);
 
         for (let i = 0; i < res.data.data.length; i++) {
@@ -61,6 +61,8 @@ const ProductQualityFrm = (props) => {
     const imageName = item.productStatusImage
       ? item.productStatusImage.split("/")[index]
       : "default";
+
+      console.log(item);
 
     setScore((prevScores) => ({
       ...prevScores,

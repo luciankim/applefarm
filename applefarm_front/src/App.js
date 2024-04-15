@@ -118,7 +118,7 @@ function App() {
             />
             <Route path="/login" element={<Login login={login} />} />
             <Route
-              path="/purchase/:productNo"
+              path="/purchase/:productNo/:bid"
               element={<Payment isLogin={isLogin} />}
             />
             <Route

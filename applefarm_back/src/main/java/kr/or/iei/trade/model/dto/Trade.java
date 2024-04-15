@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Alias(value = "trade")
 @Schema(description = "거래 객체")
 public class Trade {
-	//필요한 컬럼 있으면 추가하셔서 쓰시고 바꾸실거 있으면 말씀해주세요
 	@Schema(description = "거래 번호",type="number")
 	private int tradeNo;
 	@Schema(description = "판매자 회원 번호",type="number")
@@ -61,6 +60,10 @@ public class Trade {
 	@Schema(description = "구매자 회원 닉네임",type="String")
 	private String tradeBuyerNickname;	
 	
+
+	@Schema(description = "리뷰작성여부",type="number")
+	private int review;
+
 	
 	@Schema(description = "회원 이름 (판매 상세 내역)",type="String")
 	private String memberName;
@@ -70,5 +73,6 @@ public class Trade {
 	private int sellerGrade;
 	
 	
+
 	
 }

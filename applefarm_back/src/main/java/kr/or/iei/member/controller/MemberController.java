@@ -247,11 +247,12 @@ public class MemberController {
 	}
 
 	@Operation(summary = "주소 삭제", description = "주소록에 저장된 주소 삭제")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중 message 값 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@DeleteMapping(value = "/address/{addressNo}")
-	public ResponseEntity<ResponseDTO> deleteAddress(@PathVariable int addressNo) {
-		System.out.println(addressNo);
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 값 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@DeleteMapping(value = "/address/{addressNo}") 
+	public ResponseEntity<ResponseDTO> deleteAddress(@PathVariable int addressNo){
 		int result = memberService.deleteAddress(addressNo);
 		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -317,13 +318,15 @@ public class MemberController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-
-	@Operation(summary = "상품,회원정보 조회", description = "상품, 회원, 기본배송지 조회")
-	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
-			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
-	@GetMapping(value = "/paymentInfo/{productNo}")
-	public ResponseEntity<ResponseDTO> paymentInfo(@RequestAttribute int memberNo, @PathVariable int productNo) {
-		Map map = memberService.selectPaymentInfo(memberNo, productNo);
+	
+	@Operation(summary = "상품,회원정보 조회",description = "상품, 회원, 기본배송지 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
+	})
+	@GetMapping(value = "/paymentInfo/{productNo}/{bidThough}")
+	public ResponseEntity<ResponseDTO> paymentInfo(@RequestAttribute int memberNo,@PathVariable int productNo, @PathVariable String bidThough){
+		Map map = memberService.selectPaymentInfo(memberNo,productNo,bidThough);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 

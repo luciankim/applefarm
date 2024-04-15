@@ -73,11 +73,10 @@ const LikeItem = (props) => {
   const navigate = useNavigate();
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
-  //구매 페이지 이동 작성 예정
+  //구매 페이지 이동
   const purchase = () => {
-    //구매페이지 이동
     const productNo = like.productNo;
-    navigate("/purchase/" + productNo);
+    navigate("/purchase/" + productNo + "/" + "n");
   };
 
   //모달
@@ -146,7 +145,7 @@ const LikeItem = (props) => {
       <td>{like.productPrice.toLocaleString()}원</td>
       <td>{like.memberNickName}</td>
       {like.trade === 0 ? (
-        <td className="purchase-btn-box">
+        <td className="purchase-go-btn-box">
           <Button3 text="구매하기" clickEvent={purchase} />
         </td>
       ) : (

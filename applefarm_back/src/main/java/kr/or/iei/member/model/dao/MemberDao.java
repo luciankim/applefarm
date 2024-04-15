@@ -9,6 +9,7 @@ import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.board.model.dto.Board;
 import kr.or.iei.member.model.dto.Address;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.product.model.dto.Product;
 import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.util.PageInfo;
@@ -85,6 +86,8 @@ public interface MemberDao {
 
 	List<Member> selectBlackMemberCheckList();
 
+
+
 	int updatePhone(Member member);
 
 	int addAccountNumber(Member member);
@@ -106,6 +109,7 @@ public interface MemberDao {
 	Trade getSalesProductDetails(int productNo);
 
 	List<Product> getRefund(int memberNo);
+
 
 
 

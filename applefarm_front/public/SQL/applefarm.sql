@@ -7,12 +7,12 @@ CREATE TABLE MEMBER_TBL (
 	MEMBER_PW	                CHAR(60)		    NOT NULL,
 	MEMBER_EMAIL	            VARCHAR2(100)		NOT NULL,
 	MEMBER_PHONE	            CHAR(13)		    NOT NULL,
-	MEMBER_GRADE	            NUMBER		        NOT NULL,           -- 1:�����??  2:������  // 3: ��(�Խñ� �� �ı�, ���?? �ۼ� ����-1��)
+	MEMBER_GRADE	            NUMBER		        NOT NULL,           -- 1:�����??  2:������  // 3: ��(�Խñ� �� �ı�, ���?? �ۼ� ����-1��)
 	MEMBER_ACCOUNTNUMBER	    VARCHAR2(20)		NULL,
 	ENROLL_DATE	                DATE		        NOT NULL,
 	SELLER_SCORE	            NUMBER		        NOT NULL,           -- 0~100 ����. ���� 37��.
 	SELLER_GRADE	            NUMBER		        NOT NULL,           --(1~3) ���������� ������ �ΰ�
-	MEMBER_WITHDRAW	            CHAR(1)		        NOT NULL            -- 0 : ����ȸ�� /1: Ż��ȸ�� ��1�� ���?? �ش� �������� �α��� ����
+	MEMBER_WITHDRAW	            CHAR(1)		        NOT NULL            -- 0 : ����ȸ�� /1: Ż��ȸ�� ��1�� ���?? �ش� �������� �α��� ����
 );
 CREATE SEQUENCE MEMBER_SEQ;
 
@@ -26,7 +26,7 @@ CREATE TABLE ADDRESS_TBL (
 	ADDRESS_NAME	        VARCHAR2(30)		NOT NULL,
 	ADDRESS_PHONE	        CHAR(13)		    NOT NULL,
 	ADDRESS_REQUEST	        VARCHAR2(200)		NULL,
-	ADDRESS_DEFAULT	        NUMBER		        NOT NULL        -- 1:�⺻�����??
+	ADDRESS_DEFAULT	        NUMBER		        NOT NULL        -- 1:�⺻�����??
 );
 CREATE SEQUENCE ADDRESS_SEQ;
 
@@ -40,7 +40,7 @@ CREATE TABLE PRODUCT_TBL (
 	PRODUCT_EXPLAIN	            VARCHAR2(4000)		    NULL,
 	PRODUCT_PRICE	            NUMBER		            NOT NULL,
 	PRODUCT_DATE	            DATE		            NOT NULL,
-	PRODUCT_HIDE                CHAR(1)                 NOT NULL,       -- 0 : �����ֱ�, 1: �����??
+	PRODUCT_HIDE                CHAR(1)                 NOT NULL,       -- 0 : �����ֱ�, 1: �����??
 	PRODUCT_LINE	            VARCHAR2(100)		    NOT NULL,
 	PRODUCT_GEN	                VARCHAR2(100)		    NULL,
 	PRODUCT_MODEL	            VARCHAR2(100)		    NULL,
@@ -80,14 +80,14 @@ CREATE TABLE TRADE_TBL (
 	TRADE_RESERVE_DATE          DATE                    NULL,               -- TRADE_STATE = "������"�� ���� ��������
     TRADE_DATE	                DATE    		        NOT NULL,
 	TRADE_PRICE	                NUMBER		            NOT NULL,
-	TRADE_STATE	                VARCHAR2(30)		    NOT NULL,           -- ������, �����Ϸ�, �߼۴��??, �����??,  ��ۿϷ�??, ����Ȯ�� or ȯ��
+	TRADE_STATE	                VARCHAR2(30)		    NOT NULL,           -- ������, �����Ϸ�, �߼۴��??, �����??,  ��ۿϷ�??, ����Ȯ�� or ȯ��
 	ZIPCODE	                    CHAR(5)		            NOT NULL,
 	ADDRESS	                    VARCHAR2(200)		    NOT NULL,
 	ADDRESS_DETAIL	            VARCHAR2(100)		    NULL,
 	ADDRESS_NAME	            VARCHAR2(30)		    NOT NULL,
 	ADDRESS_PHONE	            CHAR(13)		        NOT NULL,
 	ADDRESS_REQUEST	            VARCHAR2(200)		    NOT NULL,
-	INVOICE_NUMBER	            VARCHAR2(30)		    NULL                -- �����ڰ� �����Ϸ��� �Ǹ��ڰ� �ǸŹ�ǰ �ù躸���鼭 ���??
+	INVOICE_NUMBER	            VARCHAR2(30)		    NULL                -- �����ڰ� �����Ϸ��� �Ǹ��ڰ� �ǸŹ�ǰ �ù躸���鼭 ���??
 	PAYMENT_NUMBER				NUMBER					NULL
 );
 CREATE SEQUENCE TRADE_SEQ;
@@ -99,6 +99,7 @@ CREATE TABLE BID_TBL (
 	PRODUCT_NO	            NUMBER		    NOT NULL        REFERENCES PRODUCT_TBL,
 	MEMBER_NO	            NUMBER		    NOT NULL        REFERENCES MEMBER_TBL,      -- ������
 	BID_PRICE	            NUMBER		    NOT NULL
+	BID_DATE 				DATE 			NOT NULL
 );
 CREATE SEQUENCE BID_SEQ;
 
@@ -210,20 +211,20 @@ CREATE TABLE BOARD_TBL (
 	READ_COUNT	            NUMBER		        NOT NULL,
 	BOARD_TYPE	            NUMBER		        NOT NULL,     -- 1.��������, 2.�����Խ���, 3.�����Խ���, 4.�˳���, 5.�Ű���
 	PRODUCT_CATEGORY	    VARCHAR2(50)		NULL,         -- IPHONE,  MACBOOK,  IPAD,  APPLEWATCH,  AIRPODS
-	BOARD_HIDE	            CHAR(1)		        NOT NULL,     -- 0 : �����ֱ�, 1 : �����??
+	BOARD_HIDE	            CHAR(1)		        NOT NULL,     -- 0 : �����ֱ�, 1 : �����??
 	BOARD_DATE	            DATE        		NOT NULL,
     BOARD_THUMBNAIL         VARCHAR2(100),
 );
 CREATE SEQUENCE BOARD_SEQ;
 
---���?? ���̺�
+--���?? ���̺�
 CREATE TABLE COMMENT_TBL (
 	COMMENT_NO	            NUMBER		        PRIMARY KEY,
 	BOARD_NO	            NUMBER		        NOT NULL    REFERENCES BOARD_TBL,
 	COMMENT_WRITER	        NUMBER		        NULL        REFERENCES MEMBER_TBL,
 	COMMENT_CONTENT	        VARCHAR2(500)		NOT NULL,
-	SELF_REF	            NUMBER		        NULL        REFERENCES COMMENT_TBL,   --NULL: ���??, NULL x: ����
-	COMMENT_HIDE	        CHAR(1)		        NOT NULL,   -- 0 : �����ֱ�, 1 : �����??
+	SELF_REF	            NUMBER		        NULL        REFERENCES COMMENT_TBL,   --NULL: ���??, NULL x: ����
+	COMMENT_HIDE	        CHAR(1)		        NOT NULL,   -- 0 : �����ֱ�, 1 : �����??
 	COMMENT_DATE	        DATE    		    NOT NULL
 );
 CREATE SEQUENCE COMMENT_SEQ;
@@ -252,7 +253,7 @@ CREATE SEQUENCE REFUND_SEQ;
 CREATE TABLE REPORT_TBL (
 	REPORT_NO	            NUMBER		        PRIMARY KEY,
 	REPORT_TYPE	            NUMBER		        NOT NULL,       --1(��ǰ�Ǹű�), 2(��ǰ�ı�), 3(����), 4(����), 5(�˳���), 6(����,����,�˳�����)
-	REPORT_TARGET	        NUMBER		        NOT NULL,       --�� ������ �°� PK�Ѱ��ֱ�.  (��ǰ�Ǹű�, ��ǰ�ı�, ����,����,�˳���, ���??)��ȣ
+	REPORT_TARGET	        NUMBER		        NOT NULL,       --�� ������ �°� PK�Ѱ��ֱ�.  (��ǰ�Ǹű�, ��ǰ�ı�, ����,����,�˳���, ���??)��ȣ
     REPORT_CONTENT	        VARCHAR2(1000)		NULL,           --�Ű������� ��Ÿ�� �� Ȱ��ȭ
 	REPORT_DATE	            DATE    		    NOT NULL,
 	REPORTING_MEMBER	    NUMBER		        NOT NULL    REFERENCES MEMBER_TBL,
@@ -264,7 +265,7 @@ CREATE SEQUENCE REPORT_SEQ;
 
 --�Ű� ���� ���� ���� ���̺�
 CREATE TABLE REPORT_SELECT_REFERENCE_TBL(
-    REPROT_SELECT_NO            NUMBER             PRIMARY KEY,    -- SEQ ���?? X. ���� �� ���� �����ϱ� ����
+    REPROT_SELECT_NO            NUMBER             PRIMARY KEY,    -- SEQ ���?? X. ���� �� ���� �����ϱ� ����
     REPROT_SELECT_CONTENT       VARCHAR2(100)      NOT NULL
 );
 
@@ -276,12 +277,12 @@ CREATE TABLE REPORT_SELECT_TBL (
 
 
 INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(1,'�弳�� ����߾��');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(2,'���?? ���������??');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(3,'�ǽ��� �õ��߾��??');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(4,'������ǰ�� �Ǹ��߾��??');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(5,'�ҹ�Ȱ���� �ǽɵǾ��??');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(6,'�Ұ����� ������ �ۼ��Ǿ����??');
-INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(7,'�������?? ���?? ����߾��');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(2,'���?? ���������??');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(3,'�ǽ��� �õ��߾��??');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(4,'������ǰ�� �Ǹ��߾��??');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(5,'�ҹ�Ȱ���� �ǽɵǾ��??');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(6,'�Ұ����� ������ �ۼ��Ǿ����??');
+INSERT INTO REPORT_SELECT_REFERENCE_TBL VALUES(7,'�������?? ���?? ����߾��');
 
 COMMIT;
 
@@ -319,7 +320,7 @@ CREATE SEQUENCE CHAT_MESSAGE_SEQ;
 CREATE TABLE BID_TBL (
     BID_NO          NUMBER                          PRIMARY KEY,
     PRODUCT_NO      NUMBER          NOT NULL        REFERENCES PRODUCT_TBL ON DELETE CASCADE,
-    MEMBER_NO       NUMBER          NOT NULL        REFERENCES MEMBER_TBL ON DELETE CASCADE,     --������
+    MEMBER_NO       NUMBER          NOT NULL        REFERENCES MEMBER_TBL ON DELETE CASCADE,     --������
     BID_PRICE       NUMBER          NOT NULL
 );
 CREATE SEQUENCE BID_SEQ;
