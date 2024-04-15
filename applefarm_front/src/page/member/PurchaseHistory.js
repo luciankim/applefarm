@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Tab from "./Tab";
+import Tab2 from "./Tab2";
 import dayjs, { Dayjs } from "dayjs";
 import {
   BidModal,
@@ -29,7 +29,7 @@ const PurchaseHistory = () => {
     <div className="mypage-current-wrap">
       <h3 className="mypage-current-title">구매내역</h3>
       <div className="purchase-history-content-wrap">
-        <Tab
+        <Tab2
           tabMenu={tabMenu}
           setTabMenu={setTabMenu}
           currentTab={currentTab}

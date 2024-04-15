@@ -7,8 +7,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import Button from "@mui/material/Button";
 
-const Tab = (props) => {
-  const { currentTab, tabMenu, setTabMenu, setCurrentTab } = props;
+const Tab2 = (props) => {
+  const { currentTab, tabMenu, setTabMenu, setCurrentTab, setReqPage } = props;
 
   const {
     startDate,
@@ -17,10 +17,19 @@ const Tab = (props) => {
     setEndDate,
     activeButton,
     setActiveButton,
+    setCurrentStatus,
   } = props;
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
+    //값초기화
+    setReqPage(1);
+    setCurrentStatus(0);
+    const today = dayjs();
+    const twoMonthAgo = today.subtract(2, "month");
+    setStartDate(twoMonthAgo);
+    setEndDate(today);
+    setActiveButton("twoMonth");
   };
 
   return (
@@ -48,6 +57,7 @@ const Tab = (props) => {
           setEndDate={setEndDate}
           activeButton={activeButton}
           setActiveButton={setActiveButton}
+          setReqPage={setReqPage}
         />
       </div>
     </>
@@ -62,6 +72,7 @@ const DateSelect = (props) => {
     setEndDate,
     activeButton,
     setActiveButton,
+    setReqPage,
   } = props;
 
   // 2개월 버튼 클릭 시
@@ -71,6 +82,7 @@ const DateSelect = (props) => {
     setStartDate(twoMonthAgo);
     setEndDate(today);
     setActiveButton("twoMonth");
+    setReqPage(1);
   };
 
   // 6개월 버튼 클릭 시
@@ -80,17 +92,23 @@ const DateSelect = (props) => {
     setStartDate(sixMonthsAgo);
     setEndDate(today);
     setActiveButton("sixMonth");
+    setReqPage(1);
   };
 
   // 전체 버튼 클릭 시
+  const projectStartDate = dayjs("2020-01-01");
   const all = () => {
     // 전체 기간을 원하는 날짜로 설정
-    // 현재 전체 기간 5년으로 잡아놈
-    const projectStartDate = dayjs().subtract(5, "year");
     const today = dayjs();
     setStartDate(projectStartDate);
     setEndDate(today);
-    setActiveButton("all"); // 추가: 버튼 활성 상태 설정
+    setActiveButton("all");
+    setReqPage(1);
+  };
+
+  const nonActive = () => {
+    setActiveButton("none"); // 버튼활성해제
+    setReqPage(1);
   };
 
   return (
@@ -139,12 +157,16 @@ const DateSelect = (props) => {
             format="YYYY/MM/DD"
             mask={"____/__/__"}
             showDaysOutsideCurrentMonth
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => {
+              setStartDate(date);
+              nonActive();
+            }}
             slotProps={{
               textField: {
                 size: "small",
               },
             }}
+            minDate={projectStartDate}
             maxDate={endDate}
           />
           <DatePicker
@@ -154,7 +176,10 @@ const DateSelect = (props) => {
             format="YYYY/MM/DD"
             mask={"____/__/__"}
             showDaysOutsideCurrentMonth
-            onChange={(date) => setEndDate(date)}
+            onChange={(date) => {
+              setEndDate(date);
+              nonActive();
+            }}
             slotProps={{
               textField: {
                 size: "small",
@@ -176,4 +201,4 @@ const DateSelect = (props) => {
     </div>
   );
 };
-export default Tab;
+export default Tab2;
