@@ -5,10 +5,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const DeleteMember = (props) => {
-  const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const logout = props.logout;
-  const isLogin = props.isLogin;
+
   const navigate = useNavigate();
   const member = props.member;
 
@@ -19,6 +18,7 @@ const DeleteMember = (props) => {
 
   const allChecked = isChecked1 && isChecked2 && isChecked3 && isChecked4;
 
+  //1,2,3번째 체크박스 체크되면 나머지 4번 체크박스도 자동으로 체크
   useEffect(() => {
     if (isChecked1 && isChecked2 && isChecked3) {
       setIsChecked4(true);
@@ -43,7 +43,7 @@ const DeleteMember = (props) => {
     const memberNo = member.memberNo;
 
     if (!allChecked) {
-      Swal.fire("모든 체크박스를 확인해 주세요.");
+      Swal.fire("모두 동의해야 탈퇴가능합니다.");
       return;
     }
 

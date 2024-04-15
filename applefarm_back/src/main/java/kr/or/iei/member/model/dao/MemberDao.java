@@ -16,7 +16,6 @@ import kr.or.iei.util.PageInfo;
 @Mapper
 public interface MemberDao {
 
-
 	int insertAddress(Address address);
 
 	int updateAddressDefault(int memberNo);
@@ -44,12 +43,10 @@ public interface MemberDao {
 	int join(Member member);
 
 	int memberTotalCount();
-	
-	
-	//-------------------------------관리자: 회원관리 기능-------------------------------
-	List selectMemberList(PageInfo pi);
-	//-------------------------------관리자: 회원관리 기능-------------------------------
 
+	// -------------------------------관리자: 회원관리 기능-------------------------------
+	List selectMemberList(PageInfo pi);
+	// -------------------------------관리자: 회원관리 기능-------------------------------
 
 	int updateSearchUpdateBasicAddress(int memberNo);
 
@@ -75,13 +72,11 @@ public interface MemberDao {
 
 	int deleteLike(int likeNo);
 
-
 	int updateEmail(Member member);
 
 	int deleteMember(int memberNo);
 
 	int updatePw(Member member);
-
 
 	List<Member> selectBlackMemberCheckList();
 
@@ -107,13 +102,4 @@ public interface MemberDao {
 
 	List<Product> getRefund(int memberNo);
 
-
-
-
-
-
-
-
-
-	
 }
