@@ -281,6 +281,10 @@
 	<update id="productPriceUpdate">
 		update product_tbl set product_price=#{productPrice} where product_no=#{productNo}
 	</update>
+	
+	<insert id="productTradeReserve">
+		insert into trade_tbl values (trade_seq.nextval, #{tradeSeller}, #{tradeBuyer}, #{productNo}, sysdate, null, #{tradePrice}, '예약중', null, null, null, null, null, null, null, null, null)
+	</insert>
 
 	<insert id="productBidInsert">
 		insert into bid_tbl values (bid_seq.nextval, #{productNo}, #{memberNo}, #{bidPrice}, sysdate)
@@ -293,10 +297,6 @@
 	<delete id="productBidDelete">
 		delete from bid_tbl where bid_no = #{bidNo}
 	</delete>
-	
-	<insert id="productTradeReserve">
-		insert into trade_tbl values (trade_seq.nextval, #{tradeSeller}, #{tradeBuyer}, #{productNo}, , null, null, #{tradePrice}, '예약중', null, null, null, null, null, null, null, null)
-	</insert>
 	
 	<insert id="insertReport">
 		insert into report_tbl values(report_seq.nextval,1,#{reportTarget},#{reportContent},sysdate,

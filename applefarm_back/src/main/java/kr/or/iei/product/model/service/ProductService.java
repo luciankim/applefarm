@@ -391,6 +391,11 @@ public class ProductService {
 	public int productPriceUpdate(int productPrice, int productNo) {
 		return productDao.productPriceUpdate(productPrice, productNo);
 	}
+
+	@Transactional
+	public int productTradeReserve(Trade trade) {
+		return productDao.productTradeReserve(trade);
+	}
 	
 	@Transactional
 	public int productBidInsert(Bid bid) {
@@ -405,12 +410,6 @@ public class ProductService {
 	@Transactional
 	public int productBidDelete(int bidNo) {
 		return productDao.productBidDelete(bidNo);
-	}
-
-	@Transactional
-	public int productTradeReserve(Trade trade) {
-		return productDao.productTradeReserve(trade);
-
 	}
 
 	@Transactional

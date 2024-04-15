@@ -473,6 +473,24 @@ public class ProductController {
 		}
 	}
 	
+	@Operation(summary="판매(거래) 예약", description = "상품 상세페이지에서 판매자가 특정 구매 호가를 승낙하고, 상품은 예약중인 상태로 변경됨")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
+	})
+	@PostMapping(value = "/trade")
+	public ResponseEntity<ResponseDTO> productTradeReserve(@RequestBody Trade trade){
+		//trade에 들어있는 값 : #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
+		int result = productService.productTradeReserve(trade);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
 	@Operation(summary="구매 호가 등록", description = "상품 상세페이지에서 구매자가 구매호가를 등록")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
@@ -516,24 +534,6 @@ public class ProductController {
 	@DeleteMapping(value = "/bid/{bidNo}")
 	public ResponseEntity<ResponseDTO> productBidInsert(@PathVariable int bidNo){
 		int result = productService.productBidDelete(bidNo);
-		if(result > 0) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}
-	}
-	
-	@Operation(summary="거래 예약", description = "상품 상세페이지에서 판매자가 특정 구매 호가를 승낙")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러 발생")
-	})
-	@PostMapping(value = "/trade")
-	public ResponseEntity<ResponseDTO> productTradeReserve(@RequestBody Trade trade){
-		//trade에 들어있는 값 : #{tradeSeller}, #{tradeBuyer}, #{productNo}, #{tradePrice},
-		int result = productService.productTradeReserve(trade);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

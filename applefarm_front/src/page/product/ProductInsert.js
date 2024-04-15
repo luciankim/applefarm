@@ -120,6 +120,10 @@ const ProductInsert = (props) => {
     ) {
       setPip(e.target.value);
     }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 이 부분이 스크롤을 부드럽게 해줍니다.
+    });
   };
   const [nextBtnActive, setNextBtnActive] = useState([false, false, false]);
   //changeBtnActive을 컴포넌트에 줄거임
