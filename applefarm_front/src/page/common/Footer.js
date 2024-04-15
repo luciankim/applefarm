@@ -4,21 +4,11 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <ul>
-          <li>
-            <Link to="#">이용약관</Link>
-          </li>
-          <li>
-            <Link to="#">개인정보취급</Link>
-          </li>
-          <li>
-            <Link to="/ref">인재채용</Link>
-          </li>
-          <li>
-            <Link to="#">제휴문의</Link>
-          </li>
-        </ul>
-        <div className="footer-wrap">
+        <div className="footer-content1">
+          <Link to="#">이용약관</Link>
+          <Link to="#">개인정보취급</Link>
+          <Link to="/ref">인재채용</Link>
+          <Link to="#">제휴문의</Link>
           <div className="footer-content-wrap">
             <div className="footer-content2">
               <div>AppleFarm 주식회사 · 대표: 박성완</div>
@@ -26,8 +16,7 @@ const Footer = () => {
               <div>통신판매업: 제 2021-성남분당C-0093호</div>
               <div>사업장소재지: 서울특별시 영등포구 선유동2로 사랑빌딩</div>
             </div>
-
-            <div>
+            <div className="footer-last-text">
               AppleFarm(주)는 통신판매 중개자로서 통신판매의 당사자가 아닙니다.
               본 상품은 개별판매자가 등록한 상품으로 상품, 상품정보, 거래에 관한
               의무와 책임은 각 판매자에게 있습니다. 단, 이용약관 및 정책, 기타
@@ -35,6 +24,8 @@ const Footer = () => {
               내용에 대한 책임은 AppleFarm(주)에 있습니다.
             </div>
           </div>
+        </div>
+        <div className="footer-wrap">
           <div className="footer-wrap2">
             <div className="icon-box">
               <Link to="#">
@@ -47,13 +38,10 @@ const Footer = () => {
                 <img className="youtube-img" src="../image/youtube.png" />
               </Link>
             </div>
-            <div className="footer-content3">
+            <div>
               <div>고객센터 1588-8282</div>
               <div>운영시간 평일 10:00 ~ 18:00 (토,일 공휴일 휴무)</div>
               <div>점심시간 평일 13:00 ~ 14:00 </div>
-              <div className="contact-btn-wrap">
-                <button className="contact-btn">1대1 문의하기</button>
-              </div>
             </div>
           </div>
         </div>

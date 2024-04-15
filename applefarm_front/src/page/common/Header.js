@@ -31,16 +31,15 @@ const Header = (props) => {
 
   return (
     <>
-      <div className="topbar"></div>
       <div className="header">
         <LogoForm />
-      </div>
-      <div className="header2">
-        <LoginForm
-          isLogin={isLogin}
-          logout={logout}
-          memberGrade={memberGrade}
-        />
+        <div className="header2">
+          <LoginForm
+            isLogin={isLogin}
+            logout={logout}
+            memberGrade={memberGrade}
+          />
+        </div>
       </div>
     </>
   );
@@ -67,9 +66,13 @@ const LoginForm = (props) => {
       {memberGrade ? ( //렌더링 같이 되는 조건으로 세팅하는 게 좀 더 안전하다.
         memberGrade === 2 ? (
           <>
-            <Link title="쪽지함">
-              <span className="material-icons">email</span>
-            </Link>
+            {/**
+           * 
+           <Link title="쪽지함">
+             <span className="material-icons">email</span>
+           </Link>
+           * 
+           */}
             <Link to="/mypage/loginInfo" title="마이페이지">
               <span className="material-icons">face</span>
             </Link>
@@ -84,9 +87,6 @@ const LoginForm = (props) => {
           </>
         ) : (
           <>
-            <Link title="쪽지함">
-              <span className="material-icons">email</span>
-            </Link>
             <Link to="/mypage/wish" title="위시리스트">
               <span className="material-icons">favorite_border</span>
             </Link>
@@ -103,16 +103,10 @@ const LoginForm = (props) => {
       ) : (
         <>
           <Link to="/login" title="로그인">
-            <span className="material-icons">login</span>
+            <span className="material-icons">face_5</span>
           </Link>
           <Link to="/join" title="회원가입">
             <span className="material-icons">assignment_ind</span>
-          </Link>
-          <Link to="/mypage/wish" title="위시리스트">
-            <span className="material-icons">favorite_border</span>
-          </Link>
-          <Link title="쪽지함">
-            <span className="material-icons">email</span>
           </Link>
         </>
       )}

@@ -34,7 +34,6 @@ const Nav = (props) => {
   return (
     <nav className="nav">
       <ul>
-        <div className="dropdown-relative"></div>
         <li className="navMenu-li">
           <Link to="/product/main/iPhone/iPhone 15 Series">iPhone</Link>
           <ul className="dropdown-content drop-iPhone">
