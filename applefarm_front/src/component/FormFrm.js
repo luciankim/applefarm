@@ -37,7 +37,8 @@ const Textarea = (props) => {
 };
 
 const Input2 = (props) => {
-  const { data, setData, type, id, blurEvent, placeholder, disabled } = props;
+  const { data, setData, type, id, blurEvent, placeholder, disabled, ref } =
+    props;
 
   const changeData = (e) => {
     setData(e.target.value);
@@ -52,6 +53,7 @@ const Input2 = (props) => {
       onBlur={blurEvent}
       placeholder={placeholder}
       disabled={disabled}
+      ref={ref}
     />
   );
 };

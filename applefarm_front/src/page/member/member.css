@@ -42,6 +42,9 @@
   margin: 0 auto;
   padding: 10px;
 }
+.mypage-wrap a {
+  color: #1e1e1e;
+}
 .mypage-current-title {
   padding: 0px 0px 15px 0px;
   color: #222222;
@@ -90,7 +93,7 @@
   opacity: 0.5;
   cursor: default;
 }
-.purchase-btn-box > button {
+.purchase-go-btn-box > button {
   background-color: #0071e3;
   cursor: pointer;
 }
@@ -99,7 +102,7 @@
   font-family: ns-r;
   font-weight: 550;
 }
-.purchase-btn-box > button:hover {
+.purchase-go-btn-box > button:hover {
   box-shadow: 0px 0px 5px blue;
 }
 .no-like-list {
@@ -133,6 +136,7 @@
   left: 0;
   opacity: 0.9;
 }
+
 /* 마이페이지 */
 
 .mypage-title {
@@ -303,13 +307,18 @@
 .payment-delivery-detail > table > tbody > tr > td {
   padding: 5px 0px;
 }
+.payment-delivery-detail > table {
+  border-spacing: 5px;
+}
+/*
 .payment-delivery-detail
   > table
   > tbody
   > tr:last-child
   > td:not(:first-child) {
+
   padding-right: 5px;
-}
+}*/
 .delivery-address-btn {
   border-radius: 10px;
   padding: 10px 15px;
@@ -556,7 +565,7 @@
   text-align: center;
   cursor: pointer;
   border-bottom: 1px solid rgba(167, 167, 167, 0.6);
-  padding: 0px 0px 20px 0px;
+  padding: 0px 0px 18px 0px;
   font-size: 15px;
 }
 .history-menu-focus {
@@ -565,7 +574,8 @@
 .history-date-select-wrap {
   border-bottom: 1px solid rgba(167, 167, 167, 0.6);
   padding: 10px;
-  background-color: #fcfcfc;
+  margin-bottom: 15px;
+  /*background-color: #fcfcfc;*/
 }
 .css-10o2lyd-MuiStack-root {
   align-items: center;
@@ -576,6 +586,7 @@
   margin: 0px 7px;
   font-size: 13px;
   border: 1px solid rgba(167, 167, 167, 0.6);
+  border-radius: 4px;
 }
 .date-select-btn {
   background-color: white;
@@ -591,6 +602,107 @@
   padding: 6px 6px;
   font-size: 13px;
   border: 1px solid rgba(167, 167, 167, 0.6);
+}
+.history-product-status-btn-box {
+  position: relative;
+  width: 100px;
+}
+.history-product-status-btn-box > span {
+  position: absolute;
+  bottom: 8px;
+  right: 4px;
+  color: #1e1e1e;
+  cursor: pointer;
+}
+.history-product-status-btn-box > button {
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 40px;
+  text-align: left;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+.purchase-history-content table {
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  border-collapse: collapse;
+}
+.purchase-history-content table > thead > tr > td {
+  font-size: 12px;
+  font-family: ns-b;
+  width: 130px;
+  padding-bottom: 5px;
+}
+.purchase-history-content > table > tbody > tr {
+  border-top: 1px solid #ccc; /*안들어감*/
+}
+.purchase-history-content table > tbody > tr > td {
+  padding: 25px 0px;
+}
+.purchase-history-content table > tbody > tr > td:nth-child(2) {
+  text-align: left;
+}
+.non-list > td > div {
+  padding: 150px 0px;
+  font-size: 13px;
+}
+.sold-out-color {
+  color: red;
+  display: block;
+  text-decoration-line: underline;
+  font-size: 14px;
+}
+.trade-book-status {
+  color: var(--main_02);
+}
+.sm-f {
+  font-size: 13px;
+}
+.purchase-date {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 15px;
+  color: var(--gray_05);
+}
+.go-purchase {
+  color: var(--main_02);
+}
+.purchase-history-content a:hover {
+  text-decoration-line: underline;
+}
+.purcase-date-wrap {
+  position: relative;
+  width: 140px;
+}
+.purchase-history-content table > tbody > tr > td > button {
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  padding: 5px 8px;
+  margin: 5px 10px;
+}
+.purchase-history-content
+  table
+  > tbody
+  > tr
+  > td
+  > button:hover:not(:disabled) {
+  border-color: var(--bg_03);
+}
+.purchase-history-content table > thead > tr > td:last-child {
+  width: 120px;
+}
+.lsr-cb {
+  color: #0071e3;
+}
+.lsr-cr {
+  color: var(--main_02);
+}
+.openInvice:hover {
+  text-decoration-line: underline;
+  cursor: pointer;
 }
 /* 사이드메뉴 */
 .sideMenu > ul > li > a {

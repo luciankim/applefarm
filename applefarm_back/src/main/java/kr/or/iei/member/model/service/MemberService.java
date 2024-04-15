@@ -243,7 +243,7 @@ public class MemberService {
 		public List allAddress(int memberNo) {
 			return memberDao.selectAddress(memberNo);
 		}
-		public Map selectPaymentInfo(int memberNo, int productNo) {
+		public Map selectPaymentInfo(int memberNo, int productNo, String bidThough) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			//회원 정보
 			Member member = memberDao.getMemberInfo(memberNo);
@@ -251,7 +251,15 @@ public class MemberService {
 			Address address= memberDao.selectAddressBasic(memberNo);
 			//상품 정보
 			Product product = productDao.selectOneProduct(productNo);
-			int tradeExist = tradeDao.selectExistTrade(productNo);
+			Trade trade = new Trade();
+			trade.setTradeBuyer(memberNo);
+			trade.setProductNo(productNo);
+			//상품 예약 결제로 페이지 접근시 결제 가격 조회
+			if(bidThough.equals("y")) {
+				int bidPrice = tradeDao.selectBidPrice(trade);
+				product.setProductPrice(bidPrice);
+			}
+			int tradeExist = tradeDao.tradeExistCount(trade);
 			map.put("member", member);
 			map.put("address", address);
 			map.put("product",product);
@@ -292,6 +300,8 @@ public class MemberService {
 			return memberDao.selectAddressBasic(memberNo);
 
 		}
+
+
 
 		
 		//이전 비밀번호 확인

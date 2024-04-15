@@ -4,7 +4,7 @@ import axios from "axios";
 import { PswRadio, PswRadioQuality } from "../../component/FormFrm";
 import ProductSummary from "./ProductSummary";
 
-const ProductCategory = (props) => {
+const ProductCategoryFrm = (props) => {
   const {
     navTable,
     navLine,
@@ -50,8 +50,13 @@ const ProductCategory = (props) => {
     changeBtnActiveTrue,
     changeBtnActiveFalse,
     pip,
+    type,
+    productNo,
+    product,
+    setProduct,
   } = props;
 
+  
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [categoryArr, setCategoryArr] = useState([]);
@@ -61,16 +66,44 @@ const ProductCategory = (props) => {
   let modelArr = [];
   let model2Arr = [];
   //특정된 카테고리의 각 key의 값들(문자열)을 split(',')해서 받을 배열 변수
-  const [colorArr, setColorArr] = useState([]);
-  const [imageArr, setImageArr] = useState([]);
-  const [storageArr, setStorageArr] = useState([]);
-  const [memoryArr, setMemoryArr] = useState([]);
-  const [chipArr, setChipArr] = useState([]);
-  const [cpuArr, setCpuArr] = useState([]);
-  const [gpuArr, setGpuArr] = useState([]);
-  const [sizeArr, setSizeArr] = useState([]);
-  const [connectivityArr, setConnectivityArr] = useState([]);
-  const [chargeArr, setChargeArr] = useState([]);
+
+    const [colorArr, setColorArr] = useState([]);
+    const [imageArr, setImageArr] = useState([]);
+    const [storageArr, setStorageArr] = useState([]);
+    const [memoryArr, setMemoryArr] = useState([]);
+    const [chipArr, setChipArr] = useState([]);
+    const [cpuArr, setCpuArr] = useState([]);
+    const [gpuArr, setGpuArr] = useState([]);
+    const [sizeArr, setSizeArr] = useState([]);
+    const [connectivityArr, setConnectivityArr] = useState([]);
+    const [chargeArr, setChargeArr] = useState([]);
+
+
+  
+
+    // useEffect(()=>{
+    //   if(type == "update"){
+    //     setProductColor(product.productColor);
+    //     setProductImage(product.productImage);
+    //     setProductStorage(product.productStorage);
+    //     setProductMemory(product.productMemory);
+    //     setProductChip(product.productChip);
+    //     setProductCpu(product.productCpu);
+    //     setProductGpu(product.productGpu);
+    //     setProductSize(product.productSize);
+    //     setProductConnectivity(product.productConnectivity);
+    //     setProductCharge(product.productCharge);
+    //     setProductQuality(product.productQuality);
+    //   }
+    // },[type,product])
+ 
+    // useEffect(()=>{
+    //   console.log(categoryArr);
+    // },[categoryArr])
+
+
+
+
 
   const clear = () => {
     setProductColor("");
@@ -96,6 +129,8 @@ const ProductCategory = (props) => {
     setConnectivityArr([]);
     setChargeArr([]);
   };
+
+  
 
   //초기화
   useEffect(() => {
@@ -593,4 +628,4 @@ const ArrMap = (props) => {
   }
 };
 
-export default ProductCategory;
+export default ProductCategoryFrm;

@@ -168,6 +168,9 @@
 		address_detail=#{addressDetail}, address_default=#{addressDefault}
 		where address_no=#{addressNo}
 	</update>
+					
+
+
 
 	<select id="selectNo" resultType="member">
 		select * from member_tbl where

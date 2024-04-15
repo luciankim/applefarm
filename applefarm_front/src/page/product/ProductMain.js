@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./productMain.css";
-import ProductCategory from "./ProductCategory";
+import ProductCategory from "./ProductCategoryFrm";
 import ProductSummary from "./ProductSummary";
 import ProductRecentTrade from "./ProductRecentTrade";
 import ProductTab from "./ProductTab";
@@ -11,7 +11,11 @@ import ProductMainList from "./productMainList";
 const ProductMain = (props) => {
   const location = useLocation();
 
-  const [navTable, setNavTable] = useState(location.state.navTable);
+  const isLogin = props.isLogin;
+
+  const [navTable, setNavTable] = useState(
+    location.state.navTable ? location.state.navTable : ""
+  );
   const [navLine, setNavLine] = useState(location.state.navProductLine);
   const [navGen, setNavGen] = useState(location.state.navProductGen);
   const [navModel, setNavModel] = useState(location.state.navProductModel);
@@ -90,14 +94,18 @@ const ProductMain = (props) => {
 
   const navigate = useNavigate(); //상품등록버튼
   const ToProductInsert = () => {
-    navigate("/product/insert", {
-      state: {
-        navTable: navTable,
-        navProductLine: navLine,
-        navProductGen: navGen,
-        navProductModel: navModel,
-      },
-    });
+    if (isLogin) {
+      navigate("/product/insert", {
+        state: {
+          navTable: navTable,
+          navProductLine: navLine,
+          navProductGen: navGen,
+          navProductModel: navModel,
+        },
+      });
+    } else {
+      navigate("/login");
+    }
   };
   //<화면 출력 순서>
   //카테고리js

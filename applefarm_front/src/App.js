@@ -9,7 +9,7 @@ import BoardMain from "./page/board/BoardMain";
 import Join from "./page/member/Join";
 import AdminMain from "./page/admin/AdminMain";
 import Login from "./page/member/Login";
-import QualitySelectFrm from "./page/product/ProductQualityInsert";
+// import QualitySelectFrm from "./page/product/QualitySelectFrm";
 import { useEffect, useState } from "react";
 import MemberInfo from "./page/member/MemberInfo";
 import Product from "./page/product/Product";
@@ -118,7 +118,7 @@ function App() {
             />
             <Route path="/login" element={<Login login={login} />} />
             <Route
-              path="/purchase/:productNo"
+              path="/purchase/:productNo/:bid"
               element={<Payment isLogin={isLogin} />}
             />
             <Route

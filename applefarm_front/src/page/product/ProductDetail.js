@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./productDetail.css"; //박성완
-import "./productDetail2.css"; //박근열
+//import "./productDetail2.css"; //박근열
 import Swal from "sweetalert2";
 import PaginationComponent from "../../component/Pagination";
 
@@ -59,6 +59,11 @@ const ProductDetail = (props) => {
   const [reqPage, setReqPage] = useState(1);
   const [writeTrigger, setWriteTrigger] = useState(0);
 
+  const [navTable, setNavTable] = useState();
+  const [navLine, setNavLine] = useState();
+  const [navGen, setNavGen] = useState();
+  const [navModel, setNavModel] = useState();
+
   useEffect(() => {
     if (isLogin) {
       axios
@@ -93,6 +98,12 @@ const ProductDetail = (props) => {
           setLikeCount(res.data.data.product.likeCount);
 
           console.log(res.data.data);
+
+          // 업데이트용
+          setNavTable(res.data.data.product.tableName);
+          setNavLine(res.data.data.product.productLine);
+          setNavGen(res.data.data.product.productGen);
+          setNavModel(res.data.data.product.productModel);
         } else if (res.data.message === "fail") {
         }
       })
@@ -163,8 +174,16 @@ const ProductDetail = (props) => {
 
   //PswProductDetailBtn 클릭이벤트들
   const clickUpdate = () => {
-    navigate("/main"); //추후에 "/product/update"로 수정
+    navigate("/product/update/" + productNo, {
+      state: {
+        navTable,
+        navLine,
+        navGen,
+        navModel,
+      },
+    });
   };
+
   const clickDelete = () => {
     Swal.fire({ title: "정말 삭제하시겠습니까?", showDenyButton: true })
       .then((result) => {
@@ -329,10 +348,10 @@ const ProductDetail = (props) => {
             <ProductImage productFileList={productFileList} />
           </div>
           <div className="productDetail-explain">
-            <div className="productDetail-explain-summary productArticle2">
+            <div className="productDetail-explain-summary">
               <ProductSummary product={product} />
             </div>
-            <div className="productDetail-explain-seller productArticle2">
+            <div className="productDetail-explain-seller">
               <ProductSeller
                 product={product}
                 seller={seller}
@@ -352,7 +371,7 @@ const ProductDetail = (props) => {
           <div className="productDetail-chart">
             <ProductChart product={product} path="productDetail" />
           </div>
-          <div className="productDetail-bid">
+          <div className="productDetail-bid productArticle">
             <ProductBid
               isLogin={isLogin}
               backServer={backServer}
@@ -380,7 +399,13 @@ const ProductDetail = (props) => {
             tabNameArr={productDetailTabArr}
           />
         </div>
-        <div className="productDetail-oneToOne">
+        <div
+          className={
+            productDetailTab === productDetailTabArr[0]
+              ? "productDetail-oneToOne"
+              : "displayNone"
+          }
+        >
           <ProductOneToOne
             isLogin={isLogin}
             productNo={productNo}
@@ -391,7 +416,13 @@ const ProductDetail = (props) => {
             setWriteTrigger={setWriteTrigger}
           />
         </div>
-        <div className="productDetail-tradeReview">
+        <div
+          className={
+            productDetailTab === productDetailTabArr[1]
+              ? "productDetail-tradeReview"
+              : "displayNone"
+          }
+        >
           <ProductTradeReview
             reviewList={reviewList}
             setReviewReqPage={setReviewReqPage}
@@ -399,7 +430,13 @@ const ProductDetail = (props) => {
             reviewReqPage={reviewReqPage}
           />
         </div>
-        <div className="productDetail-productList">
+        <div
+          className={
+            productDetailTab === productDetailTabArr[2]
+              ? "productDetail-productList"
+              : "displayNone"
+          }
+        >
           <ProductProductList
             sellerProductList={sellerProductList}
             sellerProductPageInfo={sellerProductPageInfo}
@@ -632,21 +669,16 @@ const ProductSeller = (props) => {
     <>
       {seller ? (
         <>
-          {" "}
           <div className="productDetail-explain-seller-name-area">
             {seller.memberNickName}
           </div>
           <div className="productDetail-explain-seller-score-area">
             <div className="productDetail-explain-seller-score-icon">
-              {/* 
-            {seller.sellerScore}는 37부터 시작 
-              
-            */}
-              {0 <= seller.sellerScore <= 36 ? (
+              {0 <= seller.sellerScore && seller.sellerScore <= 36 ? (
                 <img src="/image/scoreImage/썩은사과.png" />
-              ) : 37 <= seller.sellerScore <= 70 ? (
+              ) : 36 < seller.sellerScore && seller.sellerScore <= 70 ? (
                 <img src="/image/scoreImage/보통사과.png" />
-              ) : 71 <= seller.sellerScore <= 100 ? (
+              ) : 70 < seller.sellerScore && seller.sellerScore <= 100 ? (
                 <img src="/image/scoreImage/금사과.png" />
               ) : (
                 ""
@@ -1076,6 +1108,7 @@ const ProductBid = (props) => {
 
   return (
     <div className="productBid">
+      <div className="productBid-line"></div>
       <div className="productBid-title">
         <div div className="productBidBox-wrap">
           <div className="productBidBox-left">
@@ -1271,15 +1304,15 @@ const ProductQuality = (props) => {
     <>
       <div className="productDetail-quality-title">
         {product.tableName == "IPHONE_TBL"
-          ? "아이폰"
+          ? "아이폰 품질 상세"
           : product.tableName == "MACBOOK_TBL"
-          ? "맥북"
+          ? "맥북 품질 상세"
           : product.tableName == "IPAD_TBL"
-          ? "아이패드"
+          ? "아이패드 품질 상세"
           : product.tableName == "WATCH_TBL"
-          ? "애플워치"
+          ? "애플워치 품질 상세"
           : product.tableName == "AIRPODS_TBL"
-          ? "에어팟"
+          ? "에어팟 품질 상세"
           : ""}
       </div>
       <div className="productDetail-quality-item-wrap">

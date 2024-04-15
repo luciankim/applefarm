@@ -3,7 +3,7 @@ import "./productInsert.css";
 import React, { useEffect, useState } from "react";
 import { Button1, Button2, Button3 } from "../../component/FormFrm";
 
-const ProductQualityInsert = (props) => {
+const ProductQualityFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const grade = props.grade;
   const setGrade = props.setGrade;
@@ -24,7 +24,7 @@ const ProductQualityInsert = (props) => {
     axios
       .get(backServer + "/product/quality/" + tableName)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setQualityList(res.data.data);
 
         for (let i = 0; i < res.data.data.length; i++) {
@@ -61,6 +61,8 @@ const ProductQualityInsert = (props) => {
     const imageName = item.productStatusImage
       ? item.productStatusImage.split("/")[index]
       : "default";
+
+      console.log(item);
 
     setScore((prevScores) => ({
       ...prevScores,
@@ -474,4 +476,4 @@ const ImageInput = (props) => {
   );
 };
 
-export default ProductQualityInsert;
+export default ProductQualityFrm;

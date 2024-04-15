@@ -21,4 +21,6 @@ public class Review {
 	
 	private String productSummary;
 	private String memberNickname;
+	
+	private int sellerScore;
 }

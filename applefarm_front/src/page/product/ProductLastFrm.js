@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TextEditor from "../../component/TextEditor";
 
-const ProductInsertLast = (props) => {
+const ProductLastFrm = (props) => {
   //데이터 전송용
   const title = props.title;
   const setTitle = props.setTitle;
@@ -216,7 +216,7 @@ const ProductInsertLast = (props) => {
   return;
 };
 
-export default ProductInsertLast;
+export default ProductLastFrm;
 
 const Input = (props) => {
   const data = props.data;

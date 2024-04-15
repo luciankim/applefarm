@@ -5,11 +5,12 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import ProductQualityInsert from "./ProductQualityInsert";
-import ProductInsertLast from "./ProductInsertLast";
+import ProductQualityFrm from "./ProductQualityFrm";
+import ProductLastFrm from "./ProductLastFrm";
+import ProductCategoryFrm from "./ProductCategoryFrm";
 import { useEffect, useState } from "react";
 import ProductTab from "./ProductTab";
-import ProductCategory from "./ProductCategory";
+
 import axios from "axios";
 
 const ProductInsert = (props) => {
@@ -21,6 +22,8 @@ const ProductInsert = (props) => {
   const [navLine, setNavLine] = useState(location.state.navProductLine);
   const [navGen, setNavGen] = useState(location.state.navProductGen);
   const [navModel, setNavModel] = useState(location.state.navProductModel);
+
+  
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -39,6 +42,9 @@ const ProductInsert = (props) => {
   const [productConnectivity, setProductConnectivity] = useState("");
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
+
+
+ 
 
   useEffect(() => {
     setProductLine(location.state.navProductLine);
@@ -89,7 +95,7 @@ const ProductInsert = (props) => {
     productQuality,
     location,
   ]);
-  //--ProductCategory.js로 넘겨줄 데이터
+  //--ProductCategoryFrm.js로 넘겨줄 데이터
 
   const navigate = useNavigate();
 
@@ -128,11 +134,11 @@ const ProductInsert = (props) => {
     }
   }, [pip]);
 
-  //ProductQualityInsert.js로 넘겨줄 속성
+  //ProductQualityFrm.js로 넘겨줄 속성
   const [grade, setGrade] = useState(null);
   const [partOrder, setPartOrder] = useState([]);
 
-  //ProductInsertLast.js로 넘겨줄 속성
+  //ProductLastFrm.js로 넘겨줄 속성
   const [title, setTitle] = useState(); //제목
   const [content, setContent] = useState(); //내용
   const [price, setPrice] = useState(); //가격
@@ -366,7 +372,7 @@ const ProductInsert = (props) => {
         <ProductInsertProgress pip={pip} progressArr={progressArr} />
       </div>
       <div className={pip === progressArr[0] ? "" : "displayNone"}>
-        <ProductCategory
+        <ProductCategoryFrm
           /*nextBtn용*/
           changeBtnActiveTrue={changeBtnActiveTrue}
           changeBtnActiveFalse={changeBtnActiveFalse}
@@ -411,27 +417,33 @@ const ProductInsert = (props) => {
           productCharge={productCharge}
           setProductCharge={setProductCharge}
           selectedProduct={selectedProduct}
+
+          // Frm 타입 설정
+          type="insert"
         />
       </div>
       <div className={pip === progressArr[1] ? "" : "displayNone"}>
-        <ProductQualityInsert
+        <ProductQualityFrm
           /*nextBtn용*/
           changeBtnActiveTrue={changeBtnActiveTrue}
           changeBtnActiveFalse={changeBtnActiveFalse}
-          //원래ProductQualityInsert용
+          //원래ProductQualityFrm용
           grade={grade}
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
           navTable={navTable}
+
+          // Frm 타입 설정
+          type="insert"
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
-        <ProductInsertLast
+        <ProductLastFrm
           /*nextBtn용*/
           changeBtnActiveTrue={changeBtnActiveTrue}
           changeBtnActiveFalse={changeBtnActiveFalse}
-          //ProductInsertLast
+          //ProductLastFrm
           title={title}
           setTitle={setTitle}
           content={content}
@@ -446,6 +458,9 @@ const ProductInsert = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
+
+          // Frm 타입 설정
+          type="insert"
           
         />
       </div>

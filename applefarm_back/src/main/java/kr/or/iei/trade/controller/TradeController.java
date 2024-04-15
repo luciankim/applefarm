@@ -1,10 +1,14 @@
 package kr.or.iei.trade.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -17,6 +21,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.admin.model.dto.Refund;
+import kr.or.iei.product.model.dto.Review;
+import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.trade.model.dto.Trade;
 import kr.or.iei.trade.service.TradeService;
 
@@ -52,8 +59,11 @@ public class TradeController {
 		@ApiResponse(responseCode = "500",description = "서버 에러 발생")
 	})
 	@GetMapping(value = "/exist/{productNo}")
-	public ResponseEntity<ResponseDTO> selectExistTrade(@PathVariable int productNo){
-		int result = tradeService.selectExistTrade(productNo);
+	public ResponseEntity<ResponseDTO> selectExistTrade(@PathVariable int productNo, @RequestAttribute int memberNo){
+		Trade trade = new Trade();
+		trade.setProductNo(productNo);
+		trade.setTradeBuyer(memberNo);
+		int result = tradeService.selectExistTrade(trade);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", result);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
@@ -86,4 +96,98 @@ public class TradeController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", trade);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
+	@Operation(summary = "구매입찰내역 조회", description = "상태,페이지,기간을 받아서 구매 입찰내역 조회")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@GetMapping(value = "/bid/{status}/{reqPage}/{startDate}/{endDate}")
+	public ResponseEntity<ResponseDTO> selectBid(@RequestAttribute int memberNo,@PathVariable int status,@PathVariable int reqPage, @PathVariable String startDate, @PathVariable String endDate) {
+		Map map = tradeService.selectBid(memberNo,status,reqPage,startDate,endDate);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	@Operation(summary = "입찰 취소", description = "입찰번호 받아 입찰데이터 삭제,예약상태일 시 거래테이블 내 예약도 삭제")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@DeleteMapping(value = "/bid/{bidNo}/{productNo}/{tradeBook}")
+	public ResponseEntity<ResponseDTO> deleteBid(@PathVariable int bidNo,@PathVariable int productNo,@PathVariable int tradeBook){
+		int result = tradeService.deleteBid(bidNo,productNo,tradeBook);
+		if(result==1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());	
+		}
+	}
+	@Operation(summary = "입찰 취소", description = "입찰번호 받아 입찰데이터 삭제,예약상태일 시 거래테이블 내 예약도 삭제")
+	@ApiResponses({ 
+		@ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PatchMapping(value = "/bid")
+	public ResponseEntity<ResponseDTO> updateBid(@RequestBody Bid bid){
+		int result = tradeService.updateBid(bid);
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());	
+		}
+	}
+	@Operation(summary = "구매내역 조회", description = "현재 탭,상태,페이지,기간을 받아서 구매내역 조회")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@GetMapping(value = "/purchase/{tab}/{status}/{reqPage}/{startDate}/{endDate}")
+	public ResponseEntity<ResponseDTO> selectPurchase(@RequestAttribute int memberNo,@PathVariable int tab, @PathVariable int status,@PathVariable int reqPage, @PathVariable String startDate, @PathVariable String endDate) {
+		Map map = tradeService.selectPurchase(memberNo,tab,status,reqPage,startDate,endDate);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	@Operation(summary = "구매확정", description = "거래상태 구매확정으로 업데이트")
+	@ApiResponses({ 
+		@ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PatchMapping(value = "/purchaseConfirm")
+	public ResponseEntity<ResponseDTO> purchaseConfirm(@RequestBody Trade trade){
+		int result = tradeService.updatePurchaseConfirm(trade);
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());	
+		}
+	}
+	@Operation(summary = "후기작성", description = "거래번호, 판매자회원번호, 만족도, 후기내용을 받아 후기등록")
+	@ApiResponses({ 
+		@ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/review")
+	public ResponseEntity<ResponseDTO> insertReview(@RequestBody Review review,@RequestAttribute int memberNo){
+		review.setReviewConsumer(memberNo);
+		int result = tradeService.insertReview(review);
+		if(result==2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());	
+		}
+	}
+	@Operation(summary = "환불신청", description = "거래번호, 상품번호, 환불사유를 받아 환불신청")
+	@ApiResponses({ 
+		@ApiResponse(responseCode = "200", description = "응답 데이터 중 message 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/refund")
+	public ResponseEntity<ResponseDTO> insertRefund(@RequestBody Refund refund){
+		int result = tradeService.insertRefund(refund);
+		if(result==2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());			
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());	
+		}
+	}
+	
 }

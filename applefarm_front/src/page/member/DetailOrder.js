@@ -112,7 +112,9 @@ const OrderItem = (props) => {
         <div>{trade.productSummary}</div>
         <div>
           {/*상품상세페이지로 이동 */}
-          <Button2 text="상품상세"></Button2>
+          <Link to={"/product/" + trade.productNo}>
+            <Button2 text="상품상세"></Button2>
+          </Link>
         </div>
       </div>
       <div className="trade-detail-info">
@@ -121,7 +123,7 @@ const OrderItem = (props) => {
           <tbody>
             <tr>
               <td>{type === "buyer" ? "판매가" : "정산금액"}</td>
-              <td>{trade.productPrice.toLocaleString()}원</td>
+              <td>{trade.tradePrice.toLocaleString()}원</td>
             </tr>
             <tr>
               <td>거래일</td>
@@ -175,7 +177,13 @@ const OrderItem = (props) => {
         </table>
       </div>
       <div className="history-go-btn">
-        <Link to="/mypage/salesHistory">
+        <Link
+          to={
+            type === "seller"
+              ? "/mypage/salesHistory"
+              : "/mypage/purchaseHistory"
+          }
+        >
           <Button2 text="목록보기"></Button2>
         </Link>
       </div>
