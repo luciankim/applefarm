@@ -85,9 +85,14 @@ header {
 }
 
 body {
-  margin-top: 230px;
+  margin-top: 159px;
 }
-
+.main-wrap {
+  height: 100vh;
+  background-image: url("/public/image/back.jpg");
+  background-repeat: no-repeat center;
+  background-size: cover;
+}
 button,
 select {
   cursor: pointer;
@@ -134,9 +139,9 @@ button[disabled] {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  position: absolute; /* header 요소와 겹치도록 절대 위치 설정 */
-  top: 85px;
-  right: 140px;
+  position: absolute;
+  top: 25%;
+  right: 0px;
 }
 
 .main-logo > a {
@@ -150,6 +155,9 @@ button[disabled] {
 
 /* 네비게이션 바 스타일링 */
 /*박성완*/
+.dropdown-relative {
+  display: flex;
+}
 .nav {
   display: flex;
   justify-content: center;
@@ -158,7 +166,7 @@ button[disabled] {
   position: relative; /* 드롭다운 위치를 위한 기준점 추가 */
   /**/
   position: fixed;
-  top: 155.5px;
+  top: 95px;
   left: 0;
   width: 100%;
   background-color: #fff;
@@ -315,42 +323,6 @@ button[disabled] {
   color: white;
 }
 
-/* footer 스타일링*/
-
-.footer {
-  padding: 50px;
-  background-color: #081828;
-}
-.footer-content {
-  width: 1200px;
-  margin: 0 auto;
-  color: #fff;
-}
-.footer-content > ul {
-  list-style-type: none;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-.footer-content > ul > li {
-  float: left;
-  padding-right: 20px;
-}
-
-.footer-content > ul > li > a {
-  color: #fff;
-}
-.main {
-  width: 100%; /* 부모 요소의 너비를 전체로 설정 */
-  min-height: 100vh;
-}
-
-.inner-wrap {
-  width: 100%;
-  max-width: 1200px; /* 최대 너비를 1320px로 설정 */ /*1320에서 수정*/
-  margin: 0 auto; /* 상단 및 하단 마진을 0으로, 좌우 마진을 auto로 설정하여 가운데 정렬 */
-  /* padding: 20px 60px; 좌우 패딩 */
-}
-
 /* ref */
 
 .ref button {
@@ -485,20 +457,28 @@ button[disabled] {
 
 /*footer*/
 
-.footer-content2 {
+.footer {
+  background-color: #081828;
+  font-size: 12px;
+}
+.footer-content {
+  width: 1200px;
+  margin: 0 auto;
+  color: #dedbdb;
   display: flex;
-  flex-direction: row;
-  font-size: 13px;
+  padding-bottom: 50px;
 }
-.footer-content2 div {
-  padding-right: 10px;
+.footer-content1 {
+  padding: 10px 0px;
 }
-
-.footer-content-wrap {
-  display: flex;
-  flex-direction: column;
+.footer-content1 > a {
+  display: inline-block;
+  padding: 20px 0px;
+  width: 100px;
+  color: #dedbdb;
+  font-size: 14px;
+  text-align: center;
 }
-
 .insta-img {
   width: 34px;
   height: 34px;
@@ -512,51 +492,25 @@ button[disabled] {
 .youtube-img {
   width: 33px;
   height: 33px;
-  position: relative;
-  left: 4px;
 }
 
 .icon-box {
-  display: flex;
-  flex-direction: row;
-  position: relative;
   left: 60px;
   bottom: 45px;
-}
-
-.footer-wrap {
   display: flex;
-  flex-direction: row;
 }
-
-.footer-content3 {
-  position: relative;
-  left: 60px;
-  bottom: 30px;
-  font-size: 15px;
-}
-
-.footer-wrap2 {
-  width: 500px;
-  position: relative;
-  left: -35px;
-  bottom: 20px;
-}
-
-.footer {
-  padding-bottom: 20px;
-}
-
-.contact-btn-wrap {
-  position: relative;
-  top: 10px;
-}
-
-.contact-btn {
-  font-size: 15px;
+.icon-box > a {
   padding: 4px;
-  background-color: #eaeced;
-  border: none;
-  font-weight: bold;
-  border-radius: 5px;
+}
+.footer-last-text {
+  width: 80%;
+}
+.footer-content-wrap {
+  padding-left: 30px;
+}
+.footer-content-wrap > div {
+  padding: 5px 0px;
+}
+.footer-wrap {
+  padding: 30px 10px 0px 0px;
 }

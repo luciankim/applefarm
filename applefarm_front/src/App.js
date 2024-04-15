@@ -95,9 +95,9 @@ function App() {
     <div className="wrap">
       <header>
         <Header isLogin={isLogin} logout={logout} /> {/*여기는 isLogin 값*/}
+        <Nav />
       </header>
       <main className="container">
-        <Nav />
         <section className="inner-wrap">
           <Routes>
             <Route path="/" element={<Main />} />
