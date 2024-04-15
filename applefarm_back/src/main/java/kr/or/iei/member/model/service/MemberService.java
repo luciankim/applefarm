@@ -169,7 +169,7 @@ public class MemberService {
 		Member m = memberDao.selectNo(memberNo);
 		
 		if(m.getMemberGrade() == 3 ) {
-			String accessToken = "블랙";
+			String accessToken = "black";
 			return accessToken;
 		}else {
 			if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {

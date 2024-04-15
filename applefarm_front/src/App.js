@@ -7,7 +7,7 @@ import Mypage from "./page/member/Mypage";
 import MemberWish from "./page/member/MemberWish";
 import BoardMain from "./page/board/BoardMain";
 import Join from "./page/member/Join";
-import AdminMain from "./page/admin/AdminMain";
+import Admin from "./page/admin/Admin";
 import Login from "./page/member/Login";
 // import QualitySelectFrm from "./page/product/QualitySelectFrm";
 import { useEffect, useState } from "react";
@@ -113,10 +113,7 @@ function App() {
               element={<BoardMain isLogin={isLogin} logout={logout} />}
             />
             <Route path="/join" element={<Join />} />
-            <Route
-              path="/admin/*"
-              element={<AdminMain isLogin={isLogin} logout={logout} />}
-            />
+            <Route path="/admin/*" element={<Admin isLogin={isLogin} />} />
             <Route path="/login" element={<Login login={login} />} />
             <Route
               path="/purchase/:productNo/:bid"
@@ -148,7 +145,6 @@ function App() {
       {modalOpen && (
         <AdminChatModal setModalOpen={setModalOpen} memberInfo={memberInfo} />
       )}
-
       <Footer />
     </div>
   );
