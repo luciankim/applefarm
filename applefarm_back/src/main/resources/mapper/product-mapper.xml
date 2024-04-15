@@ -300,10 +300,13 @@
 	</select>
 	
 	<select id="selectProductList" resultType="product">
-	select * from 
-		(select ROWNUM as RNUM, p.* from
-			(select * from product_tbl where table_name = #{tableName} order by product_no desc)p)
-	where RNUM between #{pi.start} and #{pi.end}
+select * from 
+        (select ROWNUM as RNUM, p.* from
+            (select * from product_tbl where table_name =#{tableName} AND (
+        PRODUCT_LINE||product_gen||product_model||product_title||product_gen LIKE '%'||#{searchWord}||'%'  
+    ) order by product_no desc) p)
+    where RNUM between  #{pi.start} and #{pi.end}
+   
 	</select>
 	
 

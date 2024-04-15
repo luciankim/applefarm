@@ -3,7 +3,6 @@ import ProductMain from "./ProductMain";
 import ProductDetail from "./ProductDetail";
 import ProductInsert from "./ProductInsert";
 import ProductQualityFrm from "./ProductQualityFrm";
-import ProductList from "./ProductList";
 import ProductUpdate from "./ProductUpdate";
 
 const Product = (props) => {
@@ -13,7 +12,6 @@ const Product = (props) => {
       <Route path="/main" element={<ProductMain isLogin={isLogin} />} />
       <Route path="/:productNo" element={<ProductDetail isLogin={isLogin} />} />
       <Route path="/insert" element={<ProductInsert />} />
-      <Route path="/list/:tableName" element={<ProductList />} />
       <Route path="/update/:productNo" element={<ProductUpdate />} />
     </Routes>
   );

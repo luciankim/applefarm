@@ -116,7 +116,7 @@ public interface ProductDao {
 
 	int productTotalCount(String tableName);
 
-	List selectProductList(String tableName, PageInfo pi);
+	List selectProductList(String tableName, PageInfo pi, String searchWord);
 
 
 	int updateProduct(Product product);
