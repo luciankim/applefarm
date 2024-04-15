@@ -174,14 +174,16 @@ const ProductDetail = (props) => {
 
   //PswProductDetailBtn 클릭이벤트들
   const clickUpdate = () => {
-    navigate("/product/update/" + productNo, {
-      state: {
-        navTable,
-        navLine,
-        navGen,
-        navModel,
-      },
-    });
+    navigate(
+      "/product/update/" +
+        productNo +
+        "/" +
+        navTable +
+        "/" +
+        navLine +
+        "/" +
+        navGen
+    );
   };
 
   const clickDelete = () => {
@@ -1024,7 +1026,7 @@ const ProductBid = (props) => {
           text: "로그인 후 구매 가능",
         });
       } else {
-        navigate("/purchase/" + productNo);
+        navigate("/purchase/" + productNo + "/" + "n");
       }
     } else {
       Swal.fire({

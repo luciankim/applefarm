@@ -15,7 +15,7 @@
 	
 	<select id="productTradeChart" resultType="productTradeChart">
 		select
-		    to_char(t.trade_reserve_date, 'yy/mm/dd') as trade_reserve_date,
+		    to_char(t.trade_date, 'yy/mm/dd') as trade_date,
 		    count(*) as trade_volume,
 		    trunc(avg(t.trade_price)) as trade_price_avg
 		from
@@ -24,7 +24,7 @@
 		where
 		    t.trade_state in ('결제완료', '발송대기', '배송중', '배송완료', '구매확정')
 		    <!-- 여기에 term 사용했음 -->
-			and to_char(t.trade_reserve_date, 'yy/mm/dd') between to_char(sysdate-#{term}, 'yy/mm/dd') and to_char(sysdate, 'yy/mm/dd')
+			and to_char(t.trade_date, 'yy/mm/dd') between to_char(sysdate-#{term}, 'yy/mm/dd') and to_char(sysdate, 'yy/mm/dd')
 		    and p.product_line = #{productLine}
 		    and p.product_gen = #{productGen}
 		    and p.product_model = #{productModel}
@@ -40,9 +40,9 @@
 		    <if test='productCharge != null and productCharge != ""'>and p.product_charge = #{productCharge}</if>
 		    <if test='productQuality != null and productQuality != ""'>and p.product_quality = #{productQuality}</if>
 		group by
-		    to_char(t.trade_reserve_date, 'yy/mm/dd')
+		    to_char(t.trade_date, 'yy/mm/dd')
 		order by
-		    trade_reserve_date asc
+		    trade_date asc
 	</select>
 	 
 	<select id="selectQualityList" resultType="quality">

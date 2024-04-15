@@ -13,17 +13,22 @@ import ProductTab from "./ProductTab";
 
 import axios from "axios";
 
-const ProductInsert = (props) => {
+const ProductInsert = () => {
   //https://heycoding.tistory.com/72#3.2.%20useNavigate
 
-  const location = useLocation();
+  //const location = useLocation();
 
-  const [navTable, setNavTable] = useState(location.state.navTable);
-  const [navLine, setNavLine] = useState(location.state.navProductLine);
-  const [navGen, setNavGen] = useState(location.state.navProductGen);
-  const [navModel, setNavModel] = useState(location.state.navProductModel);
+  console.log("insert로 들어옴");
 
-  
+  const params = useParams();
+  const nTable = params.productTable;
+  const nLine = params.productLine;
+  const nGen = params.productGen;
+
+  const [navTable, setNavTable] = useState(nTable);
+  const [navLine, setNavLine] = useState(nLine);
+  const [navGen, setNavGen] = useState(nGen);
+  const [navModel, setNavModel] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -43,19 +48,16 @@ const ProductInsert = (props) => {
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
 
-
- 
-
   useEffect(() => {
-    setProductLine(location.state.navProductLine);
-    setProductGen(location.state.navProductGen);
-    setProductModel(location.state.navProductModel);
+    setProductLine(nLine);
+    setProductGen(nGen);
+    //setProductModel(nModel);
 
-    setNavTable(location.state.navTable);
-    setNavLine(location.state.navProductLine);
-    setNavGen(location.state.navProductGen);
-    setNavModel(location.state.navProductModel);
-  }, [location]);
+    setNavTable(nTable);
+    setNavLine(nLine);
+    setNavGen(nGen);
+    //setNavModel(nModel);
+  }, [nTable, nLine, nGen]);
 
   //ProductInsert.js 버전 setSelectedProduct
   const [selectedProduct, setSelectedProduct] = useState({}); //객체
@@ -93,7 +95,6 @@ const ProductInsert = (props) => {
     productConnectivity,
     productCharge,
     productQuality,
-    location,
   ]);
   //--ProductCategoryFrm.js로 넘겨줄 데이터
 
@@ -417,7 +418,6 @@ const ProductInsert = (props) => {
           productCharge={productCharge}
           setProductCharge={setProductCharge}
           selectedProduct={selectedProduct}
-
           // Frm 타입 설정
           type="insert"
         />
@@ -433,7 +433,6 @@ const ProductInsert = (props) => {
           partOrder={partOrder}
           setPartOrder={setPartOrder}
           navTable={navTable}
-
           // Frm 타입 설정
           type="insert"
         />
@@ -458,10 +457,8 @@ const ProductInsert = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
-
           // Frm 타입 설정
           type="insert"
-          
         />
       </div>
       <div className="productInsert-nextBtn">

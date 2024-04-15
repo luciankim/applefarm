@@ -7,24 +7,74 @@ import ProductTab from "./ProductTab";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductChart from "./ProductChart";
 import ProductMainList from "./productMainList";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const ProductMain = (props) => {
-  const location = useLocation();
+  const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const isLogin = props.isLogin;
 
-  const [navTable, setNavTable] = useState(
-    location.state.navTable ? location.state.navTable : ""
+  //const location = useLocation();
+  const params = useParams();
+  const nLine = params.productLine;
+  const nGen = params.productGen;
+  //const nModel = params.productModel;
+
+  let nTable = "";
+
+  if (nLine === "iPhone") {
+    nTable = "IPHONE_TBL";
+  } else if (nLine === "MacBook Pro" || nLine === "MacBook Air") {
+    nTable = "MACBOOK_TBL";
+  } else if (
+    nLine === "iPad Pro 12.9" ||
+    nLine === "iPad Pro 11" ||
+    nLine === "iPad Air" ||
+    nLine === "iPad Mini" ||
+    nLine === "iPad"
+  ) {
+    nTable = "IPAD_TBL";
+  } else if (
+    nLine === "Apple Watch Ultra" ||
+    nLine === "Apple Watch Series" ||
+    nLine === "Apple Watch SE"
+  ) {
+    nTable = "WATCH_TBL";
+  } else if (
+    nLine === "AirPods Max" ||
+    nLine === "AirPods Pro" ||
+    nLine === "AirPods"
+  ) {
+    nTable = "AIRPODS_TBL";
+  }
+
+  /*
+  useEffect(
+    () => {
+      axios
+        .get(backServer + "/product/main/" + nLine + "/" + nGen)
+        .then((res) => {})
+        .catch((res) => {});
+    },
+    [nLine, nGen]
   );
-  const [navLine, setNavLine] = useState(location.state.navProductLine);
-  const [navGen, setNavGen] = useState(location.state.navProductGen);
-  const [navModel, setNavModel] = useState(location.state.navProductModel);
+  */
+
+  console.log(nLine, nGen);
+
+  //let navnavTable = navTable;
+
+  const [navTable, setNavTable] = useState(nTable);
+  const [navLine, setNavLine] = useState(nLine);
+  const [navGen, setNavGen] = useState(nGen);
+  const [navModel, setNavModel] = useState(""); //이거 어떻게 나중에...
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const [productLine, setProductLine] = useState("");
-  const [productGen, setProductGen] = useState("");
-  const [productModel, setProductModel] = useState();
+  const [productLine, setProductLine] = useState(navLine ? navLine : "");
+  const [productGen, setProductGen] = useState(navGen ? navGen : "");
+  const [productModel, setProductModel] = useState(""); //이거 어떻게 나중에...
   const [productModel2, setProductModel2] = useState("");
   const [productColor, setProductColor] = useState("");
   const [productImage, setProductImage] = useState("");
@@ -39,15 +89,15 @@ const ProductMain = (props) => {
   const [productQuality, setProductQuality] = useState("");
 
   useEffect(() => {
-    setProductLine(location.state.navProductLine);
-    setProductGen(location.state.navProductGen);
-    setProductModel(location.state.navProductModel);
+    setProductLine(nLine);
+    setProductGen(nGen);
+    //setProductModel(location.state.navProductModel);
 
-    setNavTable(location.state.navTable);
-    setNavLine(location.state.navProductLine);
-    setNavGen(location.state.navProductGen);
-    setNavModel(location.state.navProductModel);
-  }, [location]);
+    setNavTable(nTable);
+    setNavLine(nLine);
+    setNavGen(nGen);
+    //setNavModel(location.state.navProductModel);
+  }, [nLine, nGen]);
 
   const [selectedProduct, setSelectedProduct] = useState({}); //객체
   useEffect(() => {
@@ -84,7 +134,6 @@ const ProductMain = (props) => {
     productConnectivity,
     productCharge,
     productQuality,
-    location,
   ]);
 
   const [productMainTab, setProductMainTab] = useState("CHART");
@@ -95,6 +144,7 @@ const ProductMain = (props) => {
   const navigate = useNavigate(); //상품등록버튼
   const ToProductInsert = () => {
     if (isLogin) {
+      /*
       navigate("/product/insert", {
         state: {
           navTable: navTable,
@@ -103,6 +153,8 @@ const ProductMain = (props) => {
           navProductModel: navModel,
         },
       });
+      */
+      navigate("/product/insert/" + navTable + "/" + navLine + "/" + navGen);
     } else {
       navigate("/login");
     }

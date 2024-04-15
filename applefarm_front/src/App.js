@@ -63,6 +63,7 @@ function App() {
     setTimeout(logout, remainingTime);
   };
   const logout = () => {
+    navigate("/");
     //로그인할때 변경한 사항을 모두 원래대로 복원
     setToken("");
     setExpiredTime("");
