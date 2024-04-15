@@ -889,6 +889,21 @@
   padding-bottom: 30px;
 }
 
+.memberInfo-saveBtn {
+  padding: 10px;
+  width: 70px;
+}
+
+.memberInfo-cancelBtn {
+  padding: 10px;
+  width: 70px;
+}
+
+.saveBtn-box {
+  display: flex;
+  gap: 10px;
+}
+
 /*회원탈퇴*/
 .content-wrap {
   border: 1px solid #b7b7b7;
@@ -932,6 +947,11 @@
 .content-title {
   padding: 30px;
   font-size: 26px;
+}
+
+.all-checked-box {
+  position: relative;
+  left: 20px;
 }
 
 /*판매자 등급*/

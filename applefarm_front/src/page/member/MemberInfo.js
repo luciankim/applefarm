@@ -343,12 +343,15 @@ const MemberInfo = (props) => {
                       </button>
                     </td>
                   </tr>
-                  <tr className="btn-wrap">
-                    <button className="change-btn" onClick={updateEmail}>
+                  <tr className="btn-wrap saveBtn-box">
+                    <button
+                      className="change-btn memberInfo-saveBtn"
+                      onClick={updateEmail}
+                    >
                       저장
                     </button>
                     <button
-                      className="cancel-btn"
+                      className="cancel-btn memberInfo-cancelBtn"
                       onClick={() => setChangeInputStatus(false)}
                     >
                       취소
@@ -424,12 +427,15 @@ const MemberInfo = (props) => {
                       </button>
                     </td>
                   </tr>
-                  <tr className="btn-wrap">
-                    <button className="change-btn" onClick={updateEmail}>
+                  <tr className="btn-wrap saveBtn-box">
+                    <button
+                      className="change-btn memberInfo-saveBtn"
+                      onClick={updateEmail}
+                    >
                       저장
                     </button>
                     <button
-                      className="cancel-btn"
+                      className="cancel-btn memberInfo-cancelBtn"
                       onClick={() => setReturnInputStatus(true)}
                     >
                       취소
@@ -486,16 +492,16 @@ const MemberInfo = (props) => {
                       />
                     </td>
                   </tr>
-                  <tr className="btn-wrap">
+                  <tr className="btn-wrap saveBtn-box">
                     <button
-                      className="change-btn"
+                      className="change-btn memberInfo-saveBtn"
                       onClick={changeUpdatePw}
                       disabled={savePwBtn}
                     >
                       저장
                     </button>
                     <button
-                      className="cancel-btn"
+                      className="cancel-btn memberInfo-cancelBtn"
                       onClick={() => setChangePwInputStatus(false)}
                     >
                       취소
@@ -560,16 +566,16 @@ const MemberInfo = (props) => {
                       />
                     </td>
                   </tr>
-                  <tr className="btn-wrap">
+                  <tr className="btn-wrap saveBtn-box">
                     <button
-                      className="change-btn"
+                      className="change-btn memberInfo-saveBtn"
                       onClick={changeUpdatePw}
                       disabled={savePwBtn}
                     >
                       저장
                     </button>
                     <button
-                      className="cancel-btn"
+                      className="cancel-btn memberInfo-cancelBtn"
                       onClick={() => setChangePwInputStatus(false)}
                     >
                       취소
@@ -594,17 +600,17 @@ const MemberInfo = (props) => {
                     <td className="reg-text">{checkRegPhone}</td>
                   </tr>
 
-                  <tr className="btn-wrap">
+                  <tr className="btn-wrap saveBtn-box">
                     <td>
                       <button
-                        className="change-btn"
+                        className="change-btn memberInfo-saveBtn"
                         disabled={savePhoneBtn}
                         onClick={changeUpdatePhone}
                       >
                         저장
                       </button>
                       <button
-                        className="cancel-btn"
+                        className="cancel-btn memberInfo-cancelBtn"
                         onClick={() => setChangePhoneInputStatus(false)}
                       >
                         취소
@@ -648,17 +654,17 @@ const MemberInfo = (props) => {
                     <td className="reg-text">{checkRegPhone}</td>
                   </tr>
 
-                  <tr className="btn-wrap">
+                  <tr className="btn-wrap saveBtn-box">
                     <td>
                       <button
-                        className="change-btn"
+                        className="change-btn memberInfo-saveBtn"
                         disabled={savePhoneBtn}
                         onClick={changeUpdatePhone}
                       >
                         저장
                       </button>
                       <button
-                        className="cancel-btn"
+                        className="cancel-btn memberInfo-cancelBtn"
                         onClick={() => setReturnPhoneInputStatus(true)}
                       >
                         취소
