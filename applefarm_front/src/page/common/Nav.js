@@ -1007,7 +1007,15 @@ const Nav = (props) => {
           </ul>
         </li>
         <li className="navMenu-li">
-          <Link to="#">Watch</Link>
+          <Link
+            to="/product/main"
+            state={{
+              navTable: "WATCH_TBL",
+              navProductLine: "Apple Watch Ultra",
+            }}
+          >
+            Watch
+          </Link>
           <ul className="dropdown-content drop-Watch">
             <li>
               <Link
@@ -1171,7 +1179,15 @@ const Nav = (props) => {
           </ul>
         </li>
         <li className="navMenu-li">
-          <Link to="#">AirPods</Link>
+          <Link
+            to="/product/main"
+            state={{
+              navTable: "AIRPODS_TBL",
+              navProductLine: "AirPods Max",
+            }}
+          >
+            AirPods
+          </Link>
           <ul className="dropdown-content drop-AirPods">
             <li>
               <Link

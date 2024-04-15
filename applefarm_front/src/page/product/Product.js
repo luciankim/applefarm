@@ -10,11 +10,11 @@ const Product = (props) => {
   const isLogin = props.isLogin;
   return (
     <Routes>
-      <Route path="/main" element={<ProductMain />} />
+      <Route path="/main" element={<ProductMain isLogin={isLogin} />} />
       <Route path="/:productNo" element={<ProductDetail isLogin={isLogin} />} />
       <Route path="/insert" element={<ProductInsert />} />
-      <Route path="/list/:tableName" element = {<ProductList/>}/>
-      <Route path="/update/:productNo" element={<ProductUpdate/>}/>
+      <Route path="/list/:tableName" element={<ProductList />} />
+      <Route path="/update/:productNo" element={<ProductUpdate />} />
     </Routes>
   );
 };
