@@ -50,32 +50,10 @@ const LogoForm = () => {
   return (
     <div className="main-logo">
       <Link to="/">
-        {/* <img src="../image/logo.png" alt="logo" /> */}
         <img src="../image/logo.png" alt="logo" />
       </Link>
     </div>
   );
-};
-
-const SearchForm = () => {
-  const [SelectedValue, setSelectedValue] = useState("");
-  const handleSelectChange = (event) => {
-    setSelectedValue(event.target.value);
-    console.log("Select:", event.target.value);
-  };
-
-  const options = [
-    { value: "", label: "All" },
-    { value: "1", label: "Mac" },
-    { value: "2", label: "iPad" },
-    { value: "3", label: "iPhone" },
-    { value: "4", label: "Watch" },
-    { value: "5", label: "AirPods" },
-  ];
-
-  const [searchKeyword, setSearchKeyword] = useState("");
-
-  return <div className="searchForm"></div>;
 };
 
 const LoginForm = (props) => {
@@ -99,7 +77,7 @@ const LoginForm = (props) => {
               <span className="material-icons">face</span>
             </Link>
             <Link to="/admin" title="관리자페이지">
-              <span class="material-icons">account_circle</span>
+              <span className="material-icons">account_circle</span>
             </Link>
             <Link to="#" title="로그아웃">
               <span className="material-icons" onClick={logout}>

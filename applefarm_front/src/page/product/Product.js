@@ -7,12 +7,28 @@ import ProductUpdate from "./ProductUpdate";
 
 const Product = (props) => {
   const isLogin = props.isLogin;
+  /*
+  const obj = {
+    navTable: "IPHONE_TBL",
+    navProductLine: "iPhone",
+    navProductGen: "iPhone 15 Series",
+  };*/
+
   return (
     <Routes>
-      <Route path="/main" element={<ProductMain isLogin={isLogin} />} />
+      <Route
+        path="/main/:productLine/:productGen"
+        element={<ProductMain isLogin={isLogin} />}
+      />
       <Route path="/:productNo" element={<ProductDetail isLogin={isLogin} />} />
-      <Route path="/insert" element={<ProductInsert />} />
-      <Route path="/update/:productNo" element={<ProductUpdate />} />
+      <Route
+        path="/insert/:productTable/:productLine/:productGen"
+        element={<ProductInsert />}
+      />
+      <Route
+        path="/update/:productNo/:productTable/:productLine/:productGen"
+        element={<ProductUpdate />}
+      />
     </Routes>
   );
 };
