@@ -64,10 +64,6 @@ const ProductDetail = (props) => {
   const [navGen, setNavGen] = useState();
   const [navModel, setNavModel] = useState();
 
-  
-
-
-
   useEffect(() => {
     if (isLogin) {
       axios
@@ -115,8 +111,6 @@ const ProductDetail = (props) => {
         console.log(res.data);
       });
   }, [productNo]);
-
-
 
   useEffect(() => {
     axios
@@ -180,15 +174,14 @@ const ProductDetail = (props) => {
 
   //PswProductDetailBtn 클릭이벤트들
   const clickUpdate = () => {
-    navigate("/product/update/"+productNo, {
+    navigate("/product/update/" + productNo, {
       state: {
         navTable,
         navLine,
         navGen,
-        navModel
-      }
-    }
-    );
+        navModel,
+      },
+    });
   };
 
   const clickDelete = () => {
@@ -406,7 +399,13 @@ const ProductDetail = (props) => {
             tabNameArr={productDetailTabArr}
           />
         </div>
-        <div className="productDetail-oneToOne">
+        <div
+          className={
+            productDetailTab === productDetailTabArr[0]
+              ? "productDetail-oneToOne"
+              : "displayNone"
+          }
+        >
           <ProductOneToOne
             isLogin={isLogin}
             productNo={productNo}
@@ -417,7 +416,13 @@ const ProductDetail = (props) => {
             setWriteTrigger={setWriteTrigger}
           />
         </div>
-        <div className="productDetail-tradeReview">
+        <div
+          className={
+            productDetailTab === productDetailTabArr[1]
+              ? "productDetail-tradeReview"
+              : "displayNone"
+          }
+        >
           <ProductTradeReview
             reviewList={reviewList}
             setReviewReqPage={setReviewReqPage}
@@ -425,7 +430,13 @@ const ProductDetail = (props) => {
             reviewReqPage={reviewReqPage}
           />
         </div>
-        <div className="productDetail-productList">
+        <div
+          className={
+            productDetailTab === productDetailTabArr[2]
+              ? "productDetail-productList"
+              : "displayNone"
+          }
+        >
           <ProductProductList
             sellerProductList={sellerProductList}
             sellerProductPageInfo={sellerProductPageInfo}

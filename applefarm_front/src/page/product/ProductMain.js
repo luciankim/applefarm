@@ -11,6 +11,8 @@ import ProductMainList from "./productMainList";
 const ProductMain = (props) => {
   const location = useLocation();
 
+  const isLogin = props.isLogin;
+
   const [navTable, setNavTable] = useState(location.state.navTable);
   const [navLine, setNavLine] = useState(location.state.navProductLine);
   const [navGen, setNavGen] = useState(location.state.navProductGen);
@@ -90,14 +92,18 @@ const ProductMain = (props) => {
 
   const navigate = useNavigate(); //상품등록버튼
   const ToProductInsert = () => {
-    navigate("/product/insert", {
-      state: {
-        navTable: navTable,
-        navProductLine: navLine,
-        navProductGen: navGen,
-        navProductModel: navModel,
-      },
-    });
+    if (isLogin) {
+      navigate("/product/insert", {
+        state: {
+          navTable: navTable,
+          navProductLine: navLine,
+          navProductGen: navGen,
+          navProductModel: navModel,
+        },
+      });
+    } else {
+      navigate("/login");
+    }
   };
   //<화면 출력 순서>
   //카테고리js

@@ -10,20 +10,21 @@ const ProductMainList = (props) => {
   const [productList, setProductList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
-
+  console.log(reqPage);
   useEffect(() => {
     const obj = { ...selectedProduct, reqPage: reqPage };
+    console.log(obj.reqPage);
+    console.log(obj);
     axios
       .post(backServer + "/product/mainList", obj)
       .then((res) => {
         if (res.data.message === "success") {
-          setProductList([]);
-          setPageInfo([]);
-          setReqPage(1);
+          //setProductList([]);
+          //setPageInfo([]);
+          //setReqPage(1);
           console.log(res.data.data);
           setProductList(res.data.data.productList);
-          setPageInfo(res.data.data.pageInfo);
-          setReqPage(res.data.data.reqPage);
+          setPageInfo(res.data.data.pi);
         } else {
           console.log(res.data);
         }
