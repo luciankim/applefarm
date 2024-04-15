@@ -551,10 +551,10 @@ public class ProductController {
 		}	
 	}
 	
-	@GetMapping(value = "/productList/{tableName}")
-	public ResponseEntity<ResponseDTO> selectProductList(@PathVariable String tableName,@RequestParam int reqPage){
+	@GetMapping(value = "/search/{tableName}")
+	public ResponseEntity<ResponseDTO> selectProductList(@PathVariable String tableName,@RequestParam int reqPage,@RequestParam String searchWord){
 		System.out.println("selectProductList");
-		Map map = productService.selectProductList(tableName,reqPage);
+		Map map = productService.selectProductList(tableName,reqPage,searchWord);
 		
 		if(map != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);

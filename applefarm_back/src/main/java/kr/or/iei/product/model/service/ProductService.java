@@ -409,13 +409,13 @@ public class ProductService {
 		return productDao.insertReport(report);
 	}
 
-	public Map selectProductList(String tableName,int reqPage) {
+	public Map selectProductList(String tableName,int reqPage, String searchWord) {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
 		
 		int totalCount = productDao.productTotalCount(tableName);
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list = productDao.selectProductList(tableName,pi);
+		List list = productDao.selectProductList(tableName,pi,searchWord);
 		System.out.println(list);
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		
