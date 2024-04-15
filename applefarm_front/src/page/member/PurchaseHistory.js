@@ -498,18 +498,22 @@ const TradeItem = (props) => {
   const refModalFunc = () => {
     setRefModalOpen(true);
   };
-  const openWindow = () => {
+  const trackingFunc = () => {
+    axios
+      .get(backServer + "/trade/tracking/" + trade.invoiceNumber)
+      .then((res) => {
+        console.log(res.date);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+    /*
     window.open(
       "http://nplus.doortodoor.co.kr/web/detail.jsp?slipno=" +
         trade.invoiceNumber,
       "택배조회",
       "width=700, height=500"
-    );
-    {
-      /*http://nplus.doortodoor.co.kr/web/detail.jsp?slipno= + 운송장 번호
-      https://link.tracker.delivery/track?client_id=3o2asob3vhbhc152ccv43v6uuq&carrier_id=kr.cjlogistics&tracking_number="+운송장번호
-     */
-    }
+    );*/
   };
   return (
     <tr>
@@ -531,7 +535,7 @@ const TradeItem = (props) => {
       <td>{trade.tradePrice.toLocaleString()}원</td>
       <td>
         <div>
-          <span className="openInvice" onClick={openWindow}>
+          <span className="openInvice" onClick={trackingFunc}>
             {trade.invoiceNumber}
           </span>
         </div>
