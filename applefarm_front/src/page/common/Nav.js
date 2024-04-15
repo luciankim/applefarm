@@ -378,22 +378,22 @@ const Nav = (props) => {
               <Link to="/product/main/iPad/10세대">iPad</Link>
               <ul>
                 <li>
-                  <Link to="/product/main/main/iPad/10세대">iPad 10세대</Link>
+                  <Link to="/product/main/iPad/10세대">iPad 10세대</Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/iPad/9세대">iPad 9세대</Link>
+                  <Link to="/product/main/iPad/9세대">iPad 9세대</Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/iPad/8세대">iPad 8세대</Link>
+                  <Link to="/product/main/iPad/8세대">iPad 8세대</Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/iPad/7세대">iPad 7세대</Link>
+                  <Link to="/product/main/iPad/7세대">iPad 7세대</Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/iPad/6세대">iPad 6세대</Link>
+                  <Link to="/product/main/iPad/6세대">iPad 6세대</Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/iPad/5세대">iPad 5세대</Link>
+                  <Link to="/product/main/iPad/5세대">iPad 5세대</Link>
                 </li>
               </ul>
             </li>

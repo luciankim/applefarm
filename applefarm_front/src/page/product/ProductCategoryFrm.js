@@ -56,7 +56,6 @@ const ProductCategoryFrm = (props) => {
     setProduct,
   } = props;
 
-  
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [categoryArr, setCategoryArr] = useState([]);
@@ -67,43 +66,36 @@ const ProductCategoryFrm = (props) => {
   let model2Arr = [];
   //특정된 카테고리의 각 key의 값들(문자열)을 split(',')해서 받을 배열 변수
 
-    const [colorArr, setColorArr] = useState([]);
-    const [imageArr, setImageArr] = useState([]);
-    const [storageArr, setStorageArr] = useState([]);
-    const [memoryArr, setMemoryArr] = useState([]);
-    const [chipArr, setChipArr] = useState([]);
-    const [cpuArr, setCpuArr] = useState([]);
-    const [gpuArr, setGpuArr] = useState([]);
-    const [sizeArr, setSizeArr] = useState([]);
-    const [connectivityArr, setConnectivityArr] = useState([]);
-    const [chargeArr, setChargeArr] = useState([]);
+  const [colorArr, setColorArr] = useState([]);
+  const [imageArr, setImageArr] = useState([]);
+  const [storageArr, setStorageArr] = useState([]);
+  const [memoryArr, setMemoryArr] = useState([]);
+  const [chipArr, setChipArr] = useState([]);
+  const [cpuArr, setCpuArr] = useState([]);
+  const [gpuArr, setGpuArr] = useState([]);
+  const [sizeArr, setSizeArr] = useState([]);
+  const [connectivityArr, setConnectivityArr] = useState([]);
+  const [chargeArr, setChargeArr] = useState([]);
 
+  // useEffect(()=>{
+  //   if(type == "update"){
+  //     setProductColor(product.productColor);
+  //     setProductImage(product.productImage);
+  //     setProductStorage(product.productStorage);
+  //     setProductMemory(product.productMemory);
+  //     setProductChip(product.productChip);
+  //     setProductCpu(product.productCpu);
+  //     setProductGpu(product.productGpu);
+  //     setProductSize(product.productSize);
+  //     setProductConnectivity(product.productConnectivity);
+  //     setProductCharge(product.productCharge);
+  //     setProductQuality(product.productQuality);
+  //   }
+  // },[type,product])
 
-  
-
-    // useEffect(()=>{
-    //   if(type == "update"){
-    //     setProductColor(product.productColor);
-    //     setProductImage(product.productImage);
-    //     setProductStorage(product.productStorage);
-    //     setProductMemory(product.productMemory);
-    //     setProductChip(product.productChip);
-    //     setProductCpu(product.productCpu);
-    //     setProductGpu(product.productGpu);
-    //     setProductSize(product.productSize);
-    //     setProductConnectivity(product.productConnectivity);
-    //     setProductCharge(product.productCharge);
-    //     setProductQuality(product.productQuality);
-    //   }
-    // },[type,product])
- 
-    // useEffect(()=>{
-    //   console.log(categoryArr);
-    // },[categoryArr])
-
-
-
-
+  // useEffect(()=>{
+  //   console.log(categoryArr);
+  // },[categoryArr])
 
   const clear = () => {
     setProductColor("");
@@ -129,8 +121,6 @@ const ProductCategoryFrm = (props) => {
     setConnectivityArr([]);
     setChargeArr([]);
   };
-
-  
 
   //초기화
   useEffect(() => {
@@ -377,6 +367,30 @@ const ProductCategoryFrm = (props) => {
     }
   }, [selectedProduct]);
 
+  /*
+  //원래는 아래처럼
+  <div className="productCategory-wrap-left">
+    <div>
+      {colorArr.indexOf(productColor) !== -1 ? (
+        <img
+          className="categoryImage"
+          src={
+            "/image/categoryImage/" +
+            imageArr[colorArr.indexOf(productColor)] +
+            ".png"
+          }
+        />
+      ) : (
+        <img
+          className="categoryImage"
+          //아래 이미지는 추후 수정 필요
+          src={"/image/categoryImage/iPhone_representation.png"}
+        />
+      )}
+    </div>
+  </div>
+  */
+
   return (
     <div className="productCategory-all-wrap">
       {pip ? (
@@ -400,21 +414,92 @@ const ProductCategoryFrm = (props) => {
         {/*좌측 영역*/}
         <div className="productCategory-wrap-left">
           <div>
-            {colorArr.indexOf(productColor) !== -1 ? (
+            {productLine === "iPhone" ? (
+              colorArr.indexOf(productColor) !== -1 ? (
+                <img
+                  className="categoryImage"
+                  src={
+                    "/image/categoryImage/" +
+                    imageArr[colorArr.indexOf(productColor)] +
+                    ".png"
+                  }
+                />
+              ) : (
+                <img
+                  className="categoryImage"
+                  //아래 이미지는 추후 수정 필요
+                  src={"/image/categoryImage/rep/iPhone_representation.png"}
+                />
+              )
+            ) : productLine === "MacBook Pro" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/MacBook_Pro_representation.png"}
+              />
+            ) : productLine === "MacBook Air" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/MacBook_Air_representation.png"}
+              />
+            ) : productLine === "iPad Pro 12.9" ||
+              productLine === "iPad Pro 11" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/iPad_Pro_representation.png"}
+              />
+            ) : productLine === "iPad Air" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/iPad_Air_representation.png"}
+              />
+            ) : productLine === "iPad Mini" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/iPad_Mini_representation.png"}
+              />
+            ) : productLine === "iPad" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/iPad_representation.png"}
+              />
+            ) : productLine === "Apple Watch Ultra" ? (
               <img
                 className="categoryImage"
                 src={
-                  "/image/categoryImage/" +
-                  imageArr[colorArr.indexOf(productColor)] +
-                  ".png"
+                  "/image/categoryImage/rep/Apple_Watch_Ultra_representation.png"
                 }
               />
-            ) : (
+            ) : productLine === "Apple Watch Series" ? (
               <img
                 className="categoryImage"
-                //아래 이미지는 추후 수정 필요
-                src={"/image/categoryImage/iPhone_representation.png"}
+                src={
+                  "/image/categoryImage/rep/Apple_Watch_Series_representation.png"
+                }
               />
+            ) : productLine === "Apple Watch SE" ? (
+              <img
+                className="categoryImage"
+                src={
+                  "/image/categoryImage/rep/Apple_Watch_SE_representation.png"
+                }
+              />
+            ) : productLine === "AirPods Max" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/AirPods_Max_representation.png"}
+              />
+            ) : productLine === "AirPods Pro" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/AirPods_Pro_representation.png"}
+              />
+            ) : productLine === "AirPods" ? (
+              <img
+                className="categoryImage"
+                src={"/image/categoryImage/rep/AirPods_representation.png"}
+              />
+            ) : (
+              ""
             )}
           </div>
         </div>
