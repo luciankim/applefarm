@@ -1001,6 +1001,53 @@
   padding-bottom: 30px;
 }
 
+.memberInfo-saveBtn {
+  padding: 10px;
+  width: 70px;
+}
+
+.memberInfo-cancelBtn {
+  padding: 10px;
+  width: 70px;
+}
+
+.change-btn {
+  margin-right: 10px;
+}
+
+.cancel-btn {
+  margin-left: 10px;
+}
+
+.saveBtn-box {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  left: 300px;
+}
+.memberInfo-tbl {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.memberInfo-table {
+  border: 1px solid #ccc;
+  max-height: 400px;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.memberInfo-table td .memberInfo-table tr {
+  width: 200px;
+}
+
+.memberInfo-table {
+  background-color: #0267f3;
+}
+
+.memberInfo-table td {
+}
+
 /*회원탈퇴*/
 .content-wrap {
   border: 1px solid #b7b7b7;
@@ -1044,6 +1091,11 @@
 .content-title {
   padding: 30px;
   font-size: 26px;
+}
+
+.all-checked-box {
+  position: relative;
+  left: 20px;
 }
 
 /*판매자 등급*/

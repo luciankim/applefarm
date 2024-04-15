@@ -13,7 +13,9 @@ const ProductMain = (props) => {
 
   const isLogin = props.isLogin;
 
-  const [navTable, setNavTable] = useState(location.state.navTable);
+  const [navTable, setNavTable] = useState(
+    location.state.navTable ? location.state.navTable : ""
+  );
   const [navLine, setNavLine] = useState(location.state.navProductLine);
   const [navGen, setNavGen] = useState(location.state.navProductGen);
   const [navModel, setNavModel] = useState(location.state.navProductModel);

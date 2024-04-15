@@ -152,7 +152,7 @@
 }
 .bottomTermArr {
   bottom: -40px;
-  right: 30px;
+  right: 50px;
 }
 
 /*--ProductChart.js*/
@@ -166,7 +166,8 @@
 
 /* ProductMainList.js */
 .productMainList {
-  width: 1150px;
+  width: 1050px;
+  margin: 0 auto;
 }
 .productMainList-card {
   width: 100%;
@@ -176,6 +177,9 @@
 }
 .productCard-wrap {
   width: 250px;
+  margin-bottom: 40px;
+}
+.productCard-wrap > a {
   text-decoration: none;
   color: var(--gray_01);
 }
