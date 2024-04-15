@@ -163,6 +163,7 @@ const Join = () => {
         .then((res) => {
           if (res.data.message === "success") {
             const authCode = res.data.data;
+            Swal.fire("해당 이메일로 인증코드를 전송했습니다.");
             console.log(authCode);
             setCurrentAuthCode(authCode);
             //chkVerifCode({ authCode }); 필요없음
@@ -190,6 +191,7 @@ const Join = () => {
   /*인증버튼 클릭 시 인풋 비활성화*/
   const disabledVerifCodeInput = () => {
     if (currentAuthCode === verifCode) {
+      Swal.fire("인증이 완료되었습니다.");
       disabledVerifInput(); //인풋 비활성화
       setBtnDisabledForVerif(true); //인증버튼 비활성화
     } else {
