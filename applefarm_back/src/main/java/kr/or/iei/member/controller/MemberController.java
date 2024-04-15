@@ -691,5 +691,16 @@ public class MemberController {
 		}
 
 	}
+	
+	@GetMapping(value = "/tracking")
+	public ResponseEntity<ResponseDTO> trackingHistory(@PathVariable int invoiceNumber){
+		
+		
+		
+		
+		
+	} 
+	
+	
 
 }
