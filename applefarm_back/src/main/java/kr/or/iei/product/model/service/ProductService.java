@@ -538,9 +538,9 @@ int result1 = productDao.updateProduct(product);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("productList", list);
 		map.put("pi", pi);
-		System.out.println(product);
-		System.out.println(list);
-		System.out.println(pi);
+		//System.out.println(product);
+		//System.out.println(list);
+		//System.out.println(pi);
 		
 		return map;
 	}

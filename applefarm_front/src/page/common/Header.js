@@ -31,16 +31,15 @@ const Header = (props) => {
 
   return (
     <>
-      <div className="topbar"></div>
       <div className="header">
         <LogoForm />
-      </div>
-      <div className="header2">
-        <LoginForm
-          isLogin={isLogin}
-          logout={logout}
-          memberGrade={memberGrade}
-        />
+        <div className="header2">
+          <LoginForm
+            isLogin={isLogin}
+            logout={logout}
+            memberGrade={memberGrade}
+          />
+        </div>
       </div>
     </>
   );
@@ -51,32 +50,10 @@ const LogoForm = () => {
   return (
     <div className="main-logo">
       <Link to="/">
-        {/* <img src="../image/logo.png" alt="logo" /> */}
         <img src="../image/logo.png" alt="logo" />
       </Link>
     </div>
   );
-};
-
-const SearchForm = () => {
-  const [SelectedValue, setSelectedValue] = useState("");
-  const handleSelectChange = (event) => {
-    setSelectedValue(event.target.value);
-    console.log("Select:", event.target.value);
-  };
-
-  const options = [
-    { value: "", label: "All" },
-    { value: "1", label: "Mac" },
-    { value: "2", label: "iPad" },
-    { value: "3", label: "iPhone" },
-    { value: "4", label: "Watch" },
-    { value: "5", label: "AirPods" },
-  ];
-
-  const [searchKeyword, setSearchKeyword] = useState("");
-
-  return <div className="searchForm"></div>;
 };
 
 const LoginForm = (props) => {
@@ -89,14 +66,18 @@ const LoginForm = (props) => {
       {memberGrade ? ( //렌더링 같이 되는 조건으로 세팅하는 게 좀 더 안전하다.
         memberGrade === 2 ? (
           <>
-            <Link title="쪽지함">
-              <span className="material-icons">email</span>
-            </Link>
+            {/**
+           * 
+           <Link title="쪽지함">
+             <span className="material-icons">email</span>
+           </Link>
+           * 
+           */}
             <Link to="/mypage/loginInfo" title="마이페이지">
               <span className="material-icons">face</span>
             </Link>
             <Link to="/admin" title="관리자페이지">
-              <span class="material-icons">account_circle</span>
+              <span className="material-icons">account_circle</span>
             </Link>
             <Link to="#" title="로그아웃">
               <span className="material-icons" onClick={logout}>
@@ -106,9 +87,6 @@ const LoginForm = (props) => {
           </>
         ) : (
           <>
-            <Link title="쪽지함">
-              <span className="material-icons">email</span>
-            </Link>
             <Link to="/mypage/wish" title="위시리스트">
               <span className="material-icons">favorite_border</span>
             </Link>
@@ -125,16 +103,10 @@ const LoginForm = (props) => {
       ) : (
         <>
           <Link to="/login" title="로그인">
-            <span className="material-icons">login</span>
+            <span className="material-icons">face_5</span>
           </Link>
           <Link to="/join" title="회원가입">
             <span className="material-icons">assignment_ind</span>
-          </Link>
-          <Link to="/mypage/wish" title="위시리스트">
-            <span className="material-icons">favorite_border</span>
-          </Link>
-          <Link title="쪽지함">
-            <span className="material-icons">email</span>
           </Link>
         </>
       )}

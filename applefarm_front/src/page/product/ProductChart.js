@@ -197,7 +197,7 @@ const ProductChart = (props) => {
         if (res.data.message === "success") {
           const data = res.data.data;
           const dateArr = data.map((item) => {
-            return item.tradeReserveDate;
+            return item.tradeDate;
           });
           const volumeArr = data.map((item) => {
             return item.tradeVolume;

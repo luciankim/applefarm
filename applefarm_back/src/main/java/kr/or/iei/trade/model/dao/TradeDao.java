@@ -48,7 +48,7 @@ public interface TradeDao {
 	List<Trade> selectPurchaseTrade(HashMap<String, Object> data);
 
 
-	int updatePurchaseConfirm(Trade trade);
+	int updatePurchaseConfirm(int tradeNo);
 
 
 	int insertReview(Review review);
@@ -61,4 +61,7 @@ public interface TradeDao {
 
 
 	int updateRefundTradeState(Refund refund);
+
+
+	List selectDeliveryCompleted();
 }

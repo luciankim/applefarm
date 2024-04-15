@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.trade.model.dao.TradeDao">
   	<insert id="insertTrade">
-  		insert into trade_tbl values(trade_seq.nextval,#{tradeSeller},#{tradeBuyer},#{productNo},null,sysdate,#{tradePrice},'결제완료',#{zipcode},#{address},#{addressDetail},#{addressName},#{addressPhone},#{addressRequest},null,#{paymentNumber})
+  		insert into trade_tbl values(trade_seq.nextval,#{tradeSeller},#{tradeBuyer},#{productNo},null,sysdate,#{tradePrice},'결제완료',#{zipcode},#{address},#{addressDetail},#{addressName},#{addressPhone},#{addressRequest},null,#{paymentNumber},null)
   	</insert>
   	<select id="tradeExistCount" resultType="int">
   		select
@@ -185,4 +185,7 @@
   	<update id="updateRefundTradeState">
   		update trade_tbl set trade_state='환불' where trade_no=#{tradeNo}
   	</update>
+  	<select id="selectDeliveryCompleted" resultType="tradeDate">
+  		select trade_no,trade_state,to_char(delivery_date,'yyyy/mm/dd') as delivery_date from trade_tbl where trade_state='배송완료'
+  	</select>
 </mapper>

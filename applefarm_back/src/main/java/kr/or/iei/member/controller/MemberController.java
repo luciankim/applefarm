@@ -203,7 +203,7 @@ public class MemberController {
 		String accessToken = memberService.login(member);
 
 		if (accessToken != null) {
-			if (accessToken == "블랙") {
+			if (accessToken == "black") {
 				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "black", accessToken); // 성공하면 토큰도 전달
 				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			} else {
