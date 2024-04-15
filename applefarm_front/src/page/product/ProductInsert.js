@@ -153,6 +153,11 @@ const ProductInsert = (props) => {
   const [grade, setGrade] = useState(null);
   const [partOrder, setPartOrder] = useState([]);
 
+  //chart용
+  useEffect(() => {
+    setProductQuality(grade);
+  }, [grade]);
+
   //ProductLastFrm.js로 넘겨줄 속성
   const [title, setTitle] = useState(); //제목
   const [content, setContent] = useState(); //내용
@@ -447,6 +452,8 @@ const ProductInsert = (props) => {
           partOrder={partOrder}
           setPartOrder={setPartOrder}
           navTable={navTable}
+          /*chart용*/
+          setProductQuality={setProductQuality}
           // Frm 타입 설정
           type="insert"
         />
@@ -471,6 +478,8 @@ const ProductInsert = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
+          /*chart용*/
+          selectedProduct={selectedProduct}
           // Frm 타입 설정
           type="insert"
         />

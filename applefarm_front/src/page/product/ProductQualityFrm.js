@@ -50,7 +50,7 @@ const ProductQualityFrm = (props) => {
   }, [Object.keys(score).length]);
 
   // 품질목록 선택할때마다 도는 함수
-  const handleQualityChange = (part, value, index_,part2) => {
+  const handleQualityChange = (part, value, index_, part2) => {
     const item = qualityList.find((item) => item.part === part);
 
     const index = qualityList
@@ -62,7 +62,7 @@ const ProductQualityFrm = (props) => {
       ? item.productStatusImage.split("/")[index]
       : "default";
 
-      console.log(item);
+    console.log(item);
 
     setScore((prevScores) => ({
       ...prevScores,
@@ -70,7 +70,7 @@ const ProductQualityFrm = (props) => {
     }));
 
     //const obj = { part: part, value: value };
-    const obj = {part2 : part2,value:value};
+    const obj = { part2: part2, value: value };
     partOrder[index_] = obj;
     setPartOrder(partOrder);
 
@@ -95,7 +95,6 @@ const ProductQualityFrm = (props) => {
     return s;
   };
 
-
   // 품목 선택할때마다 점수 등급 설정
   useEffect(() => {
     if (calculateTotalScore() / qualityList.length < 1.4) {
@@ -114,8 +113,6 @@ const ProductQualityFrm = (props) => {
   }, [handleQualityChange]);
 
   const arr = new Array();
-
-  
 
   return (
     <div className="quality-select-total-wrap">
@@ -154,7 +151,9 @@ const ProductQualityFrm = (props) => {
               id4={arr[3] ? item.part + "4" : undefined}
               data={qualityState[item.part]} // 이 부분이 `qualityState` 객체에서 해당 `part`의 상태를 참조합니다.
               //value전달
-              setData={(value) => handleQualityChange(item.part, value, index,item.part2)}
+              setData={(value) =>
+                handleQualityChange(item.part, value, index, item.part2)
+              }
               // 이 부분이 상태를 설정하는 함수를 전달합니다.
               name={item.part}
               // img1={
