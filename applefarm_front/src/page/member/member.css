@@ -930,9 +930,8 @@
 
 /*로그인 정보*/
 .info-input {
-  width: 80%; /* 입력 필드 폭을 컨테이너에 맞춤 */
-
-  padding: 10px; /* 내부 여백 추가 */
+  width: 80%;
+  padding: 10px;
   margin-bottom: 10px; /* 필드 간격 */
   border: 1px solid #ccc; /* 테두리 스타일링 */
   font-size: 1rem; /* 텍스트 크기 */
@@ -941,17 +940,70 @@
 .change-btn {
   padding: 10px 20px;
   border: none;
-  background-color: #4caf50; /* 버튼 배경색 */
-  color: white; /* 텍스트 색상 */
-  cursor: pointer; /* 마우스 오버 시 커서 변경 */
+  background-color: #0267f3;
+  border-radius: 5px;
+
+  color: white;
+  cursor: pointer;
   margin-right: 5px;
 }
 
+.saveBtn-box {
+  position: relative;
+  left: 250px;
+  bottom: 20px;
+}
+
+.saveBtn-box2 {
+  position: relative;
+  left: 250px;
+  bottom: -13px;
+}
+
+.saveBtn-box3 {
+  position: relative;
+  left: 250px;
+  bottom: -13px;
+}
+.memberInfo-change-btn {
+  position: relative;
+  bottom: 53px;
+  right: 73px;
+}
+
+.delete-btn {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  color: #bfbfbf;
+}
+.delete-btn:hover {
+  text-decoration: underline;
+}
+
+.memberInfo-emailBtn {
+  position: relative;
+  bottom: 55px;
+  right: 50px;
+}
+
+.memberInfo-confirmBtn {
+  position: relative;
+  bottom: 53px;
+  right: 71px;
+}
+
+.memberInfo-CodeBtn {
+  position: relative;
+  bottom: 50px;
+  right: 70px;
+}
 .cancel-btn {
   padding: 10px 20px;
   border: none;
-  background-color: #f44336; /* 취소 버튼 색상 */
+  background-color: #e5e5e5; /* 취소 버튼 색상 */
   color: white;
+  border-radius: 5px;
   cursor: pointer;
   margin-left: 5px;
 }
@@ -961,10 +1013,14 @@
 }
 .reg-text {
   position: relative;
-  top: 25px;
-  right: 420px;
+  top: -10px;
+
   color: red;
   font-size: 12px;
+}
+
+.memberInfo-mini-title {
+  padding-bottom: 15px;
 }
 
 .reg-text1 {
@@ -976,6 +1032,10 @@
 }
 
 /*회원탈퇴*/
+
+.checkbox-title {
+  font-weight: bold;
+}
 .content-wrap {
   border: 1px solid #b7b7b7;
   padding: 20px;

@@ -208,6 +208,12 @@ const MemberInfo = (props) => {
     }
   };
 
+  const regTextRemove = () => {
+    setUpdatePhone("");
+    setCheckRegPhone("");
+    setChangePwInputStatus(false);
+  };
+
   //이전 비밀번호 == 로그인 비밀번호 확인
   const chkRePw = () => {
     const memberNo = member.memberNo;
@@ -315,7 +321,7 @@ const MemberInfo = (props) => {
                     </div>
                     <div className="input-change-btn">
                       <button
-                        className="change-btn"
+                        className="change-btn memberInfo-emailBtn"
                         onClick={sendVerifCode}
                         disabled={emailBtn}
                       >
@@ -336,7 +342,7 @@ const MemberInfo = (props) => {
                         disabled={disabledForVerifInput}
                       />
                     </div>
-                    <div className="input-change-btn">
+                    <div className="input-change-btn memberInfo-CodeBtn">
                       <button
                         className="change-btn"
                         onClick={chkVerifCode}
@@ -372,7 +378,7 @@ const MemberInfo = (props) => {
                         value={member.memberEmail}
                       />
                     </div>
-                    <div className="input-change-btn">
+                    <div className="input-change-btn memberInfo-change-btn">
                       <button
                         className="change-btn"
                         onClick={() => setChangeInputStatus(true)}
@@ -403,7 +409,7 @@ const MemberInfo = (props) => {
                     </div>
                     <div className="input-change-btn">
                       <button
-                        className="change-btn"
+                        className="change-btn memberInfo-emailBtn"
                         onClick={sendVerifCode}
                         disabled={emailBtn}
                       >
@@ -424,7 +430,7 @@ const MemberInfo = (props) => {
                         disabled={disabledForVerifInput}
                       />
                     </div>
-                    <div className="input-change-btn">
+                    <div className="input-change-btn memberInfo-CodeBtn">
                       <button
                         className="change-btn"
                         onClick={chkVerifCode}
@@ -475,7 +481,7 @@ const MemberInfo = (props) => {
                         disabled={rePwInput}
                       />
                     </div>
-                    <div className="input-change-btn">
+                    <div className="input-change-btn memberInfo-confirmBtn">
                       <button
                         onClick={chkRePw}
                         className="change-btn"
@@ -499,7 +505,7 @@ const MemberInfo = (props) => {
                       />
                     </div>
                   </div>
-                  <div className="btn-wrap saveBtn-box">
+                  <div className="btn-wrap saveBtn-box2">
                     <button
                       className="change-btn memberInfo-saveBtn"
                       onClick={changeUpdatePw}
@@ -526,7 +532,7 @@ const MemberInfo = (props) => {
                       value="123456789"
                     />
                   </div>
-                  <div className="input-change-btn">
+                  <div className="input-change-btn memberInfo-change-btn">
                     <button
                       className="change-btn"
                       onClick={() => setChangePwInputStatus(true)}
@@ -549,7 +555,7 @@ const MemberInfo = (props) => {
                         disabled={rePwInput}
                       />
                     </div>
-                    <div className="input-change-btn">
+                    <div className="input-change-btn memberInfo-confirmBtn">
                       <button
                         className="change-btn"
                         onClick={chkRePw}
@@ -573,7 +579,7 @@ const MemberInfo = (props) => {
                       />
                     </div>
                   </div>
-                  <div className="btn-wrap saveBtn-box">
+                  <div className="btn-wrap saveBtn-box2">
                     <button
                       className="change-btn memberInfo-saveBtn"
                       onClick={changeUpdatePw}
@@ -607,7 +613,7 @@ const MemberInfo = (props) => {
                     <div className="reg-text">{checkRegPhone}</div>
                   </div>
 
-                  <div className="btn-wrap saveBtn-box">
+                  <div className="btn-wrap saveBtn-box3">
                     <div>
                       <button
                         className="change-btn memberInfo-saveBtn"
@@ -636,7 +642,7 @@ const MemberInfo = (props) => {
                       readOnly
                     />
                   </div>
-                  <div className="input-change-btn">
+                  <div className="input-change-btn memberInfo-change-btn">
                     <button
                       className="change-btn"
                       onClick={() => setChangePhoneInputStatus(true)}
@@ -661,7 +667,7 @@ const MemberInfo = (props) => {
                     <div className="reg-text">{checkRegPhone}</div>
                   </div>
 
-                  <div className="btn-wrap saveBtn-box">
+                  <div className="btn-wrap saveBtn-box3">
                     <button
                       className="change-btn memberInfo-saveBtn"
                       disabled={savePhoneBtn}
@@ -671,7 +677,7 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={() => setReturnPhoneInputStatus(true)}
+                      onClick={regTextRemove}
                     >
                       취소
                     </button>

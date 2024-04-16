@@ -89,7 +89,7 @@ body {
 }
 .main-wrap {
   height: 100vh;
-  background-image: url("/public/image/back.jpg");
+
   background-repeat: no-repeat center;
   background-size: cover;
 }
