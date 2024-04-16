@@ -291,6 +291,8 @@ const Login = (props) => {
             Swal.fire(
               "You are a black member, but I'm confident that you'll eventually become a good member."
             );
+          } else if (res.data.message === "withdrawMember") {
+            Swal.fire("탈퇴한 회원입니다.");
           } else {
             Swal.fire("아이디 또는 비밀번호를 확인하세요.");
           }

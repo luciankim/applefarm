@@ -930,62 +930,98 @@
 }
 
 /*로그인 정보*/
-
-.memberInfo-table {
-  max-height: 250px;
-  min-height: 350px;
-}
-.memberInfo-mini-title {
-  min-width: 200px;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.mypage-content-info {
-  padding-top: 30px;
-}
-
 .info-input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px; /* 필드 간격 */
+  border: 1px solid #ccc; /* 테두리 스타일링 */
+  font-size: 1rem; /* 텍스트 크기 */
+}
+
+.change-btn {
+  padding: 10px 20px;
   border: none;
-  border-bottom: 1px solid #bfbfbf;
-  width: 400px;
-}
-
-.input-change-btn {
-  padding-left: 20px;
-}
-
-.change-btn,
-.cancel-btn {
-  background-color: white;
-  border: 1px solid #b7b7b7;
+  background-color: #0267f3;
   border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 10px;
-  color: #b7b7b7;
+
+  color: white;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.saveBtn-box {
+  position: relative;
+  left: 250px;
+  bottom: 20px;
+}
+
+.saveBtn-box2 {
+  position: relative;
+  left: 250px;
+  bottom: -13px;
+}
+
+.saveBtn-box3 {
+  position: relative;
+  left: 250px;
+  bottom: -13px;
+}
+.memberInfo-change-btn {
+  position: relative;
+  bottom: 53px;
+  right: 73px;
 }
 
 .delete-btn {
+  padding: 10px;
+  background-color: transparent;
   border: none;
-  background-color: white;
-  color: #b7b7b7;
+  color: #bfbfbf;
 }
-
 .delete-btn:hover {
   text-decoration: underline;
 }
 
-.btn-wrap {
+.memberInfo-emailBtn {
   position: relative;
-  left: 35%;
+  bottom: 55px;
+  right: 50px;
 }
 
+.memberInfo-confirmBtn {
+  position: relative;
+  bottom: 53px;
+  right: 71px;
+}
+
+.memberInfo-CodeBtn {
+  position: relative;
+  bottom: 50px;
+  right: 70px;
+}
+.cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #e5e5e5; /* 취소 버튼 색상 */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.input-change-btn {
+  display: flex;
+  justify-content: flex-end;
+}
 .reg-text {
   position: relative;
-  top: 25px;
-  right: 420px;
+  top: -10px;
+
   color: red;
   font-size: 12px;
+}
+
+.memberInfo-mini-title {
+  padding-bottom: 15px;
 }
 
 .reg-text1 {
@@ -996,59 +1032,11 @@
   right: 460px;
 }
 
-.info-title {
-  font-weight: bold;
-  font-size: 18px;
-  padding-bottom: 30px;
-}
-
-.memberInfo-saveBtn {
-  padding: 10px;
-  width: 70px;
-}
-
-.memberInfo-cancelBtn {
-  padding: 10px;
-  width: 70px;
-}
-
-.change-btn {
-  margin-right: 10px;
-}
-
-.cancel-btn {
-  margin-left: 10px;
-}
-
-.saveBtn-box {
-  display: flex;
-  justify-content: flex-start;
-  position: relative;
-  left: 300px;
-}
-.memberInfo-tbl {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.memberInfo-table {
-  border: 1px solid #ccc;
-  max-height: 400px;
-  min-height: 400px;
-  overflow: hidden;
-}
-
-.memberInfo-table td .memberInfo-table tr {
-  width: 200px;
-}
-
-.memberInfo-table {
-}
-
-.memberInfo-table td {
-}
-
 /*회원탈퇴*/
+
+.checkbox-title {
+  font-weight: bold;
+}
 .content-wrap {
   border: 1px solid #b7b7b7;
   padding: 20px;

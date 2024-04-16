@@ -77,7 +77,8 @@ const DeleteMember = (props) => {
                 onChange={() => setIsChecked1(!isChecked1)}
               />
               <label htmlFor="checkbox1" className="checkbox-title">
-                AppleFarm을 탈퇴하면 회원 정보 및 서비스 기록이 삭제됩니다.
+                AppleFarm을 탈퇴하면 가입하신 이메일과 아이디로 재가입이
+                불가합니다.
               </label>
             </div>
             <div className="content">

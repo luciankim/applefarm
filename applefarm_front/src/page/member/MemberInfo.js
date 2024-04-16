@@ -208,6 +208,12 @@ const MemberInfo = (props) => {
     }
   };
 
+  const regTextRemove = () => {
+    setUpdatePhone("");
+    setCheckRegPhone("");
+    setChangePwInputStatus(false);
+  };
+
   //이전 비밀번호 == 로그인 비밀번호 확인
   const chkRePw = () => {
     const memberNo = member.memberNo;
@@ -289,317 +295,379 @@ const MemberInfo = (props) => {
 
   return (
     <>
-      <div className="mypage-current-wrap">
-        <h3 className="mypage-current-title">로그인 정보</h3>
-        <table className="memberInfo-table">
-          <tbody>
-            {changeInputStatus ? (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">이메일 주소 변경</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="text"
-                      setData={setEmail}
-                      onChange={changeEmail}
-                      onBlur={emailChk}
-                      checkMsg={setEmailMsg}
-                      disabled={disabledForEmailInput}
-                    />
-                  </td>
-                  <td className="input-change-btn">
-                    <button
-                      className="change-btn"
-                      onClick={sendVerifCode}
-                      disabled={emailBtn}
-                    >
-                      메일인증
-                    </button>
-                  </td>
-                </tr>
-                <div className="reg-text1">{emailMsg}</div>
+      <div className="mypage-content">
+        <div className="mypage-current-wrap">
+          <h3 className="mypage-current-title">로그인 정보</h3>
+          <div className="memberInfo-table">
+            <div>
+              {changeInputStatus ? (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="change-email-box">
+                      <div className="memberInfo-mini-title">
+                        이메일 주소 변경
+                      </div>
+                      <div>
+                        <input
+                          className="info-input"
+                          type="text"
+                          setData={setEmail}
+                          onChange={changeEmail}
+                          onBlur={emailChk}
+                          checkMsg={setEmailMsg}
+                          disabled={disabledForEmailInput}
+                        />
+                      </div>
+                    </div>
+                    <div className="input-change-btn">
+                      <button
+                        className="change-btn memberInfo-emailBtn"
+                        onClick={sendVerifCode}
+                        disabled={emailBtn}
+                      >
+                        메일인증
+                      </button>
+                    </div>
+                  </div>
+                  <div className="reg-text1">{emailMsg}</div>
 
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">인증 코드</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      value={verifCode}
-                      setData={setVerifCode}
-                      onChange={changeVerifCode}
-                      disabled={disabledForVerifInput}
-                    />
-                  </td>
-                  <td className="input-change-btn">
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">인증 코드</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        value={verifCode}
+                        setData={setVerifCode}
+                        onChange={changeVerifCode}
+                        disabled={disabledForVerifInput}
+                      />
+                    </div>
+                    <div className="input-change-btn memberInfo-CodeBtn">
+                      <button
+                        className="change-btn"
+                        onClick={chkVerifCode}
+                        disabled={verifBtn}
+                      >
+                        인증
+                      </button>
+                    </div>
+                  </div>
+                  <div className="btn-wrap saveBtn-box">
                     <button
-                      className="change-btn"
-                      onClick={chkVerifCode}
-                      disabled={verifBtn}
+                      className="change-btn memberInfo-saveBtn"
+                      onClick={updateEmail}
                     >
-                      인증
+                      저장
                     </button>
-                  </td>
-                </tr>
-                <tr className="btn-wrap saveBtn-box">
-                  <button
-                    className="change-btn memberInfo-saveBtn"
-                    onClick={updateEmail}
-                  >
-                    저장
-                  </button>
-                  <button
-                    className="cancel-btn memberInfo-cancelBtn"
-                    onClick={() => setChangeInputStatus(false)}
-                  >
-                    취소
-                  </button>
-                </tr>
-              </>
-            ) : returnInputStatus ? (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">이메일</td>
-                  <td>
+                    <button
+                      className="cancel-btn memberInfo-cancelBtn"
+                      onClick={() => setChangeInputStatus(false)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </>
+              ) : returnInputStatus ? (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">이메일</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="text"
+                        value={member.memberEmail}
+                      />
+                    </div>
+                    <div className="input-change-btn memberInfo-change-btn">
+                      <button
+                        className="change-btn"
+                        onClick={() => setChangeInputStatus(true)}
+                      >
+                        변경
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="change-email-box">
+                      <div className="memberInfo-mini-title">
+                        이메일 주소 변경
+                      </div>
+                      <div>
+                        <input
+                          className="info-input"
+                          type="text"
+                          setData={setEmail}
+                          onChange={changeEmail}
+                          onBlur={emailChk}
+                          checkMsg={setEmailMsg}
+                          disabled={disabledForEmailInput}
+                        />
+                      </div>
+                    </div>
+                    <div className="input-change-btn">
+                      <button
+                        className="change-btn memberInfo-emailBtn"
+                        onClick={sendVerifCode}
+                        disabled={emailBtn}
+                      >
+                        메일인증
+                      </button>
+                    </div>
+                    <div className="reg-text1">{emailMsg}</div>
+                  </div>
+
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">인증 코드</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        value={verifCode}
+                        setData={setVerifCode}
+                        onChange={changeVerifCode}
+                        disabled={disabledForVerifInput}
+                      />
+                    </div>
+                    <div className="input-change-btn memberInfo-CodeBtn">
+                      <button
+                        className="change-btn"
+                        onClick={chkVerifCode}
+                        disabled={verifBtn}
+                      >
+                        인증
+                      </button>
+                    </div>
+                  </div>
+                  <div className="btn-wrap saveBtn-box">
+                    <button
+                      className="change-btn memberInfo-saveBtn"
+                      onClick={updateEmail}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className="cancel-btn memberInfo-cancelBtn"
+                      onClick={() => setReturnInputStatus(true)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </>
+              )}
+
+              <div className="info-wrap-content">
+                <div className="memberInfo-mini-title">아이디</div>
+                <div>
+                  <input
+                    className="info-input"
+                    type="text"
+                    value={member.memberId}
+                  />
+                </div>
+              </div>
+              {changePwInputStatus ? (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">이전 비밀번호</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="password"
+                        value={chkUpdatePw}
+                        setData={setChkUpdatePw}
+                        onChange={changeChkPw}
+                        disabled={rePwInput}
+                      />
+                    </div>
+                    <div className="input-change-btn memberInfo-confirmBtn">
+                      <button
+                        onClick={chkRePw}
+                        className="change-btn"
+                        disabled={rePwBtn}
+                      >
+                        확인
+                      </button>
+                    </div>
+                  </div>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">새 비밀번호</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="password"
+                        value={updatePw}
+                        setData={setUpdatePw}
+                        onChange={changePw}
+                        disabled={newPwBtn}
+                        onBlur={inNewPw}
+                      />
+                    </div>
+                  </div>
+                  <div className="btn-wrap saveBtn-box2">
+                    <button
+                      className="change-btn memberInfo-saveBtn"
+                      onClick={changeUpdatePw}
+                      disabled={savePwBtn}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className="cancel-btn memberInfo-cancelBtn"
+                      onClick={() => setChangePwInputStatus(false)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </>
+              ) : returnPwInputStatus ? (
+                // 비밀번호 복귀 입력 상태
+                <div className="info-wrap-content">
+                  <div className="memberInfo-mini-title">비밀번호</div>
+                  <div>
                     <input
                       className="info-input"
-                      type="text"
-                      value={member.memberEmail}
+                      type="password"
+                      value="123456789"
                     />
-                  </td>
-                  <td className="input-change-btn">
+                  </div>
+                  <div className="input-change-btn memberInfo-change-btn">
                     <button
                       className="change-btn"
-                      onClick={() => setChangeInputStatus(true)}
+                      onClick={() => setChangePwInputStatus(true)}
                     >
                       변경
                     </button>
-                  </td>
-                </tr>
-              </>
-            ) : (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">이메일 주소 변경</td>
-                  <td>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">이전 비밀번호</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="password"
+                        value={chkUpdatePw}
+                        setData={setChkUpdatePw}
+                        onChange={changeChkPw}
+                        disabled={rePwInput}
+                      />
+                    </div>
+                    <div className="input-change-btn memberInfo-confirmBtn">
+                      <button
+                        className="change-btn"
+                        onClick={chkRePw}
+                        disabled={rePwBtn}
+                      >
+                        확인
+                      </button>
+                    </div>
+                  </div>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">새 비밀번호</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="password"
+                        value={updatePw}
+                        setData={setUpdatePw}
+                        onChange={changePw}
+                        disabled={newPwBtn}
+                        onBlur={inNewPw}
+                      />
+                    </div>
+                  </div>
+                  <div className="btn-wrap saveBtn-box2">
+                    <button
+                      className="change-btn memberInfo-saveBtn"
+                      onClick={changeUpdatePw}
+                      disabled={savePwBtn}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className="cancel-btn memberInfo-cancelBtn"
+                      onClick={() => setChangePwInputStatus(false)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {changePhoneInputStatus ? (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">전화번호 변경</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="text"
+                        value={updatePhone}
+                        onChange={changePhone}
+                        onBlur={phoneChk}
+                      />
+                    </div>
+                    <div className="reg-text">{checkRegPhone}</div>
+                  </div>
+
+                  <div className="btn-wrap saveBtn-box3">
+                    <div>
+                      <button
+                        className="change-btn memberInfo-saveBtn"
+                        disabled={savePhoneBtn}
+                        onClick={changeUpdatePhone}
+                      >
+                        저장
+                      </button>
+                      <button
+                        className="cancel-btn memberInfo-cancelBtn"
+                        onClick={() => setChangePhoneInputStatus(false)}
+                      >
+                        취소
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : returnPhoneInputStatus ? (
+                <div className="info-wrap-content">
+                  <div className="memberInfo-mini-title">전화번호</div>
+                  <div>
                     <input
                       className="info-input"
                       type="text"
-                      setData={setEmail}
-                      onChange={changeEmail}
-                      onBlur={emailChk}
-                      checkMsg={setEmailMsg}
-                      disabled={disabledForEmailInput}
+                      value={member.memberPhone}
+                      readOnly
                     />
-                  </td>
-                  <td className="input-change-btn">
+                  </div>
+                  <div className="input-change-btn memberInfo-change-btn">
                     <button
                       className="change-btn"
-                      onClick={sendVerifCode}
-                      disabled={emailBtn}
+                      onClick={() => setChangePhoneInputStatus(true)}
                     >
-                      메일인증
+                      변경
                     </button>
-                  </td>
-                  <td className="reg-text1">{emailMsg}</td>
-                </tr>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="info-wrap-content">
+                    <div className="memberInfo-mini-title">전화번호 변경</div>
+                    <div>
+                      <input
+                        className="info-input"
+                        type="text"
+                        value={updatePhone}
+                        onChange={changePhone}
+                        onBlur={phoneChk}
+                      />
+                    </div>
+                    <div className="reg-text">{checkRegPhone}</div>
+                  </div>
 
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">인증 코드</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      value={verifCode}
-                      setData={setVerifCode}
-                      onChange={changeVerifCode}
-                      disabled={disabledForVerifInput}
-                    />
-                  </td>
-                  <td className="input-change-btn">
-                    <button
-                      className="change-btn"
-                      onClick={chkVerifCode}
-                      disabled={verifBtn}
-                    >
-                      인증
-                    </button>
-                  </td>
-                </tr>
-                <tr className="btn-wrap saveBtn-box">
-                  <button
-                    className="change-btn memberInfo-saveBtn"
-                    onClick={updateEmail}
-                  >
-                    저장
-                  </button>
-                  <button
-                    className="cancel-btn memberInfo-cancelBtn"
-                    onClick={() => setReturnInputStatus(true)}
-                  >
-                    취소
-                  </button>
-                </tr>
-              </>
-            )}
-
-            <tr className="info-wrap-content">
-              <td className="memberInfo-mini-title">아이디</td>
-              <td>
-                <input
-                  className="info-input"
-                  type="text"
-                  value={member.memberId}
-                />
-              </td>
-            </tr>
-            {changePwInputStatus ? (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">이전 비밀번호</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="password"
-                      value={chkUpdatePw}
-                      setData={setChkUpdatePw}
-                      onChange={changeChkPw}
-                      disabled={rePwInput}
-                    />
-                  </td>
-                  <td className="input-change-btn">
-                    <button
-                      onClick={chkRePw}
-                      className="change-btn"
-                      disabled={rePwBtn}
-                    >
-                      확인
-                    </button>
-                  </td>
-                </tr>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">새 비밀번호</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="password"
-                      value={updatePw}
-                      setData={setUpdatePw}
-                      onChange={changePw}
-                      disabled={newPwBtn}
-                      onBlur={inNewPw}
-                    />
-                  </td>
-                </tr>
-                <tr className="btn-wrap saveBtn-box">
-                  <button
-                    className="change-btn memberInfo-saveBtn"
-                    onClick={changeUpdatePw}
-                    disabled={savePwBtn}
-                  >
-                    저장
-                  </button>
-                  <button
-                    className="cancel-btn memberInfo-cancelBtn"
-                    onClick={() => setChangePwInputStatus(false)}
-                  >
-                    취소
-                  </button>
-                </tr>
-              </>
-            ) : returnPwInputStatus ? (
-              // 비밀번호 복귀 입력 상태
-              <tr className="info-wrap-content">
-                <td className="memberInfo-mini-title">비밀번호</td>
-                <td>
-                  <input
-                    className="info-input"
-                    type="password"
-                    value="123456789"
-                  />
-                </td>
-                <td className="input-change-btn">
-                  <button
-                    className="change-btn"
-                    onClick={() => setChangePwInputStatus(true)}
-                  >
-                    변경
-                  </button>
-                </td>
-              </tr>
-            ) : (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">이전 비밀번호</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="password"
-                      value={chkUpdatePw}
-                      setData={setChkUpdatePw}
-                      onChange={changeChkPw}
-                      disabled={rePwInput}
-                    />
-                  </td>
-                  <td className="input-change-btn">
-                    <button
-                      className="change-btn"
-                      onClick={chkRePw}
-                      disabled={rePwBtn}
-                    >
-                      확인
-                    </button>
-                  </td>
-                </tr>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">새 비밀번호</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="password"
-                      value={updatePw}
-                      setData={setUpdatePw}
-                      onChange={changePw}
-                      disabled={newPwBtn}
-                      onBlur={inNewPw}
-                    />
-                  </td>
-                </tr>
-                <tr className="btn-wrap saveBtn-box">
-                  <button
-                    className="change-btn memberInfo-saveBtn"
-                    onClick={changeUpdatePw}
-                    disabled={savePwBtn}
-                  >
-                    저장
-                  </button>
-                  <button
-                    className="cancel-btn memberInfo-cancelBtn"
-                    onClick={() => setChangePwInputStatus(false)}
-                  >
-                    취소
-                  </button>
-                </tr>
-              </>
-            )}
-
-            {changePhoneInputStatus ? (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">전화번호 변경</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="text"
-                      value={updatePhone}
-                      onChange={changePhone}
-                      onBlur={phoneChk}
-                    />
-                  </td>
-                  <td className="reg-text">{checkRegPhone}</td>
-                </tr>
-
-                <tr className="btn-wrap saveBtn-box">
-                  <td>
+                  <div className="btn-wrap saveBtn-box3">
                     <button
                       className="change-btn memberInfo-saveBtn"
                       disabled={savePhoneBtn}
@@ -609,73 +677,21 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={() => setChangePhoneInputStatus(false)}
+                      onClick={regTextRemove}
                     >
                       취소
                     </button>
-                  </td>
-                </tr>
-              </>
-            ) : returnPhoneInputStatus ? (
-              <tr className="info-wrap-content">
-                <td className="memberInfo-mini-title">전화번호</td>
-                <td>
-                  <input
-                    className="info-input"
-                    type="text"
-                    value={member.memberPhone}
-                    readOnly
-                  />
-                </td>
-                <td className="input-change-btn">
-                  <button
-                    className="change-btn"
-                    onClick={() => setChangePhoneInputStatus(true)}
-                  >
-                    변경
-                  </button>
-                </td>
-              </tr>
-            ) : (
-              <>
-                <tr className="info-wrap-content">
-                  <td className="memberInfo-mini-title">전화번호 변경</td>
-                  <td>
-                    <input
-                      className="info-input"
-                      type="text"
-                      value={updatePhone}
-                      onChange={changePhone}
-                      onBlur={phoneChk}
-                    />
-                  </td>
-                  <td className="reg-text">{checkRegPhone}</td>
-                </tr>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
 
-                <tr className="btn-wrap saveBtn-box">
-                  <button
-                    className="change-btn memberInfo-saveBtn"
-                    disabled={savePhoneBtn}
-                    onClick={changeUpdatePhone}
-                  >
-                    저장
-                  </button>
-                  <button
-                    className="cancel-btn memberInfo-cancelBtn"
-                    onClick={() => setReturnPhoneInputStatus(true)}
-                  >
-                    취소
-                  </button>
-                </tr>
-              </>
-            )}
-          </tbody>
-        </table>
-
-        <div className="delete-btn-box">
-          <button className="delete-btn" onClick={deleteMember}>
-            회원탈퇴
-          </button>
+          <div className="delete-btn-box">
+            <button className="delete-btn" onClick={deleteMember}>
+              회원탈퇴
+            </button>
+          </div>
         </div>
       </div>
     </>

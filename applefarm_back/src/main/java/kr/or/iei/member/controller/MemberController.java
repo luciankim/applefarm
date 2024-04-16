@@ -207,6 +207,9 @@ public class MemberController {
 			if (accessToken == "black") {
 				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "black", accessToken); // 성공하면 토큰도 전달
 				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}else if(accessToken == "withdrawMember") {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "withdrawMember", accessToken); // 성공하면 토큰도 전달
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 			} else {
 				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken); // 성공하면 토큰도 전달
 				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

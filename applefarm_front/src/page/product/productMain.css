@@ -211,5 +211,15 @@
   font-size: 13px;
   color: #868e96;
 }
+.productCard-likeCount > .like-image {
+  color: var(--main_02);
+}
 
 /* --ProductMainList.js */
+
+/* RefundDelevery.js */
+.refundDelevery-wrap {
+  width: 900px;
+  margin: 0 auto;
+}
+/* --RefundDelevery.js */

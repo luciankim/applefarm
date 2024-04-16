@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import TextEditor from "../../component/TextEditor";
+import ProductChart from "./ProductChart";
 
 const ProductLastFrm = (props) => {
   //데이터 전송용
@@ -13,6 +14,8 @@ const ProductLastFrm = (props) => {
   const setFile = props.setFile;
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
+  //chart용
+  const selectedProduct = props.selectedProduct;
 
   // 서버 변수
   const backServer = process.env.REACT_WEB_BACK_SERVER;
@@ -38,7 +41,7 @@ const ProductLastFrm = (props) => {
   const [checkPriceMsg, setCheckPriceMsg] = useState("");
 
   //유효성 검사
-  const titleReg = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()_+|<>?:{}]{5,30}$/;
+  const titleReg = /^[^]{4,30}$/;
   const priceReg = /^[0-9]{4,7}$/;
 
   // 제목 && 가격 유효성 검사
@@ -48,7 +51,7 @@ const ProductLastFrm = (props) => {
     if (titleReg.test(title)) {
       setCheckTitleMsg("");
     } else {
-      setCheckTitleMsg("제목은 영어 대/소문자/숫자/한글로 5~30글자 입니다.");
+      setCheckTitleMsg("제목은 4~30글자 입니다.");
     }
   };
   const priceCheck = () => {
@@ -61,9 +64,17 @@ const ProductLastFrm = (props) => {
     }
   };
 
-   //버튼 조건문
-   useEffect(() => {
-    if (title && content && price && file && thumbnail && priceReg.test(price) && titleReg.test(title)) {
+  //버튼 조건문
+  useEffect(() => {
+    if (
+      title &&
+      content &&
+      price &&
+      file &&
+      thumbnail &&
+      priceReg.test(price) &&
+      titleReg.test(title)
+    ) {
       changeBtnActiveTrue();
     } else {
       changeBtnActiveFalse();
@@ -75,7 +86,6 @@ const ProductLastFrm = (props) => {
 
   // 이미지 파일 변경시
   const changeFile = (e) => {
-
     const files = e.target.files;
 
     if (files) {
@@ -102,7 +112,6 @@ const ProductLastFrm = (props) => {
     console.log("changeFile종료");
   };
 
-
   //filePreviews 상태가 변경될 때마다
   //(즉, 새로운 파일 미리보기가 생성될 때마다) 원하는 함수를 호출
   useEffect(() => {
@@ -122,7 +131,6 @@ const ProductLastFrm = (props) => {
     <div className="insert-last-write-wrap">
       <div className="insert-last-frm-title">상세 입력 페이지</div>
       <div className="insert-last-frm-wrap">
-
         <table className="insert-last-frm-tbl">
           <tbody>
             <tr style={{ height: "100px" }}>
@@ -161,7 +169,9 @@ const ProductLastFrm = (props) => {
             </tr>
             <tr style={{ height: "400px" }}>
               <th>차트</th>
-              <td>여기에 컴포넌트</td>
+              <td>
+                <ProductChart product={selectedProduct} />
+              </td>
             </tr>
             <tr style={{ height: "300px" }}>
               <th>썸내일 등록</th>

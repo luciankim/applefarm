@@ -43,7 +43,7 @@ const SalesHistory = (props) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   useEffect(() => {
     const filtered = products.filter((product) => {
-      const productDate = dayjs(product.productDate); // 제품의 `productDate` 필드를 가정
+      const productDate = dayjs(product.productDate); //
       return (
         productDate.isAfter(startDate) &&
         productDate.isBefore(endDate.add(1, "day"))
@@ -117,6 +117,7 @@ const SalesHistory = (props) => {
       })
       .catch(console.error);
   };
+
   //송장등록(업데이트)
   const registerInvoiceNum = () => {
     console.log(productNo);
@@ -161,6 +162,7 @@ const SalesHistory = (props) => {
         const dateInRange =
           productDate.isAfter(startDate) &&
           productDate.isBefore(endDate.add(1, "day"));
+
         if (!dateInRange) return false;
 
         switch (currentTab) {
@@ -190,7 +192,7 @@ const SalesHistory = (props) => {
     filterProducts();
   }, [startDate, endDate, products, currentTab, selectFilter, visibleCount]);
 
-  // 더보기 기능은 상품 목록 업데이트를 위해 visibleCount만 변경합니다.
+  //더보기 기능은 상품 목록 업데이트를 위해 visibleCount만 변경
   const showMoreItems = () => {
     setVisibleCount((prevCount) => prevCount + 4);
   };
@@ -234,6 +236,24 @@ const SalesHistory = (props) => {
       zIndex: "1001", //모달 컨텐츠 z-index
       position: "relative", //모달 컨텐츠 포지션,이게 있어야 zIndex 사용
     },
+  };
+
+  //배송 조회
+  const [trackingList, setTrackingList] = useState([]);
+  const trackingFunc = () => {
+    const invoiceNumber = products.invoiceNumber;
+    axios
+      .get(backServer + "/trade/tracking/" + invoiceNumber)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setTrackingList(res.data.data);
+          console.log(res.data);
+        }
+      })
+      .catch((res) => {
+        console.log("catch");
+        console.log(res.data);
+      });
   };
 
   //초기 상품 데이터 로딩
@@ -325,7 +345,7 @@ const SalesHistory = (props) => {
     }
   };
 
-  //컴포넌트 반환 (렌더링)
+  //컴포넌트 반환 (렌더링 되는 거)
   return (
     <div className="mypage-current-wrap">
       <h3 className="mypage-current-title">판매내역</h3>

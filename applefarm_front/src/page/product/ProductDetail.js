@@ -1538,7 +1538,6 @@ const SellerProductItem = (props) => {
       top: 0,
       behavior: "smooth", // 이 부분이 스크롤을 부드럽게 해줍니다.
     });
-    // window.location.href = "/product/"+product.productNo;
   };
 
   return (
