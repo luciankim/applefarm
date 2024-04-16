@@ -33,11 +33,13 @@ const ProductUpdate = (props) => {
   const [productConnectivity, setProductConnectivity] = useState("");
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
+  
 
   // 디테일에서 넘겨받은 데이터
   const params = useParams();
   const location = useLocation();
   const [productNo, setProductNo] = useState(params.productNo);
+  // console.log(productNo);
 
   const [navTable, setNavTable] = useState(params.productTable);
   const [navLine, setNavLine] = useState(params.productLine);
@@ -47,21 +49,30 @@ const ProductUpdate = (props) => {
 
   const [product, setProduct] = useState({});
   const [type, setType] = useState("update");
+  const [productFileList, setProductFileList] = useState();
+  const [productQualityInitKey, setProductQualityInitKey] = useState();
+  const [productQualityInitValue, setProductQualityInitValue] = useState();
 
   // 초기 데이터 로딩 로직
-  //  useEffect(()=>{
-  //   if(type === 'update'){
-  //     axios.get(backServer + "/product/detail/"+productNo)
-  //     .then((res)=>{
-  //       // console.log(res.data.data);
-  //       setProduct(res.data.data.product);
-  //       setProductQuality(res.data.data.qualityHistory);
-  //     })
-  //     .catch((res)=>{
+   useEffect(()=>{
+    if(type === 'update'){
+      axios.get(backServer + "/product/detail/"+productNo)
+      .then((res)=>{
+        console.log(res.data.data);
+        setProduct(res.data.data.product);
+        setProductQualityInitKey(Object.keys(res.data.data.qualityHistory).slice(2));
+        setProductQualityInitValue(Object.values(res.data.data.qualityHistory).slice(2));
+      })
+      .catch((res)=>{
 
-  //     })
-  //   }
-  // },[])
+      })
+    }
+  },[])
+  
+
+  useEffect(()=>{
+    console.log(productQualityInitKey);
+  },[productQualityInitKey])
 
   // useEffect(() => {
   //   console.log(product); // 상태 업데이트 후의 값 확인
@@ -330,6 +341,15 @@ const ProductUpdate = (props) => {
   //서버 변수
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
+  
+  useEffect(()=>{
+    if(type === "update"){
+      setTitle(product.productTitle);
+      setContent(product.productExplain);
+      setPrice(product.productPrice);
+    }
+  },[product])
+
 
 
   //selectedProduct.productSummary 구하기
@@ -452,6 +472,7 @@ const ProductUpdate = (props) => {
           navTable={navTable}
           // Frm 타입 설정
           type="update"
+          productNo = {productNo}
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
@@ -476,8 +497,15 @@ const ProductUpdate = (props) => {
           setPartOrder={setPartOrder}
           /*chart용*/
           selectedProduct={selectedProduct}
+          
           // Frm 타입 설정
           type="update"
+          productNo = {productNo}
+          product = {product}
+          productFileList={productFileList}
+
+          productQualityInitKey={productQualityInitKey}
+          productQualityInitValue={productQualityInitValue}
         />
       </div>
       <div className="productInsert-nextBtn">

@@ -1308,8 +1308,8 @@ const ProductQuality = (props) => {
   const key = Object.keys(qualityHistory).slice(2);
   const value = Object.values(qualityHistory).slice(2);
 
-  console.log(key);
-  console.log(value);
+  // console.log(key);
+  // console.log(value);
 
   if (product.tableName === "IPHONE_TBL") {
   } else if (product.tableName === "MACBOOK_TBL") {
