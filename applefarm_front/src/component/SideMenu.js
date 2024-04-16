@@ -6,7 +6,6 @@ const SideMenu = (props) => {
   const setMenuItems = props.setMenuItems;
   const type = props.type;
   const location = useLocation();
-  console.log("과연 정답");
   return (
     <div className="sideMenu">
       <ul>

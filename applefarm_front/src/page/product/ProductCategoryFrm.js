@@ -51,9 +51,6 @@ const ProductCategoryFrm = (props) => {
     changeBtnActiveFalse,
     pip,
     type,
-    productNo,
-    product,
-    setProduct,
   } = props;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -76,26 +73,6 @@ const ProductCategoryFrm = (props) => {
   const [sizeArr, setSizeArr] = useState([]);
   const [connectivityArr, setConnectivityArr] = useState([]);
   const [chargeArr, setChargeArr] = useState([]);
-
-  // useEffect(()=>{
-  //   if(type == "update"){
-  //     setProductColor(product.productColor);
-  //     setProductImage(product.productImage);
-  //     setProductStorage(product.productStorage);
-  //     setProductMemory(product.productMemory);
-  //     setProductChip(product.productChip);
-  //     setProductCpu(product.productCpu);
-  //     setProductGpu(product.productGpu);
-  //     setProductSize(product.productSize);
-  //     setProductConnectivity(product.productConnectivity);
-  //     setProductCharge(product.productCharge);
-  //     setProductQuality(product.productQuality);
-  //   }
-  // },[type,product])
-
-  // useEffect(()=>{
-  //   console.log(categoryArr);
-  // },[categoryArr])
 
   const clear = () => {
     setProductColor("");
@@ -140,6 +117,7 @@ const ProductCategoryFrm = (props) => {
     model2Arr = [];
   }, [productGen]);
   useEffect(() => {
+    //여기는 원본 코드
     setProductModel2("");
     clear();
     model2Arr = [];

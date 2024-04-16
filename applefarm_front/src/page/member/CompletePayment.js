@@ -19,7 +19,7 @@ const CompletePayment = (props) => {
     navigate("/mypage/detailOrder/" + productNo);
   };
   const purchaseHistory = () => {
-    navigate("/mypage/purchaseHistory/" + productNo);
+    navigate("/mypage/purchaseHistory");
   };
   return (
     <div className="completePayment-wrap">

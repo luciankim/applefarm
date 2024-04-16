@@ -128,7 +128,7 @@ const LikeItem = (props) => {
         >
           <div>
             <img
-              src={like.productThumbnail}
+              src={backServer + "/product/img/" + like.productThumbnail}
               className={like.trade === 0 ? "like-img" : "sold-out-first-img"}
             />
           </div>
