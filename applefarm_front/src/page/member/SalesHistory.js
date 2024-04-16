@@ -404,7 +404,7 @@ const SalesHistory = (props) => {
                     <td>
                       <Link
                         className="sales-link"
-                        to={`/mypage/salesProductDetails/${product.productNo}`}
+                        to={`/product/${product.productNo}`}
                       >
                         <img
                           className="salesImg"
@@ -421,7 +421,7 @@ const SalesHistory = (props) => {
                     <td className="sales-info">
                       <Link
                         className="sales-link"
-                        to={`/mypage/salesProductDetails/${product.productNo}`}
+                        to={`/product/${product.productNo}`}
                       >
                         {product.productSummary}
                       </Link>

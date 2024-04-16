@@ -12,7 +12,7 @@ const SalesProductDetails = () => {
   const navigate = useNavigate();
 
   const productDetail = () => {
-    navigate();
+    navigate("/product/:");
   };
 
   useEffect(() => {
@@ -50,7 +50,9 @@ const SalesProductDetails = () => {
               </td>
               <td className="sales-text">{trade.productSummary}</td>
               <td className="sales-text">
-                <button onClick={productDetail}>상품상세</button>
+                <Link to={`/product/${product.productNo}`}>
+                  <button onClick={productDetail}>상품상세</button>
+                </Link>
               </td>
             </tr>
           </thead>
