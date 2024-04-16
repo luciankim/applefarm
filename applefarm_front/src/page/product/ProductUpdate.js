@@ -152,6 +152,11 @@ const ProductUpdate = (props) => {
   const [grade, setGrade] = useState(null);
   const [partOrder, setPartOrder] = useState([]);
 
+  //chart용
+  useEffect(() => {
+    setProductQuality(grade);
+  }, [grade]);
+
   //ProductLastFrm.js로 넘겨줄 속성
   const [title, setTitle] = useState(); //제목
   const [content, setContent] = useState(); //내용
@@ -471,6 +476,8 @@ const ProductUpdate = (props) => {
           setGrade={setGrade}
           partOrder={partOrder}
           setPartOrder={setPartOrder}
+          /*chart용*/
+          selectedProduct={selectedProduct}
           // Frm 타입 설정
           type="update"
         />

@@ -49,7 +49,7 @@ const ProductChart = (props) => {
     },
     //options.title
     title: {
-      text: "거래량/거래가격",
+      text: "거래량/평균가격",
       align: "left",
       margin: 10,
       offsetX: 0,
@@ -85,6 +85,8 @@ const ProductChart = (props) => {
     yaxis: [
       ////optios.yaxis[0] = 거래량(좌측 Y축)
       {
+        min: 0, //y축 시작이 0부터 시작
+        stepSize: 1, //y축 한 칸의 단위
         labels: {
           style: {
             colors: ["rgba(0, 143, 251, 0.85)"],
@@ -133,6 +135,7 @@ const ProductChart = (props) => {
 
       ////options.yaxis[1] = 거래가격(우측 Y축)
       {
+        min: 0, //y축 시작이 0부터 시작
         opposite: true, //이거 있어야 오른쪽에 라벨 뜸!!!
         labels: {
           style: {
@@ -166,7 +169,7 @@ const ProductChart = (props) => {
           offsetY: 0,
         },
         title: {
-          text: [path === "productDetail" ? "" : "거래가격"],
+          text: [path === "productDetail" ? "" : "평균가격"],
           rotate: -90,
           offsetX: 0,
           offsetY: 0,
