@@ -76,4 +76,7 @@ public interface TradeDao {
 
 	int updateTrade(Trade trade);
 
+
+	void deleteTradeBook2(int tradeNo);
+
 }

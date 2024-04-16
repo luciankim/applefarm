@@ -973,6 +973,10 @@ const TrackingModal = (props) => {
   const invoiceNumber = props.invoiceNumber;
   const completeYN = props.completeYN; //스케줄 1분마다 안할거면 이걸로
   const modalBackground = useRef();
+  const viewer = props.viewer;
+  const refModalFunc = props.refModalFunc;
+  const okModalFunc = props.okModalFunc;
+  const trade = props.trade;
   //모달 닫기
   const closeModal = () => {
     setModalOpen(false);
@@ -982,6 +986,14 @@ const TrackingModal = (props) => {
     if (e.target === modalBackground.current) {
       setModalOpen(false);
     }
+  };
+  const okFunc = () => {
+    setModalOpen(false);
+    okModalFunc();
+  };
+  const reFunc = () => {
+    setModalOpen(false);
+    refModalFunc();
   };
   return (
     <div className="modal" ref={modalBackground} onClick={modalBack}>
@@ -1029,10 +1041,13 @@ const TrackingModal = (props) => {
                 )}
               </tbody>
             </table>
-            {completeYN === "Y" ? (
-              <div>
-                <button>구매확정</button>
-                <button>환불신청</button>
+            {viewer === "c" &&
+            completeYN === "Y" &&
+            trade.tradeState !== "환불" &&
+            trade.tradeState !== "구매확정" ? (
+              <div className="tracking-btn">
+                <button onClick={okFunc}>구매확정</button>
+                <button onClick={reFunc}>환불신청</button>
               </div>
             ) : (
               ""

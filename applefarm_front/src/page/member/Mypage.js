@@ -26,6 +26,7 @@ const Mypage = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const logout = props.logout;
+
   const navigate = useNavigate();
   if (!isLogin) {
     Swal.fire("로그인 후 이용 가능합니다.")
@@ -82,19 +83,33 @@ const Mypage = (props) => {
         <Routes>
           <Route
             path="/loginInfo"
-            element={<MemberInfo member={member} logout={logout} />}
+            element={
+              <MemberInfo
+                member={member}
+                setMember={setMember}
+                logout={logout}
+              />
+            }
           />
           <Route
             path="/deleteMember"
-            element={<DeleteMember member={member} logout={logout} />}
+            element={
+              <DeleteMember
+                member={member}
+                setMember={setMember}
+                logout={logout}
+              />
+            }
           />
           <Route
             path="/sellerGrade"
-            element={<SellerGrade member={member} />}
+            element={<SellerGrade member={member} setMember={setMember} />}
           />
           <Route
             path="/memberAccountNumber"
-            element={<MemberAccountNumber member={member} />}
+            element={
+              <MemberAccountNumber member={member} setMember={setMember} />
+            }
           />
           <Route path="/address" element={<Address />}></Route>
           <Route path="/wish" element={<MemberWish />}></Route>
@@ -103,20 +118,22 @@ const Mypage = (props) => {
           <Route path="/detailSales/:productNo" element={<DetailSales />} />
           <Route
             path="/salesHistory"
-            element={<SalesHistory member={member} />}
+            element={<SalesHistory member={member} setMember={setMember} />}
           />
           <Route
             path="/viewMyPost"
-            element={<WritingHistory member={member} />}
+            element={<WritingHistory member={member} setMember={setMember} />}
           />
 
           <Route
             path="/refundHistory"
-            element={<RefundHistory member={member} />}
+            element={<RefundHistory member={member} setMember={setMember} />}
           />
           <Route
             path="/salesProductDetails/:productNo"
-            element={<SalesProductDetails member={member} />}
+            element={
+              <SalesProductDetails member={member} setMember={setMember} />
+            }
           />
         </Routes>
       </div>

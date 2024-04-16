@@ -19,6 +19,9 @@ const ProductQualityFrm = (props) => {
   const [qualityState, setQualityState] = useState({});
   const [qualityList, setQualityList] = useState([]);
 
+  const productQualityInitKey = props.productQualityInitKey;
+  const productQualityInitValue = props.productQualityInitValue;
+
   // 품질 참조 리스트 불러오기
   useEffect(() => {
     axios
@@ -116,8 +119,18 @@ const ProductQualityFrm = (props) => {
 
   return (
     <div className="quality-select-total-wrap">
+      
       <div className="quality-select-wrap">
         <div className="quality-select-title">품질 선택</div>
+
+        <div className="quality-select-selected">
+          <div className="quality-select-selected-left">
+            
+          </div>
+          <div className="quality-select-selected-right">
+
+          </div>
+        </div>
 
         {qualityList.map((item, index) => {
           const arr = item.productStatus.split("/");
