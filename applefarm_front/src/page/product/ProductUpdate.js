@@ -48,8 +48,8 @@ const ProductUpdate = (props) => {
 
   const [product, setProduct] = useState({});
   const [productFileList, setProductFileList] = useState();
-  const [productQualityInitKey, setProductQualityInitKey] = useState();
-  const [productQualityInitValue, setProductQualityInitValue] = useState();
+  const [productQualityInitKey, setProductQualityInitKey] = useState([]);
+  const [productQualityInitValue, setProductQualityInitValue] = useState([]);
 
   // 초기 데이터 로딩 로직
   useEffect(() => {
@@ -70,9 +70,6 @@ const ProductUpdate = (props) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(productQualityInitKey);
-  }, [productQualityInitKey]);
 
   const type = "update";
 
@@ -481,6 +478,8 @@ const ProductUpdate = (props) => {
           // Frm 타입 설정
           type="update"
           productNo={productNo}
+          productQualityInitKey={productQualityInitKey}
+          productQualityInitValue={productQualityInitValue}
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
@@ -510,8 +509,7 @@ const ProductUpdate = (props) => {
           productNo={productNo}
           product={product}
           productFileList={productFileList}
-          productQualityInitKey={productQualityInitKey}
-          productQualityInitValue={productQualityInitValue}
+          
         />
       </div>
       <div className="productInsert-nextBtn">
