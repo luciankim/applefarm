@@ -258,7 +258,7 @@ const BidItem = (props) => {
   };
   //입찰가격 변경
   const [bidModalOpen, setBidModalOpen] = useState(false);
-  const [newBidprice, setNewBidPrice] = useState();
+  const [newBidprice, setNewBidPrice] = useState("");
   const bidModal = () => {
     setBidModalOpen(true);
   };
@@ -297,7 +297,7 @@ const BidItem = (props) => {
           >
             <div>
               <img
-                src={bid.productThumbnail}
+                src={backServer + "/product/img/" + bid.productThumbnail}
                 className={
                   bid.tradeStatus === 0 ? "like-img" : "sold-out-first-img"
                 }
@@ -330,8 +330,10 @@ const BidItem = (props) => {
       <td>
         {bid.tradeStatus === 1 && bid.tradeBook === 0 ? (
           <>
-            <span className="sold-out-color">품절</span>
+            <span className="sold-out-color">입찰실패</span>
+            {/*
             <button onClick={delModalFunc}>취소</button>
+            */}
           </>
         ) : bid.tradeBook === 1 ? (
           <>
@@ -527,7 +529,10 @@ const TradeItem = (props) => {
         <Link to={"/product/" + trade.productNo}>
           <div className="member-like-img-box">
             <div>
-              <img src={trade.productThumbnail} className="like-img" />
+              <img
+                src={backServer + "/product/img/" + trade.productThumbnail}
+                className="like-img"
+              />
             </div>
           </div>
         </Link>

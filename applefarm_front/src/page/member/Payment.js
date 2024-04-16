@@ -174,7 +174,7 @@ const Payment = (props) => {
               buyer_addr: deliveryAddress + " " + deliveryAddressDetail, //배송정보
               buyer_postcode: deliveryZipcode,
             };
-
+            //결제
             IMP.request_pay(
               {
                 pg: "html5_inicis.INIpayTest",
@@ -207,19 +207,38 @@ const Payment = (props) => {
                     addressPhone: deliveryAddressPhone,
                     addressRequest: deliveryAddressRequest,
                   };
-                  axios
-                    .post(backServer + "/trade", trade)
-                    .then((res) => {
-                      console.log(res.data);
-                      if (res.data.message === "success") {
-                        navigate("/completePayment/" + trade.productNo);
-                      } else {
-                        alert("서버 오류 관리자에게 문의해주세요.");
-                      }
-                    })
-                    .catch((res) => {
-                      console.log(res.data);
-                    });
+                  if (bidThough === "y") {
+                    //입찰성공통해서 들어올 시 updqte
+                    console.log(trade);
+                    axios
+                      .patch(backServer + "/trade", trade)
+                      .then((res) => {
+                        console.log(res.data);
+                        if (res.data.message === "success") {
+                          navigate("/completePayment/" + trade.productNo);
+                        } else {
+                          alert("서버 오류 관리자에게 문의해주세요.");
+                        }
+                      })
+                      .catch((res) => {
+                        console.log(res.data);
+                      });
+                  } else {
+                    //아닐시 insert
+                    axios
+                      .post(backServer + "/trade", trade)
+                      .then((res) => {
+                        console.log(res.data);
+                        if (res.data.message === "success") {
+                          navigate("/completePayment/" + trade.productNo);
+                        } else {
+                          alert("서버 오류 관리자에게 문의해주세요.");
+                        }
+                      })
+                      .catch((res) => {
+                        console.log(res.data);
+                      });
+                  }
                 } else {
                   console.log(rsp);
                 }
@@ -248,7 +267,11 @@ const Payment = (props) => {
               <div className="payment-info">
                 <div className="payment-product">
                   <div className="payment-img-box">
-                    <img src={product.productThumbnail} />
+                    <img
+                      src={
+                        backServer + "/product/img/" + product.productThumbnail
+                      }
+                    />
                   </div>
                   <div className="payment-product-detail">
                     {/*
