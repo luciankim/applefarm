@@ -3,7 +3,20 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const SalesProductDetails = () => {
+const SalesProductDetails = (props) => {
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const product = useParams();
   const productNo = product.productNo;

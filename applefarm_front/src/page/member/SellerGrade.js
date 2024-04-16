@@ -1,7 +1,21 @@
+import axios from "axios";
 import "./member.css";
+import { useEffect, useState } from "react";
 
 const SellerGrade = (props) => {
-  const member = props.member;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   return (
     <>
