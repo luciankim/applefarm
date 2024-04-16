@@ -11,8 +11,17 @@ const ProductMainList = (props) => {
   const [productList, setProductList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
+
+  const searchArr = ["전체", "판매중"];
+  const [searchArea, setSearchArea] = useState(searchArr[0]);
+
   useEffect(() => {
-    const obj = { ...selectedProduct, reqPage: reqPage };
+    const obj = {
+      ...selectedProduct,
+      reqPage: reqPage,
+      tradeState: searchArea,
+    };
+    console.log(obj);
     axios
       .post(backServer + "/product/mainList", obj)
       .then((res) => {
@@ -27,11 +36,7 @@ const ProductMainList = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [selectedProduct, reqPage]);
-
-  const searchArr = ["전체", "판매중"];
-  const [searchArea, setSearchArea] = useState(searchArr[0]);
-
+  }, [selectedProduct, reqPage, searchArea]);
   return (
     <div className="productMainList">
       <div className="productMainList-btn">
