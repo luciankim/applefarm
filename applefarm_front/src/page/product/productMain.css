@@ -169,6 +169,15 @@
   width: 1100px;
   margin: 0 auto;
 }
+.productMainList-btn {
+  margin-bottom: 20px;
+}
+.productMainList-btn > button {
+  margin-right: 10px;
+  font-size: 18px;
+}
+.productMainList-btn > button.gray {
+}
 .productMainList-card {
   width: 100%;
   display: flex;
@@ -233,8 +242,12 @@
 .refundDelevery {
   width: 100%;
 }
-.refundDelevery table,
-tr,
+.refundDelevery > table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+/*
+.refundDelevery > table > 
 th,
 td,
 dt,
@@ -242,20 +255,16 @@ dd {
   border-spacing: 0;
   border-collapse: collapse;
 }
+*/
+
 .refundDelevery > table {
   width: 100%;
 }
-.refundDelevery > table th {
+.refundDelevery > table > thead > tr > th {
   width: 20%;
 }
-.refundDelevery > table th:last-child {
+.refundDelevery > table > thead > tr > th:last-child {
   width: 40%;
-}
-.refundDelevery th,
-td {
-  padding: 15px 0px;
-  text-align: center;
-  color: #7d7e80;
 }
 .refundDelevery > table > thead > tr > th {
   padding: 15px 0;
@@ -264,21 +273,32 @@ td {
   color: #222;
   text-align: center;
 }
-.refundDelevery th:not(:last-child),
-td:not(:last-child) {
+.refundDelevery > table > tbody > tr > td {
+  padding: 15px 0px;
+  text-align: center;
+  color: #7d7e80;
+}
+.refundDelevery > table > thead > tr > th:not(:last-child) {
   border-right: 1px solid #e3e5e8;
 }
-.refundDelevery th,
-td {
+.refundDelevery > table > tbody > tr > td:not(:last-child) {
+  border-right: 1px solid #e3e5e8;
+}
+
+.refundDelevery > table > thead > tr > th {
   border-top: 1px solid #e3e5e8;
   border-bottom: 1px solid #e3e5e8;
 }
-.refundDelevery dt {
+.refundDelevery > table > tbody > tr > td {
+  border-top: 1px solid #e3e5e8;
+  border-bottom: 1px solid #e3e5e8;
+}
+.refundDelevery > table > tbody > tr > td > dt {
   color: #222;
   text-align: left;
   padding-left: 20px;
 }
-.refundDelevery dd {
+.refundDelevery > table > tbody > tr > td > dd {
   margin-inline-start: 20px;
   text-align: left;
   padding-left: 20px;

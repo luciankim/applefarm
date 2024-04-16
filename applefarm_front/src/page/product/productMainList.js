@@ -29,8 +29,25 @@ const ProductMainList = (props) => {
       });
   }, [selectedProduct, reqPage]);
 
+  const searchArr = ["전체", "판매중"];
+  const [searchArea, setSearchArea] = useState(searchArr[0]);
+
   return (
     <div className="productMainList">
+      <div className="productMainList-btn">
+        <Btn
+          bg={searchArea === searchArr[0] ? "red" : "gray"}
+          text={searchArr[0]}
+          value={searchArr[0]}
+          setValue={setSearchArea}
+        />
+        <Btn
+          bg={searchArea === searchArr[1] ? "red" : "gray"}
+          text={searchArr[1]}
+          value={searchArr[1]}
+          setValue={setSearchArea}
+        />
+      </div>
       <div className="productMainList-card">
         {productList.map((product, index) => {
           return (
@@ -85,5 +102,23 @@ const ProductCard = (props) => {
         </div>
       </Link>
     </div>
+  );
+};
+
+const Btn = (props) => {
+  //탭
+  const { bg, text, value, setValue } = props;
+  const clickEvent = () => {
+    setValue(value);
+  };
+  return (
+    <button
+      className={"button_form " + bg}
+      type="button"
+      onClick={clickEvent}
+      value={value}
+    >
+      {text}
+    </button>
   );
 };

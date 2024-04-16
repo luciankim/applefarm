@@ -177,44 +177,61 @@ const ProductDetail = (props) => {
 
   //PswProductDetailBtn 클릭이벤트들
   const clickUpdate = () => {
-    navigate(
-      "/product/update/" +
-        productNo +
-        "/" +
-        navTable +
-        "/" +
-        navLine +
-        "/" +
-        navGen
-    );
+    if (!product.tradeState) {
+      navigate(
+        "/product/update/" +
+          productNo +
+          "/" +
+          navTable +
+          "/" +
+          navLine +
+          "/" +
+          navGen
+      );
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "수정 불가",
+        text: "이미 거래중인 상품입니다.",
+      });
+    }
   };
 
   const clickDelete = () => {
-    Swal.fire({ title: "정말 삭제하시겠습니까?", showDenyButton: true })
-      .then((result) => {
-        if (result.isConfirmed) {
-          axios
-            .patch(backServer + "/product/hide", {
-              productNo: product.productNo,
-            })
-            .then((res) => {
-              if (res.data.message === "success") {
-                console.log("삭제 성공"); //확인!!!!!
-                navigate("/main");
-              } else {
-                console.log("삭제 실패"); //확인!!!!!
+    if (
+      !product.tradeState ||
+      (product.tradeState &&
+        (product.tradeState === "구매확정" ||
+          product.tradeState === "환불완료"))
+    ) {
+      Swal.fire({ title: "정말 삭제하시겠습니까?", showDenyButton: true })
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .patch(backServer + "/product/hide", {
+                productNo: product.productNo,
+              })
+              .then((res) => {
+                if (res.data.message === "success") {
+                  navigate("/");
+                } else {
+                  console.log(res.data);
+                }
+              })
+              .catch((res) => {
                 console.log(res.data);
-              }
-            })
-            .catch((res) => {
-              console.log("axios 들어가지도 않았음 시발"); //확인!!!!!
-              console.log(res.data);
-            });
-        } else if (result.isDenied) {
-          console.log("삭제 거부"); //확인!!!!!
-        }
-      })
-      .catch(() => {});
+              });
+          } else if (result.isDenied) {
+          }
+        })
+        .catch(() => {});
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "삭제 불가",
+        text: "거래 중인 경우 구매확정 또는 환불완료가 되어야 삭제할 수 있습니다.",
+      });
+    }
   };
   const likeClick = () => {
     //좋아요를 누르지 않은 상태일 때 -> 좋아요 Insert

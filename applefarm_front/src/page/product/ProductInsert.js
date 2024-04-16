@@ -142,7 +142,7 @@ const ProductInsert = (props) => {
   //"등록 취소"버튼 클릭시 제품별 메인페이지로 이동
   useEffect(() => {
     if (pip === "등록 취소") {
-      navigate("/main");
+      navigate("/");
     }
     if (pip === "상품 등록") {
       navigate("/product/"); //상품 상세페이지로 이동
