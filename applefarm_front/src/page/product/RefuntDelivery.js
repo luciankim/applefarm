@@ -1,7 +1,7 @@
-const RefundDelevery = () => {
+const RefundDelivery = () => {
   return (
-    <div className="refundDelevery-wrap">
-      <div className="refundDelevery">
+    <div className="refundDelivery-wrap">
+      <div className="refundDelivery">
         <h2>배송 & 환불 규정</h2>
         <table>
           <thead>
@@ -20,7 +20,7 @@ const RefundDelevery = () => {
                 <br />
                 구매호가 선택
               </td>
-              <td className="refundDelevery-red">예약취소</td>
+              <td className="refundDelivery-red">예약취소</td>
               <td>
                 <dt>마이페이지에서 [예약 취소]버튼 클릭시 즉시 환불 처리</dt>
                 <dd>서버 상태에 따라 취소 시점에 차이가 있을 수 있습니다.</dd>
@@ -69,7 +69,7 @@ const RefundDelevery = () => {
                 <br />
                 상품 배송 완료
               </td>
-              <td className="refundDelevery-red">환불 요청</td>
+              <td className="refundDelivery-red">환불 요청</td>
               <td>
                 <dt>마이페이지에서 [환불 요청]버튼 클릭시 환불요청 완료</dt>
                 <dd>구매자가 AppleFarm으로 상품 배송</dd>
@@ -96,4 +96,4 @@ const RefundDelevery = () => {
   );
 };
 
-export default RefundDelevery;
+export default RefundDelivery;

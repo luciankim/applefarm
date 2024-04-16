@@ -657,6 +657,25 @@
 .trade-book-status {
   color: var(--main_02);
 }
+.trade-book-status-badge {
+  color: #0071e3;
+  margin-left: 10px;
+  font-size: 12px;
+  background-color: var(--gray_07);
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+.purchase-product-summary {
+  font-size: 12px;
+  color: var(--gray_04);
+  display: flex;
+  align-items: center;
+}
+.purchase-history-content > .report-message {
+  font-size: 12px;
+  color: var(--gray_05);
+  padding-bottom: 20px;
+}
 .sm-f {
   font-size: 13px;
 }

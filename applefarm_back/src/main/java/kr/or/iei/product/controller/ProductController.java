@@ -808,6 +808,8 @@ public class ProductController {
 	})
 	@PostMapping(value = "/mainList")
 	public ResponseEntity<ResponseDTO> selectProductMainList(@RequestBody Product obj){
+		//거래상태 상관 없이 "전체"검색 : obj.tradeState="전체"
+		//판매중인 상품만 검색 : obj.tradeState = null
 		Product product = obj;
 		int reqPage = obj.getReqPage();
 		HashMap<String, Object> map = productService.productMainList(product,reqPage);

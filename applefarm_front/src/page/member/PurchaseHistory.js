@@ -141,6 +141,12 @@ const PurchaseBid = (props) => {
   } = props;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [status, setStatus] = useState(true);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 이 부분이 스크롤을 부드럽게 해줍니다.
+    });
+  }, [reqPage]);
   const statusList = [
     { name: "전체", color: "black" },
     { name: "입찰중", color: "black" },
@@ -181,6 +187,9 @@ const PurchaseBid = (props) => {
 
   return (
     <div className="purchase-history-content">
+      <div className="report-message">
+        * 입찰성공시 기한 안에 결제 안할 시 예약 취소 됩니다.
+      </div>
       <table>
         <StatusBar
           statusList={statusList}
@@ -314,19 +323,20 @@ const BidItem = (props) => {
         </Link>
       </td>
       <td>
-        {bid.tradeBook === 1 ? (
-          <span className="trade-book-status sm-f">결제대기</span>
-        ) : (
-          ""
-        )}
-        <Link to={"/product/" + bid.productNo}>
+        <div className="purchase-product-summary">
           <div>{bid.productSummary}</div>
+          {bid.tradeBook === 1 ? (
+            <div className="trade-book-status-badge">입찰성공</div>
+          ) : (
+            ""
+          )}
+        </div>
+        <Link to={"/product/" + bid.productNo}>
+          <div>{bid.productTitle}</div>
         </Link>
       </td>
       <td>{bid.maxPrice.toLocaleString()}원</td>
-      <td className={bid.tradeBook === 1 ? "trade-book-status" : ""}>
-        {bid.bidPrice.toLocaleString()}원
-      </td>
+      <td>{bid.bidPrice.toLocaleString()}원</td>
       <td>
         {bid.tradeStatus === 1 && bid.tradeBook === 0 ? (
           <>
@@ -392,6 +402,13 @@ const PurchaseOngoing = (props) => {
   const [status, setStatus] = useState(true);
   const [tradeList, setTradeList] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 이 부분이 스크롤을 부드럽게 해줍니다.
+    });
+  }, [reqPage]);
+
   const statusList1 = [
     { name: "전체", color: "black" },
     { name: "결제완료", color: "black" },
@@ -433,6 +450,9 @@ const PurchaseOngoing = (props) => {
   }, [reqPage, currentStatus, startDate, endDate, currentTab, status]);
   return (
     <div className="purchase-history-content">
+      <div className="report-message">
+        * 단순변심으로 인한 환불은 불가합니다.
+      </div>
       <table>
         <StatusBar
           statusList={currentTab === 1 ? statusList1 : statusList2}
@@ -538,8 +558,9 @@ const TradeItem = (props) => {
         </Link>
       </td>
       <td>
+        <div className="purchase-product-summary">{trade.productSummary}</div>
         <Link to={"/mypage/detailOrder/" + trade.productNo}>
-          {trade.productSummary}
+          <div>{trade.productTitle}</div>
         </Link>
       </td>
       <td>{trade.tradePrice.toLocaleString()}원</td>

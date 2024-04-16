@@ -199,12 +199,12 @@ const AddressModal = (props) => {
         addressDetail: newAddressDetail,
         addressDefault: newAddressDefault,
       };
-      console.log(obj);
+      //console.log(obj);
 
       axios
         .post(backServer + "/member/address", obj)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (res.data.message === "success") {
             if (delivery === "deliveryPlus") {
               setDeliveryAddress(newAddress);

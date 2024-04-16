@@ -45,6 +45,9 @@ public class Trade {
 	private String invoiceNumber;
 	@Schema(description = "결제 번호",type="number")
 	private String paymentNumber;
+	@Schema(description = "배송완료일",type="String")
+	private String deliveryDate;
+	
 	
 	@Schema(description = "상품 요약",type="String")
 	private String productSummary;
@@ -52,6 +55,8 @@ public class Trade {
 	private String productThumbnail;
 	@Schema(description = "상품 구매 가격",type="String")
 	private int productPrice;
+	@Schema(description = "상품 제목",type="String")
+	private String productTitle;
 	
 	@Schema(description = "판매자 회원 닉네임",type="String")
 	private String tradeSellerNickname;	

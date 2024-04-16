@@ -27,6 +27,8 @@ public class Like {
 	private String ProductQuality;
 	@Schema(description = "상품 사진",type="number")
 	private String productThumbnail;
+	@Schema(description = "상품 제목",type="number")
+	private String productTitle;
 	@Schema(description = "판매자 닉네임",type="string")
 	private String memberNickName;
 	@Schema(description = "상품 가격",type="number")

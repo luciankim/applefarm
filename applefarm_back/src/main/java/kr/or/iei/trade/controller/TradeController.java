@@ -218,7 +218,9 @@ public class TradeController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-
+	@Operation(summary = "배송조회", description = "송장번호 받아서 배송상태 조회, api이용")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@GetMapping(value = "/tracking/{invoiceNumber}")
 	public ResponseEntity<ResponseDTO> trackingHistory(@PathVariable String invoiceNumber) {
 		String url = "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=04&t_invoice=" + invoiceNumber
@@ -235,7 +237,6 @@ public class TradeController {
 			System.out.println(result);
 			
 			JsonObject object = (JsonObject) JsonParser.parseString(result); // 객체로 데이터를 받았기 때문에 제이슨 오브젝트로 받음
-			
 			JsonArray items = object.get("trackingDetails").getAsJsonArray();
 			// 겟.키값.해당하는 형태
 			String completeYN = object.get("completeYN").getAsString();	//배송완료 여부

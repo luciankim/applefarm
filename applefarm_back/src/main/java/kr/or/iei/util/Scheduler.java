@@ -24,24 +24,23 @@ public class Scheduler {
 	}
 	
 	//배송완료 후 7일 이후자동 구매확정
-	//@Scheduled(cron="10 * * * * *")	//테스트용으로 매분 10초마다 실행중
-	@Scheduled(cron="0 0 0 * * *")	//매일 00시에 실행
+	@Scheduled(cron="0 1 * * * *")	//매일 00시에 실행	//테스트로 매시 1분에 실행으로 설정되어있음
 	public void scheduledPurchase() {
 		tradeService.scheduledPurchase();
 	}
 	
 	//매일 00시에 예약상품 기간내에 결제 미완료 취소
-	@Scheduled(cron="0 0 0 * * *")
+	@Scheduled(cron="0 0 0 * * *")	//매일 00시에 실행
 	public void scheduledBook() {
 		tradeService.scheduledBook();
 	}
-	
-	/*
-	//배송완료
-	@Scheduled(cron="50 16 * * * *")	//1분마다 실행
+
+/*횟수제한때문에 막아놈	
+	//배송완료(하루에 한번 배송중인 거래들 송장번호를 가지고 배송완료상태,완료시간을 조회해서 배송완료시 거래테이블 업데이트
+	@Scheduled(cron="0 55 * * * *")	//테스트로 매시 55분에 실행으로 설정되어있음
 	public void scheduledDelivery() {
 		tradeService.selectDelivery();
 	}
-	*/
+*/	
 	
 }
