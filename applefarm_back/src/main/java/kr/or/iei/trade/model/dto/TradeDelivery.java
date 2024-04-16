@@ -10,15 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value = "tradeDate")
-@Schema(description = "거래 배송 날짜 객체")
-public class TradeDate {
+@Alias(value = "tradeDelivery")
+@Schema(description = "배송관련정보 객체")
+public class TradeDelivery {	
 	@Schema(description = "거래 번호",type="number")
 	private int tradeNo;
 	@Schema(description = "거래 상태",type="String")
 	private String tradeState;
-	@Schema(description = "배송완료일",type="String")
-	private String deliveryDate;
-	@Schema(description = "거래 예약일",type="String")
-	private String tradeReserveDate;
+	@Schema(description = "배송 송장번호",type="String")
+	private String invoiceNumber;
 }
