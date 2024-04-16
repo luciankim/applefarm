@@ -530,7 +530,11 @@ const SalesHistory = (props) => {
                         >
                           <img
                             className="salesImg"
-                            src={product.productThumbnail}
+                            src={
+                              backServer +
+                              "product/img/" +
+                              product.productThumbnail
+                            }
                             alt="Product"
                           />
                         </Link>
