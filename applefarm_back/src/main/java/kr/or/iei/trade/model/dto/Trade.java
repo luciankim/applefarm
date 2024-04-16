@@ -52,6 +52,8 @@ public class Trade {
 	private String productThumbnail;
 	@Schema(description = "상품 구매 가격",type="String")
 	private int productPrice;
+	@Schema(description = "상품 제목",type="String")
+	private String productTitle;
 	
 	@Schema(description = "판매자 회원 닉네임",type="String")
 	private String tradeSellerNickname;	

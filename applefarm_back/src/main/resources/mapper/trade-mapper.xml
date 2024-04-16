@@ -51,16 +51,16 @@
 					</choose>
 	</select>
 	<select id="selectBid" resultType="bid">
-	select bid_no,product_no,member_no,bid_price,bid_date,trade_status,trade_book,max_price,product_thumbnail,product_summary,product_price
+	select bid_no,product_no,member_no,bid_price,bid_date,trade_status,trade_book,max_price,product_thumbnail,product_summary,product_price,product_title
         from (select rownum as rnum, c.* 
                 from (select b.bid_no,b.product_no,b.member_no,b.bid_price,to_char(b.bid_date,'yyyy-mm-dd') as bid_date,
                         (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer=#{memberNo} and trade_state!='예약중') as my_trade,
                         (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer!=#{memberNo}) as trade_status,
                         (select count(*) from trade_tbl t where t.product_no=b.product_no and t.trade_buyer=#{memberNo} and trade_state='예약중') as trade_book,
                         (select max(bid_price) from bid_tbl m where m.product_no=b.product_no) as max_price,
-                         p.product_thumbnail, p.product_summary, p.product_price
+                         p.product_thumbnail, p.product_summary, p.product_price, p.product_title
                      from bid_tbl b join product_tbl p on b.product_no=p.product_no
-                     where b.member_no=#{memberNo} and to_char(bid_date,'yyyy-mm-dd') between #{startDate} and #{endDate} order by 1 desc)c 
+                     where b.member_no=#{memberNo} and to_char(bid_date,'yyyy-mm-dd') between #{startDate} and #{endDate} order by b.bid_date desc, b.bid_no desc)c 
              	where my_trade=0 
              	<choose>
 						<when test="status==1">
@@ -129,10 +129,11 @@
   	</select>
   	<select id="selectPurchaseTrade" resultType="trade">
   		select * from 
-		(select rownum as rnum, a.* from (select t.trade_no, t.trade_seller, p.product_thumbnail, p.product_summary, t.trade_state, t.product_no,t.trade_price,to_char(t.trade_date,'yyyy-mm-dd') as trade_date, t.payment_number, t.invoice_number
+		(select rownum as rnum, a.* from (select t.trade_no, t.trade_seller, p.product_thumbnail, p.product_summary,p.product_title, t.trade_state, t.product_no,t.trade_price,to_char(t.trade_date,'yyyy-mm-dd') as trade_date, t.payment_number, t.invoice_number
 		,(select count(*) from review_tbl r where r.trade_no=t.trade_no) as review
 		,(select member_nickname from member_tbl where member_no=t.trade_seller) as trade_seller_nickname
-		from trade_tbl t join product_tbl p on p.product_no=t.product_no where trade_buyer=#{memberNo}
+		from trade_tbl t join product_tbl p on p.product_no=t.product_no 
+		where trade_buyer=#{memberNo}
 		and to_char(t.trade_date,'yyyy-mm-dd') between #{startDate} and #{endDate}
 		and 
 		<choose>
@@ -166,7 +167,7 @@
 				</choose>
 			</when>
 		</choose>		
-		 order by 1 desc)a)
+		 order by trade_date desc, trade_no desc)a)
 		where rnum between #{start} and #{end}
   	</select>
   	<update id="updatePurchaseConfirm">

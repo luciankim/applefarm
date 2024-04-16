@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button1, Button2, Button3, Button4 } from "../../component/FormFrm";
 import "./member.css";
 import { useEffect, useRef, useState } from "react";
@@ -119,29 +119,36 @@ const LikeItem = (props) => {
         </span>
       </td>
       <td>
-        <div
-          className={
-            like.trade === 0
-              ? "member-like-img-box"
-              : "member-like-img-box  sold-out-img-box"
-          }
-        >
-          <div>
-            <img
-              src={backServer + "/product/img/" + like.productThumbnail}
-              className={like.trade === 0 ? "like-img" : "sold-out-first-img"}
-            />
-          </div>
-          {like.trade === 0 ? (
-            ""
-          ) : (
+        <Link to={"/product/" + like.productNo}>
+          <div
+            className={
+              like.trade === 0
+                ? "member-like-img-box"
+                : "member-like-img-box  sold-out-img-box"
+            }
+          >
             <div>
-              <img src="/image/soldout.png" className="sold-out-img"></img>
+              <img
+                src={backServer + "/product/img/" + like.productThumbnail}
+                className={like.trade === 0 ? "like-img" : "sold-out-first-img"}
+              />
             </div>
-          )}
-        </div>
+            {like.trade === 0 ? (
+              ""
+            ) : (
+              <div>
+                <img src="/image/soldout.png" className="sold-out-img"></img>
+              </div>
+            )}
+          </div>
+        </Link>
       </td>
-      <td className="likeName-td">{like.productSummary}</td>
+      <td className="likeName-td">
+        <div className="purchase-product-summary">{like.productSummary}</div>
+        <Link to={"/product/" + like.productNo}>
+          <div>{like.productTitle}</div>
+        </Link>
+      </td>
       <td>{like.productPrice.toLocaleString()}원</td>
       <td>{like.memberNickName}</td>
       {like.trade === 0 ? (

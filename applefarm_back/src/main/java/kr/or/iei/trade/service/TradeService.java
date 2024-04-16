@@ -52,7 +52,7 @@ public class TradeService {
 		return tradeDao.selectDetailSales(t);
 	}
 	public Map selectBid(int memberNo, int status, int reqPage, String startDate, String endDate) {
-		int numPerPage = 10; // 페이지당 행 수 -> 성공 후 수정
+		int numPerPage = 5; // 페이지당 행 수 -> 성공 후 수정
 		int pageNaviSize = 5;
 		int totalCount = tradeDao.bidTotalCount(memberNo,status,startDate,endDate);
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
@@ -85,7 +85,7 @@ public class TradeService {
 		return tradeDao.updateBid(bid);
 	}
 	public Map selectPurchase(int memberNo, int tab, int status, int reqPage, String startDate, String endDate) {
-		int numPerPage = 10;
+		int numPerPage = 5;
 		int pageNaviSize = 5;
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("memberNo", memberNo);

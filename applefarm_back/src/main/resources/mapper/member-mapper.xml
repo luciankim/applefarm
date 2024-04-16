@@ -54,6 +54,7 @@
 		b.product_price,
 		b.product_quality,
 		b.product_thumbnail,
+		b.product_title,
 		c.member_nickname,
 		(SELECT COUNT(*) FROM trade_tbl
 		WHERE product_no = a.product_no) AS trade
