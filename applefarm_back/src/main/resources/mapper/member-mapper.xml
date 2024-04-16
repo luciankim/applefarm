@@ -429,6 +429,38 @@
 		JOIN product_tbl p ON r.product_no = p.product_no
 
 	</select>
+	
+	<select id="getOnlyProduct" resultType="product">
+	
+		SELECT 
+        	p.product_no,
+			p.product_date,
+			p.product_thumbnail,
+			p.product_summary,
+			p.product_price,
+			MAX(b.bid_price) AS max_bid_price,
+        	t.trade_state
+		FROM
+			member_tbl m
+		JOIN 
+			product_tbl p ON m.member_no = p.member_no
+		LEFT JOIN
+			bid_tbl b ON p.product_no = b.product_no
+		LEFT JOIN 
+			trade_tbl t ON p.product_no = t.product_no
+		WHERE
+			m.member_no = #{memberNo} AND t.product_no IS NULL
+		GROUP BY
+			p.product_no,
+			p.product_date,
+			p.product_thumbnail,
+			p.product_summary,
+			p.product_price,
+        	t.trade_state
+		ORDER BY
+			p.product_date desc
+	
+	</select>
 
 
 </mapper>

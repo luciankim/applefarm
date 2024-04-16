@@ -696,7 +696,25 @@ public class MemberController {
 
 	}
 	
-	
+	@Operation(summary = "거래테이블에 없는 상품데이터", description = "화면에서 회원번호로 참조")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PostMapping(value = "/getOnlyProduct/{memberNo}")
+	public ResponseEntity<ResponseDTO> getOnlyProduct(@PathVariable int memberNo){
+		
+		List<Product> product = memberService.getOnlyProduct(memberNo);
+		
+		if (product != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", product);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<>(response, response.getHttpStatus());
+
+		}
+
+		
+	}
 
 	
 	

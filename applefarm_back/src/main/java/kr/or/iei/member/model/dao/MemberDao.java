@@ -103,6 +103,8 @@ public interface MemberDao {
 
 	List<Product> getRefund(int memberNo);
 
+	List<Product> getOnlyProduct(int memberNo);
+
 
 
 
