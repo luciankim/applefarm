@@ -58,7 +58,7 @@
   padding: 10px 0px;
 }
 .address-input-wrap {
-  padding: 20px;
+  padding: 10px 20px;
 }
 .address-input-wrap > div {
   text-align: left;
@@ -68,7 +68,7 @@
   font-size: 13px;
 }
 .address-modal-content-wrap {
-  width: 520px;
+  width: 500px;
   border-radius: 10px;
 }
 .zipcode-wrap {

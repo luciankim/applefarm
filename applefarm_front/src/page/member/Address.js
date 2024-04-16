@@ -72,13 +72,17 @@ const Address = () => {
                 })}
               </ul>
             </div>
-            <div className="address-page">
-              <Pagination
-                pageInfo={pageInfo}
-                reqPage={reqpage}
-                setReqPage={setreqpage}
-              />
-            </div>
+            {pageInfo.totalPage <= 1 ? (
+              ""
+            ) : (
+              <div className="address-page">
+                <Pagination
+                  pageInfo={pageInfo}
+                  reqPage={reqpage}
+                  setReqPage={setreqpage}
+                />
+              </div>
+            )}
           </>
         ) : (
           <div className="non-address">

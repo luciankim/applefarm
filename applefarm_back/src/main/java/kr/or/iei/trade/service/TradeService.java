@@ -126,6 +126,8 @@ public class TradeService {
 		}
 		return result;
 	}
+	
+	@Transactional
 	public void scheduledPurchase() {
 		//배송완료 리스트 불러오기(거래번호, 배송완료일)
 		List<TradeDate> list = tradeDao.selectDeliveryCompleted();
@@ -146,6 +148,7 @@ public class TradeService {
 		}
 	}
 	
+	@Transactional
 	public void scheduledBook() {
 		List<TradeDate> list = tradeDao.selectBook();
 		System.out.println("예약리스트 : "+list);
@@ -164,14 +167,14 @@ public class TradeService {
 		}
 	}
 	
-	//집가서하기
+	@Transactional
 	public void selectDelivery() {
-		//배송완료 전 배송중 상태(송장등록된 상태)만 가져옴
+		//배송완료 전 배송중 상태만 가져옴
 		List<TradeDelivery> list = tradeDao.selectDelivery();
 		System.out.println(list);
 		for(TradeDelivery td : list) {
 			String invoiceNumber = td.getInvoiceNumber();
-			System.out.println(invoiceNumber);
+			System.out.println(invoiceNumber);			
 			String url = "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=04&t_invoice=" + invoiceNumber
 					+ "&t_key=YlFOzoy1xCyv8YDqetwzAA";
 			try {
@@ -179,10 +182,15 @@ public class TradeService {
 						.ignoreContentType(true).get().text();
 				System.out.println(result);
 				JsonObject object = (JsonObject) JsonParser.parseString(result); // 객체로 데이터를 받았기 때문에 제이슨 오브젝트로 받음
-				//배송완료 여부만 조회
-				String completeYN = object.get("completeYN").getAsString();	
+				//배송완료 여부 조회,배송완료시간 가져오기
+				String completeYN = object.get("completeYN").getAsString();		//완료여부
+				JsonObject item = object.get("lastDetail").getAsJsonObject();
+				String timeString = item.get("timeString").getAsString();		//완료시간(ex."2024-04-02 18:08:08")
 				if(completeYN.equals("Y")){
-					System.out.println("배송완료");
+					//배송완료시 거래테이블에 배송완료시간,배송상태(배송완료)로 업데이트
+					TradeDate t = new TradeDate(td.getTradeNo(), "배송완료", timeString, null);
+					System.out.println("t:"+t);
+					tradeDao.updateDeliveryComplete(t);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

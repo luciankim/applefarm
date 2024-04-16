@@ -201,4 +201,7 @@
 	<delete id="deleteTradeBook2">
 		delete from trade_tbl where trade_no=#{tradeNo}
 	</delete>
+	<update id="updateDeliveryComplete">
+		update trade_tbl set trade_state=#{tradeState}, delivery_date=to_date(#{deliveryDate},'yyyy-mm-dd hh24:mi:ss') where trade_no=#{tradeNo}
+	</update>
 </mapper>
