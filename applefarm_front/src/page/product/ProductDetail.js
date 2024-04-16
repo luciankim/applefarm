@@ -32,6 +32,10 @@ const ProductDetail = (props) => {
 
   const [productNo, setProductNo] = useState(params.productNo);
 
+  console.log(params.productNo);
+
+
+
   // const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -70,6 +74,7 @@ const ProductDetail = (props) => {
         .get(backServer + "/member")
         .then((res) => {
           if (res.data.message === "success") {
+            console.log(productNo);
             setLoginMember(res.data.data);
             axios
               .get(backServer + "/product/likeBoolean/" + productNo)

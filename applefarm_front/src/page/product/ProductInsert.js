@@ -230,7 +230,7 @@ const ProductInsert = (props) => {
         form.append("keyboard", partObject.KEYBOARD);
         form.append("ports", partObject.PORTS);
         form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
-        form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+        form.append("wirelessConnectivity", partObject.WIRELESS_CONNECTIVITY);
         form.append("camera", partObject.CAMERA);
         form.append("microphone", partObject.MICROPHONE);
         form.append("speakersAudioJack", partObject.SPEAKERS_AUDIO_JACK);
@@ -265,7 +265,7 @@ const ProductInsert = (props) => {
         form.append("keyboard", partObject.KEYBOARD);
         form.append("ports", partObject.PORTS);
         form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
-        form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+        form.append("wirelessConnectivity", partObject.WIRELESS_CONNECTIVITY);
         form.append("camera", partObject.CAMERA);
         form.append("microphone", partObject.MICROPHONE);
         form.append("speakersAudioJack", partObject.SPEAKERS_AUDIO_JACK);
@@ -283,7 +283,7 @@ const ProductInsert = (props) => {
         form.append("display", partObject.DISPLAY);
         form.append("digitalCrownButton", partObject.DIGITAL_CROWN_BUTTON);
         form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
-        form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+        form.append("wirelessConnectivity", partObject.WIRELESS_CONNECTIVITY);
         form.append("microphone", partObject.MICROPHONE);
         form.append("speaker", partObject.SPEAKER);
         form.append("power", partObject.POWER);

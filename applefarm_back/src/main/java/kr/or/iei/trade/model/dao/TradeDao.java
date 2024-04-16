@@ -9,6 +9,8 @@ import kr.or.iei.admin.model.dto.Refund;
 import kr.or.iei.product.model.dto.Review;
 import kr.or.iei.trade.model.dto.Bid;
 import kr.or.iei.trade.model.dto.Trade;
+import kr.or.iei.trade.model.dto.TradeDate;
+import kr.or.iei.trade.model.dto.TradeDelivery;
 
 @Mapper
 public interface TradeDao {
@@ -64,4 +66,11 @@ public interface TradeDao {
 
 
 	List selectDeliveryCompleted();
+
+
+	List<TradeDelivery> selectDelivery();
+
+
+	List<TradeDate> selectBook();
+
 }

@@ -967,6 +967,82 @@ const RefundModal = (props) => {
     </div>
   );
 };
+const TrackingModal = (props) => {
+  const setModalOpen = props.setModalOpen;
+  const trackingList = props.trackingList;
+  const invoiceNumber = props.invoiceNumber;
+  const completeYN = props.completeYN; //스케줄 1분마다 안할거면 이걸로
+  const modalBackground = useRef();
+  //모달 닫기
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  //모달밖 클릭시
+  const modalBack = (e) => {
+    if (e.target === modalBackground.current) {
+      setModalOpen(false);
+    }
+  };
+  return (
+    <div className="modal" ref={modalBackground} onClick={modalBack}>
+      <div className="modal-content-wrap big-modal">
+        <span
+          className="material-icons close-icon status-close"
+          onClick={closeModal}
+        >
+          highlight_off
+        </span>
+        <div className="modal-tracking-title">배송조회</div>
+        <div className="tracking-wrap">
+          <div className="tracking-number">
+            <div>송장번호</div>
+            <div>{invoiceNumber}</div>
+          </div>
+          <div className="tracking-content">
+            <table>
+              <thead>
+                <tr>
+                  <td>배송시간</td>
+                  <td>현재위치</td>
+                  <td>배송내용</td>
+                  <td>기사 연락처</td>
+                </tr>
+              </thead>
+              <tbody>
+                {trackingList === null ? (
+                  <tr>
+                    <td colSpan={4}>
+                      <div>집하처리 전입니다. </div>
+                    </td>
+                  </tr>
+                ) : (
+                  trackingList.map((item, index) => {
+                    return (
+                      <tr key={"tracking" + index}>
+                        <td>{item.timeString}</td>
+                        <td>{item.where}</td>
+                        <td>{item.kind}</td>
+                        <td>{item.telno2}</td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+            {completeYN === "Y" ? (
+              <div>
+                <button>구매확정</button>
+                <button>환불신청</button>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 export {
   DelModal,
   AddressModal,
@@ -976,4 +1052,5 @@ export {
   ReviewModal,
   SuccessModal,
   RefundModal,
+  TrackingModal,
 };
