@@ -27,14 +27,21 @@ public class Scheduler {
 	//@Scheduled(cron="10 * * * * *")	//테스트용으로 매분 10초마다 실행중
 	@Scheduled(cron="0 0 0 * * *")	//매일 00시에 실행
 	public void scheduledPurchase() {
-		tradeService.scheduledPurchase();//예약작업추가예정
+		tradeService.scheduledPurchase();
 	}
 	
-	@Scheduled(cron="0 * * * * *")	//1분마다 실행
+	@Scheduled(cron="0 * * * * *")
+	public void scheduledBook() {
+		//매일 00시에 예약상품 기간내에 결제 미완료 취소
+		tradeService.scheduledBook();
+	}
+	
+	/*
+	//배송완료
+	@Scheduled(cron="50 16 * * * *")	//1분마다 실행
 	public void scheduledDelivery() {
 		tradeService.selectDelivery();
-		
 	}
-	
+	*/
 	
 }

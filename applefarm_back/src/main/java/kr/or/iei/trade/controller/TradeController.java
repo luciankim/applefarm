@@ -217,9 +217,9 @@ public class TradeController {
 					.ignoreContentType(true).get().text();
 
 			System.out.println(result);
-
+			
 			JsonObject object = (JsonObject) JsonParser.parseString(result); // 객체로 데이터를 받았기 때문에 제이슨 오브젝트로 받음
-
+			
 			JsonArray items = object.get("trackingDetails").getAsJsonArray();
 			// 겟.키값.해당하는 형태
 			String completeYN = object.get("completeYN").getAsString();	//배송완료 여부

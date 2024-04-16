@@ -1029,6 +1029,14 @@ const TrackingModal = (props) => {
                 )}
               </tbody>
             </table>
+            {completeYN === "Y" ? (
+              <div>
+                <button>구매확정</button>
+                <button>환불신청</button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

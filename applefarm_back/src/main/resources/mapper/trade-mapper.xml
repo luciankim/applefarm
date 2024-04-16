@@ -188,7 +188,10 @@
   	<select id="selectDeliveryCompleted" resultType="tradeDate">
   		select trade_no,trade_state,to_char(delivery_date,'yyyy/mm/dd') as delivery_date from trade_tbl where trade_state='배송완료'
   	</select>
-  	<select id="selectDelivery" resultType="tradeDate">
-  		select trade_no,trade_state,to_char(delivery_date,'yyyy/mm/dd') as delivery_date from trade_tbl where trade_state='배송중'
+  	<select id="selectDelivery" resultType="tradeDelivery">
+  		select trade_no,trade_state,invoice_number from trade_tbl where trade_state='배송중'
+  	</select>
+  	<select id="selectBook" resultType="tradeDate">
+  		select trade_no,trade_state,to_char(trade_reserve_date,'yyyy/mm/dd') as trade_reserve_date where trade_state='예약중'
   	</select>
 </mapper>
