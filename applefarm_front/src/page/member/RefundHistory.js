@@ -172,7 +172,11 @@ const RefundHistory = (props) => {
                           <td>
                             <img
                               className="refund-history-img"
-                              src={product.productThumbnail}
+                              src={
+                                backServer +
+                                "product/img/" +
+                                product.productThumbnail
+                              }
                             />
                           </td>
                           <td className="refund-info">
@@ -234,7 +238,11 @@ const RefundHistory = (props) => {
                           <td>
                             <img
                               className="refund-history-img"
-                              src={product.productThumbnail}
+                              src={
+                                backServer +
+                                "product/img/" +
+                                product.productThumbnail
+                              }
                             />
                           </td>
                           <td className="refund-info">

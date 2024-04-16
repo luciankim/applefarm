@@ -1513,6 +1513,16 @@
 
 /*판매 내역*/
 
+.sales-pTitle {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 13px;
+  color: #8f8f8f;
+}
+.sales-summary {
+  color: #1c0303 !important;
+}
 .salesHistory-content {
   width: 100%;
   border-collapse: collapse;

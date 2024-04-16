@@ -320,7 +320,8 @@
 		t.invoice_number,
 		t.trade_price,
 		t.trade_no,
-		t.invoice_number
+		t.invoice_number,
+		p.product_title
 		FROM
 		member_tbl m
 		JOIN
@@ -343,7 +344,8 @@
 		t.invoice_number,
 		t.trade_price,
 		t.trade_no,
-		t.invoice_number
+		t.invoice_number,
+		p.product_title
 		ORDER BY
 		p.product_date desc
 
@@ -441,7 +443,8 @@
 			p.product_summary,
 			p.product_price,
 			MAX(b.bid_price) AS max_bid_price,
-        	t.trade_state
+        	t.trade_state,
+        	p.product_title
 		FROM
 			member_tbl m
 		JOIN 
@@ -458,7 +461,8 @@
 			p.product_thumbnail,
 			p.product_summary,
 			p.product_price,
-        	t.trade_state
+        	t.trade_state,
+        	p.product_title
 		ORDER BY
 			p.product_date desc
 	

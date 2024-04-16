@@ -526,6 +526,7 @@ const SalesHistory = (props) => {
               <tr className="salesHistory-title">
                 <td className="allSales-btn"></td>
                 <td></td>
+
                 <td className="sales-title">최고입찰가</td>
                 <td className="sales-title">판매가</td>
                 <td></td>
@@ -565,7 +566,12 @@ const SalesHistory = (props) => {
                           className="sales-link"
                           to={`/product/${product.productNo}`}
                         >
-                          {product.productSummary}
+                          <div className="sales-pTitle">
+                            <span className="sales-summary">
+                              {product.productSummary}
+                            </span>
+                            <span>{product.productTitle}</span>
+                          </div>
                         </Link>
                       </td>
 
@@ -604,6 +610,7 @@ const SalesHistory = (props) => {
                     </button>
                   </td>
                   <td></td>
+
                   <td className="sales-title"></td>
                   <td className="sales-title">판매가</td>
                   <td></td>
@@ -637,9 +644,15 @@ const SalesHistory = (props) => {
                           className="sales-link"
                           to={`/mypage/salesProductDetails/${product.productNo}`}
                         >
-                          {product.productSummary}
+                          <div className="sales-pTitle">
+                            <span className="sales-summary">
+                              {product.productSummary}
+                            </span>
+                            <span>{product.productTitle}</span>
+                          </div>
                         </Link>
                       </td>
+
                       <td className="sales-info"></td>
                       <td className="sales-info">{product.tradePrice}원</td>
 
@@ -675,6 +688,7 @@ const SalesHistory = (props) => {
                     </button>
                   </td>
                   <td></td>
+
                   <td className="sales-title"></td>
                   <td className="sales-title">판매가</td>
                   <td></td>
@@ -712,9 +726,15 @@ const SalesHistory = (props) => {
                           className="sales-link"
                           to={`/mypage/salesProductDetails/${product.productNo}`}
                         >
-                          {product.productSummary}
+                          <div className="sales-pTitle">
+                            <span className="sales-summary">
+                              {product.productSummary}
+                            </span>
+                            <span>{product.productTitle}</span>
+                          </div>
                         </Link>
                       </td>
+
                       <td className="sales-info"></td>
                       <td className="sales-info">{product.tradePrice}원</td>
 
