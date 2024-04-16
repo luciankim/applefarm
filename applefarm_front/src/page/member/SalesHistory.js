@@ -32,12 +32,11 @@ const SalesHistory = (props) => {
         console.log(res);
       });
   }, [member]);
+  const memberNo = member.memberNo;
 
   const [startDate, setStartDate] = useState(dayjs().subtract(1, "month"));
   const [endDate, setEndDate] = useState(dayjs());
   const [activeButton, setActiveButton] = useState();
-
-  const memberNo = member.memberNo;
 
   const [products, setProducts] = useState([]); // 판매한 상품 리스트
   const [productNo, setProductNo] = useState(null); // 변경할 상품 번호

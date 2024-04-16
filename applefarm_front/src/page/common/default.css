@@ -140,6 +140,7 @@ body {
 
 .mainImg-wrap {
   display: flex;
+
   flex-direction: row;
   align-items: center;
   position: relative;
@@ -147,8 +148,8 @@ body {
 }
 
 .mainImg-wrap img:hover {
-  transform: scale(1.1);
-  transition: transform 0.5s;
+  transform: scale(1.15);
+  transition: transform 0.9s;
 }
 
 button,

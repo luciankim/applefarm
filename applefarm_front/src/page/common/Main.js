@@ -20,7 +20,7 @@ const Main = () => {
   return (
     <>
       <div className="main-wrap">
-        <Swiper
+        {/**<Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           navigation
           pagination={{ clickable: true }}
@@ -35,7 +35,7 @@ const Main = () => {
           <SwiperSlide>
             <img className="main-img2" src="../image/five.png" />
           </SwiperSlide>
-        </Swiper>
+        </Swiper> */}
 
         <div className="mainImg-wrap">
           <Link to="/product/main/iPhone/iPhone 15 Series">
