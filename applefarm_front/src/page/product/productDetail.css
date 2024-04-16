@@ -321,6 +321,7 @@
   height: 600px;
   font-size: 25px;
   line-height: 50px;
+  overflow-y: auto;
 }
 
 /* 관리자 문의 */

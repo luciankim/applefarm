@@ -452,7 +452,7 @@ select * from
 		where
 			product_hide = '0'
 	   <!-- <if test='tradeState != null and tradeState != ""'>and t.trade_state in ('예약중', '결제완료', '발송대기', '배송중', '배송완료', '구매확정')</if> -->
-			<if test='tradeState == null or tradeState == ""'>and t.trade_state is null</if>
+	   <!-- <if test='tradeState == null or tradeState == ""'>and t.trade_state is null</if> -->
 		    <if test='productLine != null and productLine != ""'>and p.product_line = #{productLine}</if>
 		    <if test='productGen != null and productGen != ""'>and p.product_gen = #{productGen}</if>
 		    <if test='productModel != null and productModel != ""'>and p.product_model = #{productModel}</if>
@@ -482,7 +482,7 @@ select * from
 				where
 					product_hide = '0'
 			   <!-- <if test='product.tradeState != null and product.tradeState != ""'>and t.trade_state in ('예약중', '결제완료', '발송대기', '배송중', '배송완료', '구매확정')</if> -->
-				    <if test='product.tradeState == null or product.tradeState == ""'>and t.trade_state is null</if>
+			   <!-- <if test='product.tradeState == null or product.tradeState == ""'>and t.trade_state is null</if> --> 
 				    <if test='product.productLine != null and product.productLine != ""'>and p.product_line = #{product.productLine}</if>
 				    <if test='product.productGen != null and product.productGen != ""'>and p.product_gen = #{product.productGen}</if>
 				    <if test='product.productModel != null and product.productModel != ""'>and p.product_model = #{product.productModel}</if>
