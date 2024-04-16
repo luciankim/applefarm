@@ -475,7 +475,7 @@ select * from
 			*
 		from 
 			(select ROWNUM as RNUM, s.* from
-				(select product_no, product_title, product_thumbnail, product_price, product_date, trade_state, like_count
+				(select product_no, product_title, product_thumbnail, product_price, to_char(product_date,'yyyy-mm-dd') as product_date_to_char, trade_state, like_count
 				from product_tbl p
 				left join trade_tbl t using (product_no)
 				left join (select product_no, count(product_no) as like_count from like_tbl group by product_no) using (product_no)

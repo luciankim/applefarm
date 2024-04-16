@@ -71,5 +71,6 @@ public class Product {
 
 	//productMainList에 사용
 	private int reqPage;
+	private String productDateToChar;
 
 }

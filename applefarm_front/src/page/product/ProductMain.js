@@ -9,6 +9,7 @@ import ProductChart from "./ProductChart";
 import ProductMainList from "./productMainList";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import RefundDelevery from "./RefuntDelevery";
 
 const ProductMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -230,7 +231,7 @@ const ProductMain = (props) => {
       <ProductTab
         productTab={productMainTab}
         changeTab={changeMainTab}
-        tabNameArr={["LIST", "CHART", "RECENT", "REFUND&DELIVERY"]}
+        tabNameArr={["LIST", "CHART", "REFUND&DELIVERY"]}
       />
 
       <div className="productMain-content-wrap">
@@ -254,19 +255,12 @@ const ProductMain = (props) => {
           </div>
           <div
             className={
-              productMainTab === "RECENT" ? "" : "productMain-content-hide"
-            }
-          >
-            <ProductRecentTrade />
-          </div>
-          <div
-            className={
               productMainTab === "REFUND&DELIVERY"
                 ? ""
                 : "productMain-content-hide"
             }
           >
-            <div>환불 배송 규정</div>
+            <RefundDelevery />
           </div>
         </div>
       </div>
