@@ -22,7 +22,7 @@ const SalesHistory = (props) => {
   const [productNo, setProductNo] = useState(null); // 변경할 상품 번호
 
   const [currentTab, setCurrentTab] = useState(0); // 현재 탭
-  const [tabMenu, setTabMenu] = useState(["판매입찰", "진행중", "완료"]);
+  const [tabMenu, setTabMenu] = useState(["미거래상품", "진행중", "완료"]);
 
   const [displayProducts, setDisplayProducts] = useState([]); // 화면에 보여질 상품 리스트
   const [visibleCount, setVisibleCount] = useState(1); // 초기에 보여줄 상품 수
