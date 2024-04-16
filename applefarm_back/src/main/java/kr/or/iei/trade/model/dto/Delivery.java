@@ -23,7 +23,6 @@ public class Delivery {
 	private String telno2;
 	private String timeString;
 	private String where; 
-	
 	//lastDetail
 	
 	

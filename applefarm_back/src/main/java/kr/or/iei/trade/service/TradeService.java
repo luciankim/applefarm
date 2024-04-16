@@ -133,6 +133,11 @@ public class TradeService {
 		}
 	}
 	
+	public void selectDelivery() {
+		List<TradeDate> list = tradeDao.selectDelivery();
+		
+	}
+	
 	
 	
 	
