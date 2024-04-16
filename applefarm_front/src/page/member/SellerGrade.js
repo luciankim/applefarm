@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 const SellerGrade = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [bankAccount, setBankAccount] = useState(null);
   const [member, setMember] = useState({});
   useEffect(() => {
     axios
@@ -15,7 +16,7 @@ const SellerGrade = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, []);
+  }, [member]);
 
   return (
     <>

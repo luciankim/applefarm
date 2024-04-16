@@ -6,12 +6,17 @@ import Swal from "sweetalert2";
 
 const MemberAccountNumber = (props) => {
   const [member, setMember] = useState({});
+  const [accountInfo, setAccountInfo] = useState(null);
   useEffect(() => {
     axios
       .get(backServer + "/member/info")
       .then((res) => {
         //console.log(res.data);
         setMember(res.data.data);
+
+        if (res.data.data.memberAccountnumber) {
+          setAccountInfo(res.data.data.memberAccountnumber);
+        }
       })
       .catch((res) => {
         console.log(res);

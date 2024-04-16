@@ -18,6 +18,8 @@ const RefundHistory = (props) => {
       });
   }, []);
 
+  console.log(member);
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [product, setProduct] = useState([]); //상품테이블 데이터
@@ -40,7 +42,6 @@ const RefundHistory = (props) => {
   const [filter, setFilter] = useState("전체");
 
   useEffect(() => {
-    // 먼저 날짜 필터를 적용합니다.
     const dateFiltered = refund.filter((item) => {
       const refundDate = dayjs(item.refundDate);
       return (
@@ -49,21 +50,16 @@ const RefundHistory = (props) => {
       );
     });
 
-    // 상태 필터를 적용합니다. 탭 및 사용자 선택에 따라 다릅니다.
     const statusFiltered = dateFiltered
       .filter((item) => {
-        // 탭에 따른 필터링
         if (currentTab === 0) {
-          // "환불 진행중" 탭
           return item.refundStatus === 0;
         } else if (currentTab === 1) {
-          // "완료" 탭
           return item.refundStatus === 1 || item.refundStatus === 2;
         }
-        return true; // 이 경우는 존재하지 않지만, 탭이 더 있을 경우를 대비
+        return true;
       })
       .filter((item) => {
-        // 추가적인 사용자 필터 (전체, 승인, 반려)
         if (filter === "전체") {
           return true;
         } else {
@@ -72,10 +68,8 @@ const RefundHistory = (props) => {
         }
       });
 
-    // 최종 필터링된 데이터를 상태에 설정합니다.
     setFilteredRefund(statusFiltered);
 
-    // 탭 변경, 날짜 변경, 필터 변경 또는 데이터 변경 시 보여줄 아이템 수를 초기화합니다.
     setVisibleCount(1);
   }, [refund, startDate, endDate, currentTab, filter]);
 
@@ -117,22 +111,11 @@ const RefundHistory = (props) => {
     },
   };
 
-  //데이트피커
-  useEffect(() => {
-    const filtered = refund.filter((refund) => {
-      const refundDate = dayjs(refund.refundDate);
-      return (
-        refundDate.isAfter(startDate) &&
-        refundDate.isBefore(endDate.add(1, "day"))
-      );
-    });
-    setFilteredRefund(filtered);
-  }, [refund, startDate, endDate]);
-
   //데이터 가져오기
   useEffect(() => {
+    console.log(member.memberNo);
     axios
-      .post(backServer + "/member/getRefund/" + memberNo)
+      .post(backServer + "/member/getRefund/" + member.memberNo)
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "success") {
@@ -143,7 +126,7 @@ const RefundHistory = (props) => {
       .catch((res) => {
         console.log(res.data);
       });
-  }, [memberNo, backServer]);
+  }, [member.memberNo, backServer]);
 
   return (
     <>
