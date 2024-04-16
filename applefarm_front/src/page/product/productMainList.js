@@ -59,7 +59,7 @@ const ProductCard = (props) => {
   const thumbnail = props.product.Thumbnail;
   const title = props.product.productTitle;
   const price = props.product.productPrice;
-  const date = props.product.productDate;
+  const date = props.product.productDateToChar;
   const likeCount = props.product.likeCount;
   const tradeState = props.product.tradeState;
 
@@ -71,11 +71,14 @@ const ProductCard = (props) => {
         </div>
         <div className="productCard-desc">
           <div className="productCard-title">{title}</div>
-          <div className="productCard-price">{price}</div>
+          <div className="productCard-price">
+            {price.toLocaleString() + " 원"}
+          </div>
           <div className="productCard-date">{date}</div>
           <div className="productCard-likeCount">
+            <span className="material-icons like-image">favorite</span>
             <span>{likeCount}</span>
-            <span>{tradeState ? "∙ " + tradeState : ""}</span>
+            <span>{tradeState ? " ∙ " + tradeState : ""}</span>
           </div>
         </div>
       </Link>
