@@ -381,4 +381,9 @@ public class MemberService {
 		return memberDao.getRefund(memberNo);
 	}
 
+	public List<Product> getOnlyProduct(int memberNo) {
+
+		return memberDao.getOnlyProduct(memberNo);
+	}
+
 }

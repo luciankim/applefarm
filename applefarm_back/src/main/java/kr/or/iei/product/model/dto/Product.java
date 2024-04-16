@@ -67,6 +67,9 @@ public class Product {
 	//환불 상태
 	private int refundStatus;
 	
+	//거래금액
+	private int tradePrice;
+	
 	
 
 	//productMainList에 사용

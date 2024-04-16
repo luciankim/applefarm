@@ -5,6 +5,19 @@ import dayjs, { Dayjs } from "dayjs";
 import Modal from "react-modal";
 
 const RefundHistory = (props) => {
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [product, setProduct] = useState([]); //상품테이블 데이터
@@ -14,7 +27,6 @@ const RefundHistory = (props) => {
   const [endDate, setEndDate] = useState(dayjs());
   const [activeButton, setActiveButton] = useState();
 
-  const member = props.member;
   const memberNo = member.memberNo;
 
   const [currentTab, setCurrentTab] = useState(0);

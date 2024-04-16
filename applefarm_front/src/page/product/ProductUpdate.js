@@ -33,11 +33,13 @@ const ProductUpdate = (props) => {
   const [productConnectivity, setProductConnectivity] = useState("");
   const [productCharge, setProductCharge] = useState("");
   const [productQuality, setProductQuality] = useState("");
+  
 
   // 디테일에서 넘겨받은 데이터
   const params = useParams();
   const location = useLocation();
   const [productNo, setProductNo] = useState(params.productNo);
+  // console.log(productNo);
 
   const [navTable, setNavTable] = useState(params.productTable);
   const [navLine, setNavLine] = useState(params.productLine);
@@ -46,22 +48,33 @@ const ProductUpdate = (props) => {
   // const [productQuality, setProductQuality] =useState(location.state.qualityHistory);
 
   const [product, setProduct] = useState({});
-  const [type, setType] = useState("update");
+  const [productFileList, setProductFileList] = useState();
+  const [productQualityInitKey, setProductQualityInitKey] = useState();
+  const [productQualityInitValue, setProductQualityInitValue] = useState();
 
   // 초기 데이터 로딩 로직
-  //  useEffect(()=>{
-  //   if(type === 'update'){
-  //     axios.get(backServer + "/product/detail/"+productNo)
-  //     .then((res)=>{
-  //       // console.log(res.data.data);
-  //       setProduct(res.data.data.product);
-  //       setProductQuality(res.data.data.qualityHistory);
-  //     })
-  //     .catch((res)=>{
+   useEffect(()=>{
+    if(type === 'update'){
+      axios.get(backServer + "/product/detail/"+productNo)
+      .then((res)=>{
+        console.log(res.data.data);
+        setProduct(res.data.data.product);
+        setProductQualityInitKey(Object.keys(res.data.data.qualityHistory).slice(2));
+        setProductQualityInitValue(Object.values(res.data.data.qualityHistory).slice(2));
+      })
+      .catch((res)=>{
 
-  //     })
-  //   }
-  // },[])
+      })
+    }
+  },[])
+  
+
+  useEffect(()=>{
+    console.log(productQualityInitKey);
+  },[productQualityInitKey])
+
+
+  const type = "update";
 
   // useEffect(() => {
   //   console.log(product); // 상태 업데이트 후의 값 확인
@@ -143,7 +156,7 @@ const ProductUpdate = (props) => {
     if (pip === "수정 취소") {
       navigate("/main");
     }
-    if( pip === "상품 수정"){
+    if (pip === "상품 수정") {
       if (
         title &&
         content &&
@@ -159,15 +172,15 @@ const ProductUpdate = (props) => {
           acc[item.part2] = item.value;
           return acc;
         }, {});
-  
+
         //console.log(partOrder);
         //console.log(partObject);
-  
+
         //navigate("/product/main"); //아직 메인페이지 경로 없음
-  
+
         //여기에 서버로 가서 insert하는 axios코드
         //navigate("/product/main"); //아직 메인페이지 경로 없음
-  
+
         const form = new FormData();
         form.append("productTitle", title);
         form.append("productExplain", content);
@@ -175,11 +188,11 @@ const ProductUpdate = (props) => {
         form.append("productQuality", grade);
         form.append("thumbnail", thumbnail);
         form.append("productSummary", summaryFind());
-  
+
         for (let i = 0; i < file.length; i++) {
           form.append("productFile", file[i]);
         }
-  
+
         form.append("productLine", selectedProduct.productLine);
         form.append("productGen", selectedProduct.productGen);
         form.append("productModel", selectedProduct.productModel);
@@ -195,7 +208,7 @@ const ProductUpdate = (props) => {
         form.append("productConnectivity", selectedProduct.productConnectivity);
         form.append("productCharge", selectedProduct.productCharge);
         form.append("tableName", navTable);
-  
+
         if (navTable == "MACBOOK_TBL") {
           form.append("displayScreen", partObject.DISPLAY_SCREEN);
           form.append("backPanelSide", partObject.BACK_PANEL_SIDE);
@@ -204,7 +217,10 @@ const ProductUpdate = (props) => {
           form.append("keyboard", partObject.KEYBOARD);
           form.append("ports", partObject.PORTS);
           form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
-          form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+          form.append(
+            "wirelessConffectivity",
+            partObject.WIRELESS_CONNECTIVITY
+          );
           form.append("camera", partObject.CAMERA);
           form.append("microphone", partObject.MICROPHONE);
           form.append("speakersAudioJack", partObject.SPEAKERS_AUDIO_JACK);
@@ -212,7 +228,7 @@ const ProductUpdate = (props) => {
             "biometricAuthentication",
             partObject.BIOMETRIC_AUTHENTICATION
           );
-  
+
           form.append("power", partObject.POWER);
           form.append("voiceRecording", partObject.VOICE_RECORDING);
           form.append("trackpad", partObject.TRACKPAD);
@@ -239,7 +255,10 @@ const ProductUpdate = (props) => {
           form.append("keyboard", partObject.KEYBOARD);
           form.append("ports", partObject.PORTS);
           form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
-          form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+          form.append(
+            "wirelessConffectivity",
+            partObject.WIRELESS_CONNECTIVITY
+          );
           form.append("camera", partObject.CAMERA);
           form.append("microphone", partObject.MICROPHONE);
           form.append("speakersAudioJack", partObject.SPEAKERS_AUDIO_JACK);
@@ -257,7 +276,10 @@ const ProductUpdate = (props) => {
           form.append("display", partObject.DISPLAY);
           form.append("digitalCrownButton", partObject.DIGITAL_CROWN_BUTTON);
           form.append("batteryEfficiency", partObject.BATTERY_EFFICIENCY);
-          form.append("wirelessConffectivity", partObject.WIRELESS_CONNECTIVITY);
+          form.append(
+            "wirelessConffectivity",
+            partObject.WIRELESS_CONNECTIVITY
+          );
           form.append("microphone", partObject.MICROPHONE);
           form.append("speaker", partObject.SPEAKER);
           form.append("power", partObject.POWER);
@@ -272,7 +294,7 @@ const ProductUpdate = (props) => {
           form.append("touchSensor", partObject.TOUCH_SENSOR);
         }
         form.append("productNo", productNo);
-  
+
         //테이블에 따라서 품질내역을 요청하는 url이 달라잠
         //상품품질내역 등록
         let url;
@@ -287,7 +309,7 @@ const ProductUpdate = (props) => {
         } else if (navTable === "AIRPODS_TBL") {
           url = backServer + "/product/airpods";
         }
-  
+
         //상품 등록
         axios
           .patch(url, form, {
@@ -298,7 +320,7 @@ const ProductUpdate = (props) => {
           })
           .then((res) => {
             console.log(res.data);
-  
+
             if (res.data.message === "success") {
               console.log(res.data.data);
               navigate("/product/" + res.data.data);
@@ -329,6 +351,17 @@ const ProductUpdate = (props) => {
 
   //서버 변수
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
+
+  
+  useEffect(()=>{
+    if(type === "update"){
+      setTitle(product.productTitle);
+      setContent(product.productExplain);
+      setPrice(product.productPrice);
+    }
+  },[product])
+
 
 
 
@@ -385,7 +418,7 @@ const ProductUpdate = (props) => {
 
   return (
     <div className="productInsert-wrap">
-      <div className="productInsert-title">상품 등록</div>
+      <div className="productInsert-title">상품 수정</div>
       <div className="pip-bar-top">
         <ProductInsertProgress pip={pip} progressArr={progressArr} />
       </div>
@@ -452,6 +485,7 @@ const ProductUpdate = (props) => {
           navTable={navTable}
           // Frm 타입 설정
           type="update"
+          productNo = {productNo}
         />
       </div>
       <div className={pip === progressArr[2] ? "" : "displayNone"}>
@@ -476,8 +510,15 @@ const ProductUpdate = (props) => {
           setPartOrder={setPartOrder}
           /*chart용*/
           selectedProduct={selectedProduct}
+          
           // Frm 타입 설정
           type="update"
+          productNo = {productNo}
+          product = {product}
+          productFileList={productFileList}
+
+          productQualityInitKey={productQualityInitKey}
+          productQualityInitValue={productQualityInitValue}
         />
       </div>
       <div className="productInsert-nextBtn">

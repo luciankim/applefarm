@@ -34,8 +34,6 @@ const ProductDetail = (props) => {
 
   console.log(params.productNo);
 
-
-
   // const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -903,6 +901,8 @@ const ProductBid = (props) => {
                 icon: "success",
                 title: "현재 상태 : 예약중",
               });
+              //판매버튼 여러개 클릭 가능한 오류 제거 -> 원인 : trade_tbl에는 insert 되었는데, 화면이 예약중으로 렌더링 안 되었음. 그래서 렌더링 강제.
+              setProduct({ ...product, tradeState: "예약중" });
             } else {
               Swal.fire({
                 icon: "error",
@@ -1045,7 +1045,7 @@ const ProductBid = (props) => {
     } else {
       Swal.fire({
         icon: "warning",
-        title: "수정 불가",
+        title: "구매 불가",
         text: "이미 거래중인 상품입니다.",
       });
     }
@@ -1308,8 +1308,8 @@ const ProductQuality = (props) => {
   const key = Object.keys(qualityHistory).slice(2);
   const value = Object.values(qualityHistory).slice(2);
 
-  console.log(key);
-  console.log(value);
+  // console.log(key);
+  // console.log(value);
 
   if (product.tableName === "IPHONE_TBL") {
   } else if (product.tableName === "MACBOOK_TBL") {

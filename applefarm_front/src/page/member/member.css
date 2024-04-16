@@ -1026,10 +1026,10 @@
 
 .reg-text1 {
   position: relative;
-  top: 30px;
+  top: -50px;
+  color: #da1d1d;
   width: 200px;
   font-size: 12px;
-  right: 460px;
 }
 
 /*회원탈퇴*/

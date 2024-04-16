@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import TextEditor from "../../component/TextEditor";
 import ProductChart from "./ProductChart";
+
+
 
 const ProductLastFrm = (props) => {
   //데이터 전송용
@@ -19,6 +22,13 @@ const ProductLastFrm = (props) => {
 
   // 서버 변수
   const backServer = process.env.REACT_WEB_BACK_SERVER;
+
+  const productNo = props.productNo;
+  const type = props.type;
+  const product = props.product;
+  const productFileList = props.productFileList;
+  const productQualityInit = props.productQualityInit;
+  
 
   const grade = props.grade;
   const setGrade = props.setGrade;
@@ -64,6 +74,9 @@ const ProductLastFrm = (props) => {
     }
   };
 
+
+
+
   //버튼 조건문
   useEffect(() => {
     if (
@@ -81,10 +94,13 @@ const ProductLastFrm = (props) => {
     }
   }, [title, content, price, file, thumbnail]);
 
+  if(type === "update"){
+    //productFileList에서 이미지가 보이게
+  }
+
   // 미리보기 이미지
   const [filePreviews, setFilePreviews] = useState([]);
 
-  // 이미지 파일 변경시
   const changeFile = (e) => {
     const files = e.target.files;
 

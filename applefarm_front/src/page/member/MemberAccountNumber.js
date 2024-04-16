@@ -5,9 +5,22 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 
 const MemberAccountNumber = (props) => {
-  const member = props.member;
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
+  console.log(member);
   const [memberAccountnumber, setMemberAccountnumber] = useState(""); //계좌번호
   const [bankName, setBankName] = useState(""); //은행이름
   const [depositorName, setDepositorName] = useState(""); //예금주명
@@ -160,7 +173,7 @@ const MemberAccountNumber = (props) => {
       setAccountRegistered(false);
       setAccount(""); // 계좌 정보 초기화
     }
-  }, [member]);
+  }, [member, backServer]);
 
   return (
     <>

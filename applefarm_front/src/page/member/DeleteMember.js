@@ -8,8 +8,19 @@ const DeleteMember = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const logout = props.logout;
 
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
   const navigate = useNavigate();
-  const member = props.member;
 
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);

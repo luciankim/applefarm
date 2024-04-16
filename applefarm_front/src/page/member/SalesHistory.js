@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import React from "react";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
+import {
+  BidModal,
+  DelModal,
+  ProductStatus,
+  RefundModal,
+  ReviewModal,
+  SuccessModal,
+  TrackingModal,
+} from "./Modal";
 
 import dayjs, { Dayjs } from "dayjs";
 import { Link } from "react-router-dom";
@@ -11,18 +20,30 @@ import { Link } from "react-router-dom";
 const SalesHistory = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, [member]);
+
   const [startDate, setStartDate] = useState(dayjs().subtract(1, "month"));
   const [endDate, setEndDate] = useState(dayjs());
   const [activeButton, setActiveButton] = useState();
 
-  const member = props.member;
   const memberNo = member.memberNo;
 
   const [products, setProducts] = useState([]); // 판매한 상품 리스트
   const [productNo, setProductNo] = useState(null); // 변경할 상품 번호
 
   const [currentTab, setCurrentTab] = useState(0); // 현재 탭
-  const [tabMenu, setTabMenu] = useState(["판매입찰", "진행중", "완료"]);
+  const [tabMenu, setTabMenu] = useState(["미거래상품", "진행중", "완료"]);
 
   const [displayProducts, setDisplayProducts] = useState([]); // 화면에 보여질 상품 리스트
   const [visibleCount, setVisibleCount] = useState(1); // 초기에 보여줄 상품 수
@@ -39,6 +60,8 @@ const SalesHistory = (props) => {
 
   const [invoiceNumber, setInvoiceNumber] = useState("");
 
+  const [onlyProduct, setOnlyProduct] = useState([]); //거래테이블에 없는 상품
+
   // 필터링된 상품 리스트
   const [filteredProducts, setFilteredProducts] = useState([]);
   useEffect(() => {
@@ -52,9 +75,17 @@ const SalesHistory = (props) => {
     setFilteredProducts(filtered);
   }, [startDate, endDate, products]);
 
+  const [visibleCountOnlyProduct, setVisibleCountOnlyProduct] = useState(3); // onlyProduct에 대한 초기에 보여줄 상품 수
+
+  // onlyProduct에 대한 더보기 기능
+  const showMoreItemsOnlyProduct = () => {
+    setVisibleCountOnlyProduct((prevCount) => prevCount + 3); // 4개씩 더 불러오기
+  };
+
   //탭 이동시 더보기 리셋
   const handleTabChange = (newTab) => {
     setVisibleCount(1); // 탭을 변경할 때마다 visibleCount를 1로 리셋
+    setVisibleCountOnlyProduct(1);
     setCurrentTab(newTab);
     setSelectFilter("전체");
   };
@@ -93,7 +124,6 @@ const SalesHistory = (props) => {
     openModalDeleteSales();
   };
 
-  //가격 변경 요청
   const submitChangePrice = () => {
     const obj = { changePrice, productNo };
     if (!changePrice || changePrice === 0) {
@@ -246,12 +276,13 @@ const SalesHistory = (props) => {
       .get(backServer + "/trade/tracking/" + invoiceNumber)
       .then((res) => {
         if (res.data.message === "success") {
-          setTrackingList(res.data.data);
           console.log(res.data);
+          setTrackingList(res.data.data.list);
+          setCompleteYN(res.data.data.completeYN);
+          setTrackingModalOpen(true);
         }
       })
       .catch((res) => {
-        console.log("catch");
         console.log(res.data);
       });
   };
@@ -262,17 +293,47 @@ const SalesHistory = (props) => {
       .post(backServer + "/member/getSalesHistory/" + memberNo)
       .then((res) => {
         if (res.data.message === "success") {
+          console.log(res.data);
           setProducts(res.data.data);
           setFilteredProducts(res.data.data); // 초기 필터링된 리스트 설정
           setDisplayProducts(res.data.data.slice(0, visibleCount));
         }
       })
-      .catch(console.error);
+      .catch((res) => {
+        console.log(res.data);
+      });
+
+    axios
+      .post(backServer + "/member/getOnlyProduct/" + memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setFilteredProducts(res.data.data);
+          setDisplayProducts(res.data.data.slice(0, visibleCount));
+          setOnlyProduct(res.data.data);
+          console.log(res.data);
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   }, [memberNo, backServer, visibleCount]);
+
+  const [completeYN, setCompleteYN] = useState();
+  const [trackingModalOpen, setTrackingModalOpen] = useState(false);
 
   //상품 배송 조회
   const trackShipment = (productNo) => {
     setProductNo(productNo);
+    {
+      trackingModalOpen && (
+        <TrackingModal
+          setModalOpen={setTrackingModalOpen}
+          trackingList={trackingList}
+          completeYN={completeYN}
+          invoiceNumber={products.invoiceNumber}
+        />
+      );
+    }
   };
 
   //예약 확인
@@ -302,17 +363,15 @@ const SalesHistory = (props) => {
       case "배송중":
         return (
           <td className="sales-info sales-btn">
-            <button onClick={() => trackShipment(product.productNo)}>
-              배송조회
-            </button>
+            <button onClick={trackingFunc}>배송조회</button>
           </td>
         );
       case "예약중":
         return (
           <td className="sales-info sales-btn">
-            <button onClick={() => checkReservation(product.productNo)}>
-              예약확인
-            </button>
+            <button
+              onClick={() => checkReservation(product.productNo)}
+            ></button>
           </td>
         );
       case "결제완료":
@@ -365,14 +424,7 @@ const SalesHistory = (props) => {
           <table className="salesHistory-content">
             <thead>
               <tr className="salesHistory-title">
-                <td className="allSales-btn">
-                  <button onClick={openModalAllSales}>
-                    <span>{selectFilter}</span>
-                    <span className="material-icons arrow-icon">
-                      arrow_right
-                    </span>
-                  </button>
-                </td>
+                <td className="allSales-btn"></td>
                 <td></td>
                 <td className="sales-title">최고입찰가</td>
                 <td className="sales-title">판매가</td>
@@ -381,52 +433,58 @@ const SalesHistory = (props) => {
               </tr>
             </thead>
             <tbody>
-              {displayProducts.map((product, index) => (
-                <React.Fragment key={index}>
-                  <tr>
-                    <td className="salesDate">
-                      {dayjs(product.productDate).format("YYYY-MM-DD")}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <Link
-                        className="sales-link"
-                        to={`/mypage/salesProductDetails/${product.productNo}`}
-                      >
-                        <img
-                          className="salesImg"
-                          src={
-                            backServer +
-                            "/product/img/" +
-                            product.productThumbnail
-                          }
-                          alt="Product"
-                        />
-                      </Link>
-                    </td>
+              {onlyProduct
+                .slice(0, visibleCountOnlyProduct)
+                .map((product, index) => (
+                  <React.Fragment key={index}>
+                    <tr>
+                      <td className="salesDate">
+                        {dayjs(product.productDate).format("YYYY-MM-DD")}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Link
+                          className="sales-link"
+                          to={`/product/${product.productNo}`}
+                        >
+                          <img
+                            className="salesImg"
+                            src={
+                              backServer +
+                              "/product/img/" +
+                              product.productThumbnail
+                            }
+                            alt="Product"
+                          />
+                        </Link>
+                      </td>
 
-                    <td className="sales-info">
-                      <Link
-                        className="sales-link"
-                        to={`/mypage/salesProductDetails/${product.productNo}`}
-                      >
-                        {product.productSummary}
-                      </Link>
-                    </td>
+                      <td className="sales-info">
+                        <Link
+                          className="sales-link"
+                          to={`/product/${product.productNo}`}
+                        >
+                          {product.productSummary}
+                        </Link>
+                      </td>
 
-                    <td className="sales-info">{product.maxBidPrice}원</td>
-                    <td className="sales-info">{product.productPrice}원</td>
+                      {product.maxBidPrice === 0 ? (
+                        <td className="sales-info">없음</td>
+                      ) : (
+                        <td className="sales-info">{product.maxBidPrice}원</td>
+                      )}
+                      <td className="sales-info">{product.productPrice}원</td>
 
-                    <td className="sales-info">{product.tradeState}</td>
+                      <td className="sales-info">{product.tradeState}</td>
 
-                    {changeTradeState(product)}
-                  </tr>
-                </React.Fragment>
-              ))}
+                      {changeTradeState(product)}
+                    </tr>
+                  </React.Fragment>
+                ))}
               <tr className="sales-more-btn">
-                {visibleCount < filteredProducts.length && (
-                  <button onClick={showMoreItems}>더보기</button>
+                {visibleCountOnlyProduct < onlyProduct.length && (
+                  <button onClick={showMoreItemsOnlyProduct}>더보기</button>
                 )}
               </tr>
             </tbody>
@@ -482,7 +540,7 @@ const SalesHistory = (props) => {
                         </Link>
                       </td>
                       <td className="sales-info"></td>
-                      <td className="sales-info">{product.productPrice}원</td>
+                      <td className="sales-info">{product.tradePrice}원</td>
 
                       <td className="sales-info">{product.tradeState}</td>
 
@@ -553,7 +611,7 @@ const SalesHistory = (props) => {
                         </Link>
                       </td>
                       <td className="sales-info"></td>
-                      <td className="sales-info">{product.productPrice}원</td>
+                      <td className="sales-info">{product.tradePrice}원</td>
 
                       <td className="sales-info">{product.tradeState}</td>
 

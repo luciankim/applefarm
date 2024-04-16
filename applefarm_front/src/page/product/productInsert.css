@@ -403,3 +403,13 @@
 .modal-content{
   
 } */
+
+
+/* 이전에 선택한 내역 */
+.quality-select-selected{
+  width: 100%;
+  height: 500px;
+  background-color: antiquewhite;
+  display: flex;
+}
+

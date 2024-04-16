@@ -8,7 +8,18 @@ import { Button3 } from "../../component/FormFrm";
 import "./member.css";
 
 const MemberInfo = (props) => {
-  const token = window.localStorage.getItem("token"); //로그인 정보가 token 에 들어있음.
+  const [member, setMember] = useState({});
+  useEffect(() => {
+    axios
+      .get(backServer + "/member/info")
+      .then((res) => {
+        //console.log(res.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -27,9 +38,6 @@ const MemberInfo = (props) => {
   //이전 비밀번호
 
   const [chkUpdatePw, setChkUpdatePw] = useState("");
-
-  //토큰에서 회원정보 가져오기
-  const member = props.member;
 
   //이메일 수정
   const changeEmail = (e) => {
