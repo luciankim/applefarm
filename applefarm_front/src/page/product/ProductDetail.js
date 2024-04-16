@@ -1585,6 +1585,9 @@ const SellerProductItem = (props) => {
         <div className="productDetail-productList-item-right-productPrice">
           가격 : {product.productPrice}
         </div>
+        <div className="productDetail-productList-item-right-productTitle">
+          제목 : {product.productTitle}
+        </div>
         <div
           className="productDetail-productList-item-right-productExplain"
           dangerouslySetInnerHTML={{ __html: product.productExplain }}

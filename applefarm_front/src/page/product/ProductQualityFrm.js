@@ -21,6 +21,7 @@ const ProductQualityFrm = (props) => {
 
   const productQualityInitKey = props.productQualityInitKey;
   const productQualityInitValue = props.productQualityInitValue;
+  const type= props.type;
 
   // 품질 참조 리스트 불러오기
   useEffect(() => {
@@ -42,6 +43,16 @@ const ProductQualityFrm = (props) => {
         console.log(res);
       });
   }, []);
+
+  
+
+  
+  useEffect(() => {
+    console.log(productQualityInitKey);
+  }, [productQualityInitKey]);
+  useEffect(() => {
+    console.log(productQualityInitValue);
+  }, [productQualityInitValue]);
 
   // 다음 입력 컴포넌트로 이동하기 위한 조건
   useEffect(() => {
@@ -123,14 +134,39 @@ const ProductQualityFrm = (props) => {
       <div className="quality-select-wrap">
         <div className="quality-select-title">품질 선택</div>
 
-        <div className="quality-select-selected">
-          <div className="quality-select-selected-left">
+        {type==="update"?(<div className="quality-select-selected">
+          {/* <div className="quality-select-selected-left">
             
           </div>
           <div className="quality-select-selected-right">
 
-          </div>
-        </div>
+          </div> */}
+          <table  className="quality-select-selected-table">
+            <tbody>
+              <tr>
+                <th className="quality-select-selected-th">
+                  품질 파트
+                </th>
+                <th className="quality-select-selected-th">
+                  품질 값
+                </th>
+              </tr>
+              {productQualityInitKey.map((item,index)=>{
+                return (
+                  <tr key={"productQualityInit"+index}>
+                    <td className="quality-select-selected-td">
+                      {item}
+                    </td>
+                    <td className="quality-select-selected-td">
+                      {productQualityInitValue[index]}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>):""}
+        
 
         {qualityList.map((item, index) => {
           const arr = item.productStatus.split("/");
