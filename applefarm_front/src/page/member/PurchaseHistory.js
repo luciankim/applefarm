@@ -514,13 +514,6 @@ const TradeItem = (props) => {
         console.log("catch");
         console.log(res.data);
       });
-    /*
-    window.open(
-      "http://nplus.doortodoor.co.kr/web/detail.jsp?slipno=" +
-        trade.invoiceNumber,
-      "택배조회",
-      "width=700, height=500"
-    );*/
   };
   return (
     <tr>

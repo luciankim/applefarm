@@ -231,7 +231,7 @@
 
 	<delete id="deleteMember">
 
-		delete from member_tbl where member_no = #{memberNo}
+		update member_tbl set member_withdraw = 1 where member_no = #{memberNo}
 
 	</delete>
 
@@ -316,7 +316,8 @@
 		p.product_price,
 		MAX(b.bid_price) AS max_bid_price,
 		t.trade_state,
-		t.trade_date
+		t.trade_date,
+		t.invoice_number
 		FROM
 		member_tbl m
 		JOIN
@@ -335,7 +336,8 @@
 		p.product_summary,
 		p.product_price,
 		t.trade_state,
-		t.trade_date
+		t.trade_date,
+		t.invoice_number
 		ORDER BY
 		p.product_date desc
 
