@@ -65,23 +65,113 @@ const SalesHistory = (props) => {
 
   const [visibleCountOnlyProduct, setVisibleCountOnlyProduct] = useState(3); // onlyProduct에 대한 초기에 보여줄 상품 수
 
-  // onlyProduct에 대한 더보기 기능
-  const showMoreItemsOnlyProduct = () => {
-    setVisibleCountOnlyProduct((prevCount) => prevCount + 3); // 4개씩 더 불러오기
+  // '미거래상품' 탭에 대한 더보기 기능
+  const showMoreItemsNoTransaction = () => {
+    setVisibleCountNoTransaction((prevCount) => prevCount + 3);
   };
 
-  //탭 이동시 더보기 리셋
+  // '진행중' 탭에 대한 더보기 기능
+  const showMoreItemsInProgress = () => {
+    setVisibleCountInProgress((prevCount) => prevCount + 3);
+  };
+
+  // '완료' 탭에 대한 더보기 기능
+  const showMoreItemsCompleted = () => {
+    setVisibleCountCompleted((prevCount) => prevCount + 3);
+  };
+
+  // '더보기' 버튼 클릭 시 호출되는 함수
+  const showMoreItems = () => {
+    switch (currentTab) {
+      case 0: // 미거래상품 탭
+        setVisibleCountOnlyProduct((prevCount) => {
+          const newCount = prevCount + 3; // 또는 원하는 수량만큼 증가
+          setDisplayProducts(onlyProduct.slice(0, newCount));
+          return newCount;
+        });
+        break;
+      case 1: // 진행중 탭
+        setVisibleCountInProgress((prevCount) => {
+          const newCount = prevCount + 3; // 이 부분을 조정하여 더 많은 아이템을 불러올 수 있습니다
+          setDisplayProducts(
+            products
+              .filter((p) =>
+                ["예약중", "결제완료", "배송중"].includes(p.tradeState)
+              )
+              .slice(0, newCount)
+          );
+          return newCount;
+        });
+        break;
+      case 2: // 완료 탭
+        setVisibleCountCompleted((prevCount) => {
+          const newCount = prevCount + 3; // 이 수치를 조정하여 추가 데이터 로딩
+          setDisplayProducts(
+            products
+              .filter((p) =>
+                ["배송완료", "환불", "구매확정"].includes(p.tradeState)
+              )
+              .slice(0, newCount)
+          );
+          return newCount;
+        });
+        break;
+    }
+  };
+
+  // 상태 변수들 초기화
+  const [visibleCountNoTransaction, setVisibleCountNoTransaction] = useState(3);
+  const [visibleCountInProgress, setVisibleCountInProgress] = useState(3);
+  const [visibleCountCompleted, setVisibleCountCompleted] = useState(3);
+
   const handleTabChange = (newTab) => {
-    setVisibleCount(3); // 탭을 변경할 때마다 visibleCount를 1로 리셋
-    setVisibleCountOnlyProduct(3);
     setCurrentTab(newTab);
     setSelectFilter("전체");
+
+    if (currentTab !== newTab) {
+      switch (newTab) {
+        case 0:
+          setVisibleCountOnlyProduct(3);
+          break;
+        case 1:
+          setVisibleCountInProgress(3);
+          break;
+        case 2:
+          setVisibleCountCompleted(3);
+          break;
+      }
+    }
+
+    switch (newTab) {
+      case 0:
+        setDisplayProducts(onlyProduct.slice(0, visibleCountNoTransaction));
+        break;
+      case 1:
+        setDisplayProducts(
+          products
+            .filter((p) =>
+              ["예약중", "결제완료", "배송중"].includes(p.tradeState)
+            )
+            .slice(0, visibleCountInProgress)
+        );
+        break;
+      case 2:
+        setDisplayProducts(
+          products
+            .filter((p) =>
+              ["배송완료", "환불", "구매확정"].includes(p.tradeState)
+            )
+            .slice(0, visibleCountCompleted)
+        );
+        break;
+    }
   };
 
   // 필터 변경 및 상품 필터링
   const filterProduct = (filter) => {
     setSelectFilter(filter);
     setVisibleCount(3); // 더보기 전의 초기 상태로 리셋
+
     const newFilteredProducts = products.filter(
       (product) => filter === "전체" || product.tradeState === filter
     );
@@ -303,11 +393,6 @@ const SalesHistory = (props) => {
     filterProducts();
   }, [startDate, endDate, products, currentTab, selectFilter, visibleCount]);
 
-  //더보기 기능은 상품 목록 업데이트를 위해 visibleCount만 변경
-  const showMoreItems = () => {
-    setVisibleCount((prevCount) => prevCount + 4);
-  };
-
   //모달 열기/닫기 함수들
   const openModalAllSales = () => setModalAllSalesIsOpen(true);
   const closeModalAllSales = () => setModalAllSalesIsOpen(false);
@@ -498,9 +583,10 @@ const SalesHistory = (props) => {
                   </React.Fragment>
                 ))}
               <tr className="sales-more-btn">
-                {visibleCountOnlyProduct < onlyProduct.length && (
-                  <button onClick={showMoreItemsOnlyProduct}>더보기</button>
-                )}
+                {currentTab === 0 &&
+                  visibleCountOnlyProduct < onlyProduct.length && (
+                    <button onClick={showMoreItems}>더보기</button>
+                  )}
               </tr>
             </tbody>
           </table>
@@ -564,9 +650,13 @@ const SalesHistory = (props) => {
                   </React.Fragment>
                 ))}
                 <tr className="sales-more-btn">
-                  {visibleCount < filteredProducts.length && (
-                    <button onClick={showMoreItems}>더보기</button>
-                  )}
+                  {currentTab === 1 &&
+                    visibleCountInProgress <
+                      products.filter((p) =>
+                        ["예약중", "결제완료", "배송중"].includes(p.tradeState)
+                      ).length && (
+                      <button onClick={showMoreItems}>더보기</button>
+                    )}
                 </tr>
               </tbody>
             </table>
@@ -635,9 +725,13 @@ const SalesHistory = (props) => {
                   </React.Fragment>
                 ))}
                 <tr className="sales-more-btn">
-                  {visibleCount < filteredProducts.length && (
-                    <button onClick={showMoreItems}>더보기</button>
-                  )}
+                  {currentTab === 2 &&
+                    visibleCountCompleted <
+                      products.filter((p) =>
+                        ["배송완료", "환불", "구매확정"].includes(p.tradeState)
+                      ).length && (
+                      <button onClick={showMoreItems}>더보기</button>
+                    )}
                 </tr>
               </tbody>
             </table>
