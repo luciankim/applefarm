@@ -19,7 +19,7 @@ const MemberInfo = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, []);
+  }, [member]);
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -125,6 +125,39 @@ const MemberInfo = (props) => {
     }
   };
 
+  const cancelChanges = () => {
+    // 기존에 연결된 이벤트를 호출하고
+    // 예를 들어 모달을 닫는 함수가 있다면 그 함수를 여기서 호출합니다.
+    // closeModal(); // 만약 모달이나 팝업을 닫는 함수가 있다면 호출
+
+    // 여기에 상태 초기화 로직을 추가
+    // 전화번호 관련 상태 초기화
+    setUpdatePhone("");
+    setChangePhoneInputStatus(false);
+    setCheckRegPhone("");
+
+    // 이메일 관련 상태 초기화
+    setEmail(member.memberEmail); // 현재 이메일로 리셋
+    setChangeInputStatus(false);
+    setEmailMsg("");
+    setDisabledForEmailInput(false);
+    setEmailBtn(false);
+
+    // 비밀번호 관련 상태 초기화
+    setChkUpdatePw("");
+    setUpdatePw("");
+    setChangePwInputStatus(false);
+    setRePwInput(false);
+    setRePwBtn(false);
+    setNewPwBtn(true);
+    setSavePwBtn(true);
+
+    // 인증 코드 관련 상태 초기화
+    setVerifCode("");
+    setDisabledForVerifInput(false);
+    setVerifBtn(true);
+  };
+
   //전화번호 수정
   const changeUpdatePhone = () => {
     const memberNo = member.memberNo;
@@ -135,7 +168,9 @@ const MemberInfo = (props) => {
         .then((res) => {
           if (res.data.message === "success") {
             console.log(res.data);
+
             Swal.fire("전화번호 수정을 완료했습니다.");
+            setChangePhoneInputStatus(false);
           }
         })
         .catch((res) => {
@@ -194,6 +229,7 @@ const MemberInfo = (props) => {
             setDisabledForEmailInput(true);
             setVerifBtn(false);
             setEmailBtn(true);
+            Swal.fire("해당 이메일로 인증코드가 전송되었습니다.");
           }
         })
         .catch((res) => {});
@@ -211,6 +247,7 @@ const MemberInfo = (props) => {
     if (verifCode === currentAuthCode) {
       setDisabledForVerifInput(true);
       setVerifBtn(true);
+      Swal.fire("인증이 완료되었습니다.");
     } else {
       Swal.fire("인증코드를 다시 확인해주세요.");
     }
@@ -236,6 +273,7 @@ const MemberInfo = (props) => {
           setNewPwBtn(false);
           setRePwBtn(true);
           setRePwInput(true);
+          Swal.fire("비밀번호 확인이 완료되었습니다.");
         } else {
           Swal.fire("비밀번호를 확인하세요.");
         }
@@ -261,7 +299,9 @@ const MemberInfo = (props) => {
             console.log(res.data);
             //setChangeInputStatus(false);
             setSavePwBtn(false);
+
             logout();
+            Swal.fire("변경하신 비밀번호로 다시 로그인해주세요.");
           }
         })
         .catch((res) => {
@@ -283,6 +323,8 @@ const MemberInfo = (props) => {
         .then((res) => {
           if (res.data.message === "success") {
             Swal.fire("이메일이 변경되었습니다.");
+            setChangeInputStatus(false);
+            setReturnInputStatus(true);
           }
         })
         .catch((res) => {
@@ -369,7 +411,7 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={() => setChangeInputStatus(false)}
+                      onClick={cancelChanges}
                     >
                       취소
                     </button>
@@ -457,7 +499,7 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={() => setReturnInputStatus(true)}
+                      onClick={cancelChanges}
                     >
                       취소
                     </button>
@@ -487,6 +529,7 @@ const MemberInfo = (props) => {
                         setData={setChkUpdatePw}
                         onChange={changeChkPw}
                         disabled={rePwInput}
+                        placeholder="현재 비밀번호를 입력해주세요."
                       />
                     </div>
                     <div className="input-change-btn memberInfo-confirmBtn">
@@ -523,7 +566,7 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={() => setChangePwInputStatus(false)}
+                      onClick={cancelChanges}
                     >
                       취소
                     </button>
@@ -561,6 +604,7 @@ const MemberInfo = (props) => {
                         setData={setChkUpdatePw}
                         onChange={changeChkPw}
                         disabled={rePwInput}
+                        placeholder="현재비밀번호를 입력해주세요."
                       />
                     </div>
                     <div className="input-change-btn memberInfo-confirmBtn">
@@ -597,7 +641,7 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={() => setChangePwInputStatus(false)}
+                      onClick={cancelChanges}
                     >
                       취소
                     </button>
@@ -632,7 +676,7 @@ const MemberInfo = (props) => {
                       </button>
                       <button
                         className="cancel-btn memberInfo-cancelBtn"
-                        onClick={() => setChangePhoneInputStatus(false)}
+                        onClick={cancelChanges}
                       >
                         취소
                       </button>
@@ -685,7 +729,7 @@ const MemberInfo = (props) => {
                     </button>
                     <button
                       className="cancel-btn memberInfo-cancelBtn"
-                      onClick={regTextRemove}
+                      onClick={cancelChanges}
                     >
                       취소
                     </button>
