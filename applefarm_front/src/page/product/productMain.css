@@ -177,6 +177,7 @@
   font-size: 18px;
 }
 .productMainList-btn > button.gray {
+  background-color: #7d7e80;
 }
 .productMainList-card {
   width: 100%;
