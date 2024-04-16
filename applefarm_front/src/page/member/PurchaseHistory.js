@@ -474,8 +474,8 @@ const TradeItem = (props) => {
     setOkModalOpen(true);
   };
 
+  //구매확정
   const okPurchase = () => {
-    //구매확정
     const obj = { tradeNo: trade.tradeNo };
     axios
       .patch(backServer + "/trade/purchaseConfirm", obj)
@@ -607,17 +607,21 @@ const TradeItem = (props) => {
             />
           )}
         </>
+        <>
+          {trackingModalOpen && (
+            <TrackingModal
+              setModalOpen={setTrackingModalOpen}
+              trackingList={trackingList}
+              completeYN={completeYN}
+              invoiceNumber={trade.invoiceNumber}
+              viewer="c"
+              okModalFunc={okModalFunc}
+              refModalFunc={refModalFunc}
+              trade={trade}
+            />
+          )}
+        </>
       </td>
-      <>
-        {trackingModalOpen && (
-          <TrackingModal
-            setModalOpen={setTrackingModalOpen}
-            trackingList={trackingList}
-            completeYN={completeYN}
-            invoiceNumber={trade.invoiceNumber}
-          />
-        )}
-      </>
     </tr>
   );
 };

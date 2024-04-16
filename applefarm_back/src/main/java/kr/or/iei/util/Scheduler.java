@@ -30,9 +30,9 @@ public class Scheduler {
 		tradeService.scheduledPurchase();
 	}
 	
-	@Scheduled(cron="0 * * * * *")
+	//매일 00시에 예약상품 기간내에 결제 미완료 취소
+	@Scheduled(cron="0 0 0 * * *")
 	public void scheduledBook() {
-		//매일 00시에 예약상품 기간내에 결제 미완료 취소
 		tradeService.scheduledBook();
 	}
 	
