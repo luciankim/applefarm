@@ -70,6 +70,9 @@ public class Product {
 	//거래금액
 	private int tradePrice;
 	
+	//송장번호
+	private String invoiceNumber;
+	
 	
 
 	//productMainList에 사용

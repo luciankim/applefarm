@@ -20,18 +20,7 @@ import { Link } from "react-router-dom";
 const SalesHistory = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
-  const [member, setMember] = useState({});
-  useEffect(() => {
-    axios
-      .get(backServer + "/member/info")
-      .then((res) => {
-        //console.log(res.data);
-        setMember(res.data.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  }, [member]);
+  const member = props.member;
   const memberNo = member.memberNo;
 
   const [startDate, setStartDate] = useState(dayjs().subtract(1, "month"));
@@ -45,7 +34,7 @@ const SalesHistory = (props) => {
   const [tabMenu, setTabMenu] = useState(["미거래상품", "진행중", "완료"]);
 
   const [displayProducts, setDisplayProducts] = useState([]); // 화면에 보여질 상품 리스트
-  const [visibleCount, setVisibleCount] = useState(1); // 초기에 보여줄 상품 수
+  const [visibleCount, setVisibleCount] = useState(3); // 초기에 보여줄 상품 수
 
   const [modalAllSalesIsOpen, setModalAllSalesIsOpen] = useState(false);
   const [modalAllSalesIsOpen2, setModalAllSalesIsOpen2] = useState(false);
@@ -83,8 +72,8 @@ const SalesHistory = (props) => {
 
   //탭 이동시 더보기 리셋
   const handleTabChange = (newTab) => {
-    setVisibleCount(1); // 탭을 변경할 때마다 visibleCount를 1로 리셋
-    setVisibleCountOnlyProduct(1);
+    setVisibleCount(3); // 탭을 변경할 때마다 visibleCount를 1로 리셋
+    setVisibleCountOnlyProduct(3);
     setCurrentTab(newTab);
     setSelectFilter("전체");
   };
@@ -92,7 +81,7 @@ const SalesHistory = (props) => {
   // 필터 변경 및 상품 필터링
   const filterProduct = (filter) => {
     setSelectFilter(filter);
-    setVisibleCount(1); // 더보기 전의 초기 상태로 리셋
+    setVisibleCount(3); // 더보기 전의 초기 상태로 리셋
     const newFilteredProducts = products.filter(
       (product) => filter === "전체" || product.tradeState === filter
     );
@@ -101,6 +90,81 @@ const SalesHistory = (props) => {
     closeModalAllSales();
     closeModalAllSales2();
     closeModalAllSales3();
+  };
+
+  //초기 상품 데이터 로딩
+  useEffect(() => {
+    axios
+      .post(backServer + "/member/getSalesHistory/" + memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setProducts(res.data.data);
+          setFilteredProducts(res.data.data); // 초기 필터링된 리스트 설정
+          setDisplayProducts(res.data.data.slice(0, visibleCount));
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [memberNo, visibleCount]);
+
+  useEffect(() => {
+    axios
+      .post(backServer + "/member/getOnlyProduct/" + memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setFilteredProducts(res.data.data);
+          setDisplayProducts(res.data.data.slice(0, visibleCount));
+          setOnlyProduct(res.data.data);
+          console.log(res.data);
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  }, [memberNo, visibleCount, products]);
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  //배송추적
+  const [completeYN, setCompleteYN] = useState();
+  const [trackingList, setTrackingList] = useState(null);
+  const [trackingModalOpen, setTrackingModalOpen] = useState(false);
+
+  const trackingFunc = (productNo) => {
+    if (!productNo) {
+      console.log("상품 번호가 제공되지 않았습니다.");
+      return;
+    }
+
+    const selectedProduct = products.find((p) => p.productNo === productNo);
+    if (!selectedProduct) {
+      console.log("선택된 상품을 찾을 수 없습니다.");
+      return;
+    }
+
+    setSelectedProduct(selectedProduct); // 상태 업데이트
+    const invoiceNumber = selectedProduct.invoiceNumber;
+    console.log(invoiceNumber);
+
+    if (!invoiceNumber) {
+      console.log("송장 번호가 없습니다.");
+      return;
+    }
+
+    axios
+      .get(backServer + "/trade/tracking/" + invoiceNumber)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setTrackingList(res.data.data.list);
+          setCompleteYN(res.data.data.completeYN);
+          setTrackingModalOpen(true);
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   };
 
   // 상품 변경 가격 설정
@@ -123,6 +187,19 @@ const SalesHistory = (props) => {
     openModalDeleteSales();
   };
 
+  useEffect(() => {
+    // 필터링 로직이나 다른 필요한 업데이트를 여기서 수행
+    const filtered = products.filter((product) => {
+      const productDate = dayjs(product.productDate);
+      return (
+        productDate.isAfter(startDate) &&
+        productDate.isBefore(endDate.add(1, "day"))
+      );
+    });
+    setFilteredProducts(filtered);
+    setDisplayProducts(filtered.slice(0, visibleCount));
+  }, [products, startDate, endDate, visibleCount]);
+  //값 변경
   const submitChangePrice = () => {
     const obj = { changePrice, productNo };
     if (!changePrice || changePrice === 0) {
@@ -133,13 +210,18 @@ const SalesHistory = (props) => {
       .patch(backServer + "/member/changeSalesPrice", obj)
       .then((res) => {
         if (res.data.message === "success") {
-          setProducts((prevProducts) =>
-            prevProducts.map((p) =>
-              p.productNo === productNo
-                ? { ...p, productPrice: changePrice }
-                : p
-            )
+          const updatedProducts = products.map((p) =>
+            p.productNo === productNo ? { ...p, productPrice: changePrice } : p
           );
+          setProducts(updatedProducts); // 상품 전체 리스트 업데이트
+
+          // 필터링된 목록과 화면에 표시될 목록도 업데이트
+          const updatedFilteredProducts = filteredProducts.map((p) =>
+            p.productNo === productNo ? { ...p, productPrice: changePrice } : p
+          );
+          setFilteredProducts(updatedFilteredProducts);
+          setDisplayProducts(updatedFilteredProducts.slice(0, visibleCount));
+
           Swal.fire("변경이 완료되었습니다.");
           closeModalChangeSales();
         }
@@ -267,74 +349,6 @@ const SalesHistory = (props) => {
     },
   };
 
-  //배송 조회
-  const [trackingList, setTrackingList] = useState([]);
-  const trackingFunc = () => {
-    const invoiceNumber = products.invoiceNumber;
-    axios
-      .get(backServer + "/trade/tracking/" + invoiceNumber)
-      .then((res) => {
-        if (res.data.message === "success") {
-          console.log(res.data);
-          setTrackingList(res.data.data.list);
-          setCompleteYN(res.data.data.completeYN);
-          setTrackingModalOpen(true);
-        }
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
-  };
-
-  //초기 상품 데이터 로딩
-  useEffect(() => {
-    axios
-      .post(backServer + "/member/getSalesHistory/" + memberNo)
-      .then((res) => {
-        if (res.data.message === "success") {
-          console.log(res.data);
-          setProducts(res.data.data);
-          setFilteredProducts(res.data.data); // 초기 필터링된 리스트 설정
-          setDisplayProducts(res.data.data.slice(0, visibleCount));
-        }
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
-
-    axios
-      .post(backServer + "/member/getOnlyProduct/" + memberNo)
-      .then((res) => {
-        if (res.data.message === "success") {
-          setFilteredProducts(res.data.data);
-          setDisplayProducts(res.data.data.slice(0, visibleCount));
-          setOnlyProduct(res.data.data);
-          console.log(res.data);
-        }
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
-  }, [memberNo, backServer, visibleCount]);
-
-  const [completeYN, setCompleteYN] = useState();
-  const [trackingModalOpen, setTrackingModalOpen] = useState(false);
-
-  //상품 배송 조회
-  const trackShipment = (productNo) => {
-    setProductNo(productNo);
-    {
-      trackingModalOpen && (
-        <TrackingModal
-          setModalOpen={setTrackingModalOpen}
-          trackingList={trackingList}
-          completeYN={completeYN}
-          invoiceNumber={products.invoiceNumber}
-        />
-      );
-    }
-  };
-
   //예약 확인
   const checkReservation = (productNo) => {
     setProductNo(productNo);
@@ -362,7 +376,9 @@ const SalesHistory = (props) => {
       case "배송중":
         return (
           <td className="sales-info sales-btn">
-            <button onClick={trackingFunc}>배송조회</button>
+            <button onClick={() => trackingFunc(product.productNo)}>
+              배송조회
+            </button>
           </td>
         );
       case "예약중":
@@ -778,6 +794,15 @@ const SalesHistory = (props) => {
             </div>
           </div>
         </Modal>
+        {trackingModalOpen && (
+          <TrackingModal
+            setModalOpen={setTrackingModalOpen}
+            trackingList={trackingList}
+            completeYN={completeYN}
+            invoiceNumber={selectedProduct.invoiceNumber}
+            trade={selectedProduct}
+          />
+        )}
       </div>
     </div>
   );

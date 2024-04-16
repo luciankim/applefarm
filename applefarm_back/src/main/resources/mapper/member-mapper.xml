@@ -319,7 +319,8 @@
 		t.trade_date,
 		t.invoice_number,
 		t.trade_price,
-		t.trade_no
+		t.trade_no,
+		t.invoice_number
 		FROM
 		member_tbl m
 		JOIN
@@ -341,7 +342,8 @@
 		t.trade_date,
 		t.invoice_number,
 		t.trade_price,
-		t.trade_no
+		t.trade_no,
+		t.invoice_number
 		ORDER BY
 		p.product_date desc
 
