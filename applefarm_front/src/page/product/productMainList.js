@@ -56,18 +56,20 @@ export default ProductMainList;
 
 const ProductCard = (props) => {
   const productNo = props.product.productNo;
-  const thumbnail = props.product.Thumbnail;
+  const thumbnail = props.product.productThumbnail;
   const title = props.product.productTitle;
   const price = props.product.productPrice;
   const date = props.product.productDateToChar;
   const likeCount = props.product.likeCount;
   const tradeState = props.product.tradeState;
 
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   return (
     <div className="productCard-wrap">
       <Link to={"/product/" + productNo}>
         <div className="productCard-image">
-          <img alt={title} src={thumbnail} />
+          <img alt={title} src={backServer + "/product/img/" + thumbnail} />
         </div>
         <div className="productCard-desc">
           <div className="productCard-title">{title}</div>

@@ -85,14 +85,14 @@
 		insert into MACBOOK_QUALITY_HISTORY_TBL values
 		(
 			macbook_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{keyboard},#{ports},#{batteryEfficiency},
-			#{wirelessConffectivity},#{camera},#{microphone},#{speakersAudioJack},#{biometricAuthentication},#{power},#{voiceRecording},#{trackpad},#{operation}
+			#{wirelessConnectivity},#{camera},#{microphone},#{speakersAudioJack},#{biometricAuthentication},#{power},#{voiceRecording},#{trackpad},#{operation}
 		)
 	</insert>
 	
 	<insert id="insertIpadQualityHistory">
 		insert into IPAD_QUALITY_HISTORY_TBL values
 		(
-			ipad_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{ports},#{batteryEfficiency},#{wirelessConffectivity}
+			ipad_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{ports},#{batteryEfficiency},#{wirelessConnectivity}
 			,#{camera},#{microphone},#{speakersAudioJack},#{biometricAuthentication},#{power},#{voiceRecording},#{operation}
 		)
 	</insert>
@@ -100,7 +100,7 @@
 	<insert id="insertWatchQualityHistory">
 		insert into WATCH_QUALITY_HISTORY_TBL values
 		(
-			watch_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{digitalCrownButton},#{batteryEfficiency},#{wirelessConffectivity}
+			watch_quality_history_seq.nextval,#{productNo},#{displayScreen},#{backPanelSide},#{burnIn},#{display},#{digitalCrownButton},#{batteryEfficiency},#{wirelessConnectivity}
 			,#{microphone},#{speaker},#{power},#{voiceRecording},#{operation}
 			
 		)

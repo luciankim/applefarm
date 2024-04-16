@@ -161,20 +161,28 @@ public class MemberService {
 //-------------------------------관리자: 회원관리 기능 끝 -------------------------------//
 
 	public String login(Member member) {
-
-		int memberNo = memberDao.OneMemberNo(member.getMemberId()); // 화면에서 가져온거
+		
+		
+		Integer memberNo = memberDao.OneMemberNo(member.getMemberId()); // 화면에서 가져온거
+		
+		  if (memberNo == null) {
+		        
+		        return null; //회원 번호가 없으면 로그인 실패 처리(아이디 잘못입력했을 떄)
+		    }
+		    
+		
+		System.out.println(member);
 
 		Member m = memberDao.selectNo(memberNo); // 디비에서 가져온거
 
-		
 		if (m.getMemberGrade() == 3) {
 			String accessToken = "black";
 			return accessToken;
 		} else if ("1".equals(m.getMemberWithdraw())) {
-			
+
 			String accessToken = "withdrawMember";
 			return accessToken;
-			
+
 		} else {
 			if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 				long expiredDateMs = 300 * 60 * 1000l; // 1시간 지정
