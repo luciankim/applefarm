@@ -73,4 +73,7 @@ public interface TradeDao {
 
 	List<TradeDate> selectBook();
 
+
+	int updateTrade(Trade trade);
+
 }

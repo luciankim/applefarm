@@ -39,6 +39,9 @@ public class TradeService {
 	public int insertTrade(Trade trade) {
 		return tradeDao.insertTrade(trade);
 	}
+	public int updateTrade(Trade trade) {
+		return tradeDao.updateTrade(trade);
+	}
 	public int selectExistTrade(Trade trade) {
 		return tradeDao.tradeExistCount(trade);
 	}
@@ -185,6 +188,7 @@ public class TradeService {
 		    }
 		}
 	}
+
 	
 	
 	

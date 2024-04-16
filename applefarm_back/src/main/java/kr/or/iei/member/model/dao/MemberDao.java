@@ -67,7 +67,7 @@ public interface MemberDao {
 
 	Member selectNo(int memberNo);
 
-	int OneMemberNo(String memberId);
+	Integer OneMemberNo(String memberId);
 
 	Member getMemberInfo(int memberNo);
 
