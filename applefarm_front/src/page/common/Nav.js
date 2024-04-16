@@ -520,7 +520,8 @@ const Nav = (props) => {
           </ul>
         </li>
         <li className="navMenu-li">
-          <Link to="#">Community</Link>
+          <Link to="/board/list">Notice</Link>
+          {/*
           <ul className="dropdown-content drop-Community">
             <li>
               <Link to="/board/list">공지사항</Link>
@@ -538,6 +539,7 @@ const Nav = (props) => {
               <Link to="#">매거진</Link>
             </li>
           </ul>
+          */}
         </li>
       </ul>
     </nav>
