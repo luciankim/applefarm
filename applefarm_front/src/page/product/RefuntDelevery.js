@@ -65,7 +65,7 @@ const RefundDelevery = () => {
             <tr>
               <td>배송 완료</td>
               <td>
-                구매자 배송지로
+                배송지로
                 <br />
                 상품 배송 완료
               </td>
