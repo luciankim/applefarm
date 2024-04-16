@@ -243,12 +243,12 @@ const Nav = (props) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/MacBook Air/2019년">
+                  <Link to="/product/main/MacBook Air/2019년">
                     MacBook Air 2019년
                   </Link>
                 </li>
                 <li>
-                  <Link to="/product/main/main/MacBook Air/2018년">
+                  <Link to="/product/main/MacBook Air/2018년">
                     MacBook Air 2018년
                   </Link>
                 </li>

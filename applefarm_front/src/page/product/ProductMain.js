@@ -9,7 +9,7 @@ import ProductChart from "./ProductChart";
 import ProductMainList from "./productMainList";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import RefundDelevery from "./RefuntDelevery";
+import RefundDelivery from "./RefuntDelivery";
 
 const ProductMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -260,7 +260,7 @@ const ProductMain = (props) => {
                 : "productMain-content-hide"
             }
           >
-            <RefundDelevery />
+            <RefundDelivery />
           </div>
         </div>
       </div>

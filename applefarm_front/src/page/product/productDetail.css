@@ -321,6 +321,7 @@
   height: 600px;
   font-size: 25px;
   line-height: 50px;
+  overflow-y: auto;
 }
 
 /* 관리자 문의 */
@@ -421,9 +422,10 @@
 .productDetail-productList-item-left {
   width: 25%;
   height: 400px;
-  background-color: #e4d7d7;
+  /* background-color: #e4d7d7; */
   padding: 10px;
   border-radius: 10px;
+  border: 1px solid #2f4f4f;
 }
 .productDetail-productList-item-left-productThumbnail {
   height: 70%;
@@ -437,11 +439,11 @@
 .productDetail-productList-item-right {
   border-radius: 10px;
   width: 70%;
-  background-color: rgb(241, 241, 195);
   cursor: pointer;
+  border: 1px solid #2f4f4f;
 }
 .productDetail-productList-item-right:hover {
-  background-color: rgb(241, 241, 195, 0.5);
+  background-color: #d3d3d3;
 }
 
 .productDetail-productList-item-left-productThumbnail img {
@@ -453,20 +455,24 @@
   padding: 10px;
 }
 .productDetail-productList-item-right-productQuality {
-  font-size: 20px;
-  font-weight: 900;
-  height: 20%;
+ 
+  height: 13%;
   border-bottom: 1px solid black;
 }
 .productDetail-productList-item-right-productPrice {
-  font-size: 20px;
-  height: 20%;
+
+  height: 13%;
+  border-bottom: 1px solid black;
+}
+
+.productDetail-productList-item-right-productTitle{
+  height: 13%;
   border-bottom: 1px solid black;
 }
 .productDetail-productList-item-right
   > .productDetail-productList-item-right-productExplain {
   /* padding: 30px; */
-  font-size: 20px;
+ 
   height: 60%;
   overflow: hidden;
   text-overflow: ellipsis;

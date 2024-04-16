@@ -451,9 +451,9 @@ select * from
 		left join trade_tbl t using (product_no)
 		where
 			product_hide = '0'
-	   <!-- <if test='tradeState != null and tradeState != ""'>and t.trade_state in ('예약중', '결제완료', '발송대기', '배송중', '배송완료', '구매확정')</if> -->
-			<if test='tradeState == null or tradeState == ""'>and t.trade_state is null</if>
-		    <if test='productLine != null and productLine != ""'>and p.product_line = #{productLine}</if>
+	        <if test='tradeState == "판매중"'>and t.trade_state is null</if>
+	   <!-- <if test='productLine != null and productLine != ""'>and p.product_line = #{productLine}</if> -->
+	   		and p.product_line = #{productLine}
 		    <if test='productGen != null and productGen != ""'>and p.product_gen = #{productGen}</if>
 		    <if test='productModel != null and productModel != ""'>and p.product_model = #{productModel}</if>
 		    <if test='productModel2 != null and productModel2 != ""'>and p.product_model2 = #{productModel2}</if>
@@ -481,9 +481,9 @@ select * from
 				left join (select product_no, count(product_no) as like_count from like_tbl group by product_no) using (product_no)
 				where
 					product_hide = '0'
-			   <!-- <if test='product.tradeState != null and product.tradeState != ""'>and t.trade_state in ('예약중', '결제완료', '발송대기', '배송중', '배송완료', '구매확정')</if> -->
-				    <if test='product.tradeState == null or product.tradeState == ""'>and t.trade_state is null</if>
-				    <if test='product.productLine != null and product.productLine != ""'>and p.product_line = #{product.productLine}</if>
+			        <if test='product.tradeState == "판매중"'>and t.trade_state is null</if>
+			   <!-- <if test='product.productLine != null and product.productLine != ""'>and p.product_line = #{product.productLine}</if> -->
+			   		and p.product_line = #{product.productLine}
 				    <if test='product.productGen != null and product.productGen != ""'>and p.product_gen = #{product.productGen}</if>
 				    <if test='product.productModel != null and product.productModel != ""'>and p.product_model = #{product.productModel}</if>
 				    <if test='product.productModel2 != null and product.productModel2 != ""'>and p.product_model2 = #{product.productModel2}</if>
