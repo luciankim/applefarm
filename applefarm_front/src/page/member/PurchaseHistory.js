@@ -8,10 +8,12 @@ import {
   RefundModal,
   ReviewModal,
   SuccessModal,
+  TrackingModal,
 } from "./Modal";
 import axios from "axios";
 import Pagination from "../../component/Pagination";
 import { Link, useNavigate } from "react-router-dom";
+import Modal from "react-modal";
 const PurchaseHistory = () => {
   //처음 기본값 세팅 => startDate:2개월전 / endDate:오늘 / 최근 2개월 조회 활성화
   const [startDate, setStartDate] = useState(dayjs().subtract(2, "month"));
@@ -498,20 +500,23 @@ const TradeItem = (props) => {
   const refModalFunc = () => {
     setRefModalOpen(true);
   };
-  const [trackingList, setTrackingList] = useState([]);
+  //배송추적
+  const [completeYN, setCompleteYN] = useState();
+  const [trackingList, setTrackingList] = useState(null);
+  const [trackingModalOpen, setTrackingModalOpen] = useState(false);
   const trackingFunc = () => {
     const invoiceNumber = trade.invoiceNumber;
-
     axios
       .get(backServer + "/trade/tracking/" + invoiceNumber)
       .then((res) => {
         if (res.data.message === "success") {
-          setTrackingList(res.data.data);
           console.log(res.data);
+          setTrackingList(res.data.data.list);
+          setCompleteYN(res.data.data.completeYN);
+          setTrackingModalOpen(true);
         }
       })
       .catch((res) => {
-        console.log("catch");
         console.log(res.data);
       });
   };
@@ -598,6 +603,16 @@ const TradeItem = (props) => {
           )}
         </>
       </td>
+      <>
+        {trackingModalOpen && (
+          <TrackingModal
+            setModalOpen={setTrackingModalOpen}
+            trackingList={trackingList}
+            completeYN={completeYN}
+            invoiceNumber={trade.invoiceNumber}
+          />
+        )}
+      </>
     </tr>
   );
 };

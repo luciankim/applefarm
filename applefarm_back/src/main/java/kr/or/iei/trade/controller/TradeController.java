@@ -2,6 +2,7 @@ package kr.or.iei.trade.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class TradeController {
 	@PostMapping
 	public ResponseEntity<ResponseDTO> insertTrade(@RequestBody Trade trade, @RequestAttribute int memberNo) {
 		trade.setTradeBuyer(memberNo);
-		System.out.println(trade);
+		//System.out.println(trade);
 		int result = tradeService.insertTrade(trade);
 		if (result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -97,7 +98,7 @@ public class TradeController {
 		t.setProductNo(productNo);
 		t.setTradeSeller(memberNo);
 		Trade trade = tradeService.selectDetailSales(t);
-		System.out.println(trade);
+		//System.out.println(trade);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", trade);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
@@ -204,10 +205,10 @@ public class TradeController {
 
 	@GetMapping(value = "/tracking/{invoiceNumber}")
 	public ResponseEntity<ResponseDTO> trackingHistory(@PathVariable String invoiceNumber) {
-
 		String url = "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=04&t_invoice=" + invoiceNumber
 				+ "&t_key=YlFOzoy1xCyv8YDqetwzAA";
-
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<Delivery> list = new ArrayList<Delivery>();
 
 		try {
@@ -216,13 +217,12 @@ public class TradeController {
 					.ignoreContentType(true).get().text();
 
 			System.out.println(result);
-
-			JsonObject object = (JsonObject) JsonParser.parseString(result); // 객체로 데이터를 받았기 때문에 제이슨 오브젝트로 받아야 함. 배열이
-																				// 아니라.
-
+			
+			JsonObject object = (JsonObject) JsonParser.parseString(result); // 객체로 데이터를 받았기 때문에 제이슨 오브젝트로 받음
+			
 			JsonArray items = object.get("trackingDetails").getAsJsonArray();
 			// 겟.키값.해당하는 형태
-
+			String completeYN = object.get("completeYN").getAsString();	//배송완료 여부
 			for (int i = 0; i < items.size(); i++) {
 				JsonObject item = items.get(i).getAsJsonObject();
 				String kind = item.get("kind").getAsString();
@@ -234,17 +234,15 @@ public class TradeController {
 				String where = item.get("where").getAsString();
 				Delivery d = new Delivery(kind, level, manName, telno, telno2, timeString, where);
 				list.add(d);
-
 			}
-
+			map.put("completeYN", completeYN);
+			map.put("list",list);
 		} catch (IOException e) {
 			e.printStackTrace();
 
 		}
-
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<>(response, response.getHttpStatus());
-
 	}
 
 }

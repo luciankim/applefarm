@@ -331,3 +331,47 @@
 .modal-sub-message > span {
   text-decoration: underline;
 }
+/*배송조회모달*/
+.tracking-number {
+  display: flex;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.tracking-number > div {
+  font-family: ns-b;
+  padding: 3px 10px;
+}
+.tracking-number > div:nth-child(2) {
+  flex: 1;
+  text-align: left;
+  border-left: 1px solid #ccc;
+  font-family: ns-r;
+}
+.tracking-content > table > tbody > tr > td {
+  padding: 0px;
+  font-size: 13px;
+}
+.tracking-content > table > thead > tr > td {
+  font-family: ns-b;
+}
+.tracking-content > table > tbody > tr > td:nth-child(2) {
+  text-align: center;
+}
+.modal-tracking-title {
+  font-family: ns-b;
+  padding-bottom: 10px;
+}
+.tracking-content > table {
+  border: 1px solid #ccc;
+}
+.tracking-content > table > thead > tr {
+  border: 1px solid #ccc;
+}
+.tracking-content > table > tbody > tr {
+  border: 1px solid #ccc;
+}
+.big-modal {
+  width: 520px;
+  border-radius: 10px;
+}
