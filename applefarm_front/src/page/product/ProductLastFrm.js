@@ -41,7 +41,7 @@ const ProductLastFrm = (props) => {
   const [checkPriceMsg, setCheckPriceMsg] = useState("");
 
   //유효성 검사
-  const titleReg = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()_+|<>?:{}]{5,30}$/;
+  const titleReg = /^[^]{4,30}$/;
   const priceReg = /^[0-9]{4,7}$/;
 
   // 제목 && 가격 유효성 검사
@@ -51,7 +51,7 @@ const ProductLastFrm = (props) => {
     if (titleReg.test(title)) {
       setCheckTitleMsg("");
     } else {
-      setCheckTitleMsg("제목은 영어 대/소문자/숫자/한글로 5~30글자 입니다.");
+      setCheckTitleMsg("제목은 4~30글자 입니다.");
     }
   };
   const priceCheck = () => {

@@ -35,7 +35,7 @@ public class MemberService {
 	private ProductDao productDao;
 	@Autowired
 	private TradeDao tradeDao;
-	
+
 	@Transactional
 	public int insertAddress(Address address) {
 		int result = 0;
@@ -129,15 +129,14 @@ public class MemberService {
 		int duplicationNickName = memberDao.selectOneNickName(memberNickName);
 		return duplicationNickName;
 	}
-/*
-	@Transactional
-	public int join(Member member) {
 
-		int result = memberDao.join(member);
-
-		return result;
-	}
-*/
+	/*
+	 * @Transactional public int join(Member member) {
+	 * 
+	 * int result = memberDao.join(member);
+	 * 
+	 * return result; }
+	 */
 	// -------------------------------관리자: 회원관리 기능 시작
 	// -------------------------------//
 	public Map selectMemberList(int reqPage) {
@@ -163,15 +162,20 @@ public class MemberService {
 
 	public String login(Member member) {
 
+		int memberNo = memberDao.OneMemberNo(member.getMemberId()); // 화면에서 가져온거
+
+		Member m = memberDao.selectNo(memberNo); // 디비에서 가져온거
+
 		
-		int memberNo = memberDao.OneMemberNo(member.getMemberId());
-		
-		Member m = memberDao.selectNo(memberNo);
-		
-		if(m.getMemberGrade() == 3 ) {
+		if (m.getMemberGrade() == 3) {
 			String accessToken = "black";
 			return accessToken;
-		}else {
+		} else if ("1".equals(m.getMemberWithdraw())) {
+			
+			String accessToken = "withdrawMember";
+			return accessToken;
+			
+		} else {
 			if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
 				long expiredDateMs = 300 * 60 * 1000l; // 1시간 지정
 				// 아이디 인증 끝났을 때 토큰
@@ -189,210 +193,184 @@ public class MemberService {
 		return memberDao.selectNo(memberNo);
 	}
 
+	@Transactional
+	public int join(Member member) {
 
+		int result = memberDao.join(member);
 
-		@Transactional
-		public int join(Member member) {
-			
-			int result = memberDao.join(member);
-					
-			
-			return result;
+		return result;
+	}
+
+	/*
+	 * //관리자: 회원관리 기능 public Map selectMemberList(int reqPage) { int numPerPage = 5;
+	 * int pageNaviSize = 5; int totalCount = memberDao.memberTotalCount();
+	 * 
+	 * //페이지 인포 객체 PageInfo pi = pagination.getPageInfo(reqPage, numPerPage,
+	 * pageNaviSize, totalCount); List memberList = memberDao.selectMemberList(pi);
+	 * HashMap<String, Object> map = new HashMap<String, Object>();
+	 * map.put("memberList", memberList); map.put("pi", pi); return map; }
+	 */
+
+	/*
+	 * public Member login(Member member) {
+	 * 
+	 * Member m = memberDao.selectId(member.getMemberId());
+	 * 
+	 * if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(),
+	 * m.getMemberPw())) {
+	 * 
+	 * 
+	 * return m; }else { return null; }
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
+	public List selectLike(int memberNo) {
+		return memberDao.selectLike(memberNo);
+	}
+
+	public int deleteLike(int likeNo) {
+		return memberDao.deleteLike(likeNo);
+	}
+
+	public List allAddress(int memberNo) {
+		return memberDao.selectAddress(memberNo);
+	}
+
+	public Map selectPaymentInfo(int memberNo, int productNo, String bidThough) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		// 회원 정보
+		Member member = memberDao.getMemberInfo(memberNo);
+		// 주소 정보
+		Address address = memberDao.selectAddressBasic(memberNo);
+		// 상품 정보
+		Product product = productDao.selectOneProduct(productNo);
+		Trade trade = new Trade();
+		trade.setTradeBuyer(memberNo);
+		trade.setProductNo(productNo);
+		// 상품 예약 결제로 페이지 접근시 결제 가격 조회
+		if (bidThough.equals("y")) {
+			int bidPrice = tradeDao.selectBidPrice(trade);
+			product.setProductPrice(bidPrice);
 		}
-		
-		/*
-		//관리자: 회원관리 기능
-		public Map selectMemberList(int reqPage) {
-			int numPerPage = 5;
-			int pageNaviSize = 5;
-			int totalCount = memberDao.memberTotalCount();
-			
-			//페이지 인포 객체
-			PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-			List memberList = memberDao.selectMemberList(pi);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("memberList", memberList);
-			map.put("pi", pi);
-			return map;
-		}
-		*/
+		int tradeExist = tradeDao.tradeExistCount(trade);
+		map.put("member", member);
+		map.put("address", address);
+		map.put("product", product);
+		map.put("tradeExist", tradeExist);
+		return map;
+	}
 
-		/*
-		public Member login(Member member) {
-			
-			Member m = memberDao.selectId(member.getMemberId());
-			
-			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
-				
-				
-				return m;
-			}else {
-				return null;
-			}
-			
-			
-			
-		}
-		 */
-		public List selectLike(int memberNo) {
-			return memberDao.selectLike(memberNo);
-		}
-		public int deleteLike(int likeNo) {
-			return memberDao.deleteLike(likeNo);
-		}
-		public List allAddress(int memberNo) {
-			return memberDao.selectAddress(memberNo);
-		}
-		public Map selectPaymentInfo(int memberNo, int productNo, String bidThough) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			//회원 정보
-			Member member = memberDao.getMemberInfo(memberNo);
-			//주소 정보
-			Address address= memberDao.selectAddressBasic(memberNo);
-			//상품 정보
-			Product product = productDao.selectOneProduct(productNo);
-			Trade trade = new Trade();
-			trade.setTradeBuyer(memberNo);
-			trade.setProductNo(productNo);
-			//상품 예약 결제로 페이지 접근시 결제 가격 조회
-			if(bidThough.equals("y")) {
-				int bidPrice = tradeDao.selectBidPrice(trade);
-				product.setProductPrice(bidPrice);
-			}
-			int tradeExist = tradeDao.tradeExistCount(trade);
-			map.put("member", member);
-			map.put("address", address);
-			map.put("product",product);
-			map.put("tradeExist",tradeExist);
-			return map;
-		}
-		
-		
-		public Member selectNo(int memberNo) {
-			
-			return memberDao.selectNo(memberNo);
-			
-			
-		}
+	public Member selectNo(int memberNo) {
 
+		return memberDao.selectNo(memberNo);
 
-		public Member getMemberInfo(int memberNo) {
-			
-			
-			return memberDao.getMemberInfo(memberNo);
-		}
+	}
 
+	public Member getMemberInfo(int memberNo) {
 
-		@Transactional
-		public int updateEmail(Member member) {
-			
-			return memberDao.updateEmail(member);
-		}
+		return memberDao.getMemberInfo(memberNo);
+	}
 
-		@Transactional
-		public int deleteMember(int memberNo) {
-			
-			return memberDao.deleteMember(memberNo);
+	@Transactional
+	public int updateEmail(Member member) {
 
-		}
-		
-		public Address basicAddress(int memberNo) {
-			return memberDao.selectAddressBasic(memberNo);
+		return memberDao.updateEmail(member);
+	}
 
-		}
+	@Transactional
+	public int deleteMember(int memberNo) {
 
+		return memberDao.deleteMember(memberNo);
 
+	}
 
-		
-		//이전 비밀번호 확인
-		public int pwCheck(Member member) {
-			
-			Member m = memberDao.selectNo(member.getMemberNo());
-			
-			
-																				//db에서 조회한거
-			if(m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
-				
-				return 1;
-				
-				
-			}else {
-				
-				return 0;
-			}
-			
-			
+	public Address basicAddress(int memberNo) {
+		return memberDao.selectAddressBasic(memberNo);
+
+	}
+
+	// 이전 비밀번호 확인
+	public int pwCheck(Member member) {
+
+		Member m = memberDao.selectNo(member.getMemberNo());
+
+		// db에서 조회한거
+		if (m != null && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
+
+			return 1;
+
+		} else {
+
+			return 0;
 		}
 
-		@Transactional
-		public int updatePw(Member member) {
-			
-			return memberDao.updatePw(member);
-		}
+	}
 
-		@Transactional
-		public int updatePhone(Member member) {
-			
-			return memberDao.updatePhone(member);
-		}
+	@Transactional
+	public int updatePw(Member member) {
 
-		@Transactional
-		public int addAccountNumber(Member member) {
-			
-			return memberDao.addAccountNumber(member);
-		}
+		return memberDao.updatePw(member);
+	}
 
-		@Transactional
-		public int deleteAccountNumber(Member member) {
-			// TODO Auto-generated method stub
-			return memberDao.deleteAccountNumber(member);
-		}
+	@Transactional
+	public int updatePhone(Member member) {
 
-		public String getMemberId(String memberEmail) {
-			
-			return memberDao.getMemberId(memberEmail);
-		}
+		return memberDao.updatePhone(member);
+	}
 
-	
-		@Transactional
-		public int resetPw(Member member) {
-			// TODO Auto-generated method stub
-			return memberDao.resetPw(member);
-		}
+	@Transactional
+	public int addAccountNumber(Member member) {
 
-		public List<Product> getSalesHistory(int memberNo) {
+		return memberDao.addAccountNumber(member);
+	}
 
-			return memberDao.getSalesHistory(memberNo);
-		}
+	@Transactional
+	public int deleteAccountNumber(Member member) {
+		// TODO Auto-generated method stub
+		return memberDao.deleteAccountNumber(member);
+	}
 
-		public int changeSalesPrice(Product product) {
-			
-			return memberDao.changeSalesPrice(product);
-		}
+	public String getMemberId(String memberEmail) {
 
-		public int deleteSalesProduct(int productNo) {
-			
-			return memberDao.deleteSalesProduct(productNo);
-		}
+		return memberDao.getMemberId(memberEmail);
+	}
 
-		public int updateInvoiceNum(Trade trade) {
+	@Transactional
+	public int resetPw(Member member) {
+		// TODO Auto-generated method stub
+		return memberDao.resetPw(member);
+	}
 
-			return memberDao.updateInvoiceNum(trade);
-		}
+	public List<Product> getSalesHistory(int memberNo) {
 
-		public Trade getSalesProductDetails(int productNo) {
-			
-			return memberDao.getSalesProductDetails(productNo);
-		}
+		return memberDao.getSalesHistory(memberNo);
+	}
 
-		public List<Product> getRefund(int memberNo) {
-			
-			return memberDao.getRefund(memberNo);
-		}
+	public int changeSalesPrice(Product product) {
 
-	
-		
-		
-		
+		return memberDao.changeSalesPrice(product);
+	}
+
+	public int deleteSalesProduct(int productNo) {
+
+		return memberDao.deleteSalesProduct(productNo);
+	}
+
+	public int updateInvoiceNum(Trade trade) {
+
+		return memberDao.updateInvoiceNum(trade);
+	}
+
+	public Trade getSalesProductDetails(int productNo) {
+
+		return memberDao.getSalesProductDetails(productNo);
+	}
+
+	public List<Product> getRefund(int memberNo) {
+
+		return memberDao.getRefund(memberNo);
+	}
 
 }
