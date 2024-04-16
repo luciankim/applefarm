@@ -372,6 +372,15 @@
   border: 1px solid #ccc;
 }
 .big-modal {
-  width: 520px;
+  width: 500px;
   border-radius: 10px;
+}
+.tracking-btn > button {
+  border: 1px solid #e5e5e5;
+  background-color: #fcfcfc;
+  padding: 5px 15px;
+  margin: 10px 10px 0px 10px;
+}
+.tracking-btn > button:hover {
+  border-color: #545454;
 }

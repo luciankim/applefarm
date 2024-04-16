@@ -101,7 +101,7 @@ public class TradeService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("tradeList", tradeList);
 		map.put("pi", pi);
-		System.out.println(tradeList);
+		//System.out.println(tradeList);
 		return map;
 	}
 	@Transactional
@@ -146,6 +146,25 @@ public class TradeService {
 		}
 	}
 	
+	public void scheduledBook() {
+		List<TradeDate> list = tradeDao.selectBook();
+		System.out.println("예약리스트 : "+list);
+		LocalDate now = LocalDate.now(); // 현재 날짜(시간까진 X(시간은 LocalDateTime.now())
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		System.out.println(now);
+		// 예약 시간을 가져와서 현재 날짜와 비교하여 그다음날 자정시 거래테이블에서 예약취소(delete)
+		for (TradeDate td : list) {
+		    LocalDate bookDate = LocalDate.parse(td.getTradeReserveDate(), formatter);
+		    long daysBetween = ChronoUnit.DAYS.between(bookDate,now);
+		    System.out.println(daysBetween);
+		    if (daysBetween >= 2) {
+		        // 그다음날 자정 지났으면 거래 삭제(취소)
+		    	tradeDao.deleteTradeBook2(td.getTradeNo());
+		    }
+		}
+	}
+	
+	//집가서하기
 	public void selectDelivery() {
 		//배송완료 전 배송중 상태(송장등록된 상태)만 가져옴
 		List<TradeDelivery> list = tradeDao.selectDelivery();
@@ -171,23 +190,7 @@ public class TradeService {
 			}
 		}
 	}
-	public void scheduledBook() {
-		List<TradeDate> list = tradeDao.selectBook();
-		System.out.println("예약리스트 : "+list);
-		LocalDate now = LocalDate.now(); // 현재 날짜
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		System.out.println(now);
-		// 예약 시간을 가져와서 현재 날짜와 비교하여 2일이면 거래테이블에서 예약취소(delete)
-		for (TradeDate td : list) {
-		    LocalDate bookDate = LocalDate.parse(td.getTradeReserveDate(), formatter);
-		    long daysBetween = ChronoUnit.DAYS.between(bookDate,now);
-		    System.out.println(daysBetween);
-		    if (daysBetween > 2) {
-		        // 2일 이상 지났으면 구매 확정으로 업데이트
-		        //tradeDao.updatePurchaseConfirm(td.getTradeNo());
-		    }
-		}
-	}
+
 
 	
 	

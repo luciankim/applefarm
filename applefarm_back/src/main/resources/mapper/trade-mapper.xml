@@ -197,5 +197,7 @@
   	<select id="selectBook" resultType="tradeDate">
   		select trade_no,trade_state,to_char(trade_reserve_date,'yyyy/mm/dd') as trade_reserve_date from trade_tbl where trade_state='예약중'
   	</select>
-
+	<delete id="deleteTradeBook2">
+		delete from trade_tbl where trade_no=#{tradeNo}
+	</delete>
 </mapper>
