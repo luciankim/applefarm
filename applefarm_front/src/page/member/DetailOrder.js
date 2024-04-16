@@ -88,6 +88,7 @@ const DetailSales = () => {
 const OrderItem = (props) => {
   const trade = props.trade;
   const type = props.type;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   return (
     <>
       <div className="trade-number-info">
@@ -107,7 +108,7 @@ const OrderItem = (props) => {
       </div>
       <div className="trade-product-info">
         <div className="trade-img-box">
-          <img src={trade.productThumbnail} />
+          <img src={backServer + "/product/img/" + trade.productThumbnail} />
         </div>
         <div>{trade.productSummary}</div>
         <div>
@@ -184,7 +185,7 @@ const OrderItem = (props) => {
               : "/mypage/purchaseHistory"
           }
         >
-          <Button2 text="목록보기"></Button2>
+          <Button2 text="구매내역 보기"></Button2>
         </Link>
       </div>
     </>

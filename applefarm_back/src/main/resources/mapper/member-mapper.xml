@@ -205,7 +205,7 @@
 	</update>
 
 
-	<select id="OneMemberNo" resultType="int">
+	<select id="OneMemberNo" resultType="Integer">
 
 
 		select member_no from
@@ -317,7 +317,9 @@
 		MAX(b.bid_price) AS max_bid_price,
 		t.trade_state,
 		t.trade_date,
-		t.invoice_number
+		t.invoice_number,
+		t.trade_price,
+		t.trade_no
 		FROM
 		member_tbl m
 		JOIN
@@ -337,7 +339,9 @@
 		p.product_price,
 		t.trade_state,
 		t.trade_date,
-		t.invoice_number
+		t.invoice_number,
+		t.trade_price,
+		t.trade_no
 		ORDER BY
 		p.product_date desc
 
@@ -424,6 +428,38 @@
 		JOIN refund_tbl r ON t_member.trade_no = r.trade_no
 		JOIN product_tbl p ON r.product_no = p.product_no
 
+	</select>
+	
+	<select id="getOnlyProduct" resultType="product">
+	
+		SELECT 
+        	p.product_no,
+			p.product_date,
+			p.product_thumbnail,
+			p.product_summary,
+			p.product_price,
+			MAX(b.bid_price) AS max_bid_price,
+        	t.trade_state
+		FROM
+			member_tbl m
+		JOIN 
+			product_tbl p ON m.member_no = p.member_no
+		LEFT JOIN
+			bid_tbl b ON p.product_no = b.product_no
+		LEFT JOIN 
+			trade_tbl t ON p.product_no = t.product_no
+		WHERE
+			m.member_no = #{memberNo} AND t.product_no IS NULL
+		GROUP BY
+			p.product_no,
+			p.product_date,
+			p.product_thumbnail,
+			p.product_summary,
+			p.product_price,
+        	t.trade_state
+		ORDER BY
+			p.product_date desc
+	
 	</select>
 
 

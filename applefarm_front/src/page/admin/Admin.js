@@ -16,6 +16,13 @@ const AdminMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
 
+  if (!isLogin) {
+    Swal.fire("로그인 후 이용 가능합니다.")
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {});
+  }
   const [adminMenu, setAdminMenu] = useState([
     { url: "dashboard", text: "대시보드", active: false },
     { url: "manageMember", text: "회원관리", active: false },

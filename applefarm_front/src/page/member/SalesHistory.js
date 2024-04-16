@@ -22,7 +22,7 @@ const SalesHistory = (props) => {
   const [productNo, setProductNo] = useState(null); // 변경할 상품 번호
 
   const [currentTab, setCurrentTab] = useState(0); // 현재 탭
-  const [tabMenu, setTabMenu] = useState(["판매입찰", "진행중", "완료"]);
+  const [tabMenu, setTabMenu] = useState(["미거래상품", "진행중", "완료"]);
 
   const [displayProducts, setDisplayProducts] = useState([]); // 화면에 보여질 상품 리스트
   const [visibleCount, setVisibleCount] = useState(1); // 초기에 보여줄 상품 수
@@ -38,6 +38,8 @@ const SalesHistory = (props) => {
   const [selectFilter, setSelectFilter] = useState("전체"); // 선택된 필터
 
   const [invoiceNumber, setInvoiceNumber] = useState("");
+
+  const [onlyProduct, setOnlyProduct] = useState([]); //거래테이블에 없는 상품
 
   // 필터링된 상품 리스트
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -262,12 +264,29 @@ const SalesHistory = (props) => {
       .post(backServer + "/member/getSalesHistory/" + memberNo)
       .then((res) => {
         if (res.data.message === "success") {
+          console.log(res.data);
           setProducts(res.data.data);
           setFilteredProducts(res.data.data); // 초기 필터링된 리스트 설정
           setDisplayProducts(res.data.data.slice(0, visibleCount));
         }
       })
-      .catch(console.error);
+      .catch((res) => {
+        console.log(res.data);
+      });
+
+    axios
+      .post(backServer + "/member/getOnlyProduct/" + memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setFilteredProducts(res.data.data);
+          setDisplayProducts(res.data.data.slice(0, visibleCount));
+          setOnlyProduct(res.data.data);
+          console.log(res.data);
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   }, [memberNo, backServer, visibleCount]);
 
   //상품 배송 조회
@@ -365,14 +384,7 @@ const SalesHistory = (props) => {
           <table className="salesHistory-content">
             <thead>
               <tr className="salesHistory-title">
-                <td className="allSales-btn">
-                  <button onClick={openModalAllSales}>
-                    <span>{selectFilter}</span>
-                    <span className="material-icons arrow-icon">
-                      arrow_right
-                    </span>
-                  </button>
-                </td>
+                <td className="allSales-btn"></td>
                 <td></td>
                 <td className="sales-title">최고입찰가</td>
                 <td className="sales-title">판매가</td>
@@ -381,7 +393,7 @@ const SalesHistory = (props) => {
               </tr>
             </thead>
             <tbody>
-              {displayProducts.map((product, index) => (
+              {onlyProduct.map((product, index) => (
                 <React.Fragment key={index}>
                   <tr>
                     <td className="salesDate">
@@ -482,7 +494,7 @@ const SalesHistory = (props) => {
                         </Link>
                       </td>
                       <td className="sales-info"></td>
-                      <td className="sales-info">{product.productPrice}원</td>
+                      <td className="sales-info">{product.tradePrice}원</td>
 
                       <td className="sales-info">{product.tradeState}</td>
 
@@ -534,7 +546,11 @@ const SalesHistory = (props) => {
                         >
                           <img
                             className="salesImg"
-                            src={product.productThumbnail}
+                            src={
+                              backServer +
+                              "product/img/" +
+                              product.productThumbnail
+                            }
                             alt="Product"
                           />
                         </Link>
@@ -549,7 +565,7 @@ const SalesHistory = (props) => {
                         </Link>
                       </td>
                       <td className="sales-info"></td>
-                      <td className="sales-info">{product.productPrice}원</td>
+                      <td className="sales-info">{product.tradePrice}원</td>
 
                       <td className="sales-info">{product.tradeState}</td>
 

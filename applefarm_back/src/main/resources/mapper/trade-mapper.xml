@@ -4,6 +4,9 @@
   	<insert id="insertTrade">
   		insert into trade_tbl values(trade_seq.nextval,#{tradeSeller},#{tradeBuyer},#{productNo},null,sysdate,#{tradePrice},'결제완료',#{zipcode},#{address},#{addressDetail},#{addressName},#{addressPhone},#{addressRequest},null,#{paymentNumber},null)
   	</insert>
+  	<update id="updateTrade">
+  		update trade_tbl set trade_date=sysdate, trade_state='결제완료',zipcode=#{zipcode},address=#{address},address_detail=#{addressDetail},address_name=#{addressName},address_phone=#{addressPhone},payment_number=#{paymentNumber} where product_no=#{productNo}
+  	</update>
   	<select id="tradeExistCount" resultType="int">
   		select
         (select count(*) from trade_tbl where product_no=#{productNo})
@@ -192,6 +195,7 @@
   		select trade_no,trade_state,invoice_number from trade_tbl where trade_state='배송중'
   	</select>
   	<select id="selectBook" resultType="tradeDate">
-  		select trade_no,trade_state,to_char(trade_reserve_date,'yyyy/mm/dd') as trade_reserve_date where trade_state='예약중'
+  		select trade_no,trade_state,to_char(trade_reserve_date,'yyyy/mm/dd') as trade_reserve_date from trade_tbl where trade_state='예약중'
   	</select>
+
 </mapper>

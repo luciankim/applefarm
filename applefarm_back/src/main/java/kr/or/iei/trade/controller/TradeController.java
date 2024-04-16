@@ -46,7 +46,7 @@ public class TradeController {
 	@Autowired
 	private TradeService tradeService;
 
-	@Operation(summary = "결제완료", description = "상품 결제 후 거래내역 생성")
+	@Operation(summary = "상품가 결제완료", description = "상품 결제 후 거래내역 생성")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중  message 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
 	@PostMapping
@@ -62,7 +62,23 @@ public class TradeController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-
+	@Operation(summary = "입찰가 결제완료", description = "상품 결제 후 거래테이블 상태 변경")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중  message 확인"),
+			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })
+	@PatchMapping
+	public ResponseEntity<ResponseDTO> updateTrade(@RequestBody Trade trade, @RequestAttribute int memberNo) {
+		trade.setTradeBuyer(memberNo);
+		int result = tradeService.updateTrade(trade);
+		if (result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	
 	@Operation(summary = "판매 유무", description = "거래되었는지 조회")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "응답 데이터 중  message 확인"),
 			@ApiResponse(responseCode = "500", description = "서버 에러 발생") })

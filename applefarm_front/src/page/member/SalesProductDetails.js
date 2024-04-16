@@ -1,13 +1,19 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const SalesProductDetails = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const product = useParams();
   const productNo = product.productNo;
   const [trade, setTrade] = useState([]);
+
+  const navigate = useNavigate();
+
+  const productDetail = () => {
+    navigate();
+  };
 
   useEffect(() => {
     axios
@@ -36,13 +42,15 @@ const SalesProductDetails = () => {
               <td>
                 <img
                   className="sales-detail-img"
-                  src={`/${trade.productThumbnail}`}
+                  src={
+                    backServer + "/product/img/" + `/${trade.productThumbnail}`
+                  }
                   alt="iPhone"
                 />
               </td>
               <td className="sales-text">{trade.productSummary}</td>
               <td className="sales-text">
-                <button>상품상세</button>
+                <button onClick={productDetail}>상품상세</button>
               </td>
             </tr>
           </thead>
