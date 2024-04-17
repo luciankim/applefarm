@@ -138,8 +138,9 @@ const Join = () => {
         .get(backServer + "/member/email/" + memberEmail)
         .then((res) => {
           if (res.data.message === "duplication") {
-            setCheckRegEmail("이미 사용중인 이메일입니다.");
             setBtnDisabledForEmail(true); //이메일 인증 버튼 비활
+            setCheckRegEmail("이미 사용중인 이메일입니다.");
+
             setVerifButtonColor("#b7b7b7"); // 인증코드 버튼 파란색으로
           } else if (res.data.message === "not duplication") {
             setCheckRegEmail("");

@@ -21,7 +21,7 @@ const ProductQualityFrm = (props) => {
 
   const productQualityInitKey = props.productQualityInitKey;
   const productQualityInitValue = props.productQualityInitValue;
-  const type= props.type;
+  const type = props.type;
 
   // 품질 참조 리스트 불러오기
   useEffect(() => {
@@ -44,9 +44,6 @@ const ProductQualityFrm = (props) => {
       });
   }, []);
 
-  
-
-  
   useEffect(() => {
     console.log(productQualityInitKey);
   }, [productQualityInitKey]);
@@ -130,43 +127,39 @@ const ProductQualityFrm = (props) => {
 
   return (
     <div className="quality-select-total-wrap">
-      
       <div className="quality-select-wrap">
         <div className="quality-select-title">품질 선택</div>
 
-        {type==="update"?(<div className="quality-select-selected">
-          {/* <div className="quality-select-selected-left">
+        {type === "update" ? (
+          <div className="quality-select-selected">
+            {/* <div className="quality-select-selected-left">
             
           </div>
           <div className="quality-select-selected-right">
 
           </div> */}
-          <table  className="quality-select-selected-table">
-            <tbody>
-              <tr>
-                <th className="quality-select-selected-th">
-                  품질 파트
-                </th>
-                <th className="quality-select-selected-th">
-                  품질 값
-                </th>
-              </tr>
-              {productQualityInitKey.map((item,index)=>{
-                return (
-                  <tr key={"productQualityInit"+index}>
-                    <td className="quality-select-selected-td">
-                      {item}
-                    </td>
-                    <td className="quality-select-selected-td">
-                      {productQualityInitValue[index]}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>):""}
-        
+            <table className="quality-select-selected-table">
+              <tbody>
+                <tr>
+                  <th className="quality-select-selected-th">품질 파트</th>
+                  <th className="quality-select-selected-th">품질 값</th>
+                </tr>
+                {productQualityInitKey.map((item, index) => {
+                  return (
+                    <tr key={"productQualityInit" + index}>
+                      <td className="quality-select-selected-td">{item}</td>
+                      <td className="quality-select-selected-td">
+                        {productQualityInitValue[index]}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          ""
+        )}
 
         {qualityList.map((item, index) => {
           const arr = item.productStatus.split("/");
@@ -292,6 +285,7 @@ const QualitySelectInputWrap = (props) => {
           id={id1}
           name={name}
           setData={setData}
+          data={data}
           // checked={selectedGrade === value1} // "A"가 현재 선택된 grade와 일치하면 true
         ></RadioInput>
         <RadioInput
@@ -301,6 +295,7 @@ const QualitySelectInputWrap = (props) => {
           id={id2}
           name={name}
           setData={setData}
+          data={data}
           // checked={selectedGrade === value2}
         ></RadioInput>
         <RadioInput
@@ -310,6 +305,7 @@ const QualitySelectInputWrap = (props) => {
           id={id3}
           name={name}
           setData={setData}
+          data={data}
           // checked={selectedGrade === value3}
         ></RadioInput>
         <RadioInput
@@ -319,6 +315,7 @@ const QualitySelectInputWrap = (props) => {
           id={id4}
           name={name}
           setData={setData}
+          data={data}
           // checked={selectedGrade === value4}
         ></RadioInput>
       </div>
@@ -422,7 +419,10 @@ const RadioInput = (props) => {
   const value = props.value;
   const labelText = props.value;
   const setData = props.setData;
+  const data = props.data;
   // const checked = props.checked;
+  // console.log(value, data);
+  // console.log(value === data);
 
   const changeData = (e) => {
     setData(e.target.value);
@@ -436,11 +436,11 @@ const RadioInput = (props) => {
           <input
             type={type}
             id={id}
-            defaultValue={value}
+            value={value}
             className={className}
             name={name}
             onChange={changeData}
-            // checked={checked}
+            checked={value === data}
           />
           <label htmlFor={id}>{labelText}</label>
         </div>

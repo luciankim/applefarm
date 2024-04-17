@@ -28,7 +28,7 @@ const ProductInsert = (props) => {
 
   //const location = useLocation();
 
-  console.log("insert로 들어옴");
+  // console.log("insert로 들어옴");
 
   const params = useParams();
   const nTable = params.productTable;
