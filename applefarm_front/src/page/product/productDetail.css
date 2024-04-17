@@ -218,12 +218,14 @@
 .productDetail-image-area {
   margin-bottom: 50px;
 }
-.productDetail-image {
+/* .productDetail-image {
   width: 90%;
   height: 600px;
-}
-.swiper-slide img {
+} */
+.productDetail-image {
   width: 100%;
+  height: 100%;
+  object-fit: contain; 
 }
 
 /****** 제품 요약 + 판매자 정보 */
