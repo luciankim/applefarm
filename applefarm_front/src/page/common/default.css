@@ -92,6 +92,7 @@ body {
   background-size: cover;
 }
 
+/*main css*/
 .main-img1 {
   width: 1312px;
 }
@@ -102,19 +103,19 @@ body {
 }
 
 .iphoneMain {
-  width: 350px;
+  width: 250px;
   position: relative;
   right: 30px;
 }
 
 .ipadMain {
-  width: 350px;
+  width: 250px;
   position: relative;
   right: 90px;
 }
 
 .macBookMain {
-  width: 320px;
+  width: 220px;
   position: relative;
   right: 140px;
 }
@@ -126,14 +127,29 @@ body {
 }
 
 .airPodsMain {
-  width: 330px;
+  width: 230px;
   position: relative;
   right: 220px;
   bottom: 40px;
 }
+.main-title {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  font-size: 45px;
+  width: 100%;
+  position: relative;
+  left: 50px;
+  padding: 50px;
+  padding-top: 55px;
+}
+
+.main-text1 {
+  color: #8f8f8f;
+}
 
 .watchMain {
-  width: 320px;
+  width: 220px;
   position: relative;
   right: 270px;
 }
@@ -144,13 +160,19 @@ body {
   flex-direction: row;
   align-items: center;
   position: relative;
-  right: 100px;
+  left: 100px;
 }
 
 .mainImg-wrap img:hover {
-  transform: scale(1.15);
+  transform: scale(1.05);
   transition: transform 0.9s;
 }
+.apple-main-wrap {
+  position: relative;
+  left: 70px;
+}
+
+/*main-css 마지막*/
 
 button,
 select {
