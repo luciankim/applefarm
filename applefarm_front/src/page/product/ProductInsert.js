@@ -158,6 +158,8 @@ const ProductInsert = (props) => {
     setProductQuality(grade);
   }, [grade]);
 
+  console.log(grade);
+
   //ProductLastFrm.js로 넘겨줄 속성
   const [title, setTitle] = useState(); //제목
   const [content, setContent] = useState(); //내용
