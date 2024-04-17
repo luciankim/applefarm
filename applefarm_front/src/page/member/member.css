@@ -1948,3 +1948,7 @@
 .refund-more-btn button:hover {
   text-decoration: underline;
 }
+
+.member-like-tbl-box > table > tbody > tr > td {
+  border-bottom: 1px solid #ccc;
+}

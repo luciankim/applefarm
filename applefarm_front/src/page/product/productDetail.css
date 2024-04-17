@@ -321,12 +321,12 @@
 /* 상세설명 */
 .productDetail-explain-detail {
   height: 600px;
+  overflow-y: auto;
 }
 
 .productDetail-explain-detail > div {
   font-size: 25px;
   line-height: 50px;
-  overflow-y: auto;
 }
 
 /* 관리자 문의 */
